@@ -283,168 +283,167 @@ input[type=file]::file-selector-button {
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
 
 	<div class="body-body">
-	<div class="text-box">
-		<!-- 처음 start -->
-		<div id="topdiv">
+		<div class="text-box">
+			<!-- 여기 채워서 작업하시면 됩니다 .-->
+			<!-- 처음 start -->
+			<div id="topdiv">
 
-			<span class="ffont1" style="font-weight: bold;">기안 완료 문서</span>
+				<span class="ffont1" style="font-weight: bold;">기안 진행 문서</span>
 
-		</div>
-		<!-- 처음 end -->
-
-		<hr>
-
-		<!-- 중간1 start-->
-		<div id="middiv">
-
-			<div>
-				<select name="languages" id="lang"
-					style="height: 40px; margin-bottom: 20px;">
-					<option value="select">분류</option>
-					<option value="vac">제목</option>
-					<option value="dept">기안자</option>
-				</select>
 			</div>
-			<div class="search_box" style="width: 500px; height: 40px;">
-				<input class="input_b" type="text" placeholder="검색"
-					style="height: auto;">
-				<div class="icon">
-					<button>
-						<i class="bi bi-search"></i>
-					</button>
+			<!-- 처음 end -->
+
+			<hr>
+
+			<!-- 중간1 start-->
+			<div id="middiv">
+
+				<div>
+					<select name="languages" id="lang"
+						style="height: 40px; margin-bottom: 20px;">
+						<option value="select">분류</option>
+						<option value="vac">제목</option>
+						<option value="dept">기안자</option>
+					</select>
 				</div>
+				<div class="search_box" style="width: 500px; height: 40px;">
+					<input class="input_b" type="text" placeholder="검색"
+						style="height: auto;">
+					<div class="icon">
+						<button>
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
+				</div>
+
 			</div>
+			<!-- 중간1 end-->
 
+
+			<!-- 중간2 start -->
+			<div id="middiv2">
+				<table class="table table-hover">
+
+					<thead>
+						<tr>
+							<th scope="col">번호</th>
+							<th scope="col">유형</th>
+							<th scope="col">제목</th>
+							<th scope="col">기안일</th>
+							<th scope="col">만료일</th>
+							<th scope="col">상태</th>
+						</tr>
+					</thead>
+
+					<tbody style="cursor: pointer;">
+						<tr>
+							<th scope="row">10</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>진행</td>
+						</tr>
+						<tr>
+							<th scope="row">9</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>진행</td>
+						</tr>
+						<tr>
+							<th scope="row">8</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>진행</td>
+						</tr>
+						<tr>
+							<th scope="row">7</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>진행</td>
+						</tr>
+						<tr>
+							<th scope="row">6</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<th scope="row">5</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<th scope="row">3</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>대기</td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>휴가</td>
+							<td>양식제목입니다.</td>
+							<td>2016-05-25</td>
+							<td>2016-06-09</td>
+							<td>대기</td>
+						</tr>
+
+
+					</tbody>
+				</table>
+			</div>
+			<!-- 중간2 end -->
+
+
+			<!-- 끝 start-->
+			<div class="paging">
+				<ul class="pagination d-flex justify-content-center text-dark"
+					style="margin-top: 40px;">
+					<li class="page-item disabled"><a class="page-link" href="">
+							<i class="bi bi-chevron-double-left"></i> <span>이전</span>
+					</a></li>
+					<li class="page-item active"><a class="page-link" href="">1</a></li>
+					<li class="page-item"><a class="page-link" href="">2</a></li>
+					<li class="page-item"><a class="page-link" href="">3</a></li>
+					<li class="page-item"><a class="page-link" href="">4</a></li>
+					<li class="page-item"><a class="page-link" href="">5</a></li>
+					<li class="page-item"><a class="page-link" href=""> <span>다음</span>&nbsp;<i
+							class="bi bi-chevron-double-right"></i>
+					</a></li>
+				</ul>
+			</div>
+			<!-- 끝 end-->
 		</div>
-		<!-- 중간1 end-->
-
-
-		<!-- 중간2 start -->
-		<div id="middiv2">
-			<table class="table table-hover">
-
-				<thead>
-					<tr>
-						<th scope="col">번호</th>
-						<th scope="col">유형</th>
-						<th scope="col">제목</th>
-						<th scope="col">기안일</th>
-						<th scope="col">만료일</th>
-						<th scope="col">상태</th>
-					</tr>
-				</thead>
-
-				<tbody style="cursor: pointer;">
-					<tr>
-						<th scope="row">10</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>완료</td>
-					</tr>
-					<tr>
-						<th scope="row">9</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>완료</td>
-					</tr>
-					<tr>
-						<th scope="row">8</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>완료</td>
-					</tr>
-					<tr>
-						<th scope="row">7</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>완료</td>
-					</tr>
-					<tr>
-						<th scope="row">6</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>완료</td>
-					</tr>
-					<tr>
-						<th scope="row">5</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>대기</td>
-					</tr>
-					<tr>
-						<th scope="row">4</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>대기</td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>대기</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>대기</td>
-					</tr>
-					<tr>
-						<th scope="row">1</th>
-						<td>휴가</td>
-						<td>양식제목입니다.</td>
-						<td>2016-05-25</td>
-						<td>2016-06-09</td>
-						<td>대기</td>
-					</tr>
-
-
-				</tbody>
-			</table>
-		</div>
-		<!-- 중간2 end -->
-
-
-		<!-- 끝 start-->
-		<div class="paging">
-			<ul class="pagination d-flex justify-content-center text-dark"
-				style="margin-top: 40px;">
-				<li class="page-item disabled"><a class="page-link" href="">
-						<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-				</a></li>
-				<li class="page-item active"><a class="page-link" href="">1</a></li>
-				<li class="page-item"><a class="page-link" href="">2</a></li>
-				<li class="page-item"><a class="page-link" href="">3</a></li>
-				<li class="page-item"><a class="page-link" href="">4</a></li>
-				<li class="page-item"><a class="page-link" href="">5</a></li>
-				<li class="page-item"><a class="page-link" href=""> <span>다음</span>&nbsp;<i
-						class="bi bi-chevron-double-right"></i>
-				</a></li>
-			</ul>
-		</div>
-		<!-- 끝 end-->
-
 	</div>
-	</div>
-
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

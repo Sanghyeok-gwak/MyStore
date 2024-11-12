@@ -117,42 +117,10 @@ input {
 }
 
 /* topdiv 스타일 start */
-#topdiv {
-	display: flex;
-}
-
 #topdiv>#menu_name {
 	font-size: 25px;
 	line-height: 30px;
 	font-weight: 400;
-}
-
-#lang {
-	margin-left: 60px;
-	width: 300px;
-	font-size: 18px;
-	line-height: 30px;
-	font-weight: 400;
-	border-radius: 5px;
-}
-
-#modal_appr {
-	margin-left: 20px;
-	width: 150px;
-	font-size: 18px;
-	line-height: 30px;
-	font-weight: 400;
-	background-color: rgb(179, 179, 179);
-	color: white;
-	border: 0px;
-	border-radius: 5px;
-	transition-property: background-color;
-	transition-duration: 0.5s;
-}
-
-#modal_appr:hover {
-	background-color: rgb(116, 116, 116);
-	color: white;
 }
 /* topdiv 스타일 end */
 
@@ -162,6 +130,15 @@ input {
 	line-height: 30px;
 	font-weight: 400;
 	display: flex;
+	justify-content: flex-end;
+}
+
+#lang {
+	width: 140px;
+	font-size: 18px;
+	line-height: 30px;
+	font-weight: 400;
+	border-radius: 5px;
 }
 
 #writer {
@@ -227,68 +204,77 @@ input {
 .spacer {
 	margin-left: auto; /* 왼쪽 여백을 최대화하여 오른쪽으로 밀기 */
 }
+
+.icon>button {
+	border: none;
+	background: none;
+	outline: none;
+}
+
+.search_box {
+	display: flex;
+	width: 250px;
+	border: 1px solid rgb(112, 112, 112);
+	border-radius: 3px;
+	align-items: center;
+}
+
+.input_b {
+	border-style: none;
+	outline: none;
+	box-shadow: none;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.icon {
+	margin-right: 10px;
+}
 /* middiv 스타일 end */
 
 /* middiv2 스타일 start */
 #middiv2 {
 	display: flex;
-}
-
-#form_title {
-	background-color: #99A1EF;
-	color: white;
-	height: 40px;
-	width: 140px;
-	border-radius: 5px;
 	font-size: 18px;
 	line-height: 30px;
 	font-weight: 400;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
-#inputf {
-	display: flex;
-}
 /* middiv2 스타일 end */
 
-/* filedownload 스타일 start */
-#filedownload {
-	display: flex;
-}
-
-#file {
+/* middiv3 스타일 start */
+input[type=file]::file-selector-button {
 	background-color: #99A1EF;
 	color: white;
-	height: 40px;
-	width: 113.75px;
-	border-radius: 5px;
+	border: none;
+	width: 113.5px;
+	height: 47.5px;
 	font-size: 18px;
 	line-height: 30px;
 	font-weight: 400;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
-#download {
-	font-size: 18px;
-	margin-left: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	line-height: 30px;
-	font-weight: 400;
+#fileupload {
+	width: 100%
 }
-/* filedownload 스타일 end */
+/* middiv2 스타일 end */
+#smarteditor {
+	margin-top: 10px;
+}
 
-/* enddiv 스타일 start */
-#enddiv {
-	margin-top: 40px;
-	display: flex;
+/* paging 스타일 start*/
+.pagination .page-link {
+	color: rgba(109, 105, 108, 1);
+	background-color: white;
+	border: none;
 }
-/* enddiv 스타일 end */
+
+.pagination .page-item.active .page-link {
+	border: 1px solid red;
+	color: red;
+	background-color: white;
+}
+/* paging 스타일 end*/
 </style>
 </head>
 <body>
@@ -297,175 +283,168 @@ input {
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
 
 	<div class="body-body">
-			<div>
-			<div class="text-box">
+	<div class="text-box">
+		<!-- 처음 start -->
+		<div id="topdiv">
 
-				<form action="">
+			<span class="ffont1" style="font-weight: bold;">기안 완료 문서</span>
 
-					<!-- 처음 start -->
-					<div id="topdiv">
-
-						<span class="ffont1" style="font-weight: bold;">기안 완료 문서</span>
-
-						<div id="lang">양식유형</div>
-
-					</div>
-					<!-- 처음 end -->
-
-					<hr>
-
-					<!-- 중간1 start-->
-					<div id="middiv">
-
-						<table>
-							<tr>
-								<td id="writer">기안자</td>
-								<td id="writer_content">기안자이름</td>
-							</tr>
-							<tr>
-								<td id="writer">부서</td>
-								<td id="writer_content">부서명</td>
-							</tr>
-							<tr>
-								<td id="writer">기안일</td>
-								<td id="writer_content">YYYY-MM-DD</td>
-							</tr>
-						</table>
-
-						<div class="container">
-							<table>
-								<tr>
-									<td id="aprr1" rowspan="5">1차</td>
-									<td id="aprr1_content">직급</td>
-								</tr>
-								<tr>
-									<td id="aprr1_content2" rowspan="3">결재자</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td id="aprr1_content">부서명</td>
-								</tr>
-							</table>
-
-							<table>
-								<tr>
-									<td id="aprr1" rowspan="5">2차</td>
-									<td id="aprr1_content">직급</td>
-								</tr>
-								<tr>
-									<td id="aprr1_content2" rowspan="3">결재자</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td id="aprr1_content">부서명</td>
-								</tr>
-							</table>
-						</div>
-
-					</div>
-					<!-- 중간1 end-->
-
-					<hr>
-
-					<!-- 중간2 start -->
-					<div id="middiv2">
-						<div id="form_title">제목</div>
-
-						<div class="input-bar" style="width: 100%; padding-left: 10px;">
-							<input type="text" class="input-bar1" readonly>
-						</div>
-					</div>
-					<!-- 중간2 end -->
-
-					<!-- smarteditor start-->
-					<div id="smarteditor" style="margin-top: 10px;">
-						<textarea name="editorTxt" id="editorTxt0" rows="15"
-							style="width: 100%"></textarea>
-					</div>
-					<!-- smarteditor end-->
-
-					<!-- 파일다운로드 start-->
-					<div id="filedownload">
-						<div id="file">첨부파일</div>
-						<div id="download">
-							<c:forEach var="at" items="${ b.attachList }">
-								<a
-									href="${ contextPath }${ at.filePath }/${ at.filesystemName }"
-									download="${ at.originalName }">${ at.originalName }</a>
-								<br>
-							</c:forEach>
-						</div>
-					</div>
-					<!--파일다운로드 end-->
-
-					<!-- 끝 start-->
-					<div id="enddiv">
-						<div class="btn-box-hover">
-							<button class="btn2-hover" style="width: 120px; font-size: 18px;">뒤로가기</button>
-						</div>
-					</div>
-					<!-- 끝 end-->
-
-
-				</form>
-			</div>
 		</div>
+		<!-- 처음 end -->
+
+		<hr>
+
+		<!-- 중간1 start-->
+		<div id="middiv">
+
+			<div>
+				<select name="languages" id="lang"
+					style="height: 40px; margin-bottom: 20px;">
+					<option value="select">분류</option>
+					<option value="vac">제목</option>
+					<option value="dept">기안자</option>
+				</select>
+			</div>
+			<div class="search_box" style="width: 500px; height: 40px;">
+				<input class="input_b" type="text" placeholder="검색"
+					style="height: auto;">
+				<div class="icon">
+					<button>
+						<i class="bi bi-search"></i>
+					</button>
+				</div>
+			</div>
+
+		</div>
+		<!-- 중간1 end-->
+
+
+		<!-- 중간2 start -->
+		<div id="middiv2">
+			<table class="table table-hover">
+
+				<thead>
+					<tr>
+						<th scope="col">번호</th>
+						<th scope="col">유형</th>
+						<th scope="col">제목</th>
+						<th scope="col">기안일</th>
+						<th scope="col">만료일</th>
+						<th scope="col">상태</th>
+					</tr>
+				</thead>
+
+				<tbody style="cursor: pointer;">
+					<tr>
+						<th scope="row">10</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>완료</td>
+					</tr>
+					<tr>
+						<th scope="row">9</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>완료</td>
+					</tr>
+					<tr>
+						<th scope="row">8</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>완료</td>
+					</tr>
+					<tr>
+						<th scope="row">7</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>완료</td>
+					</tr>
+					<tr>
+						<th scope="row">6</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>완료</td>
+					</tr>
+					<tr>
+						<th scope="row">5</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>대기</td>
+					</tr>
+					<tr>
+						<th scope="row">4</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>대기</td>
+					</tr>
+					<tr>
+						<th scope="row">3</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>대기</td>
+					</tr>
+					<tr>
+						<th scope="row">2</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>대기</td>
+					</tr>
+					<tr>
+						<th scope="row">1</th>
+						<td>휴가</td>
+						<td>양식제목입니다.</td>
+						<td>2016-05-25</td>
+						<td>2016-06-09</td>
+						<td>대기</td>
+					</tr>
+
+
+				</tbody>
+			</table>
+		</div>
+		<!-- 중간2 end -->
+
+
+		<!-- 끝 start-->
+		<div class="paging">
+			<ul class="pagination d-flex justify-content-center text-dark"
+				style="margin-top: 40px;">
+				<li class="page-item disabled"><a class="page-link" href="">
+						<i class="bi bi-chevron-double-left"></i> <span>이전</span>
+				</a></li>
+				<li class="page-item active"><a class="page-link" href="">1</a></li>
+				<li class="page-item"><a class="page-link" href="">2</a></li>
+				<li class="page-item"><a class="page-link" href="">3</a></li>
+				<li class="page-item"><a class="page-link" href="">4</a></li>
+				<li class="page-item"><a class="page-link" href="">5</a></li>
+				<li class="page-item"><a class="page-link" href=""> <span>다음</span>&nbsp;<i
+						class="bi bi-chevron-double-right"></i>
+				</a></li>
+			</ul>
+		</div>
+		<!-- 끝 end-->
 
 	</div>
+	</div>
 
-	<script>
-		let oEditors = [];
-
-		smartEditor = function() {
-			nhn.husky.EZCreator.createInIFrame({
-				oAppRef : oEditors,
-				elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-				sSkinURI : "/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
-				htParams : {
-					// 툴바 사용여부 (true: 사용, false: 미사용)
-					bUseToolbar : false,
-					// 입력창 크키 조절바 사용여부 (true: 사용, false: 미사용)
-					bUseVerticalResizer : false,
-					// 모드 탭(Editor | HTML | TEXT) 사용여부 (true: 사용, false: 미사용)
-					bUseModeChanger : false
-				},
-				fCreator : "createSEditor2",
-				fOnAppLoad : function() {
-					// 에디터 로드가 완료된 후 readonly 모드로 설정
-					oEditors.getById["editorTxt0"].exec("DISABLE_WYSIWYG", []); // 에디터 비활성화 (만약 에디터쪽에 양식서가 보여져야하는데 안보여지거나 보여줘도 스크롤바를 못내릴시 삭제예정)
-				}
-			})
-		}
-
-		$(document)
-				.ready(
-						function() {
-							//스마트에디터 적용
-							smartEditor();
-							//값 불러오기
-							function preview() {
-								// 에디터의 내용을 textarea에 적용
-								oEditors.getById["editorTxt0"].exec(
-										"UPDATE_CONTENTS_FIELD", []);
-								// textarea 값 불러오기 
-								var content = document
-										.getElementById("editorTxt0").value;
-								alert(content);
-								return;
-							}
-
-						})
-	</script>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

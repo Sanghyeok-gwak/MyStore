@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <style>
 /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
 .text-box {
@@ -117,10 +118,6 @@ input {
 }
 
 /* topdiv 스타일 start */
-#topdiv {
-	display: flex;
-}
-
 #topdiv>#menu_name {
 	font-size: 25px;
 	line-height: 30px;
@@ -161,6 +158,9 @@ input {
 	font-size: 18px;
 	line-height: 30px;
 	font-weight: 400;
+}
+
+#content {
 	display: flex;
 }
 
@@ -248,40 +248,27 @@ input {
 	align-items: center;
 }
 
-#inputf {
-	display: flex;
-}
 /* middiv2 스타일 end */
 
-/* filedownload 스타일 start */
-#filedownload {
-	display: flex;
-}
-
-#file {
+/* middiv3 스타일 start */
+input[type=file]::file-selector-button {
 	background-color: #99A1EF;
 	color: white;
-	height: 40px;
-	width: 113.75px;
-	border-radius: 5px;
+	border: none;
+	width: 113.5px;
+	height: 47.5px;
 	font-size: 18px;
-	line-height: 30px;
-	font-weight: 400;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-#download {
-	font-size: 18px;
-	margin-left: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	line-height: 30px;
 	font-weight: 400;
 }
-/* filedownload 스타일 end */
+
+#fileupload {
+	width: 100%
+}
+/* middiv2 스타일 end */
+#smarteditor {
+	margin-top: 10px;
+}
 
 /* enddiv 스타일 start */
 #enddiv {
@@ -297,160 +284,76 @@ input {
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
 
 	<div class="body-body">
-		<div>
-			<div class="text-box">
+		<div class="text-box">
+			<form action="">
 
-				<!-- 여기 채워서 작업하시면 됩니다 .-->
-				<form action="">
+				<!-- 처음 start -->
+				<div id="topdiv">
+					<span class="ffont1" style="font-weight: bold;">문서양식 작성하기</span>
+				</div>
+				<!-- 처음 end -->
 
-					<!-- 처음 start -->
-					<div id="topdiv">
+				<hr>
 
-						<span class="ffont1" style="font-weight: bold;">기안 진행 문서</span>
+				<!-- 중간1 start-->
+				<div id="middiv">
 
-						<div id="lang">양식유형</div>
-
-					</div>
-					<!-- 처음 end -->
-
-					<hr>
-
-					<!-- 중간1 start-->
-					<div id="middiv">
-
-						<table>
-							<tr>
-								<td id="writer">기안자</td>
-								<td id="writer_content">기안자이름</td>
-							</tr>
-							<tr>
-								<td id="writer">부서</td>
-								<td id="writer_content">부서명</td>
-							</tr>
-							<tr>
-								<td id="writer">기안일</td>
-								<td id="writer_content">YYYY-MM-DD</td>
-							</tr>
-						</table>
-
-						<div class="container">
-							<table>
-								<tr>
-									<td id="aprr1" rowspan="5">1차</td>
-									<td id="aprr1_content">직급</td>
-								</tr>
-								<tr>
-									<td id="aprr1_content2" rowspan="3">결재자</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td id="aprr1_content">부서명</td>
-								</tr>
-							</table>
-
-							<table>
-								<tr>
-									<td id="aprr1" rowspan="5">2차</td>
-									<td id="aprr1_content">직급</td>
-								</tr>
-								<tr>
-									<td id="aprr1_content2" rowspan="3">결재자</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td id="aprr1_content">부서명</td>
-								</tr>
-							</table>
-						</div>
-
-					</div>
-					<!-- 중간1 end-->
-
-					<hr>
-
-					<!-- 중간2 start -->
-					<div id="middiv2">
-						<div id="form_title">제목</div>
-
-						<div class="input-bar" style="width: 100%; padding-left: 10px;">
-							<input type="text" class="input-bar1" readonly>
+					<div id="content">
+						<div id="form_title" style="width: 9%;">결재 유형</div>
+						<div class="input-bar" style="width: 30%; padding-left: 10px;">
+							<input type="text" class="input-bar1" placeholder="결재 유형을 입력해주세요">
 						</div>
 					</div>
-					<!-- 중간2 end -->
 
-					<!-- smarteditor start-->
-					<div id="smarteditor" style="margin-top: 10px;">
-						<textarea name="editorTxt" id="editorTxt0" rows="15"
-							style="width: 100%"></textarea>
-					</div>
-					<!-- smarteditor end-->
-
-					<!-- 파일다운로드 start-->
-					<div id="filedownload">
-						<div id="file">첨부파일</div>
-						<div id="download">
-							<c:forEach var="at" items="${ b.attachList }">
-								<a
-									href="${ contextPath }${ at.filePath }/${ at.filesystemName }"
-									download="${ at.originalName }">${ at.originalName }</a>
-								<br>
-							</c:forEach>
+					<div id="content" style="margin-top: 10px;">
+						<div id="form_title" style="width: 9%;">양식 설명</div>
+						<div class="input-bar" style="width: 91%; padding-left: 10px;">
+							<input type="text" class="input-bar1" placeholder="양식유형을 입력해주세요">
 						</div>
 					</div>
-					<!--파일다운로드 end-->
 
-					<!-- 끝 start-->
-					<div id="enddiv">
-						<div class="btn-box-hover">
-							<button class="btn1-hover" style="width: 120px; font-size: 18px;">회수하기</button>
-						</div>
-						<div class="btn-box-hover">
-							<button class="btn2-hover"
-								style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
-						</div>
+				</div>
+				<!-- 중간1 end-->
+
+				<hr>
+
+				<!-- smarteditor start-->
+				<div id="smarteditor">
+					<textarea name="editorTxt" id="editorTxt0" rows="15"
+						style="width: 100%;">
+        </textarea>
+				</div>
+				<!-- smarteditor end-->
+
+				<!-- 끝 start-->
+				<div id="enddiv">
+					<div class="btn-box-hover">
+						<button class="btn3-hover" style="width: 120px; font-size: 18px;">작성하기</button>
 					</div>
-					<!-- 끝 end-->
+					<div class="btn-box-hover">
+						<button class="btn1-hover"
+							style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
+					</div>
+				</div>
+				<!-- 끝 end-->
 
+			</form>
 
-
-
-				</form>
-
-			</div>
 		</div>
 	</div>
 
 	<script>
 		let oEditors = [];
-
 		smartEditor = function() {
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef : oEditors,
 				elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
 				sSkinURI : "/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
 				htParams : {
-					// 툴바 사용여부 (true: 사용, false: 미사용)
-					bUseToolbar : false,
 					// 입력창 크키 조절바 사용여부 (true: 사용, false: 미사용)
 					bUseVerticalResizer : false,
-					// 모드 탭(Editor | HTML | TEXT) 사용여부 (true: 사용, false: 미사용)
-					bUseModeChanger : false
 				},
-				fCreator : "createSEditor2",
-				fOnAppLoad : function() {
-					// 에디터 로드가 완료된 후 readonly 모드로 설정
-					oEditors.getById["editorTxt0"].exec("DISABLE_WYSIWYG", []); // 에디터 비활성화 (만약 에디터쪽에 양식서가 보여져야하는데 안보여지거나 보여줘도 스크롤바를 못내릴시 삭제예정)
-				}
+				fCreator : "createSEditor2"
 			})
 		}
 

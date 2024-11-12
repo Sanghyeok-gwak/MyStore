@@ -262,156 +262,166 @@
 <jsp:include page="/WEB-INF/views/common/side.jsp"/>
 
 	<div class="body-body">
-	      <!-- 여기 채워서 작업하시면 됩니다 .-->
-	                <form action="">
+	
+	<div>
+			<div class="text-box">
 
-            <!-- 처음 start -->
-            <div id="topdiv"> 
+				<!-- 여기 채워서 작업하시면 됩니다 .-->
+				<form action="">
 
-              <span class="ffont1" style="font-weight: bold;">기안 대기 문서</span>
+					<!-- 처음 start -->
+					<div id="topdiv">
 
-              <select name="languages" id="lang">
-                <option value="select">결제양식 선택</option>
-                <option value="vac">휴가</option>
-                <option value="dept">부서</option>
-                <option value="java">일반</option>
-              </select>
+						<span class="ffont1" style="font-weight: bold;">기안 대기 문서</span> <select
+							name="languages" id="lang">
+							<option value="select">결제양식 선택</option>
+							<option value="vac">휴가</option>
+							<option value="dept">부서</option>
+							<option value="java">일반</option>
+						</select>
 
-              <button type="button" id="modal_appr" data-bs-toggle="modal" data-bs-target="#basicModal"> 결제선 선택 </button>
+						<button type="button" id="modal_appr" data-bs-toggle="modal"
+							data-bs-target="#basicModal">결제선 선택</button>
 
-            </div> 
-            <!-- 처음 end -->
-            
-            <hr>
+					</div>
+					<!-- 처음 end -->
 
-            <!-- 중간1 start-->
-            <div id="middiv"> 
+					<hr>
 
-              <table>
-                <tr>
-                  <td id="writer">기안자</td>
-                  <td id="writer_content">기안자이름</td>
-                </tr>
-                <tr>
-                  <td id="writer">부서</td>
-                  <td id="writer_content">부서명</td>
-                </tr>
-                <tr>
-                  <td id="writer">기안일</td>
-                  <td id="writer_content">YYYY-MM-DD</td>
-                </tr>
-              </table>
+					<!-- 중간1 start-->
+					<div id="middiv">
 
-              <div class="container">
-                <table>
-                  <tr>
-                    <td id="aprr1" rowspan="5">1차</td>
-                    <td id="aprr1_content">직급</td>
-                  </tr>
-                  <tr>
-                    <td id="aprr1_content2" rowspan="3">결재자</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td id="aprr1_content">부서명</td>
-                  </tr>
-                </table>
+						<table>
+							<tr>
+								<td id="writer">기안자</td>
+								<td id="writer_content">기안자이름</td>
+							</tr>
+							<tr>
+								<td id="writer">부서</td>
+								<td id="writer_content">부서명</td>
+							</tr>
+							<tr>
+								<td id="writer">기안일</td>
+								<td id="writer_content">YYYY-MM-DD</td>
+							</tr>
+						</table>
 
-                <table>
-                  <tr>
-                    <td id="aprr1" rowspan="5">2차</td>
-                    <td id="aprr1_content">직급</td>
-                  </tr>
-                  <tr>
-                    <td id="aprr1_content2" rowspan="3">결재자</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td id="aprr1_content">부서명</td>
-                  </tr>
-                </table>
-              </div>
-    
-            </div> 
-            <!-- 중간1 end-->
+						<div class="container">
+							<table>
+								<tr>
+									<td id="aprr1" rowspan="5">1차</td>
+									<td id="aprr1_content">직급</td>
+								</tr>
+								<tr>
+									<td id="aprr1_content2" rowspan="3">결재자</td>
+								</tr>
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td id="aprr1_content">부서명</td>
+								</tr>
+							</table>
 
-            <hr>
+							<table>
+								<tr>
+									<td id="aprr1" rowspan="5">2차</td>
+									<td id="aprr1_content">직급</td>
+								</tr>
+								<tr>
+									<td id="aprr1_content2" rowspan="3">결재자</td>
+								</tr>
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td id="aprr1_content">부서명</td>
+								</tr>
+							</table>
+						</div>
 
-            <!-- 중간2 start -->
-            <div id="middiv2">  
-                <div id="form_title">제목</div>
+					</div>
+					<!-- 중간1 end-->
 
-                <div class="input-bar" style="width: 100%;  padding-left: 10px;">
-                  <input type="text" class="input-bar1" placeholder="제목을 입력해주세요">
-                </div>
-            </div> 
-            <!-- 중간2 end -->
+					<hr>
 
+					<!-- 중간2 start -->
+					<div id="middiv2">
+						<div id="form_title">제목</div>
 
-
-            <!-- smarteditor start-->
-            <div id="smarteditor">
-              <textarea name="editorTxt" id="editorTxt0"
-                        rows="15"
-                        style="width: 100%;"
-              ></textarea>
-            </div>
-            <!-- smarteditor end-->
-
-            <!-- 파일업로드 start-->
-            <div id="middiv3">
-              <input type="file" id="fileupload" name="uploadFile" multiple> <br>
-            </div>
-            <!--파일업로드 end-->
-
-            <!-- 끝 start-->
-            <div id="enddiv">
-              <div class="btn-box-hover">
-                <button class="btn3-hover" style="width: 120px; font-size: 18px;">수정하기</button>
-              </div>
-              <div class="btn-box-hover">
-                <button class="btn1-hover" style="width: 120px; margin-left: 20px; font-size: 18px;">삭제하기</button>
-              </div>
-              <div class="btn-box-hover">
-                <button class="btn2-hover" style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
-              </div>
-            </div>
-            <!-- 끝 end-->
-
-            <!-- 모달 start -->
-            <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title">Basic Modal</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
-                  </div>
-              </div>
-            </div>
-            <!-- 모달 end -->
+						<div class="input-bar" style="width: 100%; padding-left: 10px;">
+							<input type="text" class="input-bar1" placeholder="제목을 입력해주세요">
+						</div>
+					</div>
+					<!-- 중간2 end -->
 
 
-            
-            
-          </form>
-	      
+
+					<!-- smarteditor start-->
+					<div id="smarteditor">
+						<textarea name="editorTxt" id="editorTxt0" rows="15"
+							style="width: 100%;"></textarea>
+					</div>
+					<!-- smarteditor end-->
+
+					<!-- 파일업로드 start-->
+					<div id="middiv3">
+						<input type="file" id="fileupload" name="uploadFile" multiple>
+						<br>
+					</div>
+					<!--파일업로드 end-->
+
+					<!-- 끝 start-->
+					<div id="enddiv">
+						<div class="btn-box-hover">
+							<button class="btn3-hover" style="width: 120px; font-size: 18px;">수정하기</button>
+						</div>
+						<div class="btn-box-hover">
+							<button class="btn1-hover"
+								style="width: 120px; margin-left: 20px; font-size: 18px;">삭제하기</button>
+						</div>
+						<div class="btn-box-hover">
+							<button class="btn2-hover"
+								style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
+						</div>
+					</div>
+					<!-- 끝 end-->
+
+					<!-- 모달 start -->
+					<div class="modal fade" id="basicModal" tabindex="-1"
+						aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Basic Modal</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body"></div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary">Save
+										changes</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- 모달 end -->
+
+
+
+
+				</form>
+
+			</div>
+		</div>
 	</div>
 	
 	  <script>

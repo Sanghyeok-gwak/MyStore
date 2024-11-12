@@ -297,16 +297,15 @@ input {
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
 
 	<div class="body-body">
-		<div>
+			<div>
 			<div class="text-box">
 
-				<!-- 여기 채워서 작업하시면 됩니다 .-->
 				<form action="">
 
 					<!-- 처음 start -->
 					<div id="topdiv">
 
-						<span class="ffont1" style="font-weight: bold;">기안 진행 문서</span>
+						<span class="ffont1" style="font-weight: bold;">기안 완료 문서</span>
 
 						<div id="lang">양식유형</div>
 
@@ -412,22 +411,16 @@ input {
 					<!-- 끝 start-->
 					<div id="enddiv">
 						<div class="btn-box-hover">
-							<button class="btn1-hover" style="width: 120px; font-size: 18px;">회수하기</button>
-						</div>
-						<div class="btn-box-hover">
-							<button class="btn2-hover"
-								style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
+							<button class="btn2-hover" style="width: 120px; font-size: 18px;">뒤로가기</button>
 						</div>
 					</div>
 					<!-- 끝 end-->
 
 
-
-
 				</form>
-
 			</div>
 		</div>
+
 	</div>
 
 	<script>

@@ -2,12 +2,78 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" />
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+/**/
+/* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
+.text-box {
+	border-radius: 20px;
+	height: 100%;
+	width: 100%;
+	background-color: white;
+	padding: 30px;
+}
+
+.head_right_logo {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+	margin: 0px 3%;
+}
+
+.d-flex {
+	justify-content: space-between;
+}
+
+.head_img {
+	width: 23px;
+	height: 23px;
+	border-radius: 100%;
+}
+
+.header_right_list {
+	display: flex;
+	align-items: center;
+	margin-right: 20px;
+}
+
+.header_right_list>a {
+	text-decoration: none;
+	text-decoration: none;
+	color: inherit;
+	font-weight: 500;
+}
+
+.header_right_list>i {
+	font-size: 20px;
+	margin-right: 5px;
+}
+
+.header-nav .nav-icon {
+	font-size: 22px;
+	color: #012970;
+	margin-right: 5px;
+	position: relative;
+}
+
+.bg-primary { -
+	-bs-bg-opacity: 1;
+	background-color: rgb(255, 72, 72) !important;
+}
+
+.header-nav .badge-number {
+	position: absolute;
+	inset: -4px -9px auto auto;
+	font-weight: normal;
+	font-size: 12px;
+	padding: 3px 6px;
+}
+
 /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
 .text-box {
 	border-radius: 20px;
@@ -295,18 +361,17 @@ input {
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
-
 	<div class="body-body">
+		<!-- 여기 채워서 작업하시면 됩니다 .-->
 		<div>
 			<div class="text-box">
 
-				<!-- 여기 채워서 작업하시면 됩니다 .-->
 				<form action="">
 
 					<!-- 처음 start -->
 					<div id="topdiv">
 
-						<span class="ffont1" style="font-weight: bold;">기안 진행 문서</span>
+						<span class="ffont1" style="font-weight: bold;">결재 대기 문서</span>
 
 						<div id="lang">양식유형</div>
 
@@ -412,7 +477,11 @@ input {
 					<!-- 끝 start-->
 					<div id="enddiv">
 						<div class="btn-box-hover">
-							<button class="btn1-hover" style="width: 120px; font-size: 18px;">회수하기</button>
+							<button class="btn3-hover" style="width: 120px; font-size: 18px;">결제하기</button>
+						</div>
+						<div class="btn-box-hover">
+							<button class="btn1-hover"
+								style="width: 120px; margin-left: 20px; font-size: 18px;">반려하기</button>
 						</div>
 						<div class="btn-box-hover">
 							<button class="btn2-hover"
@@ -422,59 +491,11 @@ input {
 					<!-- 끝 end-->
 
 
-
-
 				</form>
 
 			</div>
 		</div>
 	</div>
-
-	<script>
-		let oEditors = [];
-
-		smartEditor = function() {
-			nhn.husky.EZCreator.createInIFrame({
-				oAppRef : oEditors,
-				elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-				sSkinURI : "/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
-				htParams : {
-					// 툴바 사용여부 (true: 사용, false: 미사용)
-					bUseToolbar : false,
-					// 입력창 크키 조절바 사용여부 (true: 사용, false: 미사용)
-					bUseVerticalResizer : false,
-					// 모드 탭(Editor | HTML | TEXT) 사용여부 (true: 사용, false: 미사용)
-					bUseModeChanger : false
-				},
-				fCreator : "createSEditor2",
-				fOnAppLoad : function() {
-					// 에디터 로드가 완료된 후 readonly 모드로 설정
-					oEditors.getById["editorTxt0"].exec("DISABLE_WYSIWYG", []); // 에디터 비활성화 (만약 에디터쪽에 양식서가 보여져야하는데 안보여지거나 보여줘도 스크롤바를 못내릴시 삭제예정)
-				}
-			})
-		}
-
-		$(document)
-				.ready(
-						function() {
-							//스마트에디터 적용
-							smartEditor();
-							//값 불러오기
-							function preview() {
-								// 에디터의 내용을 textarea에 적용
-								oEditors.getById["editorTxt0"].exec(
-										"UPDATE_CONTENTS_FIELD", []);
-								// textarea 값 불러오기 
-								var content = document
-										.getElementById("editorTxt0").value;
-								alert(content);
-								return;
-							}
-
-						})
-	</script>
-
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-
 </body>
 </html>

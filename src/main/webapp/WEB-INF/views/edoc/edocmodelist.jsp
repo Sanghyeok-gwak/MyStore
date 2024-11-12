@@ -130,7 +130,7 @@ input {
 	line-height: 30px;
 	font-weight: 400;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 }
 
 #lang {
@@ -288,141 +288,166 @@ input[type=file]::file-selector-button {
 			<!-- 처음 start -->
 			<div id="topdiv">
 
-				<span class="ffont1" style="font-weight: bold;">기안 대기 문서</span>
-
+				<span class="ffont1" style="font-weight: bold;">문서 양식 관리</span>
 			</div>
 			<!-- 처음 end -->
 
 			<hr>
 
-			<!-- 중간1 start-->
-			<div id="middiv">
+			<form action="">
+				<!-- 중간1 start-->
+				<div id="middiv">
 
-				<div>
-					<select name="languages" id="lang"
-						style="height: 40px; margin-bottom: 20px;">
-						<option value="select">분류</option>
-						<option value="vac">제목</option>
-						<option value="dept">기안자</option>
-					</select>
-				</div>
-				<div class="search_box" style="width: 500px; height: 40px;">
-					<input class="input_b" type="text" placeholder="검색"
-						style="height: auto;">
-					<div class="icon">
-						<button>
-							<i class="bi bi-search"></i>
-						</button>
+					<div style="display: flex;">
+						<div class="btn-box-hover">
+							<button class="btn3-hover" style="width: 120px; font-size: 18px;">추가</button>
+						</div>
+
+						<div class="btn-box-hover">
+							<button class="btn1-hover" style="width: 120px; font-size: 18px;">삭제</button>
+						</div>
 					</div>
+
+					<div style="display: flex;">
+						<div>
+							<select name="languages" id="lang"
+								style="height: 40px; margin-bottom: 20px;">
+								<option value="select">분류</option>
+								<option value="vac">제목</option>
+								<option value="dept">기안자</option>
+							</select>
+						</div>
+						<!-- width값은 페이지에 맞게 조절해주세요 -->
+						<div class="search_box" style="width: 500px; height: 40px;">
+							<input class="input_b" type="text" placeholder="검색"
+								style="height: auto;">
+							<div class="icon">
+								<button>
+									<i class="bi bi-search"></i>
+								</button>
+							</div>
+						</div>
+						
+					</div>
+
 				</div>
-
-			</div>
-			<!-- 중간1 end-->
+				<!-- 중간1 end-->
 
 
-			<!-- 중간2 start -->
-			<div id="middiv2">
-				<table class="table table-hover">
+				<!-- 중간2 start -->
+				<div id="middiv2">
+					<table class="table table-hover">
 
-					<thead>
-						<tr>
-							<th scope="col">번호</th>
-							<th scope="col">유형</th>
-							<th scope="col">제목</th>
-							<th scope="col">기안일</th>
-							<th scope="col">만료일</th>
-							<th scope="col">상태</th>
-						</tr>
-					</thead>
+						<thead>
+							<tr>
+								<th scope="col"><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="col">번호</th>
+								<th scope="col">유형</th>
+								<th scope="col">양식설명</th>
+								<th scope="col">생성자</th>
+								<th scope="col">생성일</th>
+							</tr>
+						</thead>
 
-					<tbody style="cursor: pointer;">
-						<tr>
-							<th scope="row">10</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">9</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">8</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">7</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">6</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">5</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">4</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">1</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
+						<tbody>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
+							<tr>
+								<th><input type="checkbox" id="checkAll"
+									style="width: 18px; height: 18px;"></th>
+								<th scope="row">10</th>
+								<td>휴가</td>
+								<td>양식설명입니다.</td>
+								<td>생성자</td>
+								<td>2016-05-25</td>
+							</tr>
 
+						</tbody>
+					</table>
+				</div>
+				<!-- 중간2 end -->
 
-					</tbody>
-				</table>
-			</div>
-			<!-- 중간2 end -->
-
+			</form>
 
 			<!-- 끝 start-->
 			<div class="paging">
@@ -442,8 +467,27 @@ input[type=file]::file-selector-button {
 				</ul>
 			</div>
 			<!-- 끝 end-->
+
+
 		</div>
 	</div>
+
+	<script>
+		// 체크박스 전체 선택
+		document.getElementById('checkAll').addEventListener(
+				'change',
+				function() {
+
+					const allChecked = this.checked;
+
+					const checkboxes = document
+							.querySelectorAll('.list-checkbox');
+
+					checkboxes.forEach(function(cbox) {
+						cbox.checked = allChecked;
+					});
+				});
+	</script>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
