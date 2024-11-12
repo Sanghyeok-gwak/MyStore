@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }"/>     
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
- /* body¿¡µé¾î°¡´Â ¾ç½ÄÀÔ´Ï´Ù. ¿øÆäÀÌÁö ÀÌ½ÅºĞµéÀº ÀÌ°Å »ç¿ëÇÏ½ÅµË´Ï´Ù. */
+    /* bodyì—ë“¤ì–´ê°€ëŠ” ì–‘ì‹ì…ë‹ˆë‹¤. ì›í˜ì´ì§€ ì´ì‹ ë¶„ë“¤ì€ ì´ê±° ì‚¬ìš©í•˜ì‹ ë©ë‹ˆë‹¤. */
     .text-box{
       border-radius: 20px;
       height: 100%;
@@ -31,14 +31,14 @@
       line-height: 30px;
       font-weight: 400;
     }
-    /* ¿µ¿ª ³ª´©·Á°í ÇÑ°Å¶ó ÀÌ°Ç Âü°í¾ÈÇÏ¼ÅµµµË´Ï´Ù. */
+    /* ì˜ì—­ ë‚˜ëˆ„ë ¤ê³  í•œê±°ë¼ ì´ê±´ ì°¸ê³ ì•ˆí•˜ì…”ë„ë©ë‹ˆë‹¤. */
     .text-box1{
       width: 100%;
       height: 100%;
       margin-bottom: 10px;
     }
 
-    /* ÀÏ¹İ ¹öÆ° »ö»ó ¾ËÀßµü°¥¼¾À¸·Î °ñ¶ó¼­ »ç¿ëÇÏ½Ã¸éµË´Ï´Ù (*ÀÌ°Í¶ÇÇÑ ³ĞÀÌ³ôÀÌ¸¸ ¼öÁ¤ÇØ¼­ »ç¿ëÇÏ¼¼¿ä) */
+    /* ì¼ë°˜ ë²„íŠ¼ ìƒ‰ìƒ ì•Œì˜ë”±ê°ˆì„¼ìœ¼ë¡œ ê³¨ë¼ì„œ ì‚¬ìš©í•˜ì‹œë©´ë©ë‹ˆë‹¤ (*ì´ê²ƒë˜í•œ ë„“ì´ë†’ì´ë§Œ ìˆ˜ì •í•´ì„œ ì‚¬ìš©í•˜ì„¸ìš”) */
     .btn-box button{
       margin-right: 10px;
       border-radius: 5px;
@@ -58,7 +58,7 @@
       background-color: rgb(72, 72, 234);
       color: white;
     }
-    /* ¹öÆ° È£¹ö ½ºÅ¸ÀÏ*/
+    /* ë²„íŠ¼ í˜¸ë²„ ìŠ¤íƒ€ì¼*/
     .btn-box-hover button{
       margin-right: 10px;
       border-radius: 5px;
@@ -93,7 +93,7 @@
       color: white;
     }
 
-    /* ³ĞÀÌ ³ôÀÌ¸¸ ¼öÁ¤ÇØ¼­ »ç¿ëÇÏ¼¼¿ä ÀÎÇ² ½ºÅ¸ÀÏ*/
+    /* ë„“ì´ ë†’ì´ë§Œ ìˆ˜ì •í•´ì„œ ì‚¬ìš©í•˜ì„¸ìš” ì¸í’‹ ìŠ¤íƒ€ì¼*/
     input{
       border: 1px solid gray;
       border-radius: 2px;
@@ -104,11 +104,8 @@
       box-sizing: border-box;
     }
 
-    /* topdiv ½ºÅ¸ÀÏ start */
-    #topdiv{
-      display: flex;
-    }
 
+    /* topdiv ìŠ¤íƒ€ì¼ start */
     #topdiv > #menu_name{
       font-size: 25px;
       line-height: 30px; 
@@ -120,7 +117,6 @@
       font-size: 18px;
       line-height: 30px; 
       font-weight: 400;
-      
       border-radius: 5px;
     }
     #modal_appr{
@@ -140,10 +136,10 @@
       background-color: rgb(116, 116, 116);
       color: white;
     }
-    /* topdiv ½ºÅ¸ÀÏ end */
+    /* topdiv ìŠ¤íƒ€ì¼ end */
 
 
-    /* middiv ½ºÅ¸ÀÏ start */
+    /* middiv ìŠ¤íƒ€ì¼ start */
     #middiv{
       font-size: 18px;
       line-height: 30px; 
@@ -200,17 +196,17 @@
     }
     .container {
     display: flex;
-    gap: 30px; /* ¿ä¼Ò °£ °£°İ */
+    gap: 30px; /* ìš”ì†Œ ê°„ ê°„ê²© */
     justify-content: flex-end;
     align-items: flex-end
     }
     .spacer {
-    margin-left: auto; /* ¿ŞÂÊ ¿©¹éÀ» ÃÖ´ëÈ­ÇÏ¿© ¿À¸¥ÂÊÀ¸·Î ¹Ğ±â */
+    margin-left: auto; /* ì™¼ìª½ ì—¬ë°±ì„ ìµœëŒ€í™”í•˜ì—¬ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ë°€ê¸° */
     }
-    /* middiv ½ºÅ¸ÀÏ end */
+    /* middiv ìŠ¤íƒ€ì¼ end */
 
 
-    /* middiv2 ½ºÅ¸ÀÏ start */
+    /* middiv2 ìŠ¤íƒ€ì¼ start */
     #middiv2{
       display: flex;
     }
@@ -227,85 +223,81 @@
       justify-content : center;
       align-items : center;
     }
-    #inputf{
-      display: flex;
+
+    /* middiv2 ìŠ¤íƒ€ì¼ end */
+
+
+    /* middiv3 ìŠ¤íƒ€ì¼ start */
+    input[type=file]::file-selector-button{
+      background-color: #99A1EF;
+      color: white;
+      border: none;
+      width: 113.5px;
+      height: 47.5px;
+      font-size: 18px;
+      line-height: 30px; 
+      font-weight: 400;
     }
-    /* middiv2 ½ºÅ¸ÀÏ end */
+    #fileupload{
+      width: 100%
+    }
+    /* middiv2 ìŠ¤íƒ€ì¼ end */
+
+    #smarteditor{
+      margin-top: 10px;
+    }
 
 
-    /* filedownload ½ºÅ¸ÀÏ start */
-      #filedownload{
-        display: flex;
-      }
-      #file{
-        background-color: #99A1EF;
-        color: white;
-        height: 40px;
-        width: 113.75px;
-        border-radius: 5px;
-        font-size: 18px;
-        line-height: 30px; 
-        font-weight: 400;
-        display : flex;
-        justify-content : center;
-        align-items : center;
-      }
-      #download{
-        font-size: 18px; 
-        margin-left: 20px;
-        display: flex;
-        justify-content : center;
-        align-items : center;
-        line-height: 30px; 
-        font-weight: 400;
-      }
-    /* filedownload ½ºÅ¸ÀÏ end */
-
-
-   /* enddiv ½ºÅ¸ÀÏ start */
+  /* enddiv ìŠ¤íƒ€ì¼ start */
     #enddiv{
       margin-top: 40px;
       display: flex;
     }
-   /* enddiv ½ºÅ¸ÀÏ end */
-</style>
+  /* enddiv ìŠ¤íƒ€ì¼ end */
+  </style>
 </head>
 <body>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <jsp:include page="/WEB-INF/views/common/side.jsp"/>
-<div class="body-body">
-      <div class="text-box">
 
-          <form action="">
+	<div class="body-body">
+	      <!-- ì—¬ê¸° ì±„ì›Œì„œ ì‘ì—…í•˜ì‹œë©´ ë©ë‹ˆë‹¤ .-->
+	                <form action="">
 
-            <!-- Ã³À½ start -->
+            <!-- ì²˜ìŒ start -->
             <div id="topdiv"> 
 
-              <span class="ffont1" style="font-weight: bold;">°áÀç ´ë±â ¹®¼­</span>
+              <span class="ffont1" style="font-weight: bold;">ê¸°ì•ˆ ëŒ€ê¸° ë¬¸ì„œ</span>
 
-              <div id="lang">
-                ¾ç½ÄÀ¯Çü
-              </div>
+              <select name="languages" id="lang">
+                <option value="select">ê²°ì œì–‘ì‹ ì„ íƒ</option>
+                <option value="vac">íœ´ê°€</option>
+                <option value="dept">ë¶€ì„œ</option>
+                <option value="java">ì¼ë°˜</option>
+              </select>
+
+              <button type="button" id="modal_appr" data-bs-toggle="modal" data-bs-target="#basicModal"> ê²°ì œì„  ì„ íƒ </button>
 
             </div> 
-            <!-- Ã³À½ end -->
+            <!-- ì²˜ìŒ end -->
             
             <hr>
 
-            <!-- Áß°£1 start-->
+            <!-- ì¤‘ê°„1 start-->
             <div id="middiv"> 
 
               <table>
                 <tr>
-                  <td id="writer">±â¾ÈÀÚ</td>
-                  <td id="writer_content">±â¾ÈÀÚÀÌ¸§</td>
+                  <td id="writer">ê¸°ì•ˆì</td>
+                  <td id="writer_content">ê¸°ì•ˆìì´ë¦„</td>
                 </tr>
                 <tr>
-                  <td id="writer">ºÎ¼­</td>
-                  <td id="writer_content">ºÎ¼­¸í</td>
+                  <td id="writer">ë¶€ì„œ</td>
+                  <td id="writer_content">ë¶€ì„œëª…</td>
                 </tr>
                 <tr>
-                  <td id="writer">±â¾ÈÀÏ</td>
+                  <td id="writer">ê¸°ì•ˆì¼</td>
                   <td id="writer_content">YYYY-MM-DD</td>
                 </tr>
               </table>
@@ -313,101 +305,149 @@
               <div class="container">
                 <table>
                   <tr>
-                    <td id="aprr1" rowspan="5">1Â÷</td>
-                    <td id="aprr1_content">Á÷±Ş</td>
+                    <td id="aprr1" rowspan="5">1ì°¨</td>
+                    <td id="aprr1_content">ì§ê¸‰</td>
                   </tr>
                   <tr>
-                    <td id="aprr1_content2" rowspan="3">°áÀçÀÚ</td>
-                  </tr>
-                  <tr>
-                    <td></td>
+                    <td id="aprr1_content2" rowspan="3">ê²°ì¬ì</td>
                   </tr>
                   <tr>
                     <td></td>
                   </tr>
                   <tr>
-                    <td id="aprr1_content">ºÎ¼­¸í</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td id="aprr1_content">ë¶€ì„œëª…</td>
                   </tr>
                 </table>
 
                 <table>
                   <tr>
-                    <td id="aprr1" rowspan="5">2Â÷</td>
-                    <td id="aprr1_content">Á÷±Ş</td>
+                    <td id="aprr1" rowspan="5">2ì°¨</td>
+                    <td id="aprr1_content">ì§ê¸‰</td>
                   </tr>
                   <tr>
-                    <td id="aprr1_content2" rowspan="3">°áÀçÀÚ</td>
-                  </tr>
-                  <tr>
-                    <td></td>
+                    <td id="aprr1_content2" rowspan="3">ê²°ì¬ì</td>
                   </tr>
                   <tr>
                     <td></td>
                   </tr>
                   <tr>
-                    <td id="aprr1_content">ºÎ¼­¸í</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td id="aprr1_content">ë¶€ì„œëª…</td>
                   </tr>
                 </table>
               </div>
     
             </div> 
-            <!-- Áß°£1 end-->
-            
+            <!-- ì¤‘ê°„1 end-->
+
             <hr>
 
-            <!-- Áß°£2 start -->
+            <!-- ì¤‘ê°„2 start -->
             <div id="middiv2">  
-                <div id="form_title">Á¦¸ñ</div>
+                <div id="form_title">ì œëª©</div>
 
                 <div class="input-bar" style="width: 100%;  padding-left: 10px;">
-                  <input type="text" class="input-bar1" readonly>
+                  <input type="text" class="input-bar1" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">
                 </div>
             </div> 
-            <!-- Áß°£2 end -->
+            <!-- ì¤‘ê°„2 end -->
+
+
 
             <!-- smarteditor start-->
-            <div id="smarteditor" style="margin-top: 10px;">
+            <div id="smarteditor">
               <textarea name="editorTxt" id="editorTxt0"
                         rows="15"
-                        style="width: 100%"
+                        style="width: 100%;"
               ></textarea>
             </div>
             <!-- smarteditor end-->
 
-            <!-- ÆÄÀÏ´Ù¿î·Îµå start-->
-            <div id="filedownload">
-              <div id="file">
-                Ã·ºÎÆÄÀÏ
-              </div>
-              <div id="download">
-                <c:forEach var="at" items="${ b.attachList }">
-                  <a href="${ contextPath }${ at.filePath }/${ at.filesystemName }" download="${ at.originalName }">${ at.originalName }</a> 
-                  <br>
-                </c:forEach>
-              </div>
+            <!-- íŒŒì¼ì—…ë¡œë“œ start-->
+            <div id="middiv3">
+              <input type="file" id="fileupload" name="uploadFile" multiple> <br>
             </div>
-            <!--ÆÄÀÏ´Ù¿î·Îµå end-->
+            <!--íŒŒì¼ì—…ë¡œë“œ end-->
 
-            <!-- ³¡ start-->
+            <!-- ë start-->
             <div id="enddiv">
               <div class="btn-box-hover">
-                <button class="btn3-hover" style="width: 120px; font-size: 18px;">°áÁ¦ÇÏ±â</button>
+                <button class="btn3-hover" style="width: 120px; font-size: 18px;">ìˆ˜ì •í•˜ê¸°</button>
               </div>
               <div class="btn-box-hover">
-                <button class="btn1-hover" style="width: 120px; margin-left: 20px; font-size: 18px;">¹İ·ÁÇÏ±â</button>
+                <button class="btn1-hover" style="width: 120px; margin-left: 20px; font-size: 18px;">ì‚­ì œí•˜ê¸°</button>
               </div>
               <div class="btn-box-hover">
-                <button class="btn2-hover" style="width: 120px; margin-left: 20px; font-size: 18px;">µÚ·Î°¡±â</button>
+                <button class="btn2-hover" style="width: 120px; margin-left: 20px; font-size: 18px;">ë’¤ë¡œê°€ê¸°</button>
               </div>
             </div>
-            <!-- ³¡ end-->
+            <!-- ë end-->
+
+            <!-- ëª¨ë‹¬ start -->
+            <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Basic Modal</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <!-- ëª¨ë‹¬ end -->
+
+
             
             
           </form>
+	      
+	</div>
+	
+	  <script>
 
-      </div>
-      
-</div>
+    let oEditors = [];
+    
+        smartEditor = function() {
+                nhn.husky.EZCreator.createInIFrame({
+                    oAppRef: oEditors,
+                    elPlaceHolder: "editorTxt0", //textareaì— ë¶€ì—¬í•œ ì•„ì´ë””ì™€ ë™ì¼í•´ì•¼í•œë‹¤.
+                    sSkinURI: "/smarteditor/SmartEditor2Skin.html", //ìì‹ ì˜ í”„ë¡œì íŠ¸ì— ë§ê²Œ ê²½ë¡œ ìˆ˜ì •
+                    htParams: {
+                    // ì…ë ¥ì°½ í¬í‚¤ ì¡°ì ˆë°” ì‚¬ìš©ì—¬ë¶€ (true: ì‚¬ìš©, false: ë¯¸ì‚¬ìš©)
+                    bUseVerticalResizer: false,	
+                    },
+                    fCreator: "createSEditor2"
+                })
+            }
+    
+        $(document).ready(function() {
+           //ìŠ¤ë§ˆíŠ¸ì—ë””í„° ì ìš©
+              smartEditor(); 
+                  //ê°’ ë¶ˆëŸ¬ì˜¤ê¸°
+              function preview(){
+                  // ì—ë””í„°ì˜ ë‚´ìš©ì„ textareaì— ì ìš©
+                  oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
+                    // textarea ê°’ ë¶ˆëŸ¬ì˜¤ê¸° 
+                  var content = document.getElementById("editorTxt0").value;
+                  alert(content);
+                  return;
+            }
+          
+        })
+  </script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
 </body>
 </html>
