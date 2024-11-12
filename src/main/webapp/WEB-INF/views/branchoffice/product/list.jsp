@@ -7,12 +7,54 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+      .ordering{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .ordering-top{
+        height: 60%;
+        margin-bottom: 10px;
+      }
+      .ordering-bottom{
+        margin-top: 10px;
+        height: 40%;
+      }
+      .ordering-detail,.order-box{
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        background-color: white;
+        padding:30px;
+      }
+      .table-box{
+        border-radius: 10px;
+        border: 1px solid lightgray;
+        height: 100%;
+        overflow-y: scroll;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse; 
+        border-style: hidden; 
+      }
+      th, td {
+        border: 1px solid lightgray;
+        padding: 8px;
+        text-align: center;
+      }
+      thead{
+      	text-align:center;
+      }
+    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <jsp:include page="/WEB-INF/views/common/side.jsp"/>
 <div class="body-body">
-      <div class="ordering">
+      <!-- 여기 채워서 작업하시면 됩니다 .-->
+       <div class="ordering">
         <div class="ordering-top">
           <div class="order-box">
             <div class="table-box">
@@ -40,6 +82,117 @@
                     <td>예시기간</td>
                     <td>발주가능</td>
                   </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+                  <tr>
+                    <td>예시 분류</td>
+                    <td>예시 상품명</td>
+                    <td>123,123</td>
+                    <td>123,123</td>
+                    <td>30%</td>
+                    <td>예시요일</td>
+                    <td>예시기간</td>
+                    <td>발주가능</td>
+                  </tr>
+
                   
                 </tbody>
               </table>
@@ -148,7 +301,7 @@
           </div>
         </div>
      </div>
-</div>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+	</div>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>
