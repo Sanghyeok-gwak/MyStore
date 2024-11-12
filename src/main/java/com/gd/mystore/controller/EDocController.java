@@ -58,12 +58,14 @@ public class EDocController {
 	
 	@GetMapping("pendingdetail")
 	public void pendingdetail() {}
+	// 영역 나감
 	
 	@GetMapping("pendinglist")
 	public void pendinglist() {}
 	
 	@GetMapping("scheduleddetail")
 	public void scheduleddetail() {}
+	// 영역 나감
 	
 	@GetMapping("scheduledlist")
 	public void scheduledlist() {}
