@@ -272,7 +272,6 @@
     }
     /* 영역 나누려고 한거라 이건 참고안하셔도됩니다. */
     .text-box1{
-      border: 1px solid red;
       width: 100%;
       height: 100px;
       margin-bottom: 10px;
