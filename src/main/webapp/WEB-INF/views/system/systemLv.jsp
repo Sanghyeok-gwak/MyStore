@@ -52,9 +52,8 @@
         justify-content: center;
     }
     .table_head_color > th{
-        background-color: rgba(123, 131, 211, 0.9);
-        color: #ffffff;
-        
+        background-color: rgba(123, 131, 211, 0.9) !important;
+        color: #ffffff !important;
     }
 
     /* 오른쪽 css */
@@ -86,6 +85,9 @@
     #right_btn{
         justify-content: center;
         margin-top: 30px;
+    }
+    .text-box{
+    	display: flex;
     }
 </style>
 
