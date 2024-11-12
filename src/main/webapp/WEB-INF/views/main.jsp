@@ -1,413 +1,246 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${ pageContext.request.contextPath }"/>     
+<c:set var="contextPath" value="${ pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
- /* body¿¡µé¾î°¡´Â ¾ç½ÄÀÔ´Ï´Ù. ¿øÆäÀÌÁö ÀÌ½ÅºĞµéÀº ÀÌ°Å »ç¿ëÇÏ½ÅµË´Ï´Ù. */
-    .text-box{
-      border-radius: 20px;
-      height: 100%;
-      width: 100%;
-      background-color: white;
-      padding:30px;
-    }
-    .ffont1{
-      font-size: 25px;
-      line-height: 30px;
-      font-weight: 400;
-    }
-    .ffont2{
-      font-size: 22px;
-      line-height: 30px;
-      font-weight: 400;
-    }
-    .ffont3{
-      font-size: 18px;
-      line-height: 30px;
-      font-weight: 400;
-    }
-    /* ¿µ¿ª ³ª´©·Á°í ÇÑ°Å¶ó ÀÌ°Ç Âü°í¾ÈÇÏ¼ÅµµµË´Ï´Ù. */
-    .text-box1{
-      width: 100%;
-      height: 100%;
-      margin-bottom: 10px;
-    }
-
-    /* ÀÏ¹İ ¹öÆ° »ö»ó ¾ËÀßµü°¥¼¾À¸·Î °ñ¶ó¼­ »ç¿ëÇÏ½Ã¸éµË´Ï´Ù (*ÀÌ°Í¶ÇÇÑ ³ĞÀÌ³ôÀÌ¸¸ ¼öÁ¤ÇØ¼­ »ç¿ëÇÏ¼¼¿ä) */
-    .btn-box button{
-      margin-right: 10px;
-      border-radius: 5px;
-      width: 120px;
-      height: 30px;
-      border: 0px;
-    }
-    .btn1{
-      background-color: rgb(248, 103, 103);
-      color: white;
-    }
-    .btn2{
-      background-color: rgb(179, 179, 179);
-      color: white;
-    }
-    .btn3{
-      background-color: rgb(72, 72, 234);
-      color: white;
-    }
-    /* ¹öÆ° È£¹ö ½ºÅ¸ÀÏ*/
-    .btn-box-hover button{
-      margin-right: 10px;
-      border-radius: 5px;
-      width: 100px;
-      height: 30px;
-      border: 0px;
-      transition-property: background-color;
-      transition-duration: 0.5s;
-    }
-    .btn1-hover {
-      background-color: rgb(248, 103, 103);
-      color: white;
-    }
-    .btn2-hover {
-      background-color: rgb(179, 179, 179);
-      color: white;
-    }
-    .btn3-hover {
-      background-color: rgb(72, 72, 234);
-      color: white;
-    }
-    .btn1-hover:hover {
-      background-color: rgb(196, 55, 55);
-      color: white;
-    }
-    .btn2-hover:hover {
-      background-color: rgb(116, 116, 116);
-      color: white;
-    }
-    .btn3-hover:hover {
-      background-color: rgb(23, 23, 128);
-      color: white;
-    }
-
-    /* ³ĞÀÌ ³ôÀÌ¸¸ ¼öÁ¤ÇØ¼­ »ç¿ëÇÏ¼¼¿ä ÀÎÇ² ½ºÅ¸ÀÏ*/
-    input{
-      border: 1px solid gray;
-      border-radius: 2px;
-      height: 40px;
-      width: 100%;
-      border-radius: 5px;
-      font-size: 18px;
-      box-sizing: border-box;
-    }
-
-    /* topdiv ½ºÅ¸ÀÏ start */
-    #topdiv{
-      display: flex;
-    }
-
-    #topdiv > #menu_name{
-      font-size: 25px;
-      line-height: 30px; 
-      font-weight: 400;
-    }
-    #lang{
-      margin-left: 60px;
-      width: 300px;
-      font-size: 18px;
-      line-height: 30px; 
-      font-weight: 400;
-      
-      border-radius: 5px;
-    }
-    #modal_appr{
-      margin-left: 20px;
-      width: 150px;
-      font-size: 18px;
-      line-height: 30px; 
-      font-weight: 400;
-      background-color: rgb(179, 179, 179);
-      color: white;
-      border: 0px;
-      border-radius: 5px;
-      transition-property: background-color;
-      transition-duration: 0.5s;
-    }
-    #modal_appr:hover {
-      background-color: rgb(116, 116, 116);
-      color: white;
-    }
-    /* topdiv ½ºÅ¸ÀÏ end */
-
-
-    /* middiv ½ºÅ¸ÀÏ start */
-    #middiv{
-      font-size: 18px;
-      line-height: 30px; 
-      font-weight: 400;
-      display: flex;
-    }
-    #writer {
-      background-color: #99A1EF;
-      color: white;
-      height: 40px;
-      width: 140px;
-      text-align: center;
-      border-top: 1px solid rgb(92, 91, 91);
-      border-bottom: 1px solid rgb(92, 91, 91);
-      border-radius: 5px;
-    }
-    #writer_content {
-      background-color: #ffffff;
-      color: rgb(0, 0, 0);
-      height: 40px;
-      width: 200px;
-      text-align: center;
-      border-top: 1px solid rgb(92, 91, 91);
-      border-bottom: 1px solid rgb(92, 91, 91);
-      border-radius: 5px;
-    }
-    #aprr1{
-      background-color: #99A1EF;
-      color: white;
-      height: 120px;
-      width: 60px;
-      text-align: center;
-      border-top: 1px solid rgb(92, 91, 91);
-      border-bottom: 1px solid rgb(92, 91, 91);
-      border-radius: 5px;
-    }
-    #aprr1_content{
-      background-color: #ffffff;
-      color: rgb(0, 0, 0);
-      height: 20px;
-      width: 120px;
-      text-align: center;
-      border-top: 1px solid rgb(92, 91, 91);
-      border-bottom: 1px solid rgb(92, 91, 91);
-      border-radius: 5px;
-    }
-    #aprr1_content2{
-      background-color: #ffffff;
-      color: rgb(0, 0, 0);
-      height: 80px;
-      width: 120px;
-      text-align: center;
-      border-radius: 5px;
-    }
-    .container {
-    display: flex;
-    gap: 30px; /* ¿ä¼Ò °£ °£°İ */
-    justify-content: flex-end;
-    align-items: flex-end
-    }
-    .spacer {
-    margin-left: auto; /* ¿ŞÂÊ ¿©¹éÀ» ÃÖ´ëÈ­ÇÏ¿© ¿À¸¥ÂÊÀ¸·Î ¹Ğ±â */
-    }
-    /* middiv ½ºÅ¸ÀÏ end */
-
-
-    /* middiv2 ½ºÅ¸ÀÏ start */
-    #middiv2{
-      display: flex;
-    }
-    #form_title{
-      background-color: #99A1EF;
-      color: white;
-      height: 40px;
-      width: 140px;
-      border-radius: 5px;
-      font-size: 18px;
-      line-height: 30px; 
-      font-weight: 400;
-      display : flex;
-      justify-content : center;
-      align-items : center;
-    }
-    #inputf{
-      display: flex;
-    }
-    /* middiv2 ½ºÅ¸ÀÏ end */
-
-
-    /* filedownload ½ºÅ¸ÀÏ start */
-      #filedownload{
-        display: flex;
-      }
-      #file{
-        background-color: #99A1EF;
-        color: white;
-        height: 40px;
-        width: 113.75px;
-        border-radius: 5px;
-        font-size: 18px;
-        line-height: 30px; 
-        font-weight: 400;
-        display : flex;
-        justify-content : center;
-        align-items : center;
-      }
-      #download{
-        font-size: 18px; 
-        margin-left: 20px;
-        display: flex;
-        justify-content : center;
-        align-items : center;
-        line-height: 30px; 
-        font-weight: 400;
-      }
-    /* filedownload ½ºÅ¸ÀÏ end */
-
-
-   /* enddiv ½ºÅ¸ÀÏ start */
-    #enddiv{
-      margin-top: 40px;
-      display: flex;
-    }
-   /* enddiv ½ºÅ¸ÀÏ end */
-</style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<jsp:include page="/WEB-INF/views/common/side.jsp"/>
-<div class="body-body">
-      <div class="text-box">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+		<script type="text/javascript" src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
-          <form action="">
+    <!-- <head> ì•ˆì— ì¶”ê°€ -->
 
-            <!-- Ã³À½ start -->
-            <div id="topdiv"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- 2.10.0 ë²„ì „ì—” js íŒŒì¼ ì¼ë¶€ë¶„ì´ ì—†ì–´ ì˜¤ë¥˜ ë°œìƒ ! -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-              <span class="ffont1" style="font-weight: bold;">°áÀç ´ë±â ¹®¼­</span>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-              <div id="lang">
-                ¾ç½ÄÀ¯Çü
-              </div>
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<jsp:include page="/WEB-INF/views/common/side.jsp" />
+	<div class="body-body">
+		<!-- ì—¬ê¸° ì±„ì›Œì„œ ì‘ì—…í•˜ì‹œë©´ ë©ë‹ˆë‹¤ .-->
+		<div class="text-box">
 
-            </div> 
-            <!-- Ã³À½ end -->
+			<div style="width: 430px; height: 400px; border: #868686 solid;">
+				<div
+					style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
+					<b>ì¡°ì§ë„</b>
+				</div>
+				<div id="jstree"></div>
+
+			</div>
+
+			<div id="smarteditor" style="margin-top: 30px;">
+				<textarea name="editorTxt" id="editorTxt0" rows="20" cols="10"
+					placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"
+					style="margin-top: 30px; width: 20%; height: 100px;"></textarea>
+			</div>
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
+<div class="">
+
+                <input type="button" onclick="sample6_execDaumPostcode()" value="ìš°í¸ë²ˆí˜¸ ì°¾ê¸°" style="margin-bottom: 3%;"><br>
+                <input type="text" id="sample6_postcode" style="margin-bottom: 3%;" placeholder="ìš°í¸ë²ˆí˜¸">
+                <input type="text" id="sample6_address" style="margin-bottom: 3%;" placeholder="ì£¼ì†Œ"><br>
+                <input type="text" id="sample6_detailAddress" style="margin-bottom: 3%;" placeholder="ìƒì„¸ì£¼ì†Œ">
+                <input type="text" id="sample6_extraAddress" style="margin-bottom: 3%;" placeholder="ì°¸ê³ í•­ëª©" hidden>
             
-            <hr>
-
-            <!-- Áß°£1 start-->
-            <div id="middiv"> 
-
-              <table>
-                <tr>
-                  <td id="writer">±â¾ÈÀÚ</td>
-                  <td id="writer_content">±â¾ÈÀÚÀÌ¸§</td>
-                </tr>
-                <tr>
-                  <td id="writer">ºÎ¼­</td>
-                  <td id="writer_content">ºÎ¼­¸í</td>
-                </tr>
-                <tr>
-                  <td id="writer">±â¾ÈÀÏ</td>
-                  <td id="writer_content">YYYY-MM-DD</td>
-                </tr>
-              </table>
-
-              <div class="container">
-                <table>
-                  <tr>
-                    <td id="aprr1" rowspan="5">1Â÷</td>
-                    <td id="aprr1_content">Á÷±Ş</td>
-                  </tr>
-                  <tr>
-                    <td id="aprr1_content2" rowspan="3">°áÀçÀÚ</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td id="aprr1_content">ºÎ¼­¸í</td>
-                  </tr>
-                </table>
-
-                <table>
-                  <tr>
-                    <td id="aprr1" rowspan="5">2Â÷</td>
-                    <td id="aprr1_content">Á÷±Ş</td>
-                  </tr>
-                  <tr>
-                    <td id="aprr1_content2" rowspan="3">°áÀçÀÚ</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td id="aprr1_content">ºÎ¼­¸í</td>
-                  </tr>
-                </table>
-              </div>
-    
-            </div> 
-            <!-- Áß°£1 end-->
+            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+            <script>
+                function sample6_execDaumPostcode() {
+                    new daum.Postcode({
+                        oncomplete: function(data) {
+                            // íŒì—…ì—ì„œ ê²€ìƒ‰ê²°ê³¼ í•­ëª©ì„ í´ë¦­í–ˆì„ë•Œ ì‹¤í–‰í•  ì½”ë“œë¥¼ ì‘ì„±í•˜ëŠ” ë¶€ë¶„.
             
-            <hr>
-
-            <!-- Áß°£2 start -->
-            <div id="middiv2">  
-                <div id="form_title">Á¦¸ñ</div>
-
-                <div class="input-bar" style="width: 100%;  padding-left: 10px;">
-                  <input type="text" class="input-bar1" readonly>
-                </div>
-            </div> 
-            <!-- Áß°£2 end -->
-
-            <!-- smarteditor start-->
-            <div id="smarteditor" style="margin-top: 10px;">
-              <textarea name="editorTxt" id="editorTxt0"
-                        rows="15"
-                        style="width: 100%"
-              ></textarea>
-            </div>
-            <!-- smarteditor end-->
-
-            <!-- ÆÄÀÏ´Ù¿î·Îµå start-->
-            <div id="filedownload">
-              <div id="file">
-                Ã·ºÎÆÄÀÏ
-              </div>
-              <div id="download">
-                <c:forEach var="at" items="${ b.attachList }">
-                  <a href="${ contextPath }${ at.filePath }/${ at.filesystemName }" download="${ at.originalName }">${ at.originalName }</a> 
-                  <br>
-                </c:forEach>
-              </div>
-            </div>
-            <!--ÆÄÀÏ´Ù¿î·Îµå end-->
-
-            <!-- ³¡ start-->
-            <div id="enddiv">
-              <div class="btn-box-hover">
-                <button class="btn3-hover" style="width: 120px; font-size: 18px;">°áÁ¦ÇÏ±â</button>
-              </div>
-              <div class="btn-box-hover">
-                <button class="btn1-hover" style="width: 120px; margin-left: 20px; font-size: 18px;">¹İ·ÁÇÏ±â</button>
-              </div>
-              <div class="btn-box-hover">
-                <button class="btn2-hover" style="width: 120px; margin-left: 20px; font-size: 18px;">µÚ·Î°¡±â</button>
-              </div>
-            </div>
-            <!-- ³¡ end-->
+                            // ê° ì£¼ì†Œì˜ ë…¸ì¶œ ê·œì¹™ì— ë”°ë¼ ì£¼ì†Œë¥¼ ì¡°í•©í•œë‹¤.
+                            // ë‚´ë ¤ì˜¤ëŠ” ë³€ìˆ˜ê°€ ê°’ì´ ì—†ëŠ” ê²½ìš°ì—” ê³µë°±('')ê°’ì„ ê°€ì§€ë¯€ë¡œ, ì´ë¥¼ ì°¸ê³ í•˜ì—¬ ë¶„ê¸° í•œë‹¤.
+                            var addr = ''; // ì£¼ì†Œ ë³€ìˆ˜
+                            var extraAddr = ''; // ì°¸ê³ í•­ëª© ë³€ìˆ˜
+            
+                            //ì‚¬ìš©ìê°€ ì„ íƒí•œ ì£¼ì†Œ íƒ€ì…ì— ë”°ë¼ í•´ë‹¹ ì£¼ì†Œ ê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
+                            if (data.userSelectedType === 'R') { // ì‚¬ìš©ìê°€ ë„ë¡œëª… ì£¼ì†Œë¥¼ ì„ íƒí–ˆì„ ê²½ìš°
+                                addr = data.roadAddress;
+                            } else { // ì‚¬ìš©ìê°€ ì§€ë²ˆ ì£¼ì†Œë¥¼ ì„ íƒí–ˆì„ ê²½ìš°(J)
+                                addr = data.jibunAddress;
+                            }
+            
+                            // ì‚¬ìš©ìê°€ ì„ íƒí•œ ì£¼ì†Œê°€ ë„ë¡œëª… íƒ€ì…ì¼ë•Œ ì°¸ê³ í•­ëª©ì„ ì¡°í•©í•œë‹¤.
+                            if(data.userSelectedType === 'R'){
+                                // ë²•ì •ë™ëª…ì´ ìˆì„ ê²½ìš° ì¶”ê°€í•œë‹¤. (ë²•ì •ë¦¬ëŠ” ì œì™¸)
+                                // ë²•ì •ë™ì˜ ê²½ìš° ë§ˆì§€ë§‰ ë¬¸ìê°€ "ë™/ë¡œ/ê°€"ë¡œ ëë‚œë‹¤.
+                                if(data.bname !== '' && /[ë™|ë¡œ|ê°€]$/g.test(data.bname)){
+                                    extraAddr += data.bname;
+                                }
+                                // ê±´ë¬¼ëª…ì´ ìˆê³ , ê³µë™ì£¼íƒì¼ ê²½ìš° ì¶”ê°€í•œë‹¤.
+                                if(data.buildingName !== '' && data.apartment === 'Y'){
+                                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                }
+                                // í‘œì‹œí•  ì°¸ê³ í•­ëª©ì´ ìˆì„ ê²½ìš°, ê´„í˜¸ê¹Œì§€ ì¶”ê°€í•œ ìµœì¢… ë¬¸ìì—´ì„ ë§Œë“ ë‹¤.
+                                if(extraAddr !== ''){
+                                    extraAddr = ' (' + extraAddr + ')';
+                                }
+                                // ì¡°í•©ëœ ì°¸ê³ í•­ëª©ì„ í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
+                                document.getElementById("sample6_extraAddress").value = extraAddr;
+                            
+                            } else {
+                                document.getElementById("sample6_extraAddress").value = '';
+                            }
+            
+                            // ìš°í¸ë²ˆí˜¸ì™€ ì£¼ì†Œ ì •ë³´ë¥¼ í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
+                            document.getElementById('sample6_postcode').value = data.zonecode;
+                            document.getElementById("sample6_address").value = addr;
+                            // ì»¤ì„œë¥¼ ìƒì„¸ì£¼ì†Œ í•„ë“œë¡œ ì´ë™í•œë‹¤.
+                            document.getElementById("sample6_detailAddress").focus();
+                        }
+                    }).open();
+                }
+            </script>
             
             
-          </form>
 
-      </div>
-      
-</div>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
+
+
+
+	</div>
+
+		</div>
+
+
+	</div>
+	
+		<script>
+			function toggleSubmenu(element) {
+				const submenu = element.nextElementSibling;
+				if (submenu.style.maxHeight === "0px"
+						|| submenu.style.maxHeight === "") {
+					submenu.style.maxHeight = submenu.scrollHeight + "px";
+				} else {
+					submenu.style.maxHeight = "0";
+				}
+			}
+
+			$(function() {
+				// jsTree ì´ˆê¸°í™”
+				$("#jstree").jstree({
+					core : {
+						data : [ {
+							"id" : "1",
+							"parent" : "#",
+							"text" : "ë³¸ë¶€",
+							"state" : {
+								"disabled" : true
+							},
+							"icon" : "fa fa-building"
+						}, {
+							"id" : "2",
+							"parent" : "1",
+							"text" : "ë¶€ì„œ A",
+							"state" : {
+								"disabled" : true
+							},
+							"icon" : "fa fa-briefcase"
+						}, {
+							"id" : "3",
+							"parent" : "1",
+							"text" : "ë¶€ì„œ B",
+							"state" : {
+								"disabled" : true
+							},
+							"icon" : "fa fa-briefcase"
+						}, {
+							"id" : "4",
+							"parent" : "2",
+							"text" : "ê²°ì¬ì 1",
+							"icon" : "fa fa-user"
+						}, {
+							"id" : "5",
+							"parent" : "2",
+							"text" : "ê²°ì¬ì 2",
+							"icon" : "fa fa-user"
+						}, {
+							"id" : "6",
+							"parent" : "2",
+							"text" : "ê²°ì¬ì 3",
+							"icon" : "fa fa-user"
+						}, {
+							"id" : "7",
+							"parent" : "3",
+							"text" : "ê²°ì¬ì 4",
+							"icon" : "fa fa-user"
+						}, {
+							"id" : "8",
+							"parent" : "3",
+							"text" : "ê²°ì¬ì 5",
+							"icon" : "fa fa-user"
+						}, {
+							"id" : "9",
+							"parent" : "3",
+							"text" : "ê²°ì¬ì 6",
+							"icon" : "fa fa-user"
+						} ]
+					},
+					plugins : [ "themes" ], // ì²´í¬ë°•ìŠ¤ í”ŒëŸ¬ê·¸ì¸ ì œê±°
+				});
+
+				// 1) ë¶€ì„œì˜ í…ìŠ¤íŠ¸ë¥¼ í´ë¦­í•˜ë©´ í•˜ìœ„ íŠ¸ë¦¬ê°€ í¼ì³ì§€ê±°ë‚˜ ë‹«íˆê³  ì²´í¬ë°•ìŠ¤ëŠ” ì„ íƒë˜ì§€ ì•Šë„ë¡ ì„¤ì •
+				$('#jstree').on('click.jstree', '.jstree-anchor', function(e) {
+					var nodeId = $(this).closest('a').parent().attr('id'); // í´ë¦­ëœ ë…¸ë“œì˜ ID ê°€ì ¸ì˜¤ê¸°
+					var tree = $('#jstree').jstree(true); // í˜„ì¬ jsTree ì¸ìŠ¤í„´ìŠ¤ ê°€ì ¸ì˜¤ê¸°
+
+					// í…ìŠ¤íŠ¸ë¥¼ í´ë¦­í•˜ë©´ ë…¸ë“œê°€ í¼ì³ì§€ê³  ë‹«í˜ (ì²´í¬ë°•ìŠ¤ ìƒíƒœëŠ” ë³€ê²½ë˜ì§€ ì•ŠìŒ)
+					if (!tree.is_open(nodeId)) {
+						tree.open_node(nodeId);
+					} else {
+						tree.close_node(nodeId); // ì´ë¯¸ ì—´ë ¤ ìˆìœ¼ë©´ ë‹«ê¸°
+					}
+				});
+			});
+		</script>
+		 <script>
+    let oEditors = [];
+      smartEditor = function() {
+          nhn.husky.EZCreator.createInIFrame({
+              oAppRef: oEditors,
+              elPlaceHolder: "editorTxt0", //textareaì— ë¶€ì—¬í•œ ì•„ì´ë””ì™€ ë™ì¼í•´ì•¼í•œë‹¤.
+              sSkinURI: "${contextPath}/smarteditor/SmartEditor2Skin.html", //ìì‹ ì˜ í”„ë¡œì íŠ¸ì— ë§ê²Œ ê²½ë¡œ ìˆ˜ì •
+              htParams: {
+              // ì…ë ¥ì°½ í¬í‚¤ ì¡°ì ˆë°” ì‚¬ìš©ì—¬ë¶€ (true: ì‚¬ìš©, false: ë¯¸ì‚¬ìš©)
+              bUseVerticalResizer: false,   
+              },
+              fCreator: "createSEditor2"
+          })
+      }
+  
+      $(document).ready(function() {
+         //ìŠ¤ë§ˆíŠ¸ì—ë””í„° ì ìš©
+            smartEditor(); 
+                //ê°’ ë¶ˆëŸ¬ì˜¤ê¸°
+            function preview(){
+                // ì—ë””í„°ì˜ ë‚´ìš©ì„ textareaì— ì ìš©
+                oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
+                  // textarea ê°’ ë¶ˆëŸ¬ì˜¤ê¸° 
+                var content = document.getElementById("editorTxt0").value;
+                alert(content);
+                return;
+          }
+        
+      })
+  </script>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

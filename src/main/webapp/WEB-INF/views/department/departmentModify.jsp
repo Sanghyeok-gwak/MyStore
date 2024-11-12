@@ -7,18 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<jsp:include page="/WEB-INF/views/common/side.jsp"/>
-
 <style>
 .left {
 	display: flex;
@@ -89,6 +77,18 @@ input {
 	background-color: white;
 }
 </style>
+
+</head>
+<body>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/common/side.jsp"/>
 <div class="body-body">
       <!-- 여기 채워서 작업하시면 됩니다 .-->
            <div class="text-box">
@@ -360,11 +360,7 @@ input {
       </div>
     </div>
 
-      </div>
-      </div>
-    </div>
-  </div>
-
+   
   <script>
     function toggleSubmenu(element) {
       const submenu = element.nextElementSibling;
@@ -413,6 +409,6 @@ input {
 
 
     </script>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
 </body>
 </html>
