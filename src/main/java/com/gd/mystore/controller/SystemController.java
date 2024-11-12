@@ -12,11 +12,12 @@ public class SystemController {
 	@GetMapping("/log.do")
 	public void systemlog() {}
 
+	@GetMapping("/systemLv.do")
+	public void systemLv() {}
+	
 	@GetMapping("/systemBoardsList.do")
 	public void systemBoards() {}
 	
-	@GetMapping("/systemLv.do")
-	public void systemLv() {}
 	
 	
 	
