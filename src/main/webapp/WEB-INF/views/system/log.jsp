@@ -34,6 +34,7 @@
         box-shadow: none;
         margin-left: 10px;
         margin-right: 10px;
+        width: 100%;
     }
     .icon{
       margin-right: 10px;
