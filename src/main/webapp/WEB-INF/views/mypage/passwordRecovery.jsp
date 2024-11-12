@@ -16,7 +16,7 @@
       <!-- 여기 채워서 작업하시면 됩니다 .-->
       <div class="text-box">
 
-        <div class="">
+        <div class="" style="margin-top: 7%">
 
           <div class="card-body" style=" display: block; justify-content: center; width: 700px; margin: auto;">
 

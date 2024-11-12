@@ -271,7 +271,7 @@
 
                 <br>
 
-                <div class="btn-box-hover" style="display: flex; justify-content: center;">
+                <div class="btn-box-hover" style="display: flex; justify-content: center; margin-left: 200px;">
                     <button class="btn3-hover ffont3" style="width: 373px; height: 35px;">등록하기</button> 
                     <button class="btn3-hover ffont3" style="width: 373px; height: 35px;">홈으로</button> 
                 </div>

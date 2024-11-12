@@ -8,6 +8,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+.pagination .page-link {
+              color: rgba(109, 105, 108, 1);
+              background-color: white;
+              border: none;
+    }
+
+            .pagination .page-item.active .page-link {
+              border: 1px solid red;
+              color: red;
+              background-color: white;
+    }
 .icon > button{
         border: none;
         background: none;

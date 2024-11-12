@@ -190,9 +190,10 @@
 
                 <br>
 
-                <div class="btn-box-hover" style="display: flex; justify-content: center;">
-                    <button class="btn3-hover ffont3" style="width: 373px; height: 35px;">수정하기</button> 
-                    <button class="btn3-hover ffont3" style="width: 373px; height: 35px;">홈으로</button> 
+				<!-- 팀장님 버튼 가져와야됨  -->
+                <div class="btn-box-hover" style="display: block; justify-content: center; margin-left: 200px; ">
+                    <button class="btn3-hover ffont3" style="width: 300px; height: 35px; ">수정하기</button> 
+                    <button class="btn3-hover ffont3" style="width: 300px; height: 35px;">홈으로</button> 
                 </div>
                 
 

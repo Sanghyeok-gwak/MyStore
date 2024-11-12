@@ -34,6 +34,17 @@
       border:none; 
       background-color:  white; color: black;
     }
+     .pagination .page-link {
+              color: rgba(109, 105, 108, 1);
+              background-color: white;
+              border: none;
+    }
+
+            .pagination .page-item.active .page-link {
+              border: 1px solid red;
+              color: red;
+              background-color: white;
+    }
     
     
 
@@ -283,6 +294,26 @@
             </div>
           </div>
           <!-- 모달end-->
+          
+          <div class="paging"> 
+          <ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
+            <li class="page-item disabled">
+              <a class="page-link" href="">
+                <i class="bi bi-chevron-double-left"></i> <span>이전</span>
+              </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="">1</a></li>
+            <li class="page-item"><a class="page-link" href="">2</a></li>
+            <li class="page-item"><a class="page-link" href="">3</a></li>
+            <li class="page-item"><a class="page-link" href="">4</a></li>
+            <li class="page-item"><a class="page-link" href="">5</a></li>
+            <li class="page-item">
+              <a class="page-link" href="">
+                <span>다음</span>&nbsp;<i class="bi bi-chevron-double-right"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
 
 
           </div>

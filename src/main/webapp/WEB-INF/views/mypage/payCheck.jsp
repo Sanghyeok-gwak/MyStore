@@ -7,6 +7,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+/* 본문 테이블 */
+    table {
+            width: 70%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border-spacing: 0; /* 셀 간의 간격을 0으로 설정 */
+            border: 1px solid #000;
+            text-align: center; /* 모든 글씨 중앙 정렬 */
+    }
+    th {
+                  background-color: #a3b8ff;
+    }
+    th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center; /* 모든 글씨 중앙 정렬 */
+    }
+    .title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin: 20px 0;
+    }
+</style>
 </head>
 <body>
 
