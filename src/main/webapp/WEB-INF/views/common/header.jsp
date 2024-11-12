@@ -372,7 +372,7 @@
               <li class="nav-item dropdown">
       
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                  <img src="부리부리몬.png" class="head_img">
+                  <img src="" class="head_img">
                   <span class="badge bg-primary badge-number">4</span>
                 </a><!-- End Notification Icon -->
       
@@ -443,6 +443,8 @@
                 </ul><!-- End Notification Dropdown Items -->
       
               </li><!-- End Notification Nav -->
+              </ul>
+              </nav>
           <span>ㅇㅇㅇ</span><span>님 환영합니다.</span>
       </div>
 
