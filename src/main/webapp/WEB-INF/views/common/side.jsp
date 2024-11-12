@@ -66,8 +66,8 @@
         <span>시스템 관리</span>
       </div>
       <div class="submenu">
-        <a href="#">시스템로그</a>
-        <a href="#">시스템 레벨 관리</a>
-        <a href="#">세부메뉴관리</a>
+        <a href="${ contextPath }/system/log.do">시스템로그</a>
+        <a href="${ contextPath }/system/systemLv.do">시스템 레벨 관리</a>
+        <a href="${ contextPath }/system/systemBoards.do">세부메뉴관리</a>
       </div>
     </div>
