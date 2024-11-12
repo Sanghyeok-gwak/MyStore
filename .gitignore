@@ -20,6 +20,10 @@ classes/
 
 .properties
 Servers/
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
 
 # External tool builders
 .externalToolBuilders/
