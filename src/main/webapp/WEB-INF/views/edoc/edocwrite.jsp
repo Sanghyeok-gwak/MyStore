@@ -428,7 +428,7 @@ input[type=file]::file-selector-button {
 					</div>
 					<!-- 끝 end-->
 
-					
+
 
 				</form>
 			</div>
@@ -584,37 +584,35 @@ input[type=file]::file-selector-button {
 		});
 	</script>
 	<!-- 모달 시작 -->
-					<div class="modal fade" id="basicModal" tabindex="-1"
-						aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content" style="width: 800px; height: 600px;">
-								<div class="modal-header">
-									<h5 class="modal-title">결재선 선택</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body d-flex">
-									<!-- 결재선 트리 표시 영역 -->
-									<div id="approvalTree"
-										style="max-height: 500px; overflow-y: auto; width: 50%;"></div>
+	<div class="modal fade" id="basicModal" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" style="width: 800px; height: 600px;">
+				<div class="modal-header">
+					<h5 class="modal-title">결재선 선택</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body d-flex">
+					<!-- 결재선 트리 표시 영역 -->
+					<div id="approvalTree"
+						style="max-height: 500px; overflow-y: auto; width: 50%;"></div>
 
-									<!-- 선택된 결재자 표시 영역 -->
-									<div id="selectedApprovers"
-										style="width: 50%; padding-left: 20px;">
-										<h6>선택된 결재자</h6>
-										<ul id="selectedList" class="list-group"></ul>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">Save
-										changes</button>
-								</div>
-							</div>
-						</div>
+					<!-- 선택된 결재자 표시 영역 -->
+					<div id="selectedApprovers" style="width: 50%; padding-left: 20px;">
+						<h6>선택된 결재자</h6>
+						<ul id="selectedList" class="list-group"></ul>
 					</div>
-					<!-- 모달 끝 -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 모달 끝 -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
