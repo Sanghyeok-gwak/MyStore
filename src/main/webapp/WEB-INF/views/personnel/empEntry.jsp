@@ -62,6 +62,9 @@
             width: 100%;
             border: 1px solid lightgray;
           }
+          input{
+          	padding-left:10px;
+          }
     </style>
        <!-- 다음주소API-->
    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -196,14 +199,35 @@
               <span class="ffont3">주소</span>
             </div>
 
-            <div class="">
-              <body>
-
-                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="margin-bottom: 3%;"><br>
-                <input type="text" id="sample6_postcode" style="margin-bottom: 3%;" placeholder="우편번호">
+            <div class="input-box-top-box6-input">
+								<style>
+									.addr-box{
+										display:flex;
+									}
+									.addr-box-left{
+										width:95%;
+									}
+									.addr-box-rigth{
+										width:5%;
+									}
+									.addr-box-rigth button{
+										width:100%;
+										background-color:white;
+										height: 30px;
+										border: 1px solid lightgray;
+									}
+								</style>
+                <div class="addr-box">
+                	<div class="addr-box-left">
+	  	              <input type="text" id="sample6_postcode" style="margin-bottom: 3%;" placeholder="우편번호">
+                	</div>
+  	            	<div class="addr-box-rigth">
+	  	              <button onclick="sample6_execDaumPostcode()"><i class="bx bxs-clinic"></i></button>
+  	            	</div>
+                </div>
                 <input type="text" id="sample6_address" style="margin-bottom: 3%;" placeholder="주소"><br>
                 <input type="text" id="sample6_detailAddress" style="margin-bottom: 3%;" placeholder="상세주소">
-                <input type="text" id="sample6_extraAddress" style="margin-bottom: 3%;" placeholder="참고항목" hidden>
+                <input type="hidden" id="sample6_extraAddress" style="margin-bottom: 3%;" placeholder="참고항목">
             
             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
             <script>
@@ -256,7 +280,6 @@
                 }
             </script>
             
-            </body>
               
             </div>
           </div>

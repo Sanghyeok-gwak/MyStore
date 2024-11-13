@@ -60,6 +60,7 @@
             height: 30px;
             width: 100%;
             border: 1px solid lightgray;
+           	padding-left:10px;
           }
     </style>
 </head>

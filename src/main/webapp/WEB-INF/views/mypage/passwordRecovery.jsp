@@ -22,9 +22,17 @@
 
             <h3 class="text-center ffont1">비밀번호 변경</h3>
             <br>
-            <p class="text-center ffont3">
-              비밀번호는 0~12자리의 대문자, 소문자, 특수문자 중 2종류 이상을 조합하여 사용해야 합니다.
-            </p>
+            <div class="span-box" style="text-align:center; margin-bottom:20px;">
+	            <span class="ffont3" >
+	            	비밀번호는 0~12자리의
+	            </span>
+	            <span class="ffont2" style="color:red;">
+	            	대문자, 소문자, 특수문자
+	            </span>
+	            <span class="ffont3">중</span>
+	            <span class="ffont2" style="color:red;">2종류</span>
+	            <span class="ffont3" >이상을 <br>조합하여 사용해야 합니다.</span>
+            </div>
 
             <br>
 

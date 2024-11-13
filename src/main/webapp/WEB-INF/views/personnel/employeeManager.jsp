@@ -62,9 +62,6 @@
 
       <div class="card-body">
 
-        <div class="btn-box-hover" style="display: flex; justify-content: flex-end;">
-            <button class="btn3-hover" style="height: 40px;">+ 사원등록 </button> 
-        </div>
 
         <br>
 
@@ -85,6 +82,9 @@
         
             </div>
 
+        </div>
+        <div class="btn-box-hover" style="display: flex; justify-content: flex-end; margin-top:20px;">
+            <button class="btn3-hover" style="height: 40px;margin-right:0px;">사원등록 </button> 
         </div>
 
 

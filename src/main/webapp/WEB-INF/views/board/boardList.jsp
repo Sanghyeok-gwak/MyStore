@@ -82,6 +82,9 @@ input {
 	color: red;
 	background-color: white;
 }
+button.btn3-hover {
+    margin-right: 0px;
+}
 </style>
 
 	<div class="body-body">

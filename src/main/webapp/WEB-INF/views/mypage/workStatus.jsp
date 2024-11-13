@@ -160,7 +160,7 @@
               </table>
 
               <div class="btn-box-hover" style="display: flex; justify-content: flex-end;">
-                <button class="btn3-hover">홈으로</button> 
+                <button class="btn3-hover" style="width:150px; border-radius: 10px;">홈으로</button> 
               </div>
 
 

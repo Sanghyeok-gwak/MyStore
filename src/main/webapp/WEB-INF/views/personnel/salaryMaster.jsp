@@ -59,9 +59,22 @@
       
       <div class="text-box">             
       <span class="ffont1" style="font-weight: bold;">급여입력</span>
-      
-      <div class="card-body">
-        <br>
+      <style>
+      .payment-top{
+      	margin-top:20px;
+      	margin-bottom:20px;
+				display:flex;   
+				justify-content: space-between;   
+      }
+      .payment-top-right{
+      	display:flex;
+      }
+      .search_box input{
+      	 height:38px; 
+      }
+      </style>
+      <div class="payment-top">
+      	<div class="payment-top-left">
         <table class="table table-bordered" style="width: 500px; text-align: center;  ">
             <thead>
               <tr>
@@ -82,27 +95,29 @@
             </tbody>
 
         </table>
+      	</div>
+      	<div class="payment-top-right">
+      		<div class="payment-top-right-text">
+			      <select class="datatable-selector" name="per-page" style=" height:40px; margin-right: 5px;">
+			        <option value="">이름</option>
+			        <option value="">사번</option>
+			      </select>
+		      </div>
+					<div class="payment-top-right-input">		        
+		      	<!-- width값은 페이지에 맞게 조절해주세요 -->
+			      <div class="search_box" style="width:300px;">
+			        <input class="input_b" type="text" placeholder="검색">
+			        <div class="icon">
+			          <button><i class="bi bi-search"></i></button>
+			        </div>  
+			      </div>
+		      </div>
+      	</div>
+      </div>
 
-    </div>
-
-    <div style="display: flex; justify-content: flex-end;  ">
 
 
       <!-- 드롭다운 버튼 -->
-      <select class="datatable-selector" name="per-page" style="margin-right: 5px;">
-        <option value="">이름</option>
-        <option value="">사번</option>
-      </select>
-        
-        <!-- width값은 페이지에 맞게 조절해주세요 -->
-        <div class="search_box" style="width:300px;">
-          <input class="input_b" type="text" placeholder="검색">
-          <div class="icon">
-            <button><i class="bi bi-search"></i></button>
-          </div>
-          
-      </div>
-    </div>
 
 
 
@@ -215,7 +230,33 @@
           
           </table>
 
-          <!-- 급여등록 모달 -->
+          
+          
+          <div class="paging"> 
+          <ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
+            <li class="page-item disabled">
+              <a class="page-link" href="">
+                <i class="bi bi-chevron-double-left"></i> <span>이전</span>
+              </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="">1</a></li>
+            <li class="page-item"><a class="page-link" href="">2</a></li>
+            <li class="page-item"><a class="page-link" href="">3</a></li>
+            <li class="page-item"><a class="page-link" href="">4</a></li>
+            <li class="page-item"><a class="page-link" href="">5</a></li>
+            <li class="page-item">
+              <a class="page-link" href="">
+                <span>다음</span>&nbsp;<i class="bi bi-chevron-double-right"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+
+          </div>
+      
+</div>
+<!-- 급여등록 모달 -->
           <div class="modal fade" id="scrollingModal" tabindex="-1" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
 
@@ -294,31 +335,6 @@
             </div>
           </div>
           <!-- 모달end-->
-          
-          <div class="paging"> 
-          <ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
-            <li class="page-item disabled">
-              <a class="page-link" href="">
-                <i class="bi bi-chevron-double-left"></i> <span>이전</span>
-              </a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="">1</a></li>
-            <li class="page-item"><a class="page-link" href="">2</a></li>
-            <li class="page-item"><a class="page-link" href="">3</a></li>
-            <li class="page-item"><a class="page-link" href="">4</a></li>
-            <li class="page-item"><a class="page-link" href="">5</a></li>
-            <li class="page-item">
-              <a class="page-link" href="">
-                <span>다음</span>&nbsp;<i class="bi bi-chevron-double-right"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-
-
-          </div>
-      
-</div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>
