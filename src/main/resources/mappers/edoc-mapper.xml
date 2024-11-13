@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper>
-  <cache-ref namespace=""/>
+<mapper namespace="edocMapper">
+
+	<resultMap id="edocSampleResultMap" type="EDocSampleDto">
+		<result column="sample_no" property="sampleNo" />
+		<result column="sample_dot_code" property="sampleDotCode" />
+		<result column="sample_desc" property="sampleDesc" />
+		<result column="sample_format" property="sampleFormat" />
+		<result column="emp_no" property="empNo" />
+		<result column="create_date" property="createDt" />
+		<result column="modifier" property="modyfy" />
+		<result column="modify_date" property="modifyDt" />
+		<result column="use_yn" property="useYN" />
+	</resultMap>
+	
+	<select id="selectEDocSampleList" resultMap="edocSampleResultMap">
+		select 
+					sample_no
+				, sample_dot_code
+				, sample_desc
+				, emp_no
+				, create_date
+	 	 from 
+	 	 			tbl_edoc_sample
+		where	use_yn = 'Y'
+		order by sample_no desc					
+	</select>
+
 </mapper>
+

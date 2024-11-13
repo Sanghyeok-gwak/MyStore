@@ -6,12 +6,18 @@
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.gd.mystore.dto.EDocDto" alias="EDocDto"/>									<!-- 전자결재 -->
+		<typeAlias type="com.gd.mystore.dto.EDocApprovalDto" alias="EDocApprovalDto"/>	<!-- 전자결재선 -->
+		<typeAlias type="com.gd.mystore.dto.EDocAttachDto" alias="EDocAttachDto"/>			<!-- 전자결재 첨부파일 -->
+		<typeAlias type="com.gd.mystore.dto.EDocSampleDto" alias="EDocSampleDto"/>			<!-- 전자결재 양식 -->
 	
 	</typeAliases>
 	
 	
 	<mappers>
+		<mapper resource="mappers/edoc-mapper.xml" />			<!-- 전자결재 mapper -->
 	
 	</mappers>
+	
 
 </configuration>
