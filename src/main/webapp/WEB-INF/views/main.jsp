@@ -9,11 +9,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-		<script type="text/javascript" src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+	
+	<script type="text/javascript" src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
     <!-- <head> 안에 추가 -->
 
@@ -21,35 +20,58 @@
     <!-- 2.10.0 버전엔 js 파일 일부분이 없어 오류 발생 ! -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
 	<div class="body-body">
 		<!-- 여기 채워서 작업하시면 됩니다 .-->
 		<div class="text-box" >
-		
-
-			<div style="width: 430px; height: 400px; border: #868686 solid;">
-				<div
-					style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
-					<b>조직도</b>
-				</div>
-				<div id="jstree"></div>
-				
-
-			</div>
 			
-			<!--  여기까지가 조직도 div -->
+			<div  style="display: flex;">
+				<div>
+					<div style="width: 430px; height: 400px; border: #868686 solid;">
+						<div style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
+							<b>조직도</b>
+						</div>
+						
+						<div id="jstree"></div>
+					</div>
+					<!--  여기까지가 조직도 div -->
+					
+					
+				</div>
+					
+					<!-- 달력 -->
+						<jsp:include page="/WEB-INF/views/calendar/fullCalendar.jsp" />
+					<!-- 달력 끝 -->
+					
+					
+			</div>
 			
 			
 			<!--  여기부터 다음api  -->	
 			<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
+			
+			
+			<div style="width: 30%;">
+						<form action="${contextPath}/weather/coord" method="get">
+						    <input type="hidden" name="lat" value="37.4765509">
+						    <input type="hidden" name="lon" value="126.8801713">
+						    <div class="btn-box-hover">
+						        <button style="overflow-z: auto;"class="btn3-hover" type="submit">날씨 확인</button>
+						    </div>
+						</form>
+						<div>
+						    <h1>Weather Data</h1>
+						    <p>${weatherData}</p>
+						</div>
+					</div>
+			
 	<div >
 
                 <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
@@ -136,6 +158,7 @@
 			
 			<!-- 여기부터 날씨 api 끝 -->
 			
+			
 
 
 		</div>
@@ -154,82 +177,38 @@
 				}
 			}
 
-			$(function() {
-				// jsTree 초기화
-				$("#jstree").jstree({
-					core : {
-						data : [ {
-							"id" : "1",
-							"parent" : "#",
-							"text" : "본부",
-							"state" : {
-								"disabled" : true
-							},
-							"icon" : "fa fa-building"
-						}, {
-							"id" : "2",
-							"parent" : "1",
-							"text" : "부서 A",
-							"state" : {
-								"disabled" : true
-							},
-							"icon" : "fa fa-briefcase"
-						}, {
-							"id" : "3",
-							"parent" : "1",
-							"text" : "부서 B",
-							"state" : {
-								"disabled" : true
-							},
-							"icon" : "fa fa-briefcase"
-						}, {
-							"id" : "4",
-							"parent" : "2",
-							"text" : "결재자 1",
-							"icon" : "fa fa-user"
-						}, {
-							"id" : "5",
-							"parent" : "2",
-							"text" : "결재자 2",
-							"icon" : "fa fa-user"
-						}, {
-							"id" : "6",
-							"parent" : "2",
-							"text" : "결재자 3",
-							"icon" : "fa fa-user"
-						}, {
-							"id" : "7",
-							"parent" : "3",
-							"text" : "결재자 4",
-							"icon" : "fa fa-user"
-						}, {
-							"id" : "8",
-							"parent" : "3",
-							"text" : "결재자 5",
-							"icon" : "fa fa-user"
-						}, {
-							"id" : "9",
-							"parent" : "3",
-							"text" : "결재자 6",
-							"icon" : "fa fa-user"
-						} ]
-					},
-					plugins : [ "themes" ], // 체크박스 플러그인 제거
-				});
+			 $(function () {
+				    // jsTree 초기화
+				    $("#jstree").jstree({
+				        core: {
+				            data: [
+				                { "id": "1", "parent": "#", "text": "본부", "state": { "disabled": true }, "icon": "fa fa-building" },
+				                { "id": "2", "parent": "1", "text": "부서 A", "state": { "disabled": true }, "icon": "fa fa-briefcase" },
+				                { "id": "3", "parent": "1", "text": "부서 B", "state": { "disabled": true }, "icon": "fa fa-briefcase" },
+				                { "id": "4", "parent": "2", "text": "결재자 1", "icon": "fa fa-user" },
+				                { "id": "5", "parent": "2", "text": "결재자 2", "icon": "fa fa-user" },
+				                { "id": "6", "parent": "2", "text": "결재자 3", "icon": "fa fa-user" },
+				                { "id": "7", "parent": "3", "text": "결재자 4", "icon": "fa fa-user" },
+				                { "id": "8", "parent": "3", "text": "결재자 5", "icon": "fa fa-user" },
+				                { "id": "9", "parent": "3", "text": "결재자 6", "icon": "fa fa-user" }
+				            ]
+				        },
+				        plugins: ["themes"], // 체크박스 플러그인 제거
+				    });
 
-				// 1) 부서의 텍스트를 클릭하면 하위 트리가 펼쳐지거나 닫히고 체크박스는 선택되지 않도록 설정
-				$('#jstree').on('click.jstree', '.jstree-anchor', function(e) {
-					var nodeId = $(this).closest('a').parent().attr('id'); // 클릭된 노드의 ID 가져오기
-					var tree = $('#jstree').jstree(true); // 현재 jsTree 인스턴스 가져오기
+				    // 1) 부서의 텍스트를 클릭하면 하위 트리가 펼쳐지거나 닫히고 체크박스는 선택되지 않도록 설정
+				    $('#jstree').on('click.jstree', '.jstree-anchor', function (e) {
+				        var nodeId = $(this).closest('a').parent().attr('id'); // 클릭된 노드의 ID 가져오기
+				        var tree = $('#jstree').jstree(true);  // 현재 jsTree 인스턴스 가져오기
 
-					// 텍스트를 클릭하면 노드가 펼쳐지고 닫힘 (체크박스 상태는 변경되지 않음)
-					if (!tree.is_open(nodeId)) {
-						tree.open_node(nodeId);
-					} else {
-						tree.close_node(nodeId); // 이미 열려 있으면 닫기
-					}
+				        // 텍스트를 클릭하면 노드가 펼쳐지고 닫힘 (체크박스 상태는 변경되지 않음)
+				        if (!tree.is_open(nodeId)) {
+				            tree.open_node(nodeId);
+				        } else {
+				            tree.close_node(nodeId); // 이미 열려 있으면 닫기
+				        }
+				    });
 				});
-			});
 		</script>
 		 <script>
     let oEditors = [];

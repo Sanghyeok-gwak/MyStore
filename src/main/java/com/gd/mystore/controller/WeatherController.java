@@ -21,10 +21,11 @@ public class WeatherController {
             @RequestParam("lat") double latitude,
             @RequestParam("lon") double longitude,
             Model model) {
+    	
         String weatherData = weatherService.getWeatherData(latitude, longitude);
         System.out.println(weatherData);
         model.addAttribute("weatherData", weatherData);
         
-        return "weather";
+        return "main";
     }
 }
