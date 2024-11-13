@@ -32,7 +32,7 @@
       // can be removed later when multiple key/instances are fine to be used
       if (!instanceMap.has(key) && instanceMap.size !== 0) {
         // eslint-disable-next-line no-console
-        console.error('Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.');
+        console.error('Bootstrap doesnt allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.');
         return;
       }
       instanceMap.set(key, instance);
@@ -726,7 +726,7 @@
 
       // Just in case some CMS puts out a full URL with the anchor appended
       if (hrefAttribute.includes('#') && !hrefAttribute.startsWith('#')) {
-        hrefAttribute = '#${hrefAttribute.split('#')[1]}';
+        hrefAttribute = "#${hrefAttribute.split('#')[1]}";
       }
       selector = hrefAttribute && hrefAttribute !== '#' ? hrefAttribute.trim() : null;
     }
