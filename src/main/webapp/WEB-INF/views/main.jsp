@@ -130,10 +130,12 @@
 			
 			
 			<!-- 여기부터 날씨 api -->
-			
+			<form action="${ contextPath }/weather/coord?let=37.7749&lon=-122.4194">
+				
+			</form>
 			
 			<!-- 여기부터 날씨 api 끝 -->
-
+			
 
 
 		</div>

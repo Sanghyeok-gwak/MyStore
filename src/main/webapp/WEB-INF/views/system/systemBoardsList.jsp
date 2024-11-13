@@ -109,7 +109,7 @@
 	<jsp:include page="/WEB-INF/views/common/side.jsp"/>
 
 	<div class="body-body">
-		        <div class="text-box">
+       <div class="text-box">
           <span class="ffont1" style="font-weight: bold;">세부메뉴관리</span>
       
           <div class="menu_main">
