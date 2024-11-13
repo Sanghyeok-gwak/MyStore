@@ -13,35 +13,31 @@ public class EDocController {
 	
 	@GetMapping("completedetail")
 	public void completedetail() {}
-	// 영역 나감
+	
 
 	@GetMapping("completelist")
 	public void completelist() {}
 	
 	@GetMapping("draftcompanion")
 	public void draftcompanion() {}
-	// 영역나감
 	
 	@GetMapping("draftcompanionlist")
 	public void draftcompanionlist() {}
 	
 	@GetMapping("draftcomplete")
 	public void draftcomplete() {}
-	// 영역 나감
 	
 	@GetMapping("draftcompletelist")
 	public void draftcompletelist() {}
 	
 	@GetMapping("draftprogress")
 	public void draftprogress() {}
-	// 영역 나감
 	
 	@GetMapping("draftprogresslist")
 	public void draftprogresslist() {}
 	
 	@GetMapping("draftwait")
 	public void draftwait() {}
-	// 영역 나감
 	
 	@GetMapping("draftwaitlist")
 	public void draftwaitlist() {}

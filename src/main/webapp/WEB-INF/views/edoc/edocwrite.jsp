@@ -27,6 +27,7 @@
 
 
 <style>
+/**/
 /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
 .text-box {
 	border-radius: 20px;
@@ -136,6 +137,10 @@ input {
 }
 
 /* topdiv 스타일 start */
+#topdiv {
+	display: flex;
+}
+
 #topdiv>#menu_name {
 	font-size: 25px;
 	line-height: 30px;
@@ -143,7 +148,7 @@ input {
 }
 
 #lang {
-	margin-left: 60px;
+	margin-left: 20px;
 	width: 300px;
 	font-size: 18px;
 	line-height: 30px;
@@ -179,18 +184,12 @@ input {
 	display: flex;
 }
 
-#content {
-	display: flex;
-}
-
 #writer {
 	background-color: #99A1EF;
 	color: white;
 	height: 40px;
 	width: 140px;
 	text-align: center;
-	border-top: 1px solid rgb(92, 91, 91);
-	border-bottom: 1px solid rgb(92, 91, 91);
 	border-radius: 5px;
 }
 
@@ -200,19 +199,14 @@ input {
 	height: 40px;
 	width: 200px;
 	text-align: center;
-	border-top: 1px solid rgb(92, 91, 91);
-	border-bottom: 1px solid rgb(92, 91, 91);
 	border-radius: 5px;
 }
-
 #aprr1 {
 	background-color: #99A1EF;
 	color: white;
 	height: 120px;
 	width: 60px;
 	text-align: center;
-	border-top: 1px solid rgb(92, 91, 91);
-	border-bottom: 1px solid rgb(92, 91, 91);
 	border-radius: 5px;
 }
 
@@ -222,12 +216,10 @@ input {
 	height: 20px;
 	width: 120px;
 	text-align: center;
-	border-top: 1px solid rgb(92, 91, 91);
-	border-bottom: 1px solid rgb(92, 91, 91);
 	border-radius: 5px;
 }
 
-#aprr1_content2 {
+#aprr1_content2  {
 	background-color: #ffffff;
 	color: rgb(0, 0, 0);
 	height: 80px;
@@ -267,9 +259,47 @@ input {
 	align-items: center;
 }
 
+#inputf {
+	display: flex;
+}
 /* middiv2 스타일 end */
 
-/* middiv3 스타일 start */
+/* filedownload 스타일 start */
+#filedownload {
+	display: flex;
+}
+
+#file {
+	background-color: #99A1EF;
+	color: white;
+	height: 40px;
+	width: 113.75px;
+	border-radius: 5px;
+	font-size: 18px;
+	line-height: 30px;
+	font-weight: 400;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#download {
+	font-size: 18px;
+	margin-left: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	line-height: 30px;
+	font-weight: 400;
+}
+/* filedownload 스타일 end */
+
+/* enddiv 스타일 start */
+#enddiv {
+	display: flex;
+	justify-content: end;
+}
+/* enddiv 스타일 end */
 input[type=file]::file-selector-button {
 	background-color: #99A1EF;
 	color: white;
@@ -280,144 +310,33 @@ input[type=file]::file-selector-button {
 	line-height: 30px;
 	font-weight: 400;
 }
-
-#fileupload {
-	width: 100%
-}
 /* middiv2 스타일 end */
 #smarteditor {
 	margin-top: 10px;
 }
-
-/* enddiv 스타일 start */
-#enddiv {
-	margin-top: 40px;
-	display: flex;
-}
-/* enddiv 스타일 end */
 </style>
 </head>
 <body>
-
-	<jsp:include page="/WEB-INF/views/common/header.jsp" />
-	<jsp:include page="/WEB-INF/views/common/side.jsp" />
-
+<jsp:include page="/WEB-INF/views/common/header.jsp" />
+<jsp:include page="/WEB-INF/views/common/side.jsp" />
 	<div class="body-body">
-
-		<div>
-			<div class="text-box">
-				<form action="">
-
-					<!-- 처음 start -->
-					<div id="topdiv">
-
-						<span class="ffont1" style="font-weight: bold;">전자문서 작성하기</span> <select
-							name="languages" id="lang">
+	<!-- 여기 채워서 작업하시면 됩니다 .-->
+		<div class="text-box">
+			<form action="">
+				<div id="topdiv">
+					<div class="bbox-box" style="width:50%;">
+						<span class="ffont1" style="font-weight: bold;">전자문서 작성하기</span> 
+						<select name="languages" id="lang">
 							<option value="select">결제양식 선택</option>
 							<option value="vac">휴가</option>
 							<option value="dept">부서</option>
 							<option value="java">일반</option>
 						</select>
-
 						<button type="button" id="modal_appr" data-bs-toggle="modal"
 							data-bs-target="#basicModal">결제선 선택</button>
 
-					</div>
-					<!-- 처음 end -->
-
-					<hr>
-
-					<!-- 중간1 start-->
-					<div id="middiv">
-
-						<table>
-							<tr>
-								<td id="writer">기안자</td>
-								<td id="writer_content">기안자이름</td>
-							</tr>
-							<tr>
-								<td id="writer">부서</td>
-								<td id="writer_content">부서명</td>
-							</tr>
-							<tr>
-								<td id="writer">기안일</td>
-								<td id="writer_content">YYYY-MM-DD</td>
-							</tr>
-						</table>
-
-						<div class="container">
-							<table>
-								<tr>
-									<td id="aprr1" rowspan="5">1차</td>
-									<td id="aprr1_content">직급</td>
-								</tr>
-								<tr>
-									<td id="aprr1_content2" rowspan="3">결재자</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td id="aprr1_content">부서명</td>
-								</tr>
-							</table>
-
-							<table>
-								<tr>
-									<td id="aprr1" rowspan="5">2차</td>
-									<td id="aprr1_content">직급</td>
-								</tr>
-								<tr>
-									<td id="aprr1_content2" rowspan="3">결재자</td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-								</tr>
-								<tr>
-									<td id="aprr1_content">부서명</td>
-								</tr>
-							</table>
-						</div>
-
-					</div>
-					<!-- 중간1 end-->
-
-					<hr>
-
-					<!-- 중간2 start -->
-					<div id="middiv2">
-						<div id="form_title" style="width: 9%;">제목</div>
-
-						<div class="input-bar" style="width: 91%; padding-left: 10px;">
-							<input type="text" class="input-bar1" placeholder="제목을 입력해주세요">
-						</div>
-					</div>
-					<!-- 중간2 end -->
-
-
-
-					<!-- smarteditor start-->
-					<div id="smarteditor">
-						<textarea name="editorTxt" id="editorTxt0" rows="15"
-							style="width: 100%;"></textarea>
-					</div>
-					<!-- smarteditor end-->
-
-					<!-- 파일업로드 start-->
-					<div id="middiv3">
-						<input type="file" id="fileupload" name="uploadFile" multiple>
-						<br>
-					</div>
-					<!--파일업로드 end-->
-
-					<!-- 끝 start-->
-					<div id="enddiv">
+					</div>		
+					<div id="enddiv" style="width:50%;">
 						<div class="btn-box-hover">
 							<button class="btn3-hover" style="width: 120px; font-size: 18px;">기안하기</button>
 						</div>
@@ -426,14 +345,123 @@ input[type=file]::file-selector-button {
 								style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
 						</div>
 					</div>
-					<!-- 끝 end-->
+				</div>
+				<hr>
+				<div id="middiv">
+				<style>
+					.middiv-box,.middiv-box-left,.middiv-box-right{
+						display:flex;
+					}
+					.middiv-box{
+						margin-top:20px;
+						margin-bottom:20px;
+						justify-content: space-between;
+						width:100%;
+					}
+					.middiv-box-right-writer-left table{
+						height:100%;
+					}
+					.middiv-box-right-writer-right table{
+						height:100%;
+					}
+					.middiv-box-right-writer-left{
+						margin-right:15px;
+					}
+					.middiv-box-right-writer-right{
+						margin-left:15px;
+					}
+					#writer_content{
+						border: 1px solid lightgray;
+					}
+				</style>
+					<div class="middiv-box">
+						<div class="middiv-box-left">
+							<div class="middiv-box-left-writer-left">
+								<div id="writer" style="margin-bottom:10px;">기안자</div>
+								<div id="writer" style="margin-bottom:10px;">부서</div>
+								<div id="writer" style="margin-bottom:10px;">기안일</div>
+							</div>
+							<div class="middiv-box-left-writer-right">
+								<div id="writer_content" style="margin-bottom:10px;">기안자이름</div>
+								<div id="writer_content" style="margin-bottom:10px;">부서명</div>
+								<div id="writer_content" style="margin-bottom:10px;">YYYY-MM-DD</div>
+							</div>
+						</div>
+						<div class="middiv-box-right">
+							<div class="middiv-box-right-writer-left">
+								<table>
+										<tr>
+											<td id="aprr1" rowspan="5"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex;">1차</div></td>
+											<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">직급</div></td>
+										</tr>
+										<tr>
+											<td id="aprr1_content2" rowspan="3"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">결재자</div></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td></td>
+										</tr>
+										<tr>
+											<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">부서명</div></td>
+										</tr>
+									</table>
+							</div>
+							<div class="middiv-box-right-writer-right">
+								<table>
+									<tr>
+										<td id="aprr1" rowspan="5"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; ">2차</div></td>
+										<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;" >직급</div></td>
+									</tr>
+									<tr>
+										<td id="aprr1_content2" rowspan="3"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">결재자</div></td>
+									</tr>
+									<tr>
+										<td></td>
+									</tr>
+									<tr>
+										<td></td>
+									</tr>
+									<tr>
+										<td id="aprr1_content"><div style="width:100%; height:100%; border:1px solid lightgray;">부서명</div></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+			</form>
+			<!-- 중간2 start -->
+			<div id="middiv2">
+				<div id="form_title">제목</div>
 
-
-
-				</form>
+				<div class="input-bar" style="width: 100%; padding-left: 10px;">
+					<input type="text" class="input-bar1" readonly>
+				</div>
 			</div>
-		</div>
+			<!-- 중간2 end -->
 
+			<!-- smarteditor start-->
+			<div id="smarteditor">
+				<textarea name="editorTxt" id="editorTxt0" rows="13"
+					style="width: 100%;"></textarea>
+			</div>
+			<!-- smarteditor end-->
+
+			<!-- 파일업로드 start-->
+					<div id="middiv3">
+						<input type="file" id="fileupload" name="uploadFile" multiple>
+						<br>
+					</div>
+			<!--파일업로드 end-->
+			<!--파일다운로드 end-->
+
+			<!-- 끝 start-->
+		
+			<!-- 끝 end-->
+		</div>      
 	</div>
 
 	<script>
