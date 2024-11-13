@@ -28,45 +28,37 @@
 
 </head>
 <body>
-	
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-	<jsp:include page="/WEB-INF/views/common/side.jsp"/>
 
 	<div class="body-body">
 	      <!-- 여기 채워서 작업하시면 됩니다 .-->
 	    <div class="text-box">
-	     	<div id='calendar'>asdfasdfsadf</div>
+	     	<div id='calendar'></div>
 		</div>
 	</div>
 
 
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 	<!-- 일정 추가 모달 -->
-<div id="add-event-modal" class="modal">
-  <div class="modal-header">일정 추가</div>
-  <input type="text" id="event-title" placeholder="일정 제목 입력" style="width: 80%; padding: 5px; margin-bottom: 10px;" />
-  <input type="hidden" id="event-date" />
-  <div class="modal-footer btn-box-hover">
-    <button id="add-event-btn" class="btn3-hover">추가</button>
-    <button onclick="$.modal.close()" class="btn2-hover">취소</button>
-  </div>
-</div>
-
-<!-- 일정 삭제 모달 -->
-<div id="delete-event-modal" class="modal">
-  <div class="modal-header">일정 삭제</div>
-  <p id="delete-event-title" style="font-weight: bold;"></p>
-  <p>이 일정을 삭제하시겠습니까?</p>
-  <div class="modal-footer btn-box-hover">
-    <button id="delete-event-btn" class="btn1-hover">삭제</button>
-    <button onclick="$.modal.close()" class="btn2-hover">취소</button>
-  </div>
-</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/ko.js"></script>
-	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+	<div id="add-event-modal" class="modal">
+	  <div class="modal-header">일정 추가</div>
+	  <input type="text" id="event-title" placeholder="일정 제목 입력" style="width: 80%; padding: 5px; margin-bottom: 10px;" />
+	  <input type="hidden" id="event-date" />
+	  <div class="modal-footer btn-box-hover">
+	    <button id="add-event-btn" class="btn3-hover">추가</button>
+	    <button onclick="$.modal.close()" class="btn2-hover">취소</button>
+	  </div>
+	</div>
+	
+	<!-- 일정 삭제 모달 -->
+	<div id="delete-event-modal" class="modal">
+	  <div class="modal-header">일정 삭제</div>
+	  <p id="delete-event-title" style="font-weight: bold;"></p>
+	  <p>이 일정을 삭제하시겠습니까?</p>
+	  <div class="modal-footer btn-box-hover">
+	    <button id="delete-event-btn" class="btn1-hover">삭제</button>
+	    <button onclick="$.modal.close()" class="btn2-hover">취소</button>
+	  </div>
+	</div>
+	
 	
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -121,10 +113,8 @@
 
         ],
         dateClick: function (info) {
-        	console.log("sss");
           $('#event-date').val(info.dateStr);
-          //$('#add-event-modal').modal();
-          new bootstrap.Modal(document.getElementById("add-event-modal")).show();
+          $('#add-event-modal').modal();
         },
         eventClick: function (info) {
           var event = info.event;
@@ -171,8 +161,26 @@
       });
     });
   </script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/ko.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
+
+  
+  <script>
+    function toggleSubmenu(element) {
+      const submenu = element.nextElementSibling;
+      if (submenu.style.maxHeight === "0px" || submenu.style.maxHeight === "") {
+        submenu.style.maxHeight = submenu.scrollHeight + "px";
+      } else {
+        submenu.style.maxHeight = "0";
+      }
+    }
+  </script>
 </body>
-	
+
 
 </html>

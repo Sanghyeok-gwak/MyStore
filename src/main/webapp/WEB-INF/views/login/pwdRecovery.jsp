@@ -8,6 +8,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+		<!-- Vendor CSS Files -->
+   <link href="${contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="${contextPath}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+   <link href="${contextPath}/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+   <link href="${contextPath}/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+   <link href="${contextPath}/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+   <link href="${contextPath}/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+   <link href="${contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+ 
+   <!-- Template Main CSS File -->
+   <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
+
     <style>
       @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600;700&family=Noto+Sans+KR:wght@100..900&display=swap");
 
@@ -116,7 +128,7 @@
       <div class="body_left">
         <div class="login_logo">
           <div class="img_controller">
-            <img src="/Group 8819.png" alt="" />
+            <img src="${ contextPath }/resources/images/login_Logo.png" alt="" />
           </div>
         </div>
       </div>
