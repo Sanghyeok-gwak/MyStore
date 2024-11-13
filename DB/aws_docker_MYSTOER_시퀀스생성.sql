@@ -142,4 +142,20 @@ NOCACHE             -- 캐시 사용하지 않음
 NOORDER             -- 순환하지 않음
 NOCYCLE ;            -- 순서대로 생성하지 않음 (기본값)
 
+CREATE SEQUENCE SALARY_NO_SEQ -- 급여
+MINVALUE 1 MAXVALUE 9999999999999999999999999999 
+INCREMENT BY 1   -- 1씩 증가
+START WITH 1001  -- 첫 번째 값 (상품 시작값)
+NOCACHE             -- 캐시 사용하지 않음
+NOORDER             -- 순환하지 않음
+NOCYCLE ;            -- 순서대로 생성하지 않음 (기본값)
+
+CREATE SEQUENCE BOARDFILE_NO_SEQ -- 급여
+MINVALUE 1 MAXVALUE 9999999999999999999999999999 
+INCREMENT BY 1   -- 1씩 증가
+START WITH 1001  -- 첫 번째 값 (상품 시작값)
+NOCACHE             -- 캐시 사용하지 않음
+NOORDER             -- 순환하지 않음
+NOCYCLE ;            -- 순서대로 생성하지 않음 (기본값)
+
 COMMIT;
