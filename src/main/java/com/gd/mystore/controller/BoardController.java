@@ -23,5 +23,8 @@ public class BoardController {
 	@GetMapping("/boardRegist")
 	public void test4() {
 	}
+	@GetMapping("/bboardDetail")
+	public void test5() {
+	}
 	
 }
