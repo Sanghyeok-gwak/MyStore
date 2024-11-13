@@ -32,7 +32,8 @@
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
 	<div class="body-body">
 		<!-- 여기 채워서 작업하시면 됩니다 .-->
-		<div class="text-box">
+		<div class="text-box" >
+		
 
 			<div style="width: 430px; height: 400px; border: #868686 solid;">
 				<div
@@ -40,24 +41,22 @@
 					<b>조직도</b>
 				</div>
 				<div id="jstree"></div>
+				
 
 			</div>
+			
+			<!--  여기까지가 조직도 div -->
+			
+			
+			<!--  여기부터 다음api  -->	
+			<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
+	<div >
 
-			<div id="smarteditor" style="margin-top: 30px;">
-				<textarea name="editorTxt" id="editorTxt0" rows="20" cols="10"
-					placeholder="내용을 입력해주세요"
-					style="margin-top: 30px; width: 20%; height: 100px;"></textarea>
-			</div>
-
-
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
-<div class="">
-
-                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="margin-bottom: 3%;"><br>
-                <input type="text" id="sample6_postcode" style="margin-bottom: 3%;" placeholder="우편번호">
-                <input type="text" id="sample6_address" style="margin-bottom: 3%;" placeholder="주소"><br>
-                <input type="text" id="sample6_detailAddress" style="margin-bottom: 3%;" placeholder="상세주소">
-                <input type="text" id="sample6_extraAddress" style="margin-bottom: 3%;" placeholder="참고항목" hidden>
+                <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+                <input type="text" id="sample6_postcode"  placeholder="우편번호"><br>
+                <input type="text" id="sample6_address"  placeholder="주소"><br>
+                <input type="text" id="sample6_detailAddress"  placeholder="상세주소"><br>
+                <input type="text" id="sample6_extraAddress"  placeholder="참고항목">
             
             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
             <script>
@@ -110,13 +109,32 @@
                 }
             </script>
             
-            
 
 
+			
+		</div>
+			
+			
+			
+			<!--  여기까지가 다음 api -->
+			
+			
+			<!--  여기부터 스마트 에디터 -->
+			<div id="smarteditor" style="margin-top: 30px;">
+				<textarea name="editorTxt" id="editorTxt0" rows="20" cols="10"
+					placeholder="내용을 입력해주세요"
+					style="margin-top: 30px; width: 20%; height: 100px;"></textarea>
+			</div>
+
+			<!-- 여기까지가 스마트에디터 -->
+			
+			
+			<!-- 여기부터 날씨 api -->
+			
+			
+			<!-- 여기부터 날씨 api 끝 -->
 
 
-
-	</div>
 
 		</div>
 
