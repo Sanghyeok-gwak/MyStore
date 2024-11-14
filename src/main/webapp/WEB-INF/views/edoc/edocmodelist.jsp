@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
 /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
 .text-box {
 	border-radius: 20px;
@@ -284,6 +285,7 @@ input[type=file]::file-selector-button {
 
 	<div class="body-body">
 		<div class="text-box">
+
 			<!-- 여기 채워서 작업하시면 됩니다 .-->
 			<!-- 처음 start -->
 			<div id="topdiv">
@@ -294,29 +296,32 @@ input[type=file]::file-selector-button {
 
 			<hr>
 
-			<form action="">
-				<!-- 중간1 start-->
-				<div id="middiv">
+			<!-- 중간1 start-->
+			<div id="middiv">
 
-					<div style="display: flex;">
-						<div class="btn-box-hover">
-							<button class="btn3-hover" style="width: 120px; font-size: 18px;">추가</button>
-						</div>
-
-						<div class="btn-box-hover">
-							<button class="btn1-hover" style="width: 120px; font-size: 18px;">삭제</button>
-						</div>
+				<div style="display: flex;">
+					<div class="btn-box-hover">
+						<a class="btn3-hover" style="width: 120px; font-size: 18px;"
+							href="${contextPath}/edoc/sampleadd.do">추가</a>
 					</div>
 
+					<div class="btn-box-hover">
+						<a class="btn1-hover" style="width: 120px; font-size: 18px;"
+							href="${contextPath}/edoc/sampledelete.do">삭제</a>
+					</div>
+				</div>
+
+				<form action="${contextPath}/edoc/samplesearch.do" method="get">
 					<div style="display: flex;">
 						<div>
-							<select name="languages" id="lang"
+							<select name="condition" id="lang"
 								style="height: 40px; margin-bottom: 20px;">
 								<option value="select">분류</option>
-								<option value="vac">제목</option>
-								<option value="dept">기안자</option>
+								<option value="sample_desc">제목</option>
+								<option value="emp_no">기안자</option>
 							</select>
 						</div>
+
 						<!-- width값은 페이지에 맞게 조절해주세요 -->
 						<div class="search_box" style="width: 500px; height: 40px;">
 							<input class="input_b" type="text" placeholder="검색"
@@ -327,143 +332,80 @@ input[type=file]::file-selector-button {
 								</button>
 							</div>
 						</div>
-						
+
 					</div>
+				</form>
 
-				</div>
-				<!-- 중간1 end-->
+			</div>
+			<!-- 중간1 end-->
 
 
-				<!-- 중간2 start -->
-				<div id="middiv2">
-					<table class="table table-hover">
+			<!-- 중간2 start -->
+			<div id="middiv2">
+				<table class="table table-hover">
 
-						<thead>
-							<tr>
-								<th scope="col"><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="col">번호</th>
-								<th scope="col">유형</th>
-								<th scope="col">양식설명</th>
-								<th scope="col">생성자</th>
-								<th scope="col">생성일</th>
-							</tr>
-						</thead>
+					<thead>
+						<tr>
+							<th scope="col"><input type="checkbox" id="checkAll"
+								style="width: 18px; height: 18px;"></th>
+							<th scope="col">번호</th>
+							<th scope="col">유형</th>
+							<th scope="col">양식설명</th>
+							<th scope="col">생성자</th>
+							<th scope="col">생성일</th>
+						</tr>
+					</thead>
 
-						<tbody>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
+					<tbody>
+						<c:choose>
+							<c:when test="${ empty list }">
+								<tr>
+									<td colspan="6">조회된 양식이 없습니다.</td>
+								</tr>
+							</c:when>
 
-						</tbody>
-					</table>
-				</div>
-				<!-- 중간2 end -->
+							<c:otherwise>
+								<c:forEach var="s" items="${ list }">
+									<tr>
+										<th><input type="checkbox" id="checkAll"
+											style="width: 18px; height: 18px;"></th>
+										<td>${ s.sampleNo }</td>
+										<td>${ s.sampleDesc }</td>
+										<td>${ s.empNo }</td>
+										<td>${ s.createDt }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 
-			</form>
+					</tbody>
+
+				</table>
+			</div>
+			<!-- 중간2 end -->
+
 
 			<!-- 끝 start-->
 			<div class="paging">
 				<ul class="pagination d-flex justify-content-center text-dark"
 					style="margin-top: 40px;">
-					<li class="page-item disabled"><a class="page-link" href="">
+					<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+						<a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage-1}">
 							<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-					</a></li>
-					<li class="page-item active"><a class="page-link" href="">1</a></li>
-					<li class="page-item"><a class="page-link" href="">2</a></li>
-					<li class="page-item"><a class="page-link" href="">3</a></li>
-					<li class="page-item"><a class="page-link" href="">4</a></li>
-					<li class="page-item"><a class="page-link" href="">5</a></li>
-					<li class="page-item"><a class="page-link" href=""> <span>다음</span>&nbsp;<i
-							class="bi bi-chevron-double-right"></i>
-					</a></li>
+					</a>
+					</li>
+
+					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
+							<a class="page-link" href="${ contextPath }/board/list.do?page=${p}">${p}</a>
+						</li>
+					</c:forEach>
+
+					<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+						<a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage+1}"> <span>다음</span>&nbsp;
+							<i class="bi bi-chevron-double-right"></i>
+						</a>
+					</li>
 				</ul>
 			</div>
 			<!-- 끝 end-->

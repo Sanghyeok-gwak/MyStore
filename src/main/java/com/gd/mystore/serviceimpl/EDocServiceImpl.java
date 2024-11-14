@@ -1,8 +1,12 @@
 package com.gd.mystore.serviceimpl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.EDocDao;
+import com.gd.mystore.dto.EDocSampleDto;
+import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.EDocService;
 
 import lombok.RequiredArgsConstructor;
@@ -12,5 +16,15 @@ import lombok.RequiredArgsConstructor;
 public class EDocServiceImpl implements EDocService {
 	
 	private final EDocDao edocDao;
+
+	@Override
+	public int selectEDocListCount() {
+		return edocDao.selectEDocSampleListCount();
+	}
+
+	@Override
+	public List<EDocSampleDto> selectEDocList(PageInfoDto pi) {
+		return edocDao.selectEDocSampleList(pi);
+	}
 
 }
