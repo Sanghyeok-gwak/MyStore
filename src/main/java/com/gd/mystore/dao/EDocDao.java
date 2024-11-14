@@ -27,4 +27,12 @@ public class EDocDao {
 		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
 		return sqlSession.selectList("edocMapper.selectEDocSampleList", null, rowBounds);
 	}
+	
+	public int insertEDocSample(EDocSampleDto es) {
+		return sqlSession.insert("edocMapper.insertEDocSample", es);
+	}
+	
+	public int deleteEDocSample(String[] deleteNo) {
+		return sqlSession.update("edocMapper.deleteEdocSample", deleteNo);
+	}
 }

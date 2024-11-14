@@ -19,7 +19,7 @@
 					count(*)
 		 from
 		 			tbl_edoc_sample
-		where status = 'Y'
+		where use_yn = 'Y'
 	</select>
 	
 	<select id="selectEDocSampleList" resultMap="edocSampleResultMap">
@@ -28,12 +28,47 @@
 				, sample_dot_code
 				, sample_desc
 				, emp_no
-				, create_date
+				, to_char(create_date, 'YYYY-MM-DD') create_date
 	 	 from 
 	 	 			tbl_edoc_sample
 		where	use_yn = 'Y'
 		order by sample_no desc					
 	</select>
+	
+	<select id="insertEDocSample">
+		insert
+			into tbl_edoc_sample
+			(
+				sample_no
+			, sample_dot_code
+			, sample_desc
+			, sample_format
+			, emp_no
+			, create_date
+			)
+			values
+			(
+				sample_no_seq.nextval
+			,	#{sampleDotCode}
+			,	#{sampleDesc}
+			,	#{sampleFormat}
+			,	1003
+			,	SYSDATE	
+			)
+	</select>
+	
+	<update id="deleteEdocSample">
+		update
+			 		tbl_edoc_sample
+			set use_yn = 'n'
+			 		
+		<where>
+        <foreach item="deleteNo" collection="array" 
+        				 open="no in (" separator="," close=")">
+            #{deleteNo}
+        </foreach>
+		</where>
+	</update>
 
 </mapper>
 

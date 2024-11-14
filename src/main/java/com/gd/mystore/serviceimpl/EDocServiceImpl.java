@@ -27,4 +27,14 @@ public class EDocServiceImpl implements EDocService {
 		return edocDao.selectEDocSampleList(pi);
 	}
 
+	@Override
+	public int insertEDocSample(EDocSampleDto es) {
+		return edocDao.insertEDocSample(es);
+	}
+
+	@Override
+	public int deleteEdocSample(String[] deleteNo) {
+		return edocDao.deleteEDocSample(deleteNo);
+	}
+
 }

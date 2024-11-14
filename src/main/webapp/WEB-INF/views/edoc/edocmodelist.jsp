@@ -300,15 +300,17 @@ input[type=file]::file-selector-button {
 			<div id="middiv">
 
 				<div style="display: flex;">
-					<div class="btn-box-hover">
-						<a class="btn3-hover" style="width: 120px; font-size: 18px;"
-							href="${contextPath}/edoc/sampleadd.do">추가</a>
-					</div>
+					<a class="btn-box-hover" href="${contextPath}/edoc/sampleadd.do">
+						<button class="btn3-hover" style="width: 120px; font-size: 18px;">추가
+						</button>
+					</a>
 
-					<div class="btn-box-hover">
-						<a class="btn1-hover" style="width: 120px; font-size: 18px;"
-							href="${contextPath}/edoc/sampledelete.do">삭제</a>
-					</div>
+					<form action="${contextPath}/edoc/sampledelete.do" method="post" >
+					  <input type="hidden" name="deleteNo" value="${s.sampleNo}">
+					  <div class="btn-box-hover">
+					  <button type="submit" class="btn1-hover" style="width: 120px; font-size: 18px;">삭제</button>
+					  </div>
+					</form>
 				</div>
 
 				<form action="${contextPath}/edoc/samplesearch.do" method="get">
@@ -316,7 +318,6 @@ input[type=file]::file-selector-button {
 						<div>
 							<select name="condition" id="lang"
 								style="height: 40px; margin-bottom: 20px;">
-								<option value="select">분류</option>
 								<option value="sample_desc">제목</option>
 								<option value="emp_no">기안자</option>
 							</select>
@@ -347,7 +348,7 @@ input[type=file]::file-selector-button {
 					<thead>
 						<tr>
 							<th scope="col"><input type="checkbox" id="checkAll"
-								style="width: 18px; height: 18px;"></th>
+									style="width: 18px; height: 18px;"></th>
 							<th scope="col">번호</th>
 							<th scope="col">유형</th>
 							<th scope="col">양식설명</th>
@@ -360,16 +361,21 @@ input[type=file]::file-selector-button {
 						<c:choose>
 							<c:when test="${ empty list }">
 								<tr>
-									<td colspan="6">조회된 양식이 없습니다.</td>
+									<td colspan="6"
+										style="text-align: center; vertical-align: middle;">조회된
+										양식이 없습니다.</td>
 								</tr>
 							</c:when>
 
 							<c:otherwise>
 								<c:forEach var="s" items="${ list }">
 									<tr>
-										<th><input type="checkbox" id="checkAll"
-											style="width: 18px; height: 18px;"></th>
+										<td>
+											<input type="checkbox" class="list-checkbox" 
+														 style="width: 18px; height: 18px;">
+										</td>
 										<td>${ s.sampleNo }</td>
+										<td>${ s.sampleDotCode }</td>
 										<td>${ s.sampleDesc }</td>
 										<td>${ s.empNo }</td>
 										<td>${ s.createDt }</td>
@@ -385,30 +391,34 @@ input[type=file]::file-selector-button {
 			<!-- 중간2 end -->
 
 
-			<!-- 끝 start-->
-			<div class="paging">
-				<ul class="pagination d-flex justify-content-center text-dark"
-					style="margin-top: 40px;">
-					<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-						<a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage-1}">
-							<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-					</a>
-					</li>
 
-					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-						<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
-							<a class="page-link" href="${ contextPath }/board/list.do?page=${p}">${p}</a>
+			<!-- 페이징 -->
+			<c:if test="${ not empty list }">
+				<div class="paging">
+					<ul class="pagination d-flex justify-content-center text-dark"
+						style="margin-top: 40px;">
+						<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+							<a class="page-link" href="${ contextPath }/edoc/list.do?page=${pi.currentPage-1}">
+								<i class="bi bi-chevron-double-left"></i> <span>이전</span>
+							</a>
 						</li>
-					</c:forEach>
 
-					<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-						<a class="page-link" href="${ contextPath }/board/list.do?page=${pi.currentPage+1}"> <span>다음</span>&nbsp;
-							<i class="bi bi-chevron-double-right"></i>
-						</a>
-					</li>
-				</ul>
-			</div>
-			<!-- 끝 end-->
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
+								<a class="page-link" href="${ contextPath }/edoc/list.do?page=${p}">${p}</a>
+							</li>
+						</c:forEach>
+
+						<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+							<a class="page-link" href="${ contextPath }/edoc/list.do?page=${pi.currentPage+1}">
+								<span>다음</span>&nbsp; 
+								<i class="bi bi-chevron-double-right"></i>
+						 </a>
+						</li>
+					</ul>
+				</div>
+			</c:if>
+			<!-- 페이징 end -->
 
 
 		</div>
@@ -416,19 +426,16 @@ input[type=file]::file-selector-button {
 
 	<script>
 		// 체크박스 전체 선택
-		document.getElementById('checkAll').addEventListener(
-				'change',
-				function() {
-
-					const allChecked = this.checked;
-
-					const checkboxes = document
-							.querySelectorAll('.list-checkbox');
-
-					checkboxes.forEach(function(cbox) {
-						cbox.checked = allChecked;
-					});
-				});
+		document.getElementById('checkAll').addEventListener('change', function() {
+		    const allChecked = this.checked;
+	
+		    // 현재 페이지에 있는 체크박스들만 선택하도록 처리
+		    const checkboxes = document.querySelectorAll('#middiv2 .list-checkbox');
+		    
+		    checkboxes.forEach(function(cbox) {
+		        cbox.checked = allChecked;
+		    });
+		});
 	</script>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

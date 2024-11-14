@@ -8,6 +8,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- 네이버 스마트에디터 -->
+<script type="text/javascript"
+	src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+
+<!-- jQuery 라이브러리 (한 번만 포함) -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <style>
 /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
 .text-box {
@@ -285,7 +293,8 @@ input[type=file]::file-selector-button {
 
 	<div class="body-body">
 		<div class="text-box">
-			<form action="">
+			<form action="${contextPath}/edoc/forminsert.do" method="post"
+				name="editorForm">
 
 				<!-- 처음 start -->
 				<div id="topdiv">
@@ -299,16 +308,18 @@ input[type=file]::file-selector-button {
 				<div id="middiv">
 
 					<div id="content">
-						<div id="form_title" style="width: 9%;">결재 유형</div>
+						<div id="form_title" style="width: 9%;">양식 유형</div>
 						<div class="input-bar" style="width: 30%; padding-left: 10px;">
-							<input type="text" class="input-bar1" placeholder="결재 유형을 입력해주세요">
+							<input type="text" class="input-bar1" placeholder="양식 유형을 입력해주세요"
+								name="sampleDotCode">
 						</div>
 					</div>
 
 					<div id="content" style="margin-top: 10px;">
 						<div id="form_title" style="width: 9%;">양식 설명</div>
 						<div class="input-bar" style="width: 91%; padding-left: 10px;">
-							<input type="text" class="input-bar1" placeholder="양식유형을 입력해주세요">
+							<input type="text" class="input-bar1" placeholder="양식 설명을 입력해주세요"
+								name="sampleDesc">
 						</div>
 					</div>
 
@@ -319,26 +330,26 @@ input[type=file]::file-selector-button {
 
 				<!-- smarteditor start-->
 				<div id="smarteditor">
-					<textarea name="editorTxt" id="editorTxt0" rows="15"
-						style="width: 100%;">
-        </textarea>
+					<textarea name="sampleFormat" id="editorTxt0" rows="15"
+						style="width: 100%;"></textarea>
 				</div>
 				<!-- smarteditor end-->
 
 				<!-- 끝 start-->
 				<div id="enddiv">
 					<div class="btn-box-hover">
-						<button class="btn3-hover" style="width: 120px; font-size: 18px;">작성하기</button>
+						<button class="btn3-hover" style="width: 120px; font-size: 18px;"
+							type="button" onclick="submitForm()">작성하기</button>
 					</div>
 					<div class="btn-box-hover">
 						<button class="btn1-hover"
-							style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
+							style="width: 120px; margin-left: 20px; font-size: 18px;"
+							type="button" onclick="history.go(-1);">뒤로가기</button>
 					</div>
 				</div>
 				<!-- 끝 end-->
 
 			</form>
-
 		</div>
 	</div>
 
@@ -348,33 +359,26 @@ input[type=file]::file-selector-button {
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef : oEditors,
 				elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-				sSkinURI : "/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
+				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
 				htParams : {
-					// 입력창 크키 조절바 사용여부 (true: 사용, false: 미사용)
-					bUseVerticalResizer : false,
+					bUseVerticalResizer : false, // 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
 				},
 				fCreator : "createSEditor2"
-			})
+			});
+		};
+
+		$(document).ready(function() {
+			// 스마트에디터 적용
+			smartEditor();
+		});
+
+		function submitForm() {
+			// 스마트에디터 내용 가져오기
+			oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
+
+			// 폼 제출
+			document.forms["editorForm"].submit();
 		}
-
-		$(document)
-				.ready(
-						function() {
-							//스마트에디터 적용
-							smartEditor();
-							//값 불러오기
-							function preview() {
-								// 에디터의 내용을 textarea에 적용
-								oEditors.getById["editorTxt0"].exec(
-										"UPDATE_CONTENTS_FIELD", []);
-								// textarea 값 불러오기 
-								var content = document
-										.getElementById("editorTxt0").value;
-								alert(content);
-								return;
-							}
-
-						})
 	</script>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
