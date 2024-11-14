@@ -9,7 +9,7 @@
         <span>인사 관리</span>
       </div>
       <div class="submenu">
-        <a href="#">부서관리</a>
+        <a href="${ contextPath }/department/departmentModify">부서관리</a>
         <a href="#">사원관리</a>
         <a href="#">급여관리</a>
       </div>
@@ -19,9 +19,9 @@
         <span>게시판</span>
       </div>
       <div class="submenu">
-        <a href="#">공지사항</a>
-        <a href="#">하위메뉴</a>
-        <a href="#">하위메뉴</a>
+        <a href="${ contextPath }/board/boardList">공지사항</a>
+        <a href="#">자유게시판</a>
+        <a href="#">익명게시판</a>
       </div>
 
       <div class="side-icon" onclick="toggleSubmenu(this)">
