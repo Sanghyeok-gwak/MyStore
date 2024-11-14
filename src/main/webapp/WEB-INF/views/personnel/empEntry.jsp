@@ -96,33 +96,7 @@
             }
           </script>
         </div>
-        <!-- <style>
-          .input-box-top{
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-          }
-          .input-box-top-box1,.input-box-top-box2,.input-box-top-box3,.input-box-top-box4,.input-box-top-box5
-          ,.input-box-top-box6,.input-box-top-box7,.input-box-top-box8{
-            display: flex;
-            margin-bottom: 30px;
-          }
-          .input-box-top-box1-text,.input-box-top-box2-text,.input-box-top-box3-text,.input-box-top-box4-text,.input-box-top-box5-text
-          ,.input-box-top-box6-text,.input-box-top-box7-text,.input-box-top-box8-text{
-            width: 30%;
-          
-          }
-          .input-box-top-box1-input,.input-box-top-box2-input,.input-box-top-box3-input,.input-box-top-box4-input,.input-box-top-box5-input
-          ,.input-box-top-box6-input,.input-box-top-box7-input,.input-box-top-box8-input{
-            width: 70%;
-          }
-          .input-box-top input{
-            height: 30px;
-            width: 100%;
-            border: 1px solid lightgray;
-          }
-        </style>
- -->
+        
         <div class="input-box-top">
           <div class="input-box-top-box1">
             <div class="input-box-top-box1-text">
@@ -200,36 +174,44 @@
             </div>
 
             <div class="input-box-top-box6-input">
-								<style>
-									.addr-box{
-										display:flex;
-									}
-									.addr-box-left{
-										width:95%;
-									}
-									.addr-box-rigth{
-										width:5%;
-									}
-									.addr-box-rigth button{
-										width:100%;
-										background-color:white;
-										height: 30px;
-										border: 1px solid lightgray;
-									}
-								</style>
+            
+<style>
+	.addr-box {
+		  display:flex;
+	}
+	.addr-box-left{
+		  width:95%;
+	}
+	.addr-box-rigth{
+		  width:5%;
+	}
+	.addr-box-rigth button{
+			width:100%;
+			background-color:white;
+			height: 30px;
+			border: 1px solid lightgray;
+	}
+</style>
+				<!--  
+				
                 <div class="addr-box">
+                
                 	<div class="addr-box-left">
 	  	              <input type="text" id="sample6_postcode" style="margin-bottom: 3%;" placeholder="우편번호">
                 	</div>
+                	
   	            	<div class="addr-box-rigth">
 	  	              <button onclick="sample6_execDaumPostcode()"><i class="bx bxs-clinic"></i></button>
   	            	</div>
+  	            	
                 </div>
+                
                 <input type="text" id="sample6_address" style="margin-bottom: 3%;" placeholder="주소"><br>
                 <input type="text" id="sample6_detailAddress" style="margin-bottom: 3%;" placeholder="상세주소">
                 <input type="hidden" id="sample6_extraAddress" style="margin-bottom: 3%;" placeholder="참고항목">
             
             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+            
             <script>
                 function sample6_execDaumPostcode() {
                     new daum.Postcode({
@@ -281,11 +263,50 @@
             </script>
             
               
-            </div>
-          </div>
+		  -->
+		  
 
+		  <div class="addr-box">
+    <div class="addr-box-left">
+        <input type="text" id="sample6_postcode" style="margin-bottom: 3%;" placeholder="우편번호">
+    </div>
+    <div class="addr-box-right">
+        <button onclick="sample6_execDaumPostcode()"><i class="bx bxs-clinic"></i></button>
+    </div>
+</div>
+
+<input type="text" id="sample6_address" style="margin-bottom: 3%;" placeholder="주소"><br>
+<input type="text" id="sample6_detailAddress" style="margin-bottom: 3%;" placeholder="상세주소">
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 주소 변수
+                var addr = ''; 
+            
+                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+            
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
+		  
           
-          
+                      </div>
+          </div>
 
 
 

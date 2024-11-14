@@ -6,17 +6,28 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="com.gd.mystore.dto.EDocDto" alias="EDocDto"/>									<!-- 전자결재 -->
+	
+		<typeAlias type="com.gd.mystore.dto.EDocDto" alias="EDocDto"/>					<!-- 전자결재 -->
 		<typeAlias type="com.gd.mystore.dto.EDocApprovalDto" alias="EDocApprovalDto"/>	<!-- 전자결재선 -->
-		<typeAlias type="com.gd.mystore.dto.EDocAttachDto" alias="EDocAttachDto"/>			<!-- 전자결재 첨부파일 -->
-		<typeAlias type="com.gd.mystore.dto.EDocSampleDto" alias="EDocSampleDto"/>			<!-- 전자결재 양식 -->
+		<typeAlias type="com.gd.mystore.dto.EDocAttachDto" alias="EDocAttachDto"/>		<!-- 전자결재 첨부파일 -->
+		<typeAlias type="com.gd.mystore.dto.EDocSampleDto" alias="EDocSampleDto"/>		<!-- 전자결재 양식 -->
+		
+		<typeAlias type="com.gd.mystore.dto.PersonnelDto" alias="PersonnelDto"/>			<!-- 사원 -->
+		<typeAlias type="com.gd.mystore.dto.SalaryDto" alias="SalaryDto"/>					<!-- 급여 -->
+		
+		
 		
 	</typeAliases>
 	
 	
 	<mappers>
-		<mapper resource="mappers/edoc-mapper.xml" />			<!-- 전자결재 mapper -->
 	
+		<mapper resource="mappers/edoc-mapper.xml" />			<!-- 전자결재 mapper -->
+		
+		<mapper resource="mappers/personnel-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
+        <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
+		
+		
 	</mappers>
 	
 

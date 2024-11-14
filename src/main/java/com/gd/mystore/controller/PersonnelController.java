@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/personnel")
 public class PersonnelController {
 
-	@GetMapping("detailEmp")
-	public void test1() {
-	}
-	
-	@GetMapping("empEntry")
-	public void test2() {
-	}
+	@GetMapping("/employeeManager")
+    public void employeeList() {
+        // 직원 리스트 조회 로직
+    }
 
-	@GetMapping("employeeManager")
-	public void test3() {
-	}
-	@GetMapping("salaryMaster")
-	public void test4() {
-	}
+    @GetMapping("/detailEmp")
+    public void detailEmp() {
+        // 직원 상세 조회 및 수정 기능
+    }
+
+    @GetMapping("/empEntry")
+    public void empEntry() {
+        // 직원 등록 로직
+    }
 	
 }

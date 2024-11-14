@@ -8,25 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/mypage")
 public class MypageController {
 	
-	@GetMapping("myinfo")
-	public void test1() {
-	}
-	
-	@GetMapping("passwordRecovery")
-	public void test2() {
-	}
+	 @GetMapping("/myInfo")
+	    public void myInfo() {
+	        // 내 정보 조회 및 수정 기능
+	    }
 
-	@GetMapping("payCheck")
-	public void test3() {
-	}
-	@GetMapping("workStatus")
-	public void test4() {
-	}
-	
-	
-	
-	
-	
+	    @GetMapping("/passwordRecovery")
+	    public void passwordChange() {
+	        // 비밀번호 변경 기능
+	    }
+
+	    @GetMapping("/workStatus")
+	    public void workStatus() {
+	        // 근무 상태 확인 기능
+	    }
 	
 	
 	

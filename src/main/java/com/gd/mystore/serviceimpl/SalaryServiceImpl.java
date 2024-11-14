@@ -1,5 +1,5 @@
 package com.gd.mystore.serviceimpl;
 
-public class SalServiceImpl {
+public class SalaryServiceImpl {
 
 }
