@@ -10,7 +10,7 @@
 		<typeAlias type="com.gd.mystore.dto.EDocApprovalDto" alias="EDocApprovalDto"/>	<!-- 전자결재선 -->
 		<typeAlias type="com.gd.mystore.dto.EDocAttachDto" alias="EDocAttachDto"/>			<!-- 전자결재 첨부파일 -->
 		<typeAlias type="com.gd.mystore.dto.EDocSampleDto" alias="EDocSampleDto"/>			<!-- 전자결재 양식 -->
-	
+		
 	</typeAliases>
 	
 	
