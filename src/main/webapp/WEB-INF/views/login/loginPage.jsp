@@ -1,3 +1,4 @@
+<%@page import="org.springframework.http.server.reactive.ContextPathCompositeHandler"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -132,7 +133,16 @@
         margin-top: 10px;
       }
     </style>
-
+		
+		<script>
+			if('${alertMsg}' != ''){
+				alert('${alertMsg}');
+				if('${historyBackYN}' == 'Y'){
+					history.back();
+				}
+			}
+		</script>
+		
 </head>
 <body>
     <div class="my_body">
@@ -149,38 +159,32 @@
         <div class="body_right1">
           <div class="body_right_list">
             <div class="right_login">LOGIN</div>
-            <div class="right_id">
-              계정
-              <div class="input-bar">
-                <input
-                  type="text"
-                  class="input-bar1"
-                  placeholder="사번을 입력해주세요"
-                />
-              </div>
-            </div>
-            <div class="right_id">
-              비밀번호
-              <div class="input-bar">
-                <input
-                  type="password"
-                  class="input-bar1"
-                  id="right_pwd"
-                  placeholder="비밀번호 입력해주세요"
-                />
-              </div>
-            </div>
-
-            <div class="save_id">
-              <input class="form-check-input" type="checkbox" id="gridCheck1" />
-              아이디 저장
-            </div>
-
-            <div class="login_btn">
-              <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-primary" type="button">로그인</button>
-              </div>
-            </div>
+            
+            <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
+		            <div class="right_id">
+		              계정
+		              <div class="input-bar">
+		                <input type="text" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요"/>
+		              </div>
+		            </div>
+		            <div class="right_id">
+		              비밀번호
+		              <div class="input-bar">
+		                <input type="password" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요"/>
+		              </div>
+		            </div>
+		
+		            <div class="save_id">
+		              <input class="form-check-input" type="checkbox" id="gridCheck1" />
+		              아이디 저장
+		            </div>
+		
+		            <div class="login_btn">
+		              <div class="d-grid gap-2 mt-3">
+		                <button class="btn btn-primary" type="submit">로그인</button>
+		              </div>
+		            </div>
+            </form>
 
             <div class="password_recovery">
               <a href="#">비밀번호 찾기</a>

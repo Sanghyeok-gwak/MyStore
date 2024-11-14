@@ -154,11 +154,15 @@
     }
     .header-nav .badge-number {
         position: absolute;
-        inset: -4px -9px auto auto;
-        font-weight: normal;
-        font-size: 12px;
-        padding: 3px 6px;
+		    inset: -5px -5px auto auto;
+		    font-weight: normal;
+		    font-size: 9px;
+		    padding: 4px 6px;
     }
+    .header-nav>ul {
+		    margin: 0;
+		    padding: 3px;
+		}
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
     * {
       margin: 0;
@@ -355,6 +359,7 @@
       background-color: white;
       border: 1px solid lightgray;
     }
+
   </style>
   <div class="my-head">
   <div class="head-icon">
@@ -369,8 +374,17 @@
 
               <li class="nav-item dropdown">
       
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                  <img src="" class="head_img">
+                <a class="nav-link nav-icon" id="head_img_4" href="#" data-bs-toggle="dropdown">
+                	<c:choose>
+                		<c:when test="${ empty loginUser.empProfile }">
+                			<img src="${ contextPath }/resources/images/defaultImg.png" class="head_img">
+                		</c:when>
+                		
+                		<c:otherwise> 		
+                			<img src="${ loginUser.empProfile }" class="head_img">
+                		</c:otherwise>
+                	</c:choose>
+                  
                   <span class="badge bg-primary badge-number">4</span>
                 </a><!-- End Notification Icon -->
       
@@ -443,7 +457,7 @@
               </li><!-- End Notification Nav -->
               </ul>
               </nav>
-          <span>ㅇㅇㅇ</span><span>님 환영합니다.</span>
+          <span>${ loginUser.empName }</span><span>님 환영합니다.</span>
       </div>
 
       <div class="header_right_list">

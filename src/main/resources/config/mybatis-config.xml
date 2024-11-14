@@ -15,7 +15,8 @@
 		<typeAlias type="com.gd.mystore.dto.PersonnelDto" alias="PersonnelDto"/>			<!-- 사원 -->
 		<typeAlias type="com.gd.mystore.dto.SalaryDto" alias="SalaryDto"/>					<!-- 급여 -->
 		
-		
+		<!-- 로그인 -->
+		<typeAlias type="com.gd.mystore.dto.EmpMemberDto" alias="EmpMemberDto"/>
 		
 	</typeAliases>
 	
@@ -25,9 +26,10 @@
 		<mapper resource="mappers/edoc-mapper.xml" />			<!-- 전자결재 mapper -->
 		
 		<mapper resource="mappers/personnel-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
-        <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
+    <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
 		
-		
+		<!-- 로그인 mapper -->
+		<mapper resource="mappers/empMember-mapper.xml"/>
 	</mappers>
 	
 
