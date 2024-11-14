@@ -74,7 +74,7 @@ public class EDocController {
 	}
 	
 	@PostMapping("/sampledelete.do")
-	public String sampledelete(String[] deleteNo, Model model) {
+	public String sampledelete(@RequestParam("deleteNo") String[] deleteNo, Model model) {
 		
 		int result = edocService.deleteEdocSample(deleteNo);
 		
