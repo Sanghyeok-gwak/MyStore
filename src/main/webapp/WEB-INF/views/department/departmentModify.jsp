@@ -137,15 +137,14 @@ input {
 						</div>
 						<div style="height: calc(100% - 60px); overflow-y: auto;">
 							<table class="table table-hover"
-								style="margin-top: 0px; width: 100%;">
+								style="margin-top: 0px; width: 100%; text-align: center; vertical-align: middle;">
 								<thead>
 									<tr>
 										<th scope="col"></th>
 										<th scope="col">이름</th>
 										<th scope="col">사번</th>
 										<th scope="col">직책</th>
-										<th scope="col">상위부서</th>
-										<th scope="col">하위부서</th>
+										<th scope="col">부서</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -156,7 +155,6 @@ input {
 										<td>A12345</td>
 										<td>사원</td>
 										<td>총무본부</td>
-										<td>재정팀</td>
 									</tr>
 									<tr>
 										<td><input type="checkbox" name="checkbox" value="2"
@@ -165,7 +163,6 @@ input {
 										<td>A67890</td>
 										<td>대리</td>
 										<td>총무본부</td>
-										<td>회계팀</td>
 									</tr>
 									<tr>
 										<td><input type="checkbox" name="checkbox" value="3"
@@ -174,7 +171,6 @@ input {
 										<td>A11223</td>
 										<td>과장</td>
 										<td>인사팀</td>
-										<td>기획팀</td>
 									</tr>
 									<tr>
 										<td><input type="checkbox" name="checkbox" value="3"
@@ -183,7 +179,6 @@ input {
 										<td>A11223</td>
 										<td>과장</td>
 										<td>인사팀</td>
-										<td>기획팀</td>
 									</tr>
 									<tr>
 										<td><input type="checkbox" name="checkbox" value="3"
@@ -192,7 +187,6 @@ input {
 										<td>A11223</td>
 										<td>과장</td>
 										<td>인사팀</td>
-										<td>기획팀</td>
 									</tr>
 								</tbody>
 							</table>
@@ -258,10 +252,11 @@ input {
 										<c:otherwise>
 											<c:forEach var="b" items="${ list }">
 												<tr>
-													<td></td>
+													<td> <!-- 고유한 id를 부여한 체크박스 -->
+            <input type="checkbox" id="checkbox_${b.empNo}" name="checkbox_${b.empNo}" value="${b.empNo}" style="width:15px;"></td>
 													<td>${ b.empName }</td>
 													<td>${ b.empNo }</td>
-													<td>${ b.Nm }</td>
+													<td>${ b.nm }</td>
 													<td>${ b.deptUpStair }</td>
 													<td>${ b.deptName }</td>
 													

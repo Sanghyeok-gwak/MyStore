@@ -22,4 +22,8 @@ public class EmpMemberDto {
                    empPwd, empAuth, empRank, empProfile, deptCode,
                    useYn, acNo, acBank;
     private Date createDate, modifyDate;
+    
+    private String nm;  // 부서에서 회원리스트 조회
+    private String deptUpStair;
+    private String deptName;
 }
