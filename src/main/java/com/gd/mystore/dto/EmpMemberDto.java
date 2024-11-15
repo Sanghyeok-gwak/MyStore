@@ -16,11 +16,26 @@ import lombok.ToString;
 @ToString
 @Builder
 public class EmpMemberDto {
-    private int creater, modifier;
-    private String empNo, empName, empGender, empBirth, empPhone, empEmail,
-                   empAddress, empEmployment, empDetailAddress, empPostcode,
-                   empPwd, empAuth, empRank, empProfile, deptCode,
-                   useYn, acNo, acBank;
+    private int creater
+    		  , modifier;
+    private String empNo
+    			 , empName
+    			 , empGender
+    			 , empBirth
+    			 , empPhone
+    			 , empEmail
+    			 , empAddress
+    			 , empEmployment
+    			 , empDetailAddress
+    			 , empPostcode
+    			 , empPwd
+    			 , empAuth
+    			 , empRank
+    			 , empProfile
+    			 , deptCode
+    			 , useYn
+    			 , acNo
+    			 , acBank;
     private Date createDate, modifyDate;
     
     private String nm;  // 부서에서 회원리스트 조회

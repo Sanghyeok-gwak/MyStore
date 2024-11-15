@@ -3,12 +3,15 @@ package com.gd.mystore.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +32,39 @@ public class EmpMemberController {
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	
 	@GetMapping("/loginPage")
-	public void test1() {}
+	public String loginCookie(
+			@CookieValue(value = "remember-empNo", required = false) Cookie cookie
+			,Model model) {
+		
+		System.out.println("로그인 페이지 진입");
+		
+		String empNo = "";					// 저장된 아이디
+		boolean rememberEmpNo = false;		// 아이디 저장 체크 여부
+		
+		if( cookie != null) {
+			System.out.println("Ck Name : " + cookie.getName());
+			System.out.println("Ck Value : " + cookie.getValue());
+			empNo = cookie.getValue();
+			rememberEmpNo = true;
+		}
+		
+		model.addAttribute("empNo", empNo);
+		model.addAttribute("rememberEmpNo", rememberEmpNo);
+		
+		return "/login/loginPage";
+		
+	}
+	
+	@GetMapping("/logOut.do")
+	public String logOut() {
+		
+		
+		
+		return "/login/loginPage";
+	}
 	
 	@PostMapping("/signin.do")
-	public String test2(EmpMemberDto em
+	public String login(EmpMemberDto em
 					, HttpServletResponse response
 					, HttpServletRequest request
 					, HttpSession session
@@ -55,7 +87,7 @@ public class EmpMemberController {
 	}
 
 	
-//	@GetMapping("/pwdRecovery")
+//	@GetMapping("/pwdRecovery") //비밀번호 찾기
 //	public void test2() {
 //	}
 	

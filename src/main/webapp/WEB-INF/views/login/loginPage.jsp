@@ -134,15 +134,15 @@
       }
     </style>
 		
-		<script>
-			if('${alertMsg}' != ''){
-				alert('${alertMsg}');
-				if('${historyBackYN}' == 'Y'){
-					history.back();
-				}
+	<script>
+		if('${alertMsg}' != ''){
+			alert('${alertMsg}');
+			if('${historyBackYN}' == 'Y'){
+				history.back();
 			}
-		</script>
-		
+		}
+	</script>
+	
 </head>
 <body>
     <div class="my_body">
@@ -164,7 +164,7 @@
 		            <div class="right_id">
 		              계정
 		              <div class="input-bar">
-		                <input type="text" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요"/>
+		                <input type="text" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="${empNo}"/>
 		              </div>
 		            </div>
 		            <div class="right_id">
@@ -175,7 +175,7 @@
 		            </div>
 		
 		            <div class="save_id">
-		              <input class="form-check-input" type="checkbox" id="gridCheck1" />
+		              <input class="form-check-input" name="remember-empNo" type="checkbox" id="gridCheck1" checked="${ rememberEmpNo }"/>
 		              아이디 저장
 		            </div>
 		
