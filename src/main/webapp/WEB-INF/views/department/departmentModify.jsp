@@ -13,24 +13,6 @@
 	justify-content: flex-end;
 }
 
-.dropdown {
-	width: 150px;
-	height: 35px;
-	margin-right: 15px;
-	border: 1px solid gray;
-}
-
-.card {
-	margin-bottom: 30px;
-	border: none;
-	border-radius: 5px;
-	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
-
-.card-body {
-	padding: 0 20px 20px 20px;
-}
-
 /* 넓이 높이만 수정해서 사용하세요 인풋 스타일*/
 input {
 	border: 1px solid gray;
@@ -65,17 +47,6 @@ input {
 	margin-right: 10px;
 }
 
-.pagination .page-link {
-	color: rgba(109, 105, 108, 1);
-	background-color: white;
-	border: none;
-}
-
-.pagination .page-item.active .page-link {
-	border: 1px solid red;
-	color: red;
-	background-color: white;
-}
 /* jstree contextmenu에 대한 기본 스타일 추가 */
 .jstree-contextmenu {
 	position: absolute;
@@ -83,12 +54,12 @@ input {
 }
 </style>
 
-</head>
-<body>
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+</head>
+<body>
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>

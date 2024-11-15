@@ -19,13 +19,6 @@
 	justify-content: flex-end;
 }
 
-.dropdown {
-	width: 150px;
-	height: 35px;
-	margin-right: 15px;
-	border: 1px solid gray;
-}
-
 .card {
 	margin-bottom: 30px;
 	border: none;
