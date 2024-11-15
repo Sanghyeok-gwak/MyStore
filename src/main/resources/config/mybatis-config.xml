@@ -14,6 +14,7 @@
 		
 		<typeAlias type="com.gd.mystore.dto.PersonnelDto" alias="PersonnelDto"/>			<!-- 사원 -->
 		<typeAlias type="com.gd.mystore.dto.SalaryDto" alias="SalaryDto"/>					<!-- 급여 -->
+		<typeAlias type="com.gd.mystore.dto.ProductDto" alias="ProductDto"/>					<!-- 상품 -->
 		
 		<!-- 로그인 -->
 		<typeAlias type="com.gd.mystore.dto.EmpMemberDto" alias="EmpMemberDto"/>

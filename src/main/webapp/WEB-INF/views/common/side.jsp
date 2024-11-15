@@ -57,6 +57,7 @@
       </div>
       <div class="submenu">
         <a href="#">발주 관리</a>
+        <a href="#">상품 관리</a>
         <a href="#">지점 이동</a>
       </div>
 

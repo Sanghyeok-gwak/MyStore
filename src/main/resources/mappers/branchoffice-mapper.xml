@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper>
-  <cache-ref namespace=""/>
+  <cache-ref namespace="branchofficeMapper"/>
+  
+  <resultMap id="boResultMap" type="ProductDto">
+		<result column="PRODUCT_NO" property="productNo"/>
+		<result column="CLASSIFICATION_NO" property="productDivision"/>
+		<result column="PRODUCT_NAME" property="productName"/>
+		<result column="COST" property="cost"/>
+		<result column="SAIL_PRICE" property="sailPrice"/>
+		<result column="PROFIT_MARGIN" property="profitMargin"/>
+		<result column="RECOMMENDED_CATEGORY" property="recommendedCategory"/>
+		<result column="EXPIRATION_PERIOD" property="expirationPeriod"/>
+		<result column="PRODUCT_IMG" property="productImg"/>
+		<result column="CREATER" property="creater"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="MODIFY_DATE" property="modifyDate" />
+		<result column="DELIVERY_DATE" property="deliveryDate" />
+		<result column="USE_YN" property="useYn" />
+  </resultMap>
+  
+  <select id="selectProductListCount" resultType="_int">
+		select 
+					 count(*)
+			from TBL_PRODUCT
+		 where USE_YN = 'Y'
+  </select>
+  <select id="select" resultMap="boResultMap">
+  	select
+		       PRODUCT_NO
+		     , CLASSIFICATION_NO
+		     , PRODUCT_NAME
+		     , COST
+		     , SAIL_PRICE
+             , PROFIT_MARGIN
+             , RECOMMENDED_CATEGORY
+             , EXPIRATION_PERIOD
+             , PRODUCT_IMG
+             , p.CREATER
+             , p.CREATE_DATE
+             , p.MODIFIER
+             , p.MODIFY_DATE
+             , p.DELIVERY_DATE
+             , p.USE_YN
+		  from TBL_PRODUCT p 
+		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
+		 where p.USE_YN = 'Y'
+		 order by PRODUCT_NO desc
+  </select>
+  
+  
 </mapper>
