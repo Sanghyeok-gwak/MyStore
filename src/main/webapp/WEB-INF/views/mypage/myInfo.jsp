@@ -82,9 +82,10 @@
       
         <br>
         
+        <!-- input type = image 라서 value값이 아니고 src 사용했음, 뒤에는 만약에 이미지 안뜰까봐 디폴트값 처리 -->
         <div class="product-img-box">
           <div class="upload-image"  style="">
-            <img id="preview" src="/assets/img/sooz.png" style="width: 100%; height: 100%;">
+            <input type="image" id="preview" src="${ loginUser.empProfile }"  default='/resources/images/defaultImg.png' style="width: 100%; height: 100%;" readonly>
           </div>
           <!--
           <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
@@ -109,49 +110,64 @@
               <span class="ffont3">부서</span>
             </div>
             <div class="input-box-top-box1-input">
-              <input type="text"  value="인사과" style="background-color: lightgray;" readonly>
+              <input type="text"  value="${ loginUser.deptCode }" style="background-color: lightgray;" readonly>
             </div>
           </div>
+          
           <div class="input-box-top-box2">
             <div class="input-box-top-box2-text">
-              <span class="ffont3">성명</span>
+              <span class="ffont3">직급</span>
             </div>
             <div class="input-box-top-box2-input">
-              <input type="text" value="배수지" style="background-color: lightgray;" readonly>
+              <input type="text"  value="${ loginUser.empRank }" style="background-color: lightgray;" readonly>
             </div>
           </div>
+          
           <div class="input-box-top-box3">
             <div class="input-box-top-box3-text">
-              <span class="ffont3">사번</span>
+              <span class="ffont3">성명</span>
             </div>
             <div class="input-box-top-box3-input">
-              <input type="text" value="10001" style="background-color: lightgray;" readonly>
+              <input type="text" value="${ loginUser.empName }" style="background-color: lightgray;" readonly>
             </div>
           </div>
+          
           <div class="input-box-top-box4">
             <div class="input-box-top-box4-text">
-              <span class="ffont3">휴대폰</span>
+              <span class="ffont3">사번</span>
             </div>
             <div class="input-box-top-box4-input">
-              <input type="text" value="010-8785-4542">
+              <input type="text" value="${ loginUser.empNo }" style="background-color: lightgray;" readonly>
             </div>
           </div>
+          
           <div class="input-box-top-box5">
             <div class="input-box-top-box5-text">
-              <span class="ffont3">이메일</span>
+              <span class="ffont3">휴대폰</span>
             </div>
             <div class="input-box-top-box5-input">
-              <input type="text" value="sooz2@gmail.com">
+              <input type="text" value="${ loginUser.empPhone }">
+            </div>
+          </div>
+          
+          <div class="input-box-top-box6">
+            <div class="input-box-top-box6-text">
+              <span class="ffont3">이메일</span>
+            </div>
+            <div class="input-box-top-box6-input">
+              <input type="text" value="${ loginUser.empEmail }">
             </div>
           </div>
 
-          <div class="input-box-top-box8">
-            <div class="input-box-top-box6-text">
+          <div class="input-box-top-box7">
+            <div class="input-box-top-box7-text">
               <span class="ffont3">주소</span>
             </div>
-            <div class="input-box-top-box6-input">
+            <div class="input-box-top-box7-input">
 
-              <input type="text" value="주소가나와요" style="margin-bottom: 10px;">
+              <input type="text" value="${ loginUser.empPostcode }" style="margin-bottom: 10px;">
+              <input type="text" value="${ loginUser.empAddress }" style="margin-bottom: 10px;">
+              <input type="text" value="${ loginUser.empDetailAddress }" style="margin-bottom: 10px;">
               <!--
                 <input type="text" value="서울시 서울구 서울동" style="margin-bottom: 10px;">
                 <input type="text" value="힐스테이트" style="margin-bottom: 10px;">
