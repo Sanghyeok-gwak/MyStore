@@ -1,5 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper>
-  <cache-ref namespace=""/>
+<mapper namespace="departmentMapper">
+ 	
+	<resultMap id="departmentResultMap" type="DepartmentDto" >
+		<result column="dept_code" property="deptCode" />
+		<result column="dept_upstair" property="deptUpStair" />
+		<result column="dept_name" property="deptName" /> 
+		<result column="emp_no" property="empNo" />
+		<result column="create_date" property="createDate" />
+		<result column="modifier" property="modifier" />
+		<result column="modify_date" property="modifyDate" />	
+		<result column="use_yn" property="useYN" />	
+	</resultMap>
+	
+	<resultMap id="commonResultMap" type="CommoncodeDto" >
+		<result column="CD" property="Cd" />
+		<result column="NM" property="Nm" />
+		<result column="CLASSIFICATION_NO" property="classificationNo" /> 
+		<result column="CLASSIFICATION_NAME" property="classificationName" />
+		<result column="CREATER" property="creater" />
+		<result column="MODIFY" property="modify" />
+		<result column="CREATE_DATE" property="createrDate" />	
+		<result column="MODIFY_DATE" property="modifyDate" />	
+	</resultMap>
+	
+	<resultMap id="empMemberResultMap" type="EmpMemberDto">
+		<result column="EMP_NO" property="empNo"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_GENDER" property="empGender"/>
+		<result column="EMP_BIRTH" property="empBirth"/>
+		<result column="EMP_PHONE" property="empPhone"/>
+		<result column="EMP_EMAIL" property="empEmail"/>
+		<result column="EMP_ADDRESS" property="empAddress"/>
+		<result column="EMP_EMPLOYMENT" property="empEmployment"/>
+		<result column="EMP_DETAILADDRESS" property="empDetailAddress"/>
+		<result column="EMP_POSTCODE" property="empPostcode"/>
+		<result column="EMP_PASSWORD" property="empPwd"/>
+		<result column="EMP_AUTH" property="empAuth"/>
+		<result column="EMP_RANK" property="empRank"/>
+		<result column="EMP_PROFILE" property="empProfile"/>
+		<result column="DEPT_CODE" property="deptCode"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="CREATER" property="creater"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="USE_YN" property="useYn"/>
+		<result column="AC_NO" property="acNo"/>
+		<result column="AC_BANK" property="acBank"/>	
+	</resultMap>	
+
+	<select id="selectMemberList" resultMap="empMemberResultMap">
+
+		select
+					e.emp_name
+				, e.emp_no
+				, c.nm
+				, d.dept_upstair
+				, d.dept_name
+		from 
+				tbl_employee e
+		join tbl_common_code c on e.emp_auth = c.cd
+		join tbl_department d ON e.dept_code = d.dept_code
+		where 
+					e.emp_no > 1001
+		order by emp_name 
+
+	</select>
+
+
+
+
+
+
+
+
+
 </mapper>

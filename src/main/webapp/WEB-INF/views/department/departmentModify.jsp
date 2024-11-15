@@ -235,7 +235,7 @@ input {
 
 						<!-- 테이블을 감싸는 div 추가하여 높이 제한 -->
 						<div style="height: 500px; overflow-y: auto; margin-top: 30px;">
-							<table class="table table-hover"
+							<table  id="MemberList" class="table table-hover"
 								style="width: 100%; text-align: center; vertical-align: middle;">
 								<thead>
 									<tr>
@@ -248,123 +248,27 @@ input {
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-										<td>재정팀</td>
-									</tr>
+									<c:choose>
+										<c:when test="${ empty list }">
+											<tr>
+												<td colspan="6">조회된 사원이 없습니다.</td>
+
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="b" items="${ list }">
+												<tr>
+													<td></td>
+													<td>${ b.empName }</td>
+													<td>${ b.empNo }</td>
+													<td>${ b.Nm }</td>
+													<td>${ b.deptUpStair }</td>
+													<td>${ b.deptName }</td>
+													
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>

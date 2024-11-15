@@ -19,6 +19,16 @@
 		<!-- 로그인 -->
 		<typeAlias type="com.gd.mystore.dto.EmpMemberDto" alias="EmpMemberDto"/>
 		
+		
+		<typeAlias type="com.gd.mystore.dto.DepartmentDto" alias="DepartmentDto"/>					<!-- 부서조회 -->
+		<typeAlias type="com.gd.mystore.dto.DepTransferDto" alias="DepTransferDto"/>					<!--부서 이동내역 조회 -->
+		<typeAlias type="com.gd.mystore.dto.BoardDto" alias="BoardDto"/>	<!-- 게시판 -->
+		<typeAlias type="com.gd.mystore.dto.BoardFileDto" alias="BoardFileDto"/>		<!-- 게시판 첨부파일 -->
+		<typeAlias type="com.gd.mystore.dto.BoardTypeDto" alias="BoardTypeDto"/>		<!-- 게시판 생성(관리자) -->
+		
+		<typeAlias type="com.gd.mystore.dto.CommonCodeDto" alias="CommonCodeDto"/>		<!-- 공통코드 -->
+		
+		
 	</typeAliases>
 	
 	
@@ -28,6 +38,9 @@
 		
 		<mapper resource="mappers/personnel-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
   	    <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
+		<mapper resource="mappers/department-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
+
+
 		
 		<!-- 로그인 mapper -->
 		<mapper resource="mappers/empMember-mapper.xml"/>
