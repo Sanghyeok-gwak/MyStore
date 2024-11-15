@@ -425,42 +425,63 @@ input[type=file]::file-selector-button {
 	</div>
 
 	<script>
-	<!-- 삭제 버튼 클릭 시 선택된 항목만 삭제하도록 처리 -->
-	    document.querySelector('.btn1-hover').addEventListener('click', function(event) {
-	        event.preventDefault(); // 폼 기본 제출 방지
+		// 체크박스 전체 선택
+		document.getElementById('checkAll').addEventListener('change', function() {
+		    const allChecked = this.checked;
+	
+		    // 현재 페이지에 있는 체크박스들만 선택하도록 처리
+		    const checkboxes = document.querySelectorAll('#middiv2 .list-checkbox');
+		    
+		    checkboxes.forEach(function(cbox) {
+		        cbox.checked = allChecked;
+		    });
+		});
+	
+	 	
+		// 삭제 버튼 클릭 시 선택된 항목만 삭제하도록 처리 
+		document
+				.querySelector('.btn1-hover')
+				.addEventListener(
+						'click',
+						function(event) {
+							event.preventDefault(); // 폼 기본 제출 방지
 
-	        // 체크된 항목의 sampleNo 값을 배열로 수집
-	        const selectedItems = [];
-	        const checkboxes = document.querySelectorAll('#middiv2 .list-checkbox:checked');
-	        
-	        checkboxes.forEach(function(cbox) {
-	            const sampleNo = cbox.closest('tr').querySelector('td:nth-child(2)').textContent; // sampleNo가 2번째 열에 있다고 가정
-	            selectedItems.push(sampleNo);
-	        });
+							// 체크된 항목의 sampleNo 값을 배열로 수집
+							const selectedItems = [];
+							const checkboxes = document
+									.querySelectorAll('#middiv2 .list-checkbox:checked');
 
-	        if (selectedItems.length === 0) {
-	            alert('삭제할 항목을 선택해주세요.');
-	            return;
-	        }
+							checkboxes
+									.forEach(function(cbox) {
+										const sampleNo = cbox.closest('tr')
+												.querySelector(
+														'td:nth-child(2)').textContent; // sampleNo가 2번째 열에 있다고 가정
+										selectedItems.push(sampleNo);
+									});
 
-	        // 삭제할 항목이 있으면 폼을 동적으로 생성하여 전송
-	        const form = document.createElement('form');
-	        form.method = 'post';
-	        form.action = '${contextPath}/edoc/sampledelete.do';
+							if (selectedItems.length === 0) {
+								alert('삭제할 항목을 선택해주세요.');
+								return;
+							}
 
-	        // 선택된 sampleNo를 hidden input으로 추가
-	        selectedItems.forEach(function(sampleNo) {
-	            const input = document.createElement('input');
-	            input.type = 'hidden';
-	            input.name = 'deleteNo';
-	            input.value = sampleNo;
-	            form.appendChild(input);
-	        });
+							// 삭제할 항목이 있으면 폼을 동적으로 생성하여 전송
+							const form = document.createElement('form');
+							form.method = 'post';
+							form.action = '${contextPath}/edoc/sampledelete.do';
 
-	        // 폼을 제출하여 삭제 요청
-	        document.body.appendChild(form);
-	        form.submit();
-	    });
+							// 선택된 sampleNo를 hidden input으로 추가
+							selectedItems.forEach(function(sampleNo) {
+								const input = document.createElement('input');
+								input.type = 'hidden';
+								input.name = 'deleteNo';
+								input.value = sampleNo;
+								form.appendChild(input);
+							});
+
+							// 폼을 제출하여 삭제 요청
+							document.body.appendChild(form);
+							form.submit();
+						});
 	</script>
 
 

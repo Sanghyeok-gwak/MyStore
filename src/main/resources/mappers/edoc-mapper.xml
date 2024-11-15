@@ -64,7 +64,7 @@
 			 		
 		<where>
         <foreach item="deleteNo" collection="array" 
-        				 open="no in (" separator="," close=")">
+        				 open="sample_no in (" separator="," close=")">
             #{deleteNo}
         </foreach>
 		</where>

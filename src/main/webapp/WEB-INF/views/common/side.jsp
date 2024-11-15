@@ -33,12 +33,11 @@
         <a href="#">결재 대기 문서</a>
         <a href="#">결재 진행 문서</a>
         <a href="#">결재 완료 문서</a>
-        <a href="#">개인 문서함</a>
-        <a href="#">대기 문서함</a>
-        <a href="#">승인 문서함</a>
-        <a href="#">반려 문서함</a>
-        <a href="#">회수 문서함</a>
-        <a href="#">문서 양식 관리</a>
+        <a href="#">기안 대기 문서함</a>
+        <a href="#">기안 승인 문서함</a>
+        <a href="#">기안 반려 문서함</a>
+        <a href="#">기안 회수 문서함</a>
+        <a href="${ contextPath }/edoc/formlist.do">문서 양식 관리</a>
       </div>
 
       <div class="side-icon" onclick="toggleSubmenu(this)">
