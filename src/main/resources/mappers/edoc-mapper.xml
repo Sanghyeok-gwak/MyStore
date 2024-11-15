@@ -52,7 +52,7 @@
 			,	#{sampleDotCode}
 			,	#{sampleDesc}
 			,	#{sampleFormat}
-			,	1003
+			,	#{empNo}
 			,	SYSDATE	
 			)
 	</select>

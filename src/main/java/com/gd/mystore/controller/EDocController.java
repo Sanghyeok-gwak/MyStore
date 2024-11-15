@@ -30,12 +30,12 @@ public class EDocController {
 	private final PagingUtil pagingUtil;
 	
 	// 샘플 양식 리스트 조회
-	@GetMapping("/list.do")
+	@GetMapping("/formlist.do")
 	public String edocmodelist(@RequestParam(value="page", defaultValue="1") int currentPage, Model model) {
 		
 		int listCount = edocService.selectEDocListCount();
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
 		List<EDocSampleDto> list = edocService.selectEDocList(pi);
 		
 		model.addAttribute("pi", pi);
@@ -55,9 +55,9 @@ public class EDocController {
 	@PostMapping("/forminsert.do")
 	public String edocmodeinsert(EDocSampleDto se
 								, RedirectAttributes rdAttributes
-								//, HttpSession session
+								, HttpSession session
 								) {
-//		se.setEmpNo( ((EDocSampleDto)session.getAttribute("loginUser")).getEmpNo() );
+		se.setEmpNo( ((EDocSampleDto)session.getAttribute("loginUser")).getEmpNo() );
 
 		log.debug("se: {}", se);
 		
@@ -69,7 +69,7 @@ public class EDocController {
 			rdAttributes.addFlashAttribute("alertMsg", "게시글 등록 실패");
 		}
 		
-		return "redirect:/edoc/list.do";
+		return "redirect:/edoc/formlist.do";
 		
 	}
 	
@@ -84,7 +84,7 @@ public class EDocController {
 	        model.addAttribute("alertMsg", "삭제에 실패했습니다.");
 	    }
 	    
-	    return "redirect:/edoc/list.do";
+	    return "redirect:/edoc/formlist.do";
 	}
 	
 	@GetMapping("collectlist")

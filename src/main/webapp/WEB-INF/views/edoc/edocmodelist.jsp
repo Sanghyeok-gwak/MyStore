@@ -318,7 +318,7 @@ input[type=file]::file-selector-button {
 						<div>
 							<select name="condition" id="lang"
 								style="height: 40px; margin-bottom: 20px;">
-								<option value="sample_desc">제목</option>
+								<option value="sample_desc">유형</option>
 								<option value="emp_no">기안자</option>
 							</select>
 						</div>
@@ -398,19 +398,19 @@ input[type=file]::file-selector-button {
 					<ul class="pagination d-flex justify-content-center text-dark"
 						style="margin-top: 40px;">
 						<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-							<a class="page-link" href="${ contextPath }/edoc/list.do?page=${pi.currentPage-1}">
+							<a class="page-link" href="${ contextPath }/edoc/formlist.do?page=${pi.currentPage-1}">
 								<i class="bi bi-chevron-double-left"></i> <span>이전</span>
 							</a>
 						</li>
 
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 							<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
-								<a class="page-link" href="${ contextPath }/edoc/list.do?page=${p}">${p}</a>
+								<a class="page-link" href="${ contextPath }/edoc/formlist.do?page=${p}">${p}</a>
 							</li>
 						</c:forEach>
 
 						<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-							<a class="page-link" href="${ contextPath }/edoc/list.do?page=${pi.currentPage+1}">
+							<a class="page-link" href="${ contextPath }/edoc/formlist.do?page=${pi.currentPage+1}">
 								<span>다음</span>&nbsp; 
 								<i class="bi bi-chevron-double-right"></i>
 						 </a>
