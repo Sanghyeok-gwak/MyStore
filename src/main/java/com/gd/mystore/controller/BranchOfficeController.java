@@ -38,5 +38,16 @@ public class BranchOfficeController {
 		return "branchoffice/product/adminlist";
 	}
 	
+	@GetMapping("detail.po")
+	public String ProductDetail(int prono,Model model) {
+		
+		ProductDto pro = boService.selectDto(prono);
+		
+		model.addAttribute("pro",pro);
+		
+		return "branchoffice/product/detail";
+		
+	}
+	
 	
 }

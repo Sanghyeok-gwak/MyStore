@@ -13,6 +13,7 @@ public interface BranchOfficeService {
 	// 상품 리스트 조회
 	List<ProductDto> selectList(PageInfoDto pi);
 	
-	
+	// 상품 상세 조회
+	ProductDto selectDto(int prono);
 		
 }

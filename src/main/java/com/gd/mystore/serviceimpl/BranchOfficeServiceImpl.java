@@ -27,6 +27,11 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
 		return boDao.selectList(pi);
 	}
 
+	@Override
+	public ProductDto selectDto(int prono) {
+		return boDao.selectDto(prono);
+	}
+
 
 
 }

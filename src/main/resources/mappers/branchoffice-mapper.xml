@@ -45,11 +45,34 @@
          , p.USE_YN
 		  from TBL_PRODUCT p 
 		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
-          join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
+      join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
 		 where p.USE_YN = 'Y'
          AND c.CD LIKE 'PC00%'
 		 order by PRODUCT_NO desc
   </select>
-  
+  <select id="selectDto" resultMap="boResultMap">
+  select
+		       PRODUCT_NO
+		     , C.NM as "CLASSIFICATION_NO"
+		     , PRODUCT_NAME
+		     , COST
+		     , SAIL_PRICE
+         , PROFIT_MARGIN
+         , RECOMMENDED_CATEGORY
+         , EXPIRATION_PERIOD
+         , PRODUCT_IMG
+         , e.EMP_NAME as "create"
+         , p.CREATE_DATE
+         , e.EMP_NAME as "MODIFIER"
+         , p.MODIFY_DATE
+         , p.DELIVERY_DATE
+         , p.USE_YN
+		  from TBL_PRODUCT p 
+		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
+      join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
+		 where p.USE_YN = 'Y'
+		   AND c.CD LIKE 'PC00%'
+		   and product_no = #{prono}
+  </select>
   
 </mapper>

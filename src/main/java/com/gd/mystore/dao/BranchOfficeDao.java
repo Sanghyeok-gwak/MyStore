@@ -25,4 +25,9 @@ public class BranchOfficeDao {
 		return sqlSession.selectList("branchofficeMapper.selectList",null,rowBounds);
 	}
 	
+	public ProductDto selectDto(int prono) {
+		return sqlSession.selectOne("branchofficeMapper.selectDto",prono);
+	}
+	
+	
 }

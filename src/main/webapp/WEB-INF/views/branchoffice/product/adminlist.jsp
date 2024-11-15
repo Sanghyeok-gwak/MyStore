@@ -60,7 +60,7 @@
           </style>
           
          	<div>
-						<b style="font-size: 25px; margin-left: 10px;">공지사항</b>
+						<b style="font-size: 25px; margin-left: 10px;">상품 관리 리스트</b>
 					</div>
 					<hr>
           <div class="search-text">

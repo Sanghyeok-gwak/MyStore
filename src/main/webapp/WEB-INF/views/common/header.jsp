@@ -371,6 +371,14 @@
     }
 
   </style>
+   <script>
+    if('${alertMsg}' != ''){
+       alert('${alertMsg}');
+       if('${historyBackYN}' == 'Y'){
+          history.back();
+       }
+    }
+   </script>
   <div class="my-head">
   <div class="head-icon">
     <img src="https://i.ibb.co/nCMNZqH/image.png" style="width: 131px; height: 90%; margin: 3px 0 0 20px;">
