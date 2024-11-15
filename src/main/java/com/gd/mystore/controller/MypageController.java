@@ -15,7 +15,7 @@ public class MypageController {
 
 	    @GetMapping("/passwordRecovery")
 	    public void passwordChange() {
-	        // 비밀번호 변경 기능
+	        // 비밀번호 변경
 	    }
 
 	    @GetMapping("/workStatus")

@@ -70,11 +70,21 @@
 <jsp:include page="/WEB-INF/views/common/side.jsp"/>
 <div class="body-body">
       <span class="ffont1" style="font-weight: bold;">마이페이지</span>
+      
+      	
+      
+      
+      
+      
+      
+      
       <div class="product-add-top">
+      
         <br>
+        
         <div class="product-img-box">
-          <div class="upload-image" onclick="document.getElementById('fileInput').click()" style="cursor: pointer;">
-            <img id="preview" src="/assets/img/sooz.png" alt="Click to upload" style="width: 100%; height: 100%;">
+          <div class="upload-image"  style="">
+            <img id="preview" src="/assets/img/sooz.png" style="width: 100%; height: 100%;">
           </div>
           <!--
           <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
@@ -92,32 +102,6 @@
             </script>
             -->
         </div>
-        <!-- <style>
-          .input-box-top{
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-          }
-          .input-box-top-box1,.input-box-top-box2,.input-box-top-box3,.input-box-top-box4,.input-box-top-box5
-          ,.input-box-top-box6,.input-box-top-box7,.input-box-top-box8{
-            display: flex;
-            margin-bottom: 30px;
-          }
-          .input-box-top-box1-text,.input-box-top-box2-text,.input-box-top-box3-text,.input-box-top-box4-text,.input-box-top-box5-text
-          ,.input-box-top-box6-text,.input-box-top-box7-text,.input-box-top-box8-text{
-            width: 30%;
-          }
-          .input-box-top-box1-input,.input-box-top-box2-input,.input-box-top-box3-input,.input-box-top-box4-input,.input-box-top-box5-input
-          ,.input-box-top-box6-input,.input-box-top-box7-input,.input-box-top-box8-input{
-            width: 70%;
-          }
-          .input-box-top input{
-            height: 30px;
-            width: 100%;
-            border: 1px solid lightgray;
-          } 
-        </style>
-          -->
         
         <div class="input-box-top">
           <div class="input-box-top-box1">

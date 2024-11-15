@@ -10,8 +10,8 @@
       </div>
       <div class="submenu">
         <a href="${ contextPath }/department/departmentModify">부서관리</a>
-        <a href="#">사원관리</a>
-        <a href="#">급여관리</a>
+        <a href="${ contextPath }/personnel/employeeManager">사원관리</a>
+        <a href="${ contextPath }/salary/salaryMaster">급여관리</a>
       </div>
 
       <div class="side-icon" onclick="toggleSubmenu(this)">
@@ -45,10 +45,10 @@
         <span>마이페이지</span>
       </div>
       <div class="submenu">
-        <a href="#">회원수정</a>
-        <a href="#">비밀번호 수정</a>
-        <a href="#">급여 조회</a>
-        <a href="#">근태조회</a>
+        <a href="${ contextPath }/mypage/myInfo">회원수정</a>
+        <a href="${ contextPath }/mypage/passwordRecovery">비밀번호 수정</a>
+        <a href="${ contextPath }/salary/payCheck">급여 조회</a>
+        <a href="${ contextPath }/mypage/workStatus">근태조회</a>
       </div>
 
       <div class="side-icon" onclick="toggleSubmenu(this)">

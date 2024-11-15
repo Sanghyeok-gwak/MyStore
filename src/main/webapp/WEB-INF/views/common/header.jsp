@@ -462,7 +462,7 @@
 
       <div class="header_right_list">
         <i class="bi bi-person-circle"></i>
-        <a href=""><span>마이페이지</span></a>
+        <a href="${ contextPath }/mypage/myInfo"><span>마이페이지</span></a>
       </div>
         
       <div class="icon header_right_list">
