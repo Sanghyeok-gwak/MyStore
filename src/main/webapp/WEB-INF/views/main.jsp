@@ -73,18 +73,38 @@
 
           </div>
           <div class="main-home-top-calender">
-
+          	<c:choose>
+          		<c:when test="${ empty loginUser.getEmpNo() }">
+          			세션정보 없음
+          		</c:when>
+          		
+          		<c:otherwise>
+          			현재 로그인 세션 정보
+          			<br>
+          			${ loginUser.toString() }
+          		</c:otherwise>
+          	</c:choose>
           </div>
         </div>
         <div class="main-home-bottom">
           <div class="main-home-bottom-weather" style="margin-right: 20px;">
-
+				
           </div>
           <div class="main-home-bottom-message" style="margin-right: 20px;">
 
           </div>
           <div class="main-home-bottom-board">
-
+				<form action="${contextPath}/weather/coord" method="get">
+				    <input type="hidden" name="lat" value="37.4765509">
+				    <input type="hidden" name="lon" value="126.8801713">
+				    <div class="btn-box-hover">
+				        <button style="overflow-z: auto;"class="btn3-hover" type="submit">날씨 확인</button>
+				    </div>
+				</form>
+				<div>
+				    <h1>Weather Data</h1>
+				    <p>${weatherData}</p>
+				</div>
           </div>
         </div>
       </div>

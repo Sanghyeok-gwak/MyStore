@@ -38,14 +38,9 @@ public class EmpMemberController {
 					, HttpSession session
 					, RedirectAttributes rdAttributes) throws IOException {
 		
-		EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
-		
-		System.out.println("리턴값 : " + loginUser.getEmpPwd());
 		response.setContentType("text/html; charset=utf-8");
-		
+		EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
 		PrintWriter out = response.getWriter();
-		
-		System.out.println(em.getEmpPwd() + " | " + loginUser.getEmpPwd());
 		
 //		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpNo(), loginUser.getEmpPwd())) { // 로그인 성공
 		if(loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {

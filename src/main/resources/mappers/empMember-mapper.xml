@@ -29,11 +29,38 @@
   
   <!-- 로그인 -->
   <select id="selectEmpMember" resultMap="empMemberResultMap">
-  	SELECT *
-      FROM TBL_EMPLOYEE
-     WHERE EMP_EMPLOYMENT = 'Y' 
-       AND USE_YN = 'Y'
-       AND EMP_NO = #{empNo}
+  	SELECT
+           EMP.EMP_NO,
+           EMP.EMP_NAME,
+           EMP.EMP_GENDER,
+           EMP.EMP_BIRTH,
+           EMP.EMP_PHONE,
+           EMP.EMP_EMAIL,
+           EMP.EMP_ADDRESS,
+           EMP.EMP_EMPLOYMENT,
+           EMP.EMP_DETAILADDRESS,
+           EMP.EMP_POSTCODE,
+           EMP.EMP_PASSWORD,
+           EMP.EMP_AUTH,
+           EMP_PROFILE,
+           POS.NM AS EMP_RANK,           -- 직급명 가져오기
+           DC.DEPT_NAME AS DEPT_CODE,
+           EMP.CREATE_DATE,
+           EMP.MODIFY_DATE,
+           EMP.CREATER,
+           EMP.MODIFIER,
+           EMP.USE_YN,
+           EMP.AC_NO,
+           EMP.AC_BANK
+      FROM
+           TBL_EMPLOYEE EMP
+      LEFT JOIN
+           TBL_COMMON_CODE POS ON EMP.EMP_AUTH = POS.CD
+      LEFT JOIN
+           tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE
+     WHERE EMP.EMP_EMPLOYMENT = 'Y' 
+       AND EMP.USE_YN = 'Y'
+       AND EMP.EMP_NO = #{empNo}
   </select>
   
 </mapper>
