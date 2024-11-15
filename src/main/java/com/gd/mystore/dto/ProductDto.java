@@ -25,8 +25,8 @@ public class ProductDto {
 	public String productImg;
 	public String creater;
 	public Date createDate;
-	public Date modifier;
-	public String modifyDate;
+	public String modifier;
+	public Date modifyDate;
 	public String deliveryDate;
 	public String useYn;
 	

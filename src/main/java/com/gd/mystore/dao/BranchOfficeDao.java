@@ -22,7 +22,7 @@ public class BranchOfficeDao {
 	
 	public List<ProductDto> selectList(PageInfoDto pi) {
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());		
-		return sqlSession.selectList("branchofficeMapper.select",null,rowBounds);
+		return sqlSession.selectList("branchofficeMapper.selectList",null,rowBounds);
 	}
 	
 }

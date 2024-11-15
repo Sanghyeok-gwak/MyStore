@@ -58,6 +58,10 @@
             }
           </style>
           
+         	<div>
+						<b style="font-size: 25px; margin-left: 10px;">공지사항</b>
+					</div>
+					<hr>
           <div class="search-text">
             <div class="search-text-text">
               <span class="ffont3">상품명</span>
@@ -69,7 +73,7 @@
           </div>
           <div class="add-edit-box">
             <button class="btn4" style="margin-right: 5px;">추가</button>
-            <button class="btn4">수정</button>
+            <button class="btn4">삭제</button>
           </div>
         </div>
         <div class="table-box">
