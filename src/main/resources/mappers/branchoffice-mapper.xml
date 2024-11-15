@@ -29,7 +29,7 @@
   <select id="selectList" resultMap="boResultMap">
   	select
 		       PRODUCT_NO
-		     , CLASSIFICATION_NO
+		     , C.NM as "CLASSIFICATION_NO"
 		     , PRODUCT_NAME
 		     , COST
 		     , SAIL_PRICE
@@ -45,7 +45,9 @@
          , p.USE_YN
 		  from TBL_PRODUCT p 
 		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
+          join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
 		 where p.USE_YN = 'Y'
+         AND c.CD LIKE 'PC00%'
 		 order by PRODUCT_NO desc
   </select>
   

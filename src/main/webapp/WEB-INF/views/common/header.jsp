@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }"/>  
+	 	<!-- font -->
+		
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Noto+Sans+KR:wght@100..900&display=swap');
+		</style>
+
 
 	<!-- Vendor CSS Files -->
    <link href="${contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -13,12 +19,16 @@
    <link href="${contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">
  
    <!-- Template Main CSS File -->
+   
    <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
    <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+    body{
+      font-family: "Noto Sans KR", serif;
     }
     .my-head{
       display: flex;
