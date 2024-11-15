@@ -89,8 +89,8 @@ input {
 								<b>조직도</b>
 							</div>
 							<div class="btn-box-hover">
-								<button class="btn2-hover" style="width: 50px;">수정</button>
-								<button class="btn3-hover" style="width: 50px;">등록</button>
+								 <button id="editNodeBtn" class="btn2-hover" style="width: 50px;">수정</button>
+								<button id="submitNodeBtn" class="btn3-hover" style="width: 50px;">등록</button>
 							</div>
 
 						</div>
@@ -224,7 +224,7 @@ input {
 											<c:forEach var="b" items="${ list }">
 												<tr>
 													<td> <!-- 고유한 id를 부여한 체크박스 -->
-            <input type="checkbox" id="checkbox_${b.empNo}" name="checkbox_${b.empNo}" value="${b.empNo}" style="width:15px;"></td>
+            								<input type="checkbox" id="checkbox_${b.empNo}" name="checkbox_${b.empNo}" value="${b.empNo}" style="width:15px;"></td>
 													<td>${ b.empName }</td>
 													<td>${ b.empNo }</td>
 													<td>${ b.nm }</td>
@@ -249,144 +249,188 @@ input {
 
 
 
-	<script>
-	function toggleSubmenu(element) {
-	    const submenu = element.nextElementSibling;
-	    if (submenu.style.maxHeight === "0px" || submenu.style.maxHeight === "") {
-	        submenu.style.maxHeight = submenu.scrollHeight + "px";
-	    } else {
-	        submenu.style.maxHeight = "0";
-	    }
-	}
+<script>
+$(function() {
+    // 수정 모드 활성화 상태 변수
+    var editMode = false;
+    // 수정된 데이터를 저장할 변수
+    var previousData = [];
 
-	$(function() {
-	    // jsTree 초기화
-	    $("#jstree").jstree({
-	        core: {
-	            data: [{
-	                    "id": "1",
-	                    "parent": "#",
-	                    "text": "본부",
-	                    "state": {
-	                        "disabled": true
-	                    },
-	                    "icon": "fa fa-building"
-	                },
-	                {
-	                    "id": "2",
-	                    "parent": "1",
-	                    "text": "부서 A",
-	                    "icon": "fa fa-briefcase"
-	                },
-	                {
-	                    "id": "3",
-	                    "parent": "1",
-	                    "text": "부서 B",
-	                    "icon": "fa fa-briefcase"
-	                },
-	                {
-	                    "id": "4",
-	                    "parent": "2",
-	                    "text": "결재자 1",
-	                    "icon": "fa fa-user"
-	                },
-	                {
-	                    "id": "5",
-	                    "parent": "2",
-	                    "text": "결재자 2",
-	                    "icon": "fa fa-user"
-	                },
-	                {
-	                    "id": "6",
-	                    "parent": "2",
-	                    "text": "결재자 3",
-	                    "icon": "fa fa-user"
-	                },
-	                {
-	                    "id": "7",
-	                    "parent": "3",
-	                    "text": "결재자 4",
-	                    "icon": "fa fa-user"
-	                },
-	                {
-	                    "id": "8",
-	                    "parent": "3",
-	                    "text": "결재자 5",
-	                    "icon": "fa fa-user"
-	                },
-	                {
-	                    "id": "9",
-	                    "parent": "3",
-	                    "text": "결재자 6",
-	                    "icon": "fa fa-user"
-	                }
-	            ],
-	            check_callback: true
-	        },
-	        plugins: ["types","contextmenu", "dnd"], // contextmenu 플러그인 추가
-	        'types': {
-	            '#': { // ROOT
-	             "max_depth": 3// 하위 depth 제한
-	            }
-	         
-	       },
-	        contextmenu: {
-	            // 커스텀 메뉴 항목
-	            items: function($node) {
-	                var tree = $('#jstree').jstree(true);
-	                var nodeId = $node.id; // 클릭된 노드의 id 가져오기
+    // 수정 버튼 클릭 시 상태 토글
+    $("#editNodeBtn").click(function() {
+        editMode = !editMode; // 클릭 시 수정모드 활성화 / 비활성화
 
-	                // 기본 메뉴 항목
-	                var menuItems = {};
+        if (editMode) {
+            // 수정 모드 활성화: contextmenu 플러그인 활성화
+            $("#jstree").jstree("enable_plugin", "contextmenu");
+            alert("수정 모드 활성화");
+        } else {
+            // 수정 모드 비활성화: contextmenu 플러그인 비활성화
+            $("#jstree").jstree("disable_plugin", "contextmenu");
+            alert("수정 모드 비활성화");
 
-	                // 최상위 노드일 경우 "부서추가" 메뉴 추가
-	                if ($node.parent === "#") { // 최상위 노드일 때
-	                    menuItems["create"] = {
-	                        "label": "부서추가",
-	                        "action": function() {
-	                            // 새 부서(노드)를 최상위 노드에 추가하는 로직
-	                            var newNode = {
-	                                "text": "새 부서",
-	                                "icon": "fa fa-briefcase",
-	                                "parent": $node.id // 클릭된 노드 아래에 추가
-	                            };
-	                            tree.create_node($node, newNode, "last", function(newNode) {
-	                                // 새로 생성된 노드가 추가된 후 처리할 사항을 여기에 추가
-	                                tree.edit(newNode); // 자동으로 이름 편집 상태로 전환
-	                            });
-	                        }
-	                    };
-	                }
+            // 수정되지 않았다면 이전 상태로 되돌리기
+            if (previousData.length > 0) {
+                // 트리 상태를 previousData로 복원
+                $('#jstree').jstree(true).settings.core.data = previousData;
+                $('#jstree').jstree(true).refresh();
+            }
+        }
+    });
 
-	                if ($node.parent === "1") { // 최상위에서 바로 아래 노드일 때
-	                    // 이름 변경 메뉴
-	                    menuItems["rename"] = {
-	                        "label": "이름 변경",
-	                        "action": function() {
-	                            tree.edit($node);
-	                        }
-	                    };
+    // 등록 버튼 클릭 시
+    $("#submitNodeBtn").click(function() {
+        if (editMode) {
+            // 수정된 내용을 서버로 전송하는 부분 (예: 서버로 전송하는 부분)
+            alert("수정된 내용을 저장합니다.");
 
-	                    // 삭제 메뉴
-	                    menuItems["remove"] = {
-	                        "label": "삭제",
-	                        "action": function() {
-	                            if (confirm("정말로 삭제하시겠습니까?")) {
-	                                tree.delete_node($node);
-	                            }
-	                        }
-	                    };
-	                }
+            // 수정된 데이터를 저장
+            previousData = $('#jstree').jstree(true).settings.core.data;
 
-	                return menuItems; // 여기서 메뉴 항목을 반환해야 합니다.
-	            }
-	        },
+            // 트리 수정 불가능하게 처리
+            $('#jstree').jstree(true).settings.core.data = previousData;
+            $('#jstree').jstree(true).refresh();
 
-	      
-	    });
-	});
+            // 수정 모드 비활성화
+            editMode = false;
+            $("#jstree").jstree("disable_plugin", "contextmenu");
 
-	</script>
+            alert("수정 완료!"); // 수정 완료 메시지
+        } else {
+            alert("수정 모드가 아닙니다.");
+        }
+    });
+
+    // jsTree 초기화
+    $("#jstree").jstree({
+        core: {
+            data: [
+                {
+                    "id": "1",
+                    "parent": "#",
+                    "text": "본부",
+                    "state": {
+                        "disabled": true
+                    },
+                    "icon": "fa fa-building"
+                },
+                {
+                    "id": "2",
+                    "parent": "1",
+                    "text": "부서 A",
+                    "icon": "fa fa-briefcase"
+                },
+                {
+                    "id": "3",
+                    "parent": "1",
+                    "text": "부서 B",
+                    "icon": "fa fa-briefcase"
+                },
+                {
+                    "id": "4",
+                    "parent": "2",
+                    "text": "결재자 1",
+                    "icon": "fa fa-user"
+                },
+                {
+                    "id": "5",
+                    "parent": "2",
+                    "text": "결재자 2",
+                    "icon": "fa fa-user"
+                },
+                {
+                    "id": "6",
+                    "parent": "2",
+                    "text": "결재자 3",
+                    "icon": "fa fa-user"
+                },
+                {
+                    "id": "7",
+                    "parent": "3",
+                    "text": "결재자 4",
+                    "icon": "fa fa-user"
+                },
+                {
+                    "id": "8",
+                    "parent": "3",
+                    "text": "결재자 5",
+                    "icon": "fa fa-user"
+                },
+                {
+                    "id": "9",
+                    "parent": "3",
+                    "text": "결재자 6",
+                    "icon": "fa fa-user"
+                }
+            ],
+            check_callback: true
+        },
+        plugins: ["types", "contextmenu", "dnd"], // contextmenu 플러그인 추가
+        'types': {
+            '#': { // ROOT
+                "max_depth": 3 // 하위 depth 제한
+            }
+        },
+        contextmenu: {
+            items: function($node) {
+                var tree = $('#jstree').jstree(true);
+                var nodeId = $node.id; // 클릭된 노드의 id 가져오기
+
+                // 기본 메뉴 항목
+                var menuItems = {};
+
+                // 수정 모드인 경우에만 contextmenu 활성화
+                if (!editMode) {
+                    return {}; // 수정 모드가 아닌 경우 메뉴 항목을 반환하지 않음
+                }
+
+                // 최상위 노드일 경우 "부서추가" 메뉴 추가
+                if ($node.parent === "#") { // 최상위 노드일 때
+                    menuItems["create"] = {
+                        "label": "부서추가",
+                        "action": function() {
+                            // 새 부서(노드)를 최상위 노드에 추가하는 로직
+                            var newNode = {
+                                "text": "새 부서",
+                                "icon": "fa fa-briefcase",
+                                "parent": $node.id // 클릭된 노드 아래에 추가
+                            };
+                            tree.create_node($node, newNode, "last", function(newNode) {
+                                // 새로 생성된 노드가 추가된 후 처리할 사항을 여기에 추가
+                                tree.edit(newNode); // 자동으로 이름 편집 상태로 전환
+                            });
+                        }
+                    };
+                }
+
+                if ($node.parent === "1") { // 최상위에서 바로 아래 노드일 때
+                    // 이름 변경 메뉴
+                    menuItems["rename"] = {
+                        "label": "이름 변경",
+                        "action": function() {
+                            tree.edit($node);
+                        }
+                    };
+
+                    // 삭제 메뉴
+                    menuItems["remove"] = {
+                        "label": "삭제",
+                        "action": function() {
+                            if (confirm("정말로 삭제하시겠습니까?")) {
+                                tree.delete_node($node);
+                            }
+                        }
+                    };
+                }
+
+                return menuItems; // 여기서 메뉴 항목을 반환해야 합니다.
+            }
+        }
+    });
+});
+</script>
+
+
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>
