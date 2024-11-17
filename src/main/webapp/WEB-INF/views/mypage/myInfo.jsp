@@ -28,7 +28,7 @@
         height: 400px;
       }
       .input-box-top{
-        width: 70%;
+        width: 90%;
         height: 100%;
       }
       .product-add-body,.input-box-body{
@@ -85,7 +85,7 @@
         <!-- input type = image 라서 value값이 아니고 src 사용했음, 뒤에는 만약에 이미지 안뜰까봐 디폴트값 처리 -->
         <div class="product-img-box">
           <div class="upload-image"  style="">
-            <input type="image" id="preview" src="${ loginUser.empProfile }"  default='/resources/images/defaultImg.png' style="width: 100%; height: 100%;" readonly>
+            <input type="image" id="preview" src="${ loginUser.empProfile }"  style="width: 100%; height: 100%;" readonly>
           </div>
           <!--
           <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
@@ -104,13 +104,15 @@
             -->
         </div>
         
+        
+        <form class="input-box-top" action="${ contextPath }/mypage/update.do" method="post" id="myinfo_form">
         <div class="input-box-top">
           <div class="input-box-top-box1">
             <div class="input-box-top-box1-text">
               <span class="ffont3">부서</span>
             </div>
             <div class="input-box-top-box1-input">
-              <input type="text"  value="${ loginUser.deptCode }" style="background-color: lightgray;" readonly>
+              <input type="text"  id="deptCode" name="deptCode" value="${ loginUser.deptCode }" style="background-color: lightgray;" readonly>
             </div>
           </div>
           
@@ -119,7 +121,7 @@
               <span class="ffont3">직급</span>
             </div>
             <div class="input-box-top-box2-input">
-              <input type="text"  value="${ loginUser.empRank }" style="background-color: lightgray;" readonly>
+              <input type="text" id="empRank" name="empRank" value="${ loginUser.empRank }" style="background-color: lightgray;" readonly>
             </div>
           </div>
           
@@ -128,7 +130,7 @@
               <span class="ffont3">성명</span>
             </div>
             <div class="input-box-top-box3-input">
-              <input type="text" value="${ loginUser.empName }" style="background-color: lightgray;" readonly>
+              <input type="text" id="empName" name="empName" value="${ loginUser.empName }" style="background-color: lightgray;" readonly>
             </div>
           </div>
           
@@ -137,7 +139,7 @@
               <span class="ffont3">사번</span>
             </div>
             <div class="input-box-top-box4-input">
-              <input type="text" value="${ loginUser.empNo }" style="background-color: lightgray;" readonly>
+              <input type="text" id="empNo" name=empNo value="${ loginUser.empNo }" style="background-color: lightgray;" readonly>
             </div>
           </div>
           
@@ -146,7 +148,8 @@
               <span class="ffont3">휴대폰</span>
             </div>
             <div class="input-box-top-box5-input">
-              <input type="text" value="${ loginUser.empPhone }">
+              <input type="text" id="empPhone" name="empPhone" value="${ loginUser.empPhone }">
+              
             </div>
           </div>
           
@@ -155,7 +158,7 @@
               <span class="ffont3">이메일</span>
             </div>
             <div class="input-box-top-box6-input">
-              <input type="text" value="${ loginUser.empEmail }">
+              <input type="text" id="empEmail" name="empEmail" value="${ loginUser.empEmail }">
             </div>
           </div>
 
@@ -165,9 +168,9 @@
             </div>
             <div class="input-box-top-box7-input">
 
-              <input type="text" value="${ loginUser.empPostcode }" style="margin-bottom: 10px;">
-              <input type="text" value="${ loginUser.empAddress }" style="margin-bottom: 10px;">
-              <input type="text" value="${ loginUser.empDetailAddress }" style="margin-bottom: 10px;">
+              <input type="text" id="empPostcode" name="empPostcode" value="${ loginUser.empPostcode }" style="margin-bottom: 10px;" readonly>
+              <input type="text" value="${ loginUser.empAddress }" style="margin-bottom: 10px;" readonly>
+              <input type="text" value="${ loginUser.empDetailAddress }" style="margin-bottom: 10px;" readonly>
               <!--
                 <input type="text" value="서울시 서울구 서울동" style="margin-bottom: 10px;">
                 <input type="text" value="힐스테이트" style="margin-bottom: 10px;">
@@ -176,18 +179,18 @@
             </div>
           </div>
           
-
                 <br>
 
                 <div class="btn-box-hover" style="display: flex; justify-content: center;">
                     <button class="btn3-hover ffont3" style="width: 300px; height: 35px;">수정하기</button> 
-                    <button class="btn3-hover ffont3" style="width: 300px; height: 35px;">홈으로</button> 
+                    <button type="button" class="btn3-hover ffont3" style="width: 300px; height: 35px;">홈으로</button> 
                 </div>
                 
 
             
         </div>
-
+        
+		</form>
 
 
       </div>
