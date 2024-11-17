@@ -25,8 +25,8 @@
 		<typeAlias type="com.gd.mystore.dto.BoardDto" alias="BoardDto"/>	<!-- 게시판 -->
 		<typeAlias type="com.gd.mystore.dto.BoardFileDto" alias="BoardFileDto"/>		<!-- 게시판 첨부파일 -->
 		<typeAlias type="com.gd.mystore.dto.BoardTypeDto" alias="BoardTypeDto"/>		<!-- 게시판 생성(관리자) -->
-		
 		<typeAlias type="com.gd.mystore.dto.CommonCodeDto" alias="CommonCodeDto"/>		<!-- 공통코드 -->
+		
 		
 		
 	</typeAliases>
