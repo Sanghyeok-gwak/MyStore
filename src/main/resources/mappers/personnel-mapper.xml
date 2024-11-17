@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper namespace="personnelmapper">
+<mapper namespace="personnelMapper">
+
+<resultMap id="empMemberResultMap" type="EmpMemberDto">
+		<result column="EMP_NO" property="empNo"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_GENDER" property="empGender"/>
+		<result column="EMP_BIRTH" property="empBirth"/>
+		<result column="EMP_PHONE" property="empPhone"/>
+		<result column="EMP_EMAIL" property="empEmail"/>
+		<result column="EMP_ADDRESS" property="empAddress"/>
+		<result column="EMP_EMPLOYMENT" property="empEmployment"/>
+		<result column="EMP_DETAILADDRESS" property="empDetailAddress"/>
+		<result column="EMP_POSTCODE" property="empPostcode"/>
+		<result column="EMP_PASSWORD" property="empPwd"/>
+		<result column="EMP_AUTH" property="empAuth"/>
+		<result column="EMP_RANK" property="empRank"/>
+		<result column="EMP_PROFILE" property="empProfile"/>
+		<result column="DEPT_CODE" property="deptCode"/>
+		<result column="USE_YN" property="useYn"/>
+		<result column="AC_NO" property="acNo"/>
+		<result column="AC_BANK" property="acBank"/>
+		<result column="CREATER" property="creater"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
+	</resultMap>
+
+<!-- 마이페이지 수정 -->
+<update id="updateEmployee">
+ UPDATE 
+ 		TBL_EMPLOYEE
+ 	SET 
+ 		EMP_PHONE = #{empPhone}
+ 	  , EMP_EMAIL = #{empEmail}
+  where EMP_NO = #{empNo}
+
+</update>
+
+<!-- 비밀번호 변경 -->
+<update id="passwordRecovery">
+ UPDATE
+ 		TBL_EMPLOYEE
+ 	SET EMP_PASSWORD = #{empPwd}
+  WHERE EMP_NO = #{empNo}
+
+</update>
+
+<!-- 비밀번호 조회 -->
+<select id="selectEmpPwd">
+  	SELECT
+           EMP_PASSWORD
+      FROM TBL_EMPLOYEE
+     WHERE EMP_PASSWORD = #{checkpwd}
+  </select>
+
+
 
 </mapper>
