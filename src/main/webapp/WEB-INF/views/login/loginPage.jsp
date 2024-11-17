@@ -164,7 +164,7 @@
 		            <div class="right_id">
 		              계정
 		              <div class="input-bar">
-		                <input type="text" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="${empNo}"/>
+		                <input type="number" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="${empNo}"/>
 		              </div>
 		            </div>
 		            <div class="right_id">
@@ -187,8 +187,21 @@
             </form>
 
             <div class="password_recovery">
-              <a href="#">비밀번호 찾기</a>
+              <a href="${ contextPath }/login/pwdRecovery">비밀번호 찾기</a>
             </div>
+            
+            <br><br>
+            <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
+            	<button>1001 로그인</button>
+            	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1001"/>
+            	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
+            </form>
+            <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
+            	<button>1002 로그인</button>
+            	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
+            	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="password123"/>
+            </form>
+            
           </div>
         </div>
       </div>

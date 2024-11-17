@@ -90,7 +90,7 @@
         border: none;
         outline: none;
         box-shadow: none;
-        margin-left: 62px;
+        margin-left: 10%;
         height: 40px;
         width: 400px;
       }
@@ -98,7 +98,7 @@
         border: none;
         outline: none;
         box-shadow: none;
-        margin-left: 30px;
+        margin-left: 6%;
         height: 40px;
       }
       .btn-primary {
@@ -120,7 +120,15 @@
         --bs-btn-disabled-border-color: #0d6efd;
       }
     </style>
-
+		
+	<script>
+		if('${alertMsg}' != ''){
+			alert('${alertMsg}');
+			if('${historyBackYN}' == 'Y'){
+				history.back();
+			}
+		}
+	</script>
 </head>
   <body>
     <div class="my_body">
@@ -137,35 +145,34 @@
         <div class="body_right1">
           <div class="body_right_list">
             <div class="right_login">비밀번호 찾기</div>
-            <div class="right_id">
-              사번
-              <div class="input-bar">
-                <input
-                  type="text"
-                  class="input-bar1"
-                  placeholder="사번을 입력해주세요"
-                />
-              </div>
-            </div>
-            <div class="right_id">
-              이메일&nbsp;&nbsp;&nbsp;&nbsp;
-              <div class="input-bar">
-                <input
-                  type="text"
-                  class="input-bar1"
-                  id="right_pwd"
-                  placeholder="abc@admin.com"
-                />
-              </div>
-            </div>
-
-            <div class="login_btn">
-              <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-primary" type="button">
-                  비밀번호 전송
-                </button>
-              </div>
-            </div>
+            
+           	<form action="${ contextPath }/login/pwdRecovery.do" method="post">
+		            <div class="right_id">
+		            	<div>
+			              사번
+		            	</div>
+		              <div class="input-bar">
+		                <input type="number" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
+		              </div>
+		            </div>
+		            <div class="right_id">
+		            	<div>
+			              이메일
+		            	</div>
+		              <div class="input-bar">
+		                <input type="text" class="input-bar1" name="empEmail" id="right_pwd" placeholder="abc@admin.com" value="yechan9981@naver.com"/>
+		              </div>
+		            </div>
+		
+		            <div class="login_btn">
+		              <div class="d-grid gap-2 mt-3">
+		                <button class="btn btn-primary" type="submit">
+		                  확인
+		                </button>
+		              </div>
+		            </div>
+           	</form>
+           	
           </div>
         </div>
       </div>

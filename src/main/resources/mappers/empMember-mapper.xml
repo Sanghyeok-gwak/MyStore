@@ -44,7 +44,7 @@
            EMP.EMP_AUTH,
            EMP_PROFILE,
            POS.NM AS EMP_RANK,           -- 직급명 가져오기
-           DC.DEPT_NAME AS DEPT_CODE,
+           DC.DEPT_NAME AS DEPT_CODE,		 -- 부서명
            EMP.CREATE_DATE,
            EMP.MODIFY_DATE,
            EMP.CREATER,
