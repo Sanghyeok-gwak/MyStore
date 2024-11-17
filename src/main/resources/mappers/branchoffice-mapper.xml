@@ -19,7 +19,14 @@
 		<result column="DELIVERY_DATE" property="deliveryDate" />
 		<result column="USE_YN" property="useYn" />
   </resultMap>
-  
+  <resultMap id="cCResultMap" type="CommonCodeDto">
+  	<result column="CD" property="commonCode"/>
+  	<result column="NM" property="commonName"/>
+  	<result column="CREATER" property="creater"/>
+  	<result column="MODIFY" property="modify"/>
+  	<result column="CREATE_DATE" property="createrDate"/>
+  	<result column="MODIFY_DATE" property="modifyDate"/>
+  </resultMap>
   <select id="selectProductListCount"  resultType="_int">
 		select 
 					 count(*)
@@ -59,7 +66,7 @@
 		     , SAIL_PRICE
          , PROFIT_MARGIN
          , RECOMMENDED_CATEGORY
-         , EXPIRATION_PERIOD
+         , TO_CHAR(EXPIRATION_PERIOD,'YY-MM-DD') as "EXPIRATION_PERIOD"
          , PRODUCT_IMG
          , e.EMP_NAME as "create"
          , p.CREATE_DATE
@@ -74,5 +81,65 @@
 		   AND c.CD LIKE 'PC00%'
 		   and product_no = #{prono}
   </select>
-  
+  <select id="selectCommonDto" resultMap="cCResultMap">
+		select 
+  			   CD
+		     , NM
+		     , CREATER
+		     , "MODIFY" 
+		     , CREATE_DATE
+		     , MODIFY_DATE
+    from TBL_COMMON_CODE    
+   where CD LIKE 'PC00%'
+	</select>
+	<update id="updateProduct">
+		update TBL_PRODUCT
+		   set
+		 		   CLASSIFICATION_NO = #{productDivision}
+		 		 , PRODUCT_NAME	= #{productName}	
+		 		 , COST = #{cost}
+		 		 , SAIL_PRICE = #{sailPrice}
+		 		 , PROFIT_MARGIN = #{profitMargin}
+		 		 , EXPIRATION_PERIOD = TO_DATE(#{expirationPeriod}, 'YY-MM-DD')
+		 		 , PRODUCT_IMG =#{productImg}
+		 		 , MODIFY_DATE =sysdate
+		 		 , DELIVERY_DATE =#{deliveryDate}
+		 		 , USE_YN =#{useYn}
+		 where PRODUCT_NO = #{productNo}     
+					 
+	</update>
+	<insert id="productDto">
+		insert 
+		  into TBL_PRODUCT
+		  (
+		  	PRODUCT_NO
+			,	CLASSIFICATION_NO
+			,	PRODUCT_NAME
+			,	COST
+			,	SAIL_PRICE
+			,	PROFIT_MARGIN
+			,	EXPIRATION_PERIOD
+			,	PRODUCT_IMG
+			,	CREATE_DATE
+			,	MODIFY_DATE
+			,	DELIVERY_DATE
+			,	USE_YN
+		  )
+		 values
+		 (
+		 	 PRODUCT_NO_SEQ.NEXTVAL
+		 , #{productDivision}	 
+		 , #{productName}	 
+		 , #{cost}	 
+		 , #{sailPrice}	 
+		 , #{profitMargin}	 
+		 , TO_DATE(#{expirationPeriod}, 'YY-MM-DD')	 
+		 , #{productImg}	 
+	   , sysdate
+     , sysdate
+		 , #{deliveryDate}	 
+		 , #{useYn}	 
+		 )
+		  
+	</insert>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.BranchOfficeDao;
+import com.gd.mystore.dto.CommonCodeDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ProductDto;
 import com.gd.mystore.service.BranchOfficeService;
@@ -32,6 +33,22 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
 		return boDao.selectDto(prono);
 	}
 
+	@Override
+	public List<CommonCodeDto> selectCommonDto() {
+		return boDao.selectCommonDto();
+	}
+
+	@Override
+	public int updateProduct(ProductDto productDto) {
+		return boDao.updateProduct(productDto);
+	}
+
+	@Override
+	public int insertProduct(ProductDto productDto) {
+		return boDao.insertProduct(productDto);
+	}
+	
+	
 
 
 }

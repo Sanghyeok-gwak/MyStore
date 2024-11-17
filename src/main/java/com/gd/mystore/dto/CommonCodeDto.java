@@ -13,10 +13,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CommonCodeDto {
-	public String Cd;
-	public String Nm;
-	public String classificationNo;
-	public String classificationName;
+	public String commonCode;
+	public String commonName;
 	public String creater;
 	public String modify;
 	public String createrDate;

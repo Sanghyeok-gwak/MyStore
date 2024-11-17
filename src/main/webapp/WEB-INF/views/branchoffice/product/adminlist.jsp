@@ -73,7 +73,7 @@
             </div>
           </div>
           <div class="add-edit-box">
-            <button class="btn4" style="margin-right: 5px;">추가</button>
+            <button class="btn4" onclick='location.href="${contextPath}/branchoffice/regist.po"' style="margin-right: 5px;">추가</button>
             <button class="btn4">삭제</button>
           </div>
         </div>
