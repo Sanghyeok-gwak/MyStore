@@ -284,6 +284,8 @@ input[type=file]::file-selector-button {
 	display: flex;
 }
 /* enddiv 스타일 end */
+
+
 </style>
 </head>
 <body>
@@ -328,6 +330,7 @@ input[type=file]::file-selector-button {
 
 				<hr>
 
+				<!-- 양식내용 -->
 				<!-- smarteditor start-->
 				<div id="smarteditor">
 					<textarea name="sampleFormat" id="editorTxt0" rows="15"
@@ -380,7 +383,7 @@ input[type=file]::file-selector-button {
 			document.forms["editorForm"].submit();
 		}
 	</script>
-
+	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>

@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.EDocDao;
+import com.gd.mystore.dto.DepartmentDto;
 import com.gd.mystore.dto.EDocSampleDto;
+import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.EDocService;
 
@@ -23,7 +25,7 @@ public class EDocServiceImpl implements EDocService {
 	}
 
 	@Override
-	public List<EDocSampleDto> selectEDocList(PageInfoDto pi) {
+	public List<EDocSampleDto> selectEDocFormList(PageInfoDto pi) {
 		return edocDao.selectEDocSampleList(pi);
 	}
 
@@ -35,6 +37,26 @@ public class EDocServiceImpl implements EDocService {
 	@Override
 	public int deleteEdocSample(String[] deleteNo) {
 		return edocDao.deleteEDocSample(deleteNo);
+	}
+
+	@Override
+	public List<EDocSampleDto> selectEDocFormList() {
+		return edocDao.selectEdocFormList();
+	}
+
+	@Override
+	public EDocSampleDto selectEDocForm(int sampleNoInt) {
+		return edocDao.selectEdocForm(sampleNoInt);
+	}
+
+	@Override
+	public List<DepartmentDto> selectDepartments() {
+		return edocDao.selectDepartments();
+	}
+
+	@Override
+	public List<EmpMemberDto> selectEmployees() {
+		return edocDao.selectEmployees();
 	}
 
 }

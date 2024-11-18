@@ -9,17 +9,22 @@
 <title>Insert title here</title>
 
 <!-- 네이버 스마트에디터 -->
-<script type="text/javascript" src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript"
+	src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
 <!-- jQuery 라이브러리 (한 번만 포함) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <!-- Font Awesome 아이콘 라이브러리 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- jsTree 라이브러리 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
 
 
 <style>
@@ -197,6 +202,7 @@ input {
 	text-align: center;
 	border-radius: 5px;
 }
+
 #aprr1 {
 	background-color: #99A1EF;
 	color: white;
@@ -215,7 +221,7 @@ input {
 	border-radius: 5px;
 }
 
-#aprr1_content2  {
+#aprr1_content2 {
 	background-color: #ffffff;
 	color: rgb(0, 0, 0);
 	height: 80px;
@@ -311,107 +317,131 @@ input[type=file]::file-selector-button {
 	margin-top: 10px;
 }
 </style>
+
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
-<jsp:include page="/WEB-INF/views/common/side.jsp" />
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
+	<jsp:include page="/WEB-INF/views/common/side.jsp" />
+
 	<div class="body-body">
-	<!-- 여기 채워서 작업하시면 됩니다 .-->
 		<div class="text-box">
-			<form action="">
+			<form action="${contextPath}/edoc/edocinsert.do" method="post"
+				onsubmit="updateEditorContent()">
 				<div id="topdiv">
-					<div class="bbox-box" style="width:50%;">
-						<span class="ffont1" style="font-weight: bold;">전자문서 작성하기</span> 
-						<select name="languages" id="lang">
-							<option value="select">결제양식 선택</option>
-							<option value="vac">휴가</option>
-							<option value="dept">부서</option>
-							<option value="java">일반</option>
+					<div class="bbox-box" style="width: 50%;">
+						<span class="ffont1" style="font-weight: bold;">전자문서 작성하기</span> <select
+							name="languages" id="lang" onchange="loadSampleFormat()">
+							<option value="">결재양식 선택</option>
+							<c:forEach var="form" items="${list}">
+								<option value="${form.sampleNo}">${form.sampleDotCode}</option>
+							</c:forEach>
 						</select>
+
 						<button type="button" id="modal_appr" data-bs-toggle="modal"
 							data-bs-target="#basicModal">결제선 선택</button>
+					</div>
 
-					</div>		
-					<div id="enddiv" style="width:50%;">
+					<div id="enddiv" style="width: 50%;">
 						<div class="btn-box-hover">
-							<button class="btn3-hover" style="width: 120px; font-size: 18px;">기안하기</button>
+							<button type="submit" class="btn3-hover"
+								style="width: 120px; font-size: 18px;">기안하기</button>
 						</div>
 						<div class="btn-box-hover">
 							<button class="btn1-hover"
-								style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
+								style="width: 120px; margin-left: 20px; font-size: 18px;"
+								onclick="history.go(-1);">뒤로가기</button>
 						</div>
 					</div>
 				</div>
+
 				<hr>
-				<div id="middiv">
+
 				<style>
-					.middiv-box,.middiv-box-left,.middiv-box-right{
-						display:flex;
-					}
-					.middiv-box{
-						margin-top:20px;
-						margin-bottom:20px;
-						justify-content: space-between;
-						width:100%;
-					}
-					.middiv-box-right-writer-left table{
-						height:100%;
-					}
-					.middiv-box-right-writer-right table{
-						height:100%;
-					}
-					.middiv-box-right-writer-left{
-						margin-right:15px;
-					}
-					.middiv-box-right-writer-right{
-						margin-left:15px;
-					}
-					#writer_content{
-						border: 1px solid lightgray;
-					}
-				</style>
+.middiv-box, .middiv-box-left, .middiv-box-right {
+	display: flex;
+}
+
+.middiv-box {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.middiv-box-right-writer-left table {
+	height: 100%;
+}
+
+.middiv-box-right-writer-right table {
+	height: 100%;
+}
+
+.middiv-box-right-writer-left {
+	margin-right: 15px;
+}
+
+.middiv-box-right-writer-right {
+	margin-left: 15px;
+}
+
+#writer_content {
+	border: 1px solid lightgray;
+}
+</style>
+
+
+				<div id="middiv">
 					<div class="middiv-box">
+
 						<div class="middiv-box-left">
 							<div class="middiv-box-left-writer-left">
-								<div id="writer" style="margin-bottom:10px;">기안자</div>
-								<div id="writer" style="margin-bottom:10px;">부서</div>
-								<div id="writer" style="margin-bottom:10px;">기안일</div>
+								<div id="writer" style="margin-bottom: 10px;">기안자</div>
+								<div id="writer" style="margin-bottom: 10px;">부서</div>
+								<div id="writer" style="margin-bottom: 10px;">기안일</div>
 							</div>
 							<div class="middiv-box-left-writer-right">
-								<div id="writer_content" style="margin-bottom:10px;">기안자이름</div>
-								<div id="writer_content" style="margin-bottom:10px;">부서명</div>
-								<div id="writer_content" style="margin-bottom:10px;">YYYY-MM-DD</div>
+								<div id="writer_content" style="margin-bottom: 10px;">${loginUser.empName}</div>
+								<div id="writer_content" style="margin-bottom: 10px;">${loginUser.deptCode}</div>
+								<div id="writer_content" style="margin-bottom: 10px;">${ currentDate }</div>
 							</div>
 						</div>
+
 						<div class="middiv-box-right">
 							<div class="middiv-box-right-writer-left">
 								<table>
-										<tr>
-											<td id="aprr1" rowspan="5"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex;">1차</div></td>
-											<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">직급</div></td>
-										</tr>
-										<tr>
-											<td id="aprr1_content2" rowspan="3"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">결재자</div></td>
-										</tr>
-										<tr>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-										</tr>
-										<tr>
-											<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">부서명</div></td>
-										</tr>
-									</table>
+									<tr>
+										<td id="aprr1" rowspan="5"><div
+												style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex;">1차</div></td>
+										<td id="aprr1_content"><div
+												style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex; border: 1px solid lightgray;">직급</div></td>
+									</tr>
+									<tr>
+										<td id="aprr1_content2" rowspan="3"><div
+												style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex; border: 1px solid lightgray;">결재자</div></td>
+									</tr>
+									<tr>
+										<td></td>
+									</tr>
+									<tr>
+										<td></td>
+									</tr>
+									<tr>
+										<td id="aprr1_content"><div
+												style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex; border: 1px solid lightgray;">부서명</div></td>
+									</tr>
+								</table>
 							</div>
 							<div class="middiv-box-right-writer-right">
 								<table>
 									<tr>
-										<td id="aprr1" rowspan="5"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; ">2차</div></td>
-										<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;" >직급</div></td>
+										<td id="aprr1" rowspan="5"><div
+												style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex;">2차</div></td>
+										<td id="aprr1_content"><div
+												style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex; border: 1px solid lightgray;">직급</div></td>
 									</tr>
 									<tr>
-										<td id="aprr1_content2" rowspan="3"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">결재자</div></td>
+										<td id="aprr1_content2" rowspan="3"><div
+												style="width: 100%; height: 100%; align-items: center; justify-content: center; display: flex; border: 1px solid lightgray;">결재자</div></td>
 									</tr>
 									<tr>
 										<td></td>
@@ -420,7 +450,8 @@ input[type=file]::file-selector-button {
 										<td></td>
 									</tr>
 									<tr>
-										<td id="aprr1_content"><div style="width:100%; height:100%; border:1px solid lightgray;">부서명</div></td>
+										<td id="aprr1_content"><div
+												style="width: 100%; height: 100%; border: 1px solid lightgray;">부서명</div></td>
 									</tr>
 								</table>
 							</div>
@@ -428,142 +459,119 @@ input[type=file]::file-selector-button {
 					</div>
 				</div>
 				<hr>
-			</form>
-			<!-- 중간2 start -->
-			<div id="middiv2">
-				<div id="form_title">제목</div>
 
-				<div class="input-bar" style="width: 100%; padding-left: 10px;">
-					<input type="text" class="input-bar1" readonly>
-				</div>
-			</div>
-			<!-- 중간2 end -->
 
-			<!-- smarteditor start-->
-			<div id="smarteditor">
-				<textarea name="editorTxt" id="editorTxt0" rows="13"
-					style="width: 100%;"></textarea>
-			</div>
-			<!-- smarteditor end-->
-
-			<!-- 파일업로드 start-->
-					<div id="middiv3">
-						<input type="file" id="fileupload" name="uploadFile" multiple>
-						<br>
+				<!-- 제목 -->
+				<div id="middiv2">
+					<div id="form_title">제목</div>
+					<div class="input-bar" style="width: 100%; padding-left: 10px;">
+						<input type="text" name="title" class="input-bar1">
 					</div>
-			<!--파일업로드 end-->
-			<!--파일다운로드 end-->
+				</div>
 
-			<!-- 끝 start-->
-		
-			<!-- 끝 end-->
-		</div>      
+				<!-- 스마트에디터 -->
+				<div id="smarteditor">
+					<textarea name="editorTxt" id="editorTxt0" rows="13"
+						style="width: 100%;"></textarea>
+				</div>
+
+				<!-- 파일업로드 -->
+				<div id="middiv3">
+					<input type="file" id="fileupload" name="uploadFile" multiple><br>
+				</div>
+			</form>
+		</div>
 	</div>
 
 	<script>
-		let oEditors = [];
-		smartEditor = function() {
+		// 문서가 준비된 후 스마트에디터 초기화 
+
+		$(document).ready(function() {
+			smartEditor();
+		});
+
+		let oEditors = []; // 스마트에디터 초기화 
+
+		function smartEditor() {
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef : oEditors,
-				elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
+				elPlaceHolder : "editorTxt0",
+				// textarea에 부여한 아이디와 동일해야 한다. 
+				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html",
+				// 자신의 프로젝트에 맞게 경로 수정 
 				htParams : {
-					// 입력창 크키 조절바 사용여부 (true: 사용, false: 미사용)
+					// 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용) 
 					bUseVerticalResizer : false,
 				},
 				fCreator : "createSEditor2"
-			})
+			});
 		}
 
-		$(document)
-				.ready(
-						function() {
-							//스마트에디터 적용
-							smartEditor();
-							//값 불러오기
-							function preview() {
-								// 에디터의 내용을 textarea에 적용
-								oEditors.getById["editorTxt0"].exec(
-										"UPDATE_CONTENTS_FIELD", []);
-								// textarea 값 불러오기 
-								var content = document
-										.getElementById("editorTxt0").value;
-								alert(content);
-								return;
-							}
+		// 양식 선택 시 자동으로 스마트에디터에 반영 
+		function loadSampleFormat() {
+			var sampleNo = $('#lang').val();
+			if (sampleNo) {
+				$.ajax({
+					url : '${contextPath}/edoc/getSampleFormat', // 해당 URL로 API 요청 
+					data : {
+						sampleNo : sampleNo
+					},
+					method : 'GET',
+					success : function(response) {
+						// 응답이 올바르게 전달되었는지 콘솔에서 확인 
+						console.log("응답 데이터:", response);
 
-						})
+						// oEditors[0]이 초기화되었을 때만 실행 
+						if (oEditors.length > 0 && oEditors[0]) {
+							// 스마트에디터 내용을 초기화 
+							oEditors[0].exec("SET_CONTENTS", [ "" ]);
+							// 응답이 HTML 형식이라면 바로 반영 
+							oEditors[0].exec("PASTE_HTML", [ response ]);
+						} else {
+							console.error("스마트에디터가 초기화되지 않았습니다.");
+						}
+					},
+					error : function() {
+						alert("양식 정보를 불러오는 데 실패했습니다.");
+					}
+				});
+			}
+		}
+
+		// 폼 제출 시 에디터 내용 업데이트 
+		function updateEditorContent() {
+			if (oEditors.length > 0 && oEditors[0]) {
+				oEditors[0].exec("UPDATE_CONTENTS_FIELD", []);
+			}
+		}
 	</script>
+
 
 	<script>
 		$(function() {
-			// jsTree 초기화
-			$("#approvalTree").jstree({
-				core : {
-					data : [ {
-						"id" : "1",
-						"parent" : "#",
-						"text" : "본부",
-						"state" : {
-							"disabled" : true
+			// 트리 데이터 로드
+			$.ajax({
+				url : "${contextPath}/edoc/getDeptAndEmployeeData",
+				method : "GET",
+				success : function(data) {
+					console.log("받은 데이터:", data);
+					$("#approvalTree").jstree({
+						core : {
+							data : data
 						},
-						"icon" : "fa fa-building"
-					}, {
-						"id" : "2",
-						"parent" : "1",
-						"text" : "부서 A",
-						"state" : {
-							"disabled" : true
-						},
-						"icon" : "fa fa-briefcase"
-					}, {
-						"id" : "3",
-						"parent" : "1",
-						"text" : "부서 B",
-						"state" : {
-							"disabled" : true
-						},
-						"icon" : "fa fa-briefcase"
-					}, {
-						"id" : "4",
-						"parent" : "2",
-						"text" : "결재자 1",
-						"icon" : "fa fa-user"
-					}, {
-						"id" : "5",
-						"parent" : "2",
-						"text" : "결재자 2",
-						"icon" : "fa fa-user"
-					}, {
-						"id" : "6",
-						"parent" : "2",
-						"text" : "결재자 3",
-						"icon" : "fa fa-user"
-					}, {
-						"id" : "7",
-						"parent" : "3",
-						"text" : "결재자 4",
-						"icon" : "fa fa-user"
-					}, {
-						"id" : "8",
-						"parent" : "3",
-						"text" : "결재자 5",
-						"icon" : "fa fa-user"
-					}, {
-						"id" : "9",
-						"parent" : "3",
-						"text" : "결재자 6",
-						"icon" : "fa fa-user"
-					} ]
+						plugins : [ "checkbox", "contextmenu", "dnd" ],
+						checkbox : {
+							three_state : false,
+							keep_selected_style : false
+						}
+					});
 				},
-				"plugins" : [ "checkbox", "contextmenu", "dnd" ],
-				"checkbox" : {
-					"three_state" : false, // 부모/자식 자동 체크 해제
-					"keep_selected_style" : false, // 선택된 노드의 스타일을 기본값으로 유지
-
+				error : function() {
+					alert("트리 데이터를 불러오는 데 실패했습니다.");
 				}
 			});
 
+			// 트리 선택 이벤트 처리
 			$('#approvalTree').on(
 					"changed.jstree",
 					function(e, data) {
@@ -573,30 +581,30 @@ input[type=file]::file-selector-button {
 						// 선택된 결재자 목록 초기화
 						$selectedList.empty();
 
-						// 선택된 결재자가 두 명을 초과하는 경우 알림 및 추가 선택 해제
+						// 선택된 노드가 2명을 초과하면 경고 및 마지막 선택 해제
 						if (selectedNodes.length > 2) {
-							alert("결재자는 두명이 최대입니다");
-							$('#approvalTree').jstree("deselect_node",
-									data.node.id); // 마지막 선택된 노드를 해제
-							return; // 추가 처리를 중지
+							alert("결재자는 최대 2명까지 선택할 수 있습니다.");
+							$('#approvalTree').jstree(true).deselect_node(
+									data.node.id);
+							return;
 						}
 
-						// 선택된 결재자를 표시 영역에 추가
+						// 선택된 노드 처리
 						selectedNodes.forEach(function(nodeId) {
-							let node = $('#approvalTree').jstree(true)
-									.get_node(nodeId);
-							if (node) {
-								// 결재자의 부모 노드(부서) 가져오기
-								let parentNode = $('#approvalTree')
-										.jstree(true).get_node(node.parent);
+							let tree = $('#approvalTree').jstree(true);
+							let node = tree.get_node(nodeId);
+
+							// 직원 노드만 처리 (부서는 제외)
+							if (!tree.is_parent(node)) {
+								let parentNode = tree.get_node(node.parent);
 								let approverInfo = node.text;
 
-								// 부서 정보가 있는 경우 부서명도 함께 표시
 								if (parentNode && parentNode.text) {
 									approverInfo += " (" + parentNode.text
 											+ ")";
 								}
 
+								// 결재자 목록에 추가
 								$selectedList
 										.append('<li class="list-group-item">'
 												+ approverInfo + '</li>');
@@ -607,6 +615,7 @@ input[type=file]::file-selector-button {
 					});
 		});
 	</script>
+
 	<!-- 모달 시작 -->
 	<div class="modal fade" id="basicModal" tabindex="-1"
 		aria-hidden="true">
@@ -637,7 +646,18 @@ input[type=file]::file-selector-button {
 		</div>
 	</div>
 	<!-- 모달 끝 -->
+
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

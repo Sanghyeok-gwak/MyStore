@@ -6,7 +6,9 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.gd.mystore.dto.DepartmentDto;
 import com.gd.mystore.dto.EDocSampleDto;
+import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
@@ -34,5 +36,21 @@ public class EDocDao {
 	
 	public int deleteEDocSample(String[] deleteNo) {
 		return sqlSession.update("edocMapper.deleteEdocSample", deleteNo);
+	}
+
+	public List<EDocSampleDto> selectEdocFormList() {
+		return sqlSession.selectList("edocMapper.selectEDocFormList");
+	}
+
+	public EDocSampleDto selectEdocForm(int sampleNoInt) {
+		return sqlSession.selectOne("edocMapper.selectEDocForm", sampleNoInt);
+	}
+
+	public List<DepartmentDto> selectDepartments() {
+		return sqlSession.selectList("edocMapper.selectDepartments");
+	}
+
+	public List<EmpMemberDto> selectEmployees() {
+		return sqlSession.selectList("edocMapper.selectEmployees");
 	}
 }

@@ -19,7 +19,7 @@ public class EDocSampleDto {
 	private String sampleDotCode;	// 양식유형(일반, 휴가)
 	private String sampleDesc;		// 샘플양식설명
 	private String sampleFormat;	// 양식 서식
-	private int empNo;				// 생성자
+	private String empNo;				// 생성자
 	private String createDt;		// 생성일
 	private int modyfy;				// 수정자
 	private String modifyDt;		// 수정일
