@@ -13,6 +13,19 @@
 		<result column="use_yn" property="useYN" />	
 	</resultMap>
 	
+	<resultMap id="departmentChangeResultMap" type="DepTransferDto">
+		<result column="TRANSFER_CODE" property="transferCode" />
+		<result column="TRANSFER_BEFORE" property="transferBefore" />
+		<result column="TRANSFER_AFTER" property="transferAfter" /> 
+		<result column="TRANSFER_DATE" property="transferDate" />
+		<result column="EMP_NO" property="empNo" />
+		<result column="CREATE_DATE" property="createDate" />
+		<result column="modifier" property="modifier" />
+		<result column="modify_date" property="modifyDate" />	
+		<result column="use_yn" property="useYN" />	
+		<result column="EMP_NAME" property="empName"/>
+	</resultMap>
+	
 	<resultMap id="commonResultMap" type="CommoncodeDto">
 		<result column="CD" property="Cd" />
 		<result column="NM" property="Nm" />
@@ -70,4 +83,25 @@
 			e.emp_no > 1001
 		order by e.emp_name
 	</select>
+	
+<select id="selectChangeHistory" resultMap="departmentChangeResultMap">
+    select 
+        d.transfer_code,
+        d.transfer_date,
+        d.transfer_before,
+        d.transfer_after,
+        d.emp_no,
+        e.emp_name,
+        d.modifier,
+        (select e2.emp_name
+         from tbl_employee e2
+         where e2.emp_no = d.modifier)
+    from 
+        tbl_dep_transfer d
+    join 
+        tbl_employee e on e.emp_no = d.emp_no
+    where 
+        (e.emp_name = #{searchValue} OR d.emp_no = #{searchValue})
+</select>
+
 </mapper>

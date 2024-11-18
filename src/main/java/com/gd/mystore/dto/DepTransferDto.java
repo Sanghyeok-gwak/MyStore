@@ -24,4 +24,6 @@ public class DepTransferDto {
 	private int modifier;
 	private String modifyDate; 
 	private String useYN;
+	
+	private String empName;
 }

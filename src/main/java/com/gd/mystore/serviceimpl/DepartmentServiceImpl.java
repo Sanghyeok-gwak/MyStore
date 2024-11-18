@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.DepartmentDao;
+import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
 import com.gd.mystore.service.DepartmentService;
 
@@ -20,6 +21,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public List<DepartmentDto> selectMemberList() {
 		
 		return departmentDao.selectMemberList();
+	}
+	
+	@Override
+	public List<DepTransferDto> selectChangeHistory(String searchValue) {
+		return departmentDao.selectChangeHistory(searchValue);
 	}
 	
 	

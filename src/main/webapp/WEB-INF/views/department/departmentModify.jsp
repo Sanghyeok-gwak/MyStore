@@ -279,27 +279,47 @@ $(function() {
     });
 
     // 등록 버튼 클릭 시
-    $("#submitNodeBtn").click(function() {
-        if (editMode) {
-            // 수정된 내용을 서버로 전송하는 부분 (예: 서버로 전송하는 부분)
-            alert("수정된 내용을 저장합니다.");
+   $("#submitNodeBtn").click(function() {
+    if (editMode) {
+        // 수정된 데이터를 서버로 전송하는 부분
+        alert("수정된 내용을 저장합니다.");
+        
+        // 수정된 트리 데이터를 가져옴
+        var modifiedData = $('#jstree').jstree(true).get_json('#', { 'flat': true });
+        
+        // 서버에 데이터를 전송하는 AJAX 요청
+        $.ajax({
+            url: contextPath + "/saveTreeData", // 데이터를 저장할 서버 URL
+            type: "POST",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(modifiedData), // 트리 데이터를 JSON 형식으로 변환하여 전송
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert("수정 완료!");
+                } else {
+                    alert("수정 중 오류가 발생했습니다.");
+                }
+            },
+            error: function(xhr, status, error) {
+                alert("서버 통신 중 오류가 발생했습니다.");
+            }
+        });
 
-            // 수정된 데이터를 저장
-            previousData = $('#jstree').jstree(true).settings.core.data;
+        // 수정된 데이터를 이전 상태로 저장
+        previousData = modifiedData;
 
-            // 트리 수정 불가능하게 처리
-            $('#jstree').jstree(true).settings.core.data = previousData;
-            $('#jstree').jstree(true).refresh();
+        // 트리 수정 불가능하게 처리
+        $('#jstree').jstree(true).settings.core.data = previousData;
+        $('#jstree').jstree(true).refresh();
 
-            // 수정 모드 비활성화
-            editMode = false;
-            $("#jstree").jstree("disable_plugin", "contextmenu");
+        // 수정 모드 비활성화
+        editMode = false;
+        $("#jstree").jstree("disable_plugin", "contextmenu");
+    } else {
+        alert("수정 모드가 아닙니다.");
+    }
+});
 
-            alert("수정 완료!"); // 수정 완료 메시지
-        } else {
-            alert("수정 모드가 아닙니다.");
-        }
-    });
 
     // jsTree 초기화
     $("#jstree").jstree({
