@@ -20,9 +20,7 @@ public class EmpMemberDao {
 	}
 
 	public int updatePwdMember(EmpMemberDto em) {
-		int result = sqlSession.update("empMemberMapper.updateEmpMember", em);
-		log.debug("result 값 : {}", result);
-		return 0;
+		return sqlSession.update("empMemberMapper.updateEmpMember", em);
 	}
 	
 	

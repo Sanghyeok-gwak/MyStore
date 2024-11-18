@@ -43,7 +43,6 @@ public class EmailService {
 	}
 
 	public void mailSend(String setFrom, String toMail, String title, String content) {
-		log.debug("mailSend 진입");
 		MimeMessage message = mailSender.createMimeMessage();
 
 		try {

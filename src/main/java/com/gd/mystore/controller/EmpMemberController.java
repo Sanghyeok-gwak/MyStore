@@ -112,7 +112,7 @@ public class EmpMemberController {
 			
 			//DB 업데이트 성공 시 메일 전송
 			if(result > 0) {
-				new EmailService().joinEmail(loginUser.getEmpEmail(), newPwd);
+				emailService.joinEmail(loginUser.getEmpEmail(), newPwd);
 			}else {
 				log.debug("비밀번호 업데이트 안됨");
 			}
