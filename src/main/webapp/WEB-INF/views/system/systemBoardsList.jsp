@@ -52,8 +52,8 @@
       .left_body_list {
         border: solid 0px red;
         margin-top: 5px;
-        height: 88%;
-        width: 435px;
+        height: 93%;
+        width: 100%;
         overflow-y: auto;
       }
 
@@ -99,6 +99,9 @@
         justify-content: center;
         margin-top: 40px;
       }
+      .disablebackdrop{
+      	top: 70px;
+      }
 	
 </style>
 
@@ -121,98 +124,64 @@
                   <button class="btn2-hover">
                     <b style="font-weight: 900">-</b> 삭제
                   </button>
-                  <button class="btn2-hover">
+                  <button class="btn2-hover" type="button" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
                     <b style="font-weight: 900">+</b> 추가
                   </button>
+                  
+	               	<div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
+		                <div class="modal-dialog">
+		                  <div class="modal-content">
+		                    <div class="modal-header">
+		                      <h5 class="modal-title">게시판 타입 추가</h5>
+		                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		                    </div>
+		                    <div class="modal-body">
+		                    	<span>글자수 최대 20</span><br>
+		                      <span>게시판 타입 제목 &nbsp</span><input type="text" class="input-bar1" />
+		                    </div>
+		                    <div class="modal-footer">
+		                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		                      <button type="button" class="btn btn-primary">추가</button>
+		                    </div>
+		                  </div>
+		                </div>
+		              </div><!-- End Disabled Backdrop Modal-->
+		              
                 </div>
               </div>
       
               <div class="left_body_list">
                 <!-- 메뉴 리스트 -->
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 공지사항
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 자유게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 인사게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 공지사항
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 자유게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 인사게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 공지사항
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 자유게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 인사게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 공지사항
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 자유게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 인사게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 공지사항
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 자유게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 인사게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 공지사항
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 자유게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 인사게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 공지사항
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 자유게시판
-                </div>
-                <div class="left_body_listItem">
-                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
-                  &nbsp 인사게시판
-                </div>
+               	<c:choose>
+               		<c:when test="${ empty list }">
+		                  <spen>조회된 게시판 유형이 없습니다.</spen>
+               		</c:when>
+               				
+               		<c:otherwise>
+               			<div class="left_body_listItem">
+			                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
+			                  추가버튼 한칸 추가, 타이틀 작성? 에이작스?
+		                </div>
+		                <div class="left_body_listItem">
+			                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
+			                  클릭 시 호버 남아있는 스크립트 구현
+		                </div>
+		                <div class="left_body_listItem">
+			                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
+			                  글자수 20으로 제한 필요
+		                </div>
+		                <div class="left_body_listItem">
+			                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
+			                  개같은 모달 스타일 뒤지게 안먹네
+		                </div>
+               			<c:forEach var="bt" items="${ list }">
+               				<div class="left_body_listItem">
+			                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
+			                  ${ bt.getBoardtName() }
+			                </div>
+               			</c:forEach>
+               		</c:otherwise>
+               	</c:choose>
                 <!-- 더 많은 메뉴 항목 추가 가능 -->
               </div>
             </div>

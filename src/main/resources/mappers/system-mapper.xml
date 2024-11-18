@@ -1,5 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper>
-  <cache-ref namespace=""/>
+<mapper namespace="systemMapper">
+	
+	<resultMap id="boardTypeResultMap" type="BoardTypeDto">
+	 	<result column="BOARD_TYPE_NO" property="boardTypeNo" />
+	 	<result column="BOARDT_NAME" property="boardtName" />
+    <result column="BOARDT_TYPE" property="boardtType" />
+    <result column="BOARDT_READ" property="boardtRead" />
+    <result column="BOARDT_WRITE" property="boardtWrite" />
+    <result column="BOARDT_CONTENT" property="boardtContent" />
+    <result column="BOARDT_USE" property="boardtUse" />
+    <result column="DEPT_CODE" property="deptCode" />
+    <result column="EMP_NO" property="empNo" />
+    <result column="CREATE_DATE" property="createDate" />
+    <result column="MODIFIER" property="modifier" />
+    <result column="MODIFY_DATE" property="modifyDate" />
+    <result column="USE_YN" property="useYN" />
+	</resultMap>
+
+	<select id="selectSystemBoardList" resultMap="boardTypeResultMap">
+		select
+					 BOARD_TYPE_NO
+				 , BOARDT_NAME
+				 , BOARDT_TYPE
+				 , BOARDT_READ
+				 , BOARDT_READ
+				 , BOARDT_WRITE
+				 , BOARDT_CONTENT
+				 , BOARDT_USE
+				 , DEPT_CODE
+				 , EMP_NO
+				 , CREATE_DATE
+				 , MODIFIER
+				 , MODIFY_DATE
+				 , USE_YN
+		  from TBL_BOARDTYPE
+		 where USE_YN = 'Y'
+	</select>
+
+
+
+
+
+
 </mapper>

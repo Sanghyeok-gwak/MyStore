@@ -8,9 +8,9 @@ import com.gd.mystore.dto.EmpMemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
-@Slf4j
 public class EmpMemberDao {
 	
 	private final SqlSessionTemplate sqlSession;

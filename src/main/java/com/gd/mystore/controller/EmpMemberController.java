@@ -41,8 +41,6 @@ public class EmpMemberController {
 			@CookieValue(value = "remember-empNo", required = false) Cookie cookie
 			,Model model) {
 		
-		System.out.println("로그인 페이지 진입");
-		
 		String empNo = "";					// 저장된 아이디
 		boolean rememberEmpNo = false;		// 아이디 저장 체크 여부
 		
@@ -103,12 +101,8 @@ public class EmpMemberController {
 			//세션에 비밀번호 변경
 	        loginUser.setEmpPwd(newPwd);
 	        
-	        log.debug("비밀번호 변경된 정보: {}, {}, {}", loginUser.getEmpNo(), loginUser.getEmpEmail(), loginUser.getEmpPwd());
-			
 			//변경된 비밀번호 DB 업데이트 진행
 			int result = empMemberService.updatePwdMember(loginUser);
-			
-			log.debug("결과값 {}", result);
 			
 			//DB 업데이트 성공 시 메일 전송
 			if(result > 0) {

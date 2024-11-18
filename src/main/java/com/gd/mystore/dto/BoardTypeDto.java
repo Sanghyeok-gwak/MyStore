@@ -1,5 +1,7 @@
 package com.gd.mystore.dto;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,8 +26,8 @@ public class BoardTypeDto {
 	private String boardtUse;
 	private String deptCode;
 	private int empNo;
-	private String createDate;
+	private Date createDate;
 	private int modifier;
-	private String modifyDate;
+	private Date modifyDate;
 	private String useYN;
 }

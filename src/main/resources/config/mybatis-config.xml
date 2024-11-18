@@ -16,9 +16,9 @@
 		<typeAlias type="com.gd.mystore.dto.SalaryDto" alias="SalaryDto"/>					<!-- 급여 -->
 		<typeAlias type="com.gd.mystore.dto.ProductDto" alias="ProductDto"/>					<!-- 상품 -->
 		
-		<!-- 로그인 -->
-		<typeAlias type="com.gd.mystore.dto.EmpMemberDto" alias="EmpMemberDto"/>
+		<typeAlias type="com.gd.mystore.dto.EmpMemberDto" alias="EmpMemberDto"/>		<!-- 로그인 -->
 		
+		<typeAlias type="com.gd.mystore.dto.BoardTypeDto" alias="BoardTypeDto"/>		<!-- 시스템 게시판타입 -->
 			
 		<typeAlias type="com.gd.mystore.dto.DepartmentDto" alias="DepartmentDto"/>					<!-- 부서조회 -->
 		<typeAlias type="com.gd.mystore.dto.DepTransferDto" alias="DepTransferDto"/>					<!--부서 이동내역 조회 -->
@@ -26,8 +26,6 @@
 		<typeAlias type="com.gd.mystore.dto.BoardFileDto" alias="BoardFileDto"/>		<!-- 게시판 첨부파일 -->
 		<typeAlias type="com.gd.mystore.dto.BoardTypeDto" alias="BoardTypeDto"/>		<!-- 게시판 생성(관리자) -->
 		<typeAlias type="com.gd.mystore.dto.CommonCodeDto" alias="CommonCodeDto"/>		<!-- 공통코드 -->
-		
-		
 		
 	</typeAliases>
 	
@@ -40,11 +38,10 @@
   	    <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
 		<mapper resource="mappers/department-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
 
-
+		<mapper resource="mappers/system-mapper.xml"/>								<!-- 시스템 관련 mapper -->
 		
     <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
 		<mapper resource="mappers/branchoffice-mapper.xml"/>					<!-- 상품 매퍼 -->
-		<!-- 로그인 mapper -->
 		
 		
 		
