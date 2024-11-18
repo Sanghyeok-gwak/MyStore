@@ -2,6 +2,7 @@ package com.gd.mystore.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +29,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/login")
 @RequiredArgsConstructor
 @Controller
+@Slf4j
 public class EmpMemberController {
 	
 	private final EmpMemberService empMemberService;
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
-	
-	@Autowired
-	private EmailService mailService;
+	private final EmailService emailService;
 	
 	@RequestMapping("/loginPage")//쿠키 확인
 	public void loginCookie(
@@ -52,10 +52,8 @@ public class EmpMemberController {
 			empNo = cookie.getValue();
 			rememberEmpNo = true;
 		}
-		
 		model.addAttribute("empNo", empNo);
 		model.addAttribute("rememberEmpNo", rememberEmpNo);
-		
 	}
 	
 	@RequestMapping("/logOut.do") // 로그아웃
@@ -99,9 +97,26 @@ public class EmpMemberController {
 		
 		if(loginUser != null && em.getEmpEmail().equals(loginUser.getEmpEmail())) { //이메일 일치 확인
 			
-			System.out.println("이메일 전송");
-			mailService.joinEmail(em.getEmpEmail());
+			//변경할 비밀번호 길이 설정
+			String newPwd = emailService.randomPassword(8);
 			
+			//세션에 비밀번호 변경
+	        loginUser.setEmpPwd(newPwd);
+	        
+	        log.debug("비밀번호 변경된 정보: {}, {}, {}", loginUser.getEmpNo(), loginUser.getEmpEmail(), loginUser.getEmpPwd());
+			
+			//변경된 비밀번호 DB 업데이트 진행
+			int result = empMemberService.updatePwdMember(loginUser);
+			
+			log.debug("결과값 {}", result);
+			
+			//DB 업데이트 성공 시 메일 전송
+			if(result > 0) {
+				new EmailService().joinEmail(loginUser.getEmpEmail(), newPwd);
+			}else {
+				log.debug("비밀번호 업데이트 안됨");
+			}
+		   	
 			out.println("<script>");
 	        out.println("alert('인증 성공. 이메일을 확인해주세요');");
 	        out.println("location.href='/mystore/login/loginPage';"); // 로그인 페이지로 이동

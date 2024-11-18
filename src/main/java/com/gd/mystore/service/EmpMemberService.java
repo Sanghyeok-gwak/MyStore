@@ -6,7 +6,8 @@ public interface EmpMemberService {
 	//로그인
 	EmpMemberDto selectEmpMember(EmpMemberDto em);
 	
-	//비밀번호 찾기
-
+	//비밀번호 변경
+	int updatePwdMember(EmpMemberDto em);
+	
 	
 }

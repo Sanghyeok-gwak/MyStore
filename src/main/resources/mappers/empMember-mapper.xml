@@ -63,4 +63,23 @@
        AND EMP.EMP_NO = #{empNo}
   </select>
   
+  <!--  비밀번호 변경 -->
+  <update id="updateEmpMember">
+  	UPDATE
+  				 TBL_EMPLOYEE
+  		 SET 
+  		 		 EMP_PASSWORD = #{empPwd}
+  	 WHERE EMP_NO = #{empNo}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </mapper>
