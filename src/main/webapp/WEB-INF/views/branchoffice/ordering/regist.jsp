@@ -59,216 +59,34 @@
         <div class="ordering-top">
           <div class="order-box">
             <div class="table-box">
+             <form action="" method="post">
               <table>
                 <thead>
                   <tr>
                     <th>분류</th>
                     <th>상품명</th>
-                    <th>발주여부</th>
-                    <th>추천구분</th>
-                    <th>행사내용</th>
+                    <th>할인행사</th>
                     <th>발주재고</th>
                     <th>발주 수량</th>
-                    <th>발주일</th>
-                    <th>최소/최대</th>
-                    <th>취급여부</th>
+                    <th>발주여부</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                  <tr>
-                    <td>예시 분류</td>
-                    <td>예시 상품명</td>
-                    <td>발주 가능</td>
-                    <td>추천</td>
-                    <td>세일 행사</td>
-                    <td>100</td>
-                    <td><input type="number"></td>
-                    <td>2024-11-10</td>
-                    <td>10 / 50</td>
-                    <td>취급 중</td>
-                  </tr>
-                </tbody>
+	                <tbody>
+	                	<c:forEach var="p" items="${pro}">
+		                  <tr class="product-row" data-productimg="${p.productImg}" data-productno="${p.productNo}" 
+		                      data-productname="${p.productName}" data-cost="${p.cost}" data-sailprice="${p.sailPrice}" 
+		                      data-expiration="${p.expirationPeriod}" data-delivery="${p.deliveryDate}">
+		                    <td>${p.productDivision }</td>
+			                	<td>${p.productName }</td>
+		                    <td>${p.event == null ? '행사없음' : p.event}</td>
+		                    <td>${p.inventory }</td>
+		                    <td><input type="number" name="count"></td>
+		                    <td>${p.useYn == 'Y' ? '발주가능' : '발주불가능'}</td>
+		                  </tr>
+	                	</c:forEach>
+	                </tbody>
               </table>
+             </form>
             </div>
           </div>
         </div>
@@ -313,50 +131,52 @@
                   width: 130px;
                 }
               </style>
-            <div class="ordering-detail-text">
-              <div class="ordering-detail-product-no">
-                <span class="ffont2">123887894</span>
-              </div>
-              <div class="ordering-detail-product-name">
-                <span class="ffont1">참이슬</span>
-              </div>
+             <div class="ordering-detail-text" id="order-details">
+              <!-- 클릭된 데이터가 여기에 표시됩니다 -->
+              <div class="ordering-detail-product-no"><span class="ffont2" id="product-id">-</span></div>
+              <div class="ordering-detail-product-name" style="width:100%; margin-bottom:50px;"><span class="ffont1" id="product-name">-</span></div>
               <div class="ordering-detail-product-box1">
                 <div class="ordering-detail-product-cost">
-                  <div class="ordering-detail-product-cost-title">
-                    <span class="ffont2">원가 :&nbsp;</span>
-                  </div>
-                  <div class="ordering-detail-product-cost-price">
-                    <span class="ffont2">32,333원</span>
-                  </div>
+                  <div class="ordering-detail-product-cost-title"><span class="ffont2">원가 :&nbsp;</span></div>
+                  <div class="ordering-detail-product-cost-price"><span class="ffont2" id="product-cost">-</span></div>
                 </div>
-                <div class="ordering-detail-product-sail-price" style="margin-left: 20px;">
-                  <div class="ordering-detail-product-sail-price-title">
-                    <span class="ffont2">매가 :&nbsp;</span>
-                  </div>
-                  <div class="ordering-detail-product-sail-price-price">
-                    <span class="ffont2">32,333원</span>
-                  </div>
+                <div class="ordering-detail-product-sail-price">
+                  <div class="ordering-detail-product-sail-price-title"><span class="ffont2">매가 :&nbsp;</span></div>
+                  <div class="ordering-detail-product-sail-price-price"><span class="ffont2" id="product-price">-</span></div>
                 </div>
               </div>
               <div class="ordering-detail-product-box2">
                 <div class="ordering-detail-product-expiration">
-                  <div class="ordering-detail-product-expiration-title">
-                    <span class="ffont2">유효기간 :&nbsp;</span>
-                  </div>
-                  <div class="ordering-detail-product-expiration-expiration">
-                    <span class="ffont2">99개월</span>
-                  </div>
+                  <div class="ordering-detail-product-expiration-title"><span class="ffont2">유효기간 :&nbsp;</span></div>
+                  <div class="ordering-detail-product-expiration-expiration"><span class="ffont2" id="product-expiration">-</span></div>
                 </div>
                 <div class="ordering-detail-product-delivery-date">
-                  <div class="ordering-detail-product-delivery-date-title" style="margin-left: 20px;">
-                    <span class="ffont2">발주요일 :&nbsp;</span>
-                  </div>
-                  <div class="ordering-detail-product-delivery-date-date">
-                    <span class="ffont2">월,수,금</span>
-                  </div>
-                </div>  
+                  <div class="ordering-detail-product-delivery-date-title"><span class="ffont2">발주요일 :&nbsp;</span></div>
+                  <div class="ordering-detail-product-delivery-date-date"><span class="ffont2" id="product-delivery">-</span></div>
+                </div>
               </div>
             </div>
+            <script>
+				      document.querySelectorAll('.product-row').forEach(function(row) {
+				        row.addEventListener('click', function() {
+				          const productImg = this.getAttribute('data-productimg');
+				          const productNo = this.getAttribute('data-productno');
+				          const productName = this.getAttribute('data-productname');
+				          const productCost = this.getAttribute('data-cost');
+				          const productSailPrice = this.getAttribute('data-sailprice');
+				          const productExpiration = this.getAttribute('data-expiration');
+				          const productDelivery = this.getAttribute('data-delivery');
+				
+				          document.getElementById('preview').src = productImg;  
+				          document.getElementById('product-id').textContent = productNo;  
+				          document.getElementById('product-name').textContent = productName;  
+				          document.getElementById('product-cost').textContent = productCost;  
+				          document.getElementById('product-price').textContent = productSailPrice; 
+				          document.getElementById('product-expiration').textContent = productExpiration;  
+				          document.getElementById('product-delivery').textContent = productDelivery;  
+				        });
+				      });
+				    </script>
             <style>
               .ordering-detail-img{
                 width: 30%;

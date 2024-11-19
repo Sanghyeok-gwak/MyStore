@@ -14,7 +14,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ProductDto {
-	public int productNo;
+	
+	public int productNo; 
 	public String productDivision;
 	public String productName;
 	public String cost;
@@ -29,5 +30,7 @@ public class ProductDto {
 	public Date modifyDate;
 	public String deliveryDate;
 	public String useYn;
+	public int inventory;
+	public String event;
 	
 }

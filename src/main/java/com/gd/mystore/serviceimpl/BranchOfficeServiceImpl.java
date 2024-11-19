@@ -62,6 +62,11 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
 	public List<ProductDto> selectSearchList(PageInfoDto pi, String search) {
 		return boDao.selectSearchList(pi,search);
 	}
+
+	@Override
+	public List<ProductDto> selectProductList() {
+		return boDao.selectProductList();
+	}
 	
 	
 

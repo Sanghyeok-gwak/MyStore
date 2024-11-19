@@ -58,7 +58,8 @@
       <div class="submenu">
         <a href="${contextPath }/ordering/regist.or">발주 관리</a>
         <a href="${contextPath }/branchoffice/adminList.po">상품 관리</a>
-        <a href="${contextPath }/branchoffice/regist.po">test</a>
+        <a href="${contextPath }/ordering/regist.or">test</a>
+        <a href="${contextPath }/branchoffice/list.po">test</a>
         <a href="#">지점 이동</a>
       </div>
 

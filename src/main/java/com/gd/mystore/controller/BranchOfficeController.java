@@ -118,6 +118,14 @@ public class BranchOfficeController {
 		}
 		return boService.deleteProduct(checkedValues);
 	}
-	
+	@GetMapping("list.po")
+	public String selectProductList(Model model) {
+		
+		List<ProductDto> list = boService.selectProductList();
+		
+		model.addAttribute("pro",list);
+		
+		return "branchoffice/product/list";
+	}
 	
 }

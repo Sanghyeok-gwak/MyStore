@@ -142,6 +142,22 @@
 	              <input type="text" value="${pro.profitMargin }" disabled>
 	            </div>
 	          </div>
+	          <div class="input-box-top-box5">
+						    <div class="input-box-top-box5-text">
+						        <span class="ffont3">수량</span>
+						    </div>
+						    <div class="input-box-top-box5-input">
+						        <input type="text" name="inventory" id="inventory" value="${pro.inventory }">
+						    </div>
+						</div>
+						<div class="input-box-top-box5">
+						    <div class="input-box-top-box5-text">
+						        <span class="ffont3">할인행사</span>
+						    </div>
+						    <div class="input-box-top-box5-input">
+						        <input type="text" name="event" id="event" value="${pro.event }">
+						    </div>
+						</div>
 	          <div class="input-box-top-box6">
 	            <div class="input-box-top-box6-text">
 	              <span class="ffont3">유효기간</span>

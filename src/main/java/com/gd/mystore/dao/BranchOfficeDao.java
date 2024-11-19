@@ -53,4 +53,7 @@ public class BranchOfficeDao {
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
 		return sqlSession.selectList("branchofficeMapper.selectSearchList",search,rowBounds);
 	}
+	public List<ProductDto> selectProductList(){
+		return sqlSession.selectList("branchofficeMapper.selectProductList");
+	}
 }

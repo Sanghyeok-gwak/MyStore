@@ -1,4 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="orderingMapper">
+	<resultMap id="productResultMap" type="ProductDto">
+		<result column="PRODUCT_NO" property="productNo"/>
+		<result column="CLASSIFICATION_NO" property="productDivision"/>
+		<result column="PRODUCT_NAME" property="productName"/>
+		<result column="COST" property="cost"/>
+		<result column="SAIL_PRICE" property="sailPrice"/>
+		<result column="PROFIT_MARGIN" property="profitMargin"/>
+		<result column="RECOMMENDED_CATEGORY" property="recommendedCategory"/>
+		<result column="EXPIRATION_PERIOD" property="expirationPeriod"/>
+		<result column="PRODUCT_IMG" property="productImg"/>
+		<result column="CREATER" property="creater"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="MODIFY_DATE" property="modifyDate" />
+		<result column="DELIVERY_DATE" property="deliveryDate" />
+		<result column="USE_YN" property="useYn" />
+		<result column="INVENTORY" property="inventory" />
+		<result column="EVENT" property="event" />
+  </resultMap>	
+
+	<select id="selectProductList" resultMap="productResultMap">
+  	select
+		       PRODUCT_NO
+		     , C.NM as "CLASSIFICATION_NO"
+		     , PRODUCT_NAME
+		     , COST
+		     , SAIL_PRICE
+         , PROFIT_MARGIN
+         , RECOMMENDED_CATEGORY
+         , TO_CHAR(EXPIRATION_PERIOD,'YY-MM-DD') as "EXPIRATION_PERIOD"
+         , PRODUCT_IMG
+         , e.EMP_NAME as "create"
+         , p.CREATE_DATE
+         , e.EMP_NAME as "MODIFIER"
+         , p.MODIFY_DATE
+         , p.DELIVERY_DATE
+         , p.USE_YN
+         , INVENTORY
+         , EVENT
+		  from TBL_PRODUCT p 
+		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
+      join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
+		 where c.CD LIKE 'PC00%'
+		 order by PRODUCT_NO desc
+  </select>
+
 </mapper>

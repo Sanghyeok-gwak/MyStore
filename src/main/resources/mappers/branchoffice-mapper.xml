@@ -18,6 +18,8 @@
 		<result column="MODIFY_DATE" property="modifyDate" />
 		<result column="DELIVERY_DATE" property="deliveryDate" />
 		<result column="USE_YN" property="useYn" />
+		<result column="INVENTORY" property="inventory" />
+		<result column="EVENT" property="event" />
   </resultMap>
   <resultMap id="cCResultMap" type="CommonCodeDto">
   	<result column="CD" property="commonCode"/>
@@ -50,11 +52,12 @@
          , p.MODIFY_DATE
          , p.DELIVERY_DATE
          , p.USE_YN
+         , INVENTORY
+         , EVENT
 		  from TBL_PRODUCT p 
 		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
       join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
-		 where p.USE_YN = 'Y'
-         AND c.CD LIKE 'PC00%'
+		 where c.CD LIKE 'PC00%'
 		 order by PRODUCT_NO desc
   </select>
   <select id="selectDto" resultMap="boResultMap">
@@ -74,11 +77,12 @@
          , p.MODIFY_DATE
          , p.DELIVERY_DATE
          , p.USE_YN
+         , INVENTORY
+         , EVENT
 		  from TBL_PRODUCT p 
 		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
       join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
-		 where p.USE_YN = 'Y'
-		   AND c.CD LIKE 'PC00%'
+		 where c.CD LIKE 'PC00%'
 		   and product_no = #{prono}
   </select>
   <select id="selectCommonDto" resultMap="cCResultMap">
@@ -105,6 +109,8 @@
 		 		 , MODIFY_DATE =sysdate
 		 		 , DELIVERY_DATE =#{deliveryDate}
 		 		 , USE_YN =#{useYn}
+		 		 , INVENTORY =#{inventory}
+         , EVENT =#{event}
 		 where PRODUCT_NO = #{productNo}     
 					 
 	</update>
@@ -127,6 +133,8 @@
 			,	MODIFY_DATE
 			,	DELIVERY_DATE
 			,	USE_YN
+			, INVENTORY
+      , EVENT
 		  )
 		 values
 		 (
@@ -144,7 +152,9 @@
 		 , '1010'	 
      , sysdate
 		 , #{deliveryDate}	 
-		 , #{useYn}	 
+		 , #{useYn}
+		 , #{inventory}
+		 , #{event}	 
 		 )
 		
 		  
@@ -164,8 +174,7 @@
 		select 
 					 count(*)
 			from TBL_PRODUCT
-		 where USE_YN = 'Y'
-		   and PRODUCT_NAME like '%' || #{searchValue} || '%'
+		 where PRODUCT_NAME like '%' || #{searchValue} || '%'
   </select>
 	<select id="selectSearchList" resultMap="boResultMap">
   	select
@@ -184,12 +193,38 @@
          , p.MODIFY_DATE
          , p.DELIVERY_DATE
          , p.USE_YN
+         , INVENTORY
+      	 , EVENT
 		  from TBL_PRODUCT p 
 		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
       join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
-		 where p.USE_YN = 'Y'
-         AND c.CD LIKE 'PC00%'
+		 where c.CD LIKE 'PC00%'
          AND PRODUCT_NAME like '%' || #{search} || '%'
+		 order by PRODUCT_NO desc
+  </select>
+  <select id="selectProductList" resultMap="boResultMap">
+  	select
+		       PRODUCT_NO
+		     , C.NM as "CLASSIFICATION_NO"
+		     , PRODUCT_NAME
+		     , COST
+		     , SAIL_PRICE
+         , PROFIT_MARGIN
+         , RECOMMENDED_CATEGORY
+         , TO_CHAR(EXPIRATION_PERIOD,'YY-MM-DD') as "EXPIRATION_PERIOD"
+         , PRODUCT_IMG
+         , e.EMP_NAME as "create"
+         , p.CREATE_DATE
+         , e.EMP_NAME as "MODIFIER"
+         , p.MODIFY_DATE
+         , p.DELIVERY_DATE
+         , p.USE_YN
+         , INVENTORY
+         , EVENT
+		  from TBL_PRODUCT p 
+		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
+      join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
+		 where c.CD LIKE 'PC00%'
 		 order by PRODUCT_NO desc
   </select>
 </mapper>

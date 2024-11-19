@@ -36,5 +36,6 @@ public interface BranchOfficeService {
 	// 상품 검색 리스트 (본사)
 	List<ProductDto> selectSearchList(PageInfoDto pi,String search);
 	
-	
+	// 상품 리스트 조회(지점)
+	List<ProductDto> selectProductList();
 }
