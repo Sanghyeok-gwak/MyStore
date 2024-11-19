@@ -38,6 +38,7 @@
 		
     <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
 		<mapper resource="mappers/branchoffice-mapper.xml"/>					<!-- 상품 매퍼 -->
+		<mapper resource="mappers/ordering-mapper.xml"/>					<!-- 발주 매퍼 -->
 		
 		
 		
