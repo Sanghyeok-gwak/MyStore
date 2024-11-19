@@ -128,14 +128,29 @@ public class EDocController {
 	
 	@ResponseBody
     @GetMapping(value = "/approvalTree", produces = "application/json")
-    public List<EmpMemberDto> getApprovalTree(Model model) {
+    public List<EmpMemberDto> getApprovalTree(Model model
+    										, HttpSession session) {
+		
+		
         // employeeService를 통해 데이터 가져오기
         List<EmpMemberDto> employees = edocService.selectEmployees();
         
         return employees; // 자동으로 JSON 형식으로 변환되어 반환됨
     }
 	
-	
+	@PostMapping("/edocinsert.do")
+	public String edocinsert(@RequestParam("approverOrder") String approverOrder
+						   , @RequestParam("approverNames") String approverNames
+					       , @RequestParam("creatorName") String creatorName
+					       , @RequestParam("creatorDept") String creatorDept
+					       , @RequestParam("lang") String lang				// 결재양식
+					       , @RequestParam("title") String title				// 제목
+					       , @RequestParam("editorTxt0") String editorTxt	// 스마트에디터 내용
+					       , Model model) {
+		
+		
+		return "redirect:/";
+	}
     
     
     

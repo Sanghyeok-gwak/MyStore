@@ -147,7 +147,9 @@
 	<!-- jstree 담을 부서 데이터 -->
 	<select id="selectDepartments" resultMap="departmentResultMap">
 		select 
-					dept_code, dept_upstair, dept_name
+					dept_code
+				, dept_upstair
+				, dept_name
 		  from 
 					tbl_department
 		where use_yn = 'Y'
@@ -156,11 +158,23 @@
 	<!-- jstree 담을 직원 데이터 -->
 	<select id="selectEmployees" resultMap="empMemberResultMap">
 		select 
-					emp_no, emp_name, emp_rank, dept_code
-		  from 
-					tbl_employee
-		where use_yn = 'Y'
+		    	emp.emp_no,
+		    	emp.emp_name,
+		    	pos.nm as emp_rank,
+		   	  dept.dept_name as dept_code
+		 from 
+		   	  tbl_employee emp
+		left join
+		    	tbl_common_code pos
+		    	on emp.emp_rank = pos.cd
+		left join
+		    	tbl_department dept
+		    	on emp.dept_code = dept.dept_code
+		where 
+		    	emp.use_yn = 'Y'
 	</select>
+	
+	
 
 
 </mapper>
