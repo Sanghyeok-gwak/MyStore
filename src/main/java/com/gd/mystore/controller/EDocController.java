@@ -1,11 +1,8 @@
 package com.gd.mystore.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gd.mystore.dto.DepartmentDto;
 import com.gd.mystore.dto.EDocSampleDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -130,56 +126,21 @@ public class EDocController {
 	    return sample != null ? sample.getSampleFormat() : "";
 	}
 	
-    @ResponseBody
-    @GetMapping("/getDeptAndEmployeeData")
-    public List<Map<String, Object>> getDeptAndEmployeeData() {
-        List<DepartmentDto> departments = edocService.selectDepartments();
+	@ResponseBody
+    @GetMapping(value = "/approvalTree", produces = "application/json")
+    public List<EmpMemberDto> getApprovalTree(Model model) {
+        // employeeService를 통해 데이터 가져오기
         List<EmpMemberDto> employees = edocService.selectEmployees();
-
-        if (departments == null || employees == null) {
-            log.error("부서 또는 직원 데이터가 null입니다.");
-            throw new IllegalStateException("부서 또는 직원 데이터가 없습니다.");
-        }
-
-        List<Map<String, Object>> treeData = new ArrayList<>();
-
-        log.info("부서 데이터: {}", departments);
-        log.info("직원 데이터: {}", employees);
-
-        for (DepartmentDto dept : departments) {
-            if (dept == null || dept.getDeptCode() == null || dept.getDeptName() == null) {
-                log.warn("부서 데이터에 null 값이 있습니다: {}", dept);
-                continue;
-            }
-            Map<String, Object> deptNode = new HashMap<>();
-            deptNode.put("id", dept.getDeptCode());
-            deptNode.put("parent", dept.getDeptUpStair() == null ? "#" : dept.getDeptUpStair());
-            deptNode.put("text", dept.getDeptName());
-            deptNode.put("icon", "fa fa-building");
-            treeData.add(deptNode);
-        }
-
-        for (EmpMemberDto emp : employees) {
-            if (emp == null || emp.getEmpNo() == null || emp.getEmpName() == null || emp.getDeptCode() == null) {
-                log.warn("직원 데이터에 null 값이 있습니다: {}", emp);
-                continue;
-            }
-            Map<String, Object> empNode = new HashMap<>();
-            empNode.put("id", emp.getEmpNo().toString());
-            empNode.put("parent", emp.getDeptCode());
-            empNode.put("text", emp.getEmpName() + " (" + emp.getEmpRank() + ")");
-            empNode.put("icon", "fa fa-user");
-            treeData.add(empNode);
-        }
-
-        log.info("트리 데이터: {}", treeData);
-
-        return treeData;
+        
+        return employees; // 자동으로 JSON 형식으로 변환되어 반환됨
     }
 	
 	
-	
-	@GetMapping("collectlist")
+    
+    
+    
+    
+    @GetMapping("collectlist")
 	public void collectlist() {}
 	
 	@GetMapping("completedetail")

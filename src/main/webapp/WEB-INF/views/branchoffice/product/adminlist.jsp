@@ -67,14 +67,37 @@
             <div class="search-text-text">
               <span class="ffont3">상품명</span>
             </div>
-            <div class="search-text-box">
-              <input type="text">
-              <button><i class="bi bi-search"></i></button>
-            </div>
+            <form id="search_form" action="${contextPath}/branchoffice/search.po" method="get">
+	            <div class="search-text-box">
+	            	<input type="hidden" name="page" value="1">
+	              <input type="text" id="searchValue" name="keyword" style="padding-left:10px;" value="${ search }">
+	           
+	              <button type="submit"><i class="bi bi-search"></i></button>
+	            </div>
+            </form>
+            <c:if test="${ not empty search }">
+	            <script>
+	            	$(document).ready(function(){
+										$("#paging_area a").on("click", function(){
+	            			
+	            			let page = $(this).text(); // Previous | Next | 페이지번호
+	            			if(page == 'Previous'){
+	            				page = ${pi.currentPage - 1};
+	            			}else if(page == 'Next'){
+	            				page = ${pi.currentPage + 1};
+	            			}
+	            			
+	            			$("#search_form input[name=page]").val(page);
+	            			$("#search_form").submit();
+	            			
+	            			return false;
+	            	})
+	            </script>
+	          </c:if>  
           </div>
           <div class="add-edit-box">
             <button class="btn4" onclick='location.href="${contextPath}/branchoffice/regist.po"' style="margin-right: 5px;">추가</button>
-            <button class="btn4">삭제</button>
+            <button class="btn4" onclick="fnDeleteSelected()">삭제</button>
           </div>
         </div>
         <div class="table-box">
@@ -100,7 +123,7 @@
               	<c:otherwise>
 		              <c:forEach var="p" items="${list }">
 			              <tr id="proNo" onclick='location.href="${contextPath}/branchoffice/detail.po?prono=${p.productNo }"'>
-			                <td ><input type="checkbox" name="list-checkBox"></td>
+			                <td ><input type="checkbox" class="list-checkBox" value="${p.productNo }" onclick="event.stopPropagation();"></td>
 			                <td>${p.productNo }</td>
 			                <td>${p.productDivision }</td>
 			                <td>${p.productName }</td>
@@ -147,10 +170,69 @@
               
             </ul>
           </div>
+         
+       	
         </div>
       </div>
 	</div>
-	
+	<script>
+	<!-- 상품 삭제 스크립트 -->
+       	function fnDeleteSelected() {
+				    const checkboxes = document.querySelectorAll('.list-checkBox:checked');
+				    const checkedValues = [];
+				    checkboxes.forEach(checkbox => {
+				        checkedValues.push(checkbox.value);
+				    });
+						console.log(checkedValues);
+				    if (checkedValues.length === 0) {
+				        alert('삭제할 상품을 선택해주세요.');
+				        return;
+				    }
+		
+				    const confirmation = confirm('선택한 상품을 삭제하시겠습니까?'); 
+				    if (confirmation) {
+		
+				        $.ajax({
+		            		
+				        	url:'${contextPath}/branchoffice/deleteProduct.po',
+		            		traditional: true, 
+		            		type:'post',
+		            		data: { checkedValues: checkedValues }, 
+		            		success: function(result) {
+		                        if (result>0) {
+		                            alert('상품이 삭제되었습니다.'); 
+		                            location.reload(); 
+		                        } else {
+		                            alert('삭제에 실패했습니다.'); 
+		                        }
+		                    },
+		            	});
+				    }
+				}
+       	</script>
+       	
+       	
+       	
+       	
+       	<!-- 
+       	 <script>
+       	 function fnSearch(){
+      	   const searchValue = document.getElementById('searchValue').value;
+		     		 console.log(document.getElementById('searchValue').value);
+		     		 
+		     		 $.ajax({
+		     			 url: "${contextPath }/branchoffice/search.po",
+		     			 type: "post",
+		     			 data:{
+		     				 search: searchValue
+		     			 }
+		     		 })
+		     			 
+		     		 
+		     	}
+
+         </script>
+          -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

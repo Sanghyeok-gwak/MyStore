@@ -43,4 +43,14 @@ public class BranchOfficeDao {
 	public int insertProduct(ProductDto productDto) {
 		return sqlSession.insert("branchofficeMapper.insertProduct",productDto);
 	}
+	public int deleteProduct(String[] checkedValues ) {
+		return sqlSession.delete("branchofficeMapper.deleteProduct",checkedValues);
+	}
+	public int searchCount(String searchValue) {
+		return sqlSession.selectOne("branchofficeMapper.searchCount",searchValue);	
+	}
+	public List<ProductDto> selectSearchList(PageInfoDto pi, String search){
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
+		return sqlSession.selectList("branchofficeMapper.selectSearchList",search,rowBounds);
+	}
 }

@@ -26,4 +26,15 @@ public interface BranchOfficeService {
 	
 	// 상품 등록
 	int insertProduct (ProductDto productDto);
+	
+	// 상품 삭제
+	int deleteProduct (String[] checkedValues);
+	
+	// 상품 검색 카운트
+	int searchCount (String searchValue);
+	
+	// 상품 검색 리스트
+	List<ProductDto> selectSearchList(PageInfoDto pi,String search);
+	
+	
 }
