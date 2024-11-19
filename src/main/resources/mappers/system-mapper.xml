@@ -24,7 +24,6 @@
 				 , BOARDT_NAME
 				 , BOARDT_TYPE
 				 , BOARDT_READ
-				 , BOARDT_READ
 				 , BOARDT_WRITE
 				 , BOARDT_CONTENT
 				 , BOARDT_USE
@@ -37,7 +36,57 @@
 		  from TBL_BOARDTYPE
 		 where USE_YN = 'Y'
 	</select>
-
+	
+	<!-- 게시판 추가 	-->
+	<insert id="insertBoard" >
+		insert 
+		  into TBL_BOARDTYPE
+		  (
+		    BOARD_TYPE_NO
+		  , BOARDT_NAME
+		  , BOARDT_TYPE
+		  , BOARDT_READ
+		  , BOARDT_WRITE
+		  , BOARDT_CONTENT
+		  , BOARDT_USE
+		  , DEPT_CODE
+		  , EMP_NO
+		  , CREATE_DATE
+		  , MODIFIER
+		  , MODIFY_DATE
+		  , USE_YN
+		  )
+			VALUES 
+			(
+			  BOARD_TYPE_NO_SEQ.NEXTVAL
+			, '일반게시판'
+			, 'S'
+			, 5
+			, 5
+			, 5
+			, 'N'
+			, #{userData}
+			, NULL
+			, SYSDATE
+			, #{userData}
+			, SYSDATE
+			, 'Y'
+			)
+	</insert>
+	
+	<!-- 게시판 수정	--> 
+	<update id="boardsUpdate">
+		update
+					 TBL_BOARDTYPE
+		   set BOARDT_NAME = #{boardtName}
+				 , BOARDT_TYPE = #{boardtType}
+				 , BOARDT_READ = #{boardtRead}
+				 , BOARDT_WRITE = #{boardtWrite}
+				 , BOARDT_CONTENT = #{boardtContent}
+				 , BOARDT_USE = #{boardtUse}
+				 , DEPT_CODE = #{deptCode}
+		 where BOARD_TYPE_NO = #{boardTypeNo}
+	</update>
 
 
 

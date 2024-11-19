@@ -18,6 +18,9 @@
    <link href="${contextPath}/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
    <link href="${contextPath}/assets/vendor/simple-datatables/style.css" rel="stylesheet">
  
+ 	<!-- ajax -->
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ 
    <!-- Template Main CSS File -->
    
    <link href="${contextPath}/assets/css/style.css" rel="stylesheet">

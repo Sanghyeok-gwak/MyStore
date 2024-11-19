@@ -19,4 +19,12 @@ public class SystemDao {
 		return sqlSession.selectList("systemMapper.selectSystemBoardList");
 	}
 
+	public void insertBoard(String userData) {
+		sqlSession.insert("systemMapper.insertBoard", userData);
+	}
+
+	public void boardsUpdate(BoardTypeDto bt) {
+		sqlSession.update("systemMapper.boardsUpdate", bt);
+	}
+
 }
