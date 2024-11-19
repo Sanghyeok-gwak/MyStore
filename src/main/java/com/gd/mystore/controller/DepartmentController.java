@@ -1,5 +1,6 @@
 package com.gd.mystore.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,17 +27,31 @@ public class DepartmentController {
 	private final DepartmentService departmentService;
 	
 	@GetMapping("/departmentModify")
-	public void list(Model model) { // Model을 파라미터로 추가
-	    // 서비스에서 부서 목록을 가져옵니다.
-	    List<DepartmentDto> list = departmentService.selectMemberList();
+	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName, Model model) {
+	    List<DepartmentDto> searchResult;
+
+	    // empName이 null이거나 빈 값일 경우 기본 리스트 반환
+	    if (empName == null || empName.trim().isEmpty()) {
+	        searchResult = departmentService.selectMemberList();  // 기본 리스트로 대체
+	    } else {
+	        // empName에 해당하는 검색 결과 가져옴
+	        searchResult = departmentService.selectSearchEmployeeByName(empName);
+	    }
+
+	    // 결과를 Model에 담아서 반환
+	    model.addAttribute("searchResult", searchResult);
 	    
-	    // 모델에 list를 추가하여 JSP로 전달
-	    model.addAttribute("list", list);
-	    
+	    // departmentModify.jsp(또는 .html)로 뷰 이름을 반환
+	    return "department/departmentModify";
 	}
 
-	
 
+
+
+
+
+	
+	
     @GetMapping("/departmentChangeHistory")
     public String search(
             @RequestParam Map<String, String> search,  // 검색 조건을 담을 Map 객체

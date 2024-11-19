@@ -32,4 +32,11 @@ public class DepartmentDao {
 	        return sqlSession.selectList("departmentMapper.selectChangeHistory", params);
 	    }
 
+
+	   public List<DepartmentDto> selectSearchEmployeeByName(String empName) {
+		    // 서비스에서 검색 조건으로 부서원 목록을 가져오는 코드
+		    return sqlSession.selectList("departmentMapper.selectSearchEmployeeByName", empName);  // 예시: Mapper 호출
+		}
+
+
 }

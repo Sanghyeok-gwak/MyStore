@@ -54,10 +54,10 @@ input {
 }
 </style>
 
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 </head>
 <body>
 
@@ -89,8 +89,9 @@ input {
 								<b>조직도</b>
 							</div>
 							<div class="btn-box-hover">
-								 <button id="editNodeBtn" class="btn2-hover" style="width: 50px;">수정</button>
-								<button id="submitNodeBtn" class="btn3-hover" style="width: 50px;">등록</button>
+								<button id="editNodeBtn" class="btn2-hover" style="width: 50px;">수정</button>
+								<button id="submitNodeBtn" class="btn3-hover"
+									style="width: 50px;">등록</button>
 							</div>
 
 						</div>
@@ -188,9 +189,10 @@ input {
 							<div>
 								<div class="search_box"
 									style="margin-top: 10px; width: 300px; margin-right: 10px;">
-									<input class="input_b" type="text" placeholder="검색">
+									<input id="empNameInput" class="input_b" type="text"
+										name="empName" placeholder="사원명 검색">
 									<div class="icon">
-										<button>
+										<button id="searchBtn">
 											<i class="bi bi-search"></i>
 										</button>
 									</div>
@@ -198,9 +200,10 @@ input {
 							</div>
 						</div>
 
+
 						<!-- 테이블을 감싸는 div 추가하여 높이 제한 -->
 						<div style="height: 500px; overflow-y: auto; margin-top: 30px;">
-							<table  id="MemberList" class="table table-hover"
+							<table id="MemberList" class="table table-hover"
 								style="width: 100%; text-align: center; vertical-align: middle;">
 								<thead>
 									<tr>
@@ -214,30 +217,46 @@ input {
 								</thead>
 								<tbody>
 									<c:choose>
-										<c:when test="${ empty list }">
-											<tr>
-												<td colspan="6">조회된 사원이 없습니다.</td>
+										<c:when test="${not empty searchResult}">
 
-											</tr>
+											<c:forEach var="b" items="${searchResult}">
+												<tr>
+													<td><input type="checkbox" id="checkbox_${b.empNo}"
+														name="checkbox_${b.empNo}" value="${b.empNo}"
+														style="width: 15px; height: 15px;"></td>
+													<td>${b.empName}</td>
+													<td>${b.empNo}</td>
+													<td>${b.nm}</td>
+													<td>${b.deptUpStair}</td>
+													<td>${b.deptName}</td>
+												</tr>
+											</c:forEach>
 										</c:when>
 										<c:otherwise>
-											<c:forEach var="b" items="${ list }">
+
+											<c:forEach var="b" items="${list}">
 												<tr>
-													<td> <!-- 고유한 id를 부여한 체크박스 -->
-            								<input type="checkbox" id="checkbox_${b.empNo}" name="checkbox_${b.empNo}" value="${b.empNo}" style="width:15px;"></td>
-													<td>${ b.empName }</td>
-													<td>${ b.empNo }</td>
-													<td>${ b.nm }</td>
-													<td>${ b.deptUpStair }</td>
-													<td>${ b.deptName }</td>
-													
+													<td><input type="checkbox" id="checkbox_${b.empNo}"
+														name="checkbox_${b.empNo}" value="${b.empNo}"
+														style="width: 15px; height: 15px;"></td>
+													<td>${b.empName}</td>
+													<td>${b.empNo}</td>
+													<td>${b.nm}</td>
+													<td>${b.deptUpStair}</td>
+													<td>${b.deptName}</td>
 												</tr>
 											</c:forEach>
 										</c:otherwise>
 									</c:choose>
 								</tbody>
+
+
+
+
 							</table>
 						</div>
+
+
 					</div>
 				</div>
 
@@ -249,7 +268,55 @@ input {
 
 
 
-<script>
+	<script>
+	$(document).ready(function() {
+	    $("#searchBtn").click(function() {
+	        var empName = $("#empNameInput").val(); // 입력된 사원명
+	        $.ajax({
+	            url: "${contextPath}/department/departmentModify",  // 서버 URL
+	            type: "GET",
+	            data: { empName: empName },  // 사원명 검색 데이터 전송
+	            success: function(response) {
+	                if (response.searchResult && response.searchResult.length > 0) {
+	                    let tableContent = "";  // 테이블 내용 초기화
+
+	                    // 배열을 순회하면서 HTML 콘텐츠 생성
+	                    response.searchResult.forEach(function(dept) {
+	                        tableContent += `
+	                            <tr>
+	                                <td><input type='checkbox' name='checkbox' value='${dept.empNo}' style='width: 15px; height: 15px;'></td>
+	                                <td>${dept.empName}</td> <!-- 사원명 -->
+	                                <td>${dept.empNo}</td>   <!-- 사원번호 -->
+	                                <td>${dept.nm}</td>      <!-- 직책 -->
+	                                <td>${dept.deptUpStair}</td> <!-- 상위부서 -->
+	                                <td>${dept.deptName}</td> <!-- 부서명 -->
+	                            </tr>
+	                        `;
+	                    });
+
+	                    // 테이블 내용 업데이트
+	                    $("#MemberList tbody").html(tableContent);
+	                } else {
+	                    // 검색 결과가 없으면 "조회된 사원이 없습니다." 표시
+	                    tableContent = "<tr><td colspan='6'>조회된 사원이 없습니다.</td></tr>";
+	                    $("#MemberList tbody").html(tableContent);
+	                }
+	            },
+	            error: function(xhr, status, error) {
+	                alert("검색 중 오류가 발생했습니다.");
+	            }
+	        });
+	    });
+	});
+
+
+
+
+
+
+
+
+
 $(function() {
     // 수정 모드 활성화 상태 변수
     var editMode = false;
@@ -451,6 +518,6 @@ $(function() {
 </script>
 
 
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

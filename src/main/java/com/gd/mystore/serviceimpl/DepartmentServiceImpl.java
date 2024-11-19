@@ -29,5 +29,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 		 return departmentDao.selectChangeHistory(startDate, endDate, searchType, searchValue);
 	}
 	
+	@Override
+	public List<DepartmentDto> selectSearchEmployeeByName(String empName) {
+		return departmentDao.selectSearchEmployeeByName(empName);
+	}
+	
 	
 }
