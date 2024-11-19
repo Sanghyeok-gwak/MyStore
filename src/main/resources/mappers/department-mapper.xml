@@ -84,30 +84,46 @@
 		order by e.emp_name
 	</select>
 	
-<select id="selectChangeHistory" resultMap="departmentChangeResultMap">
-    SELECT 
-        d.transfer_code,
-        d.transfer_date,
-        d.transfer_before,
-        d.transfer_after,
-        d.emp_no,
-        e.emp_name,
-        d.modifier,
-        (SELECT e2.emp_name
-         FROM tbl_employee e2
-         WHERE e2.emp_no = d.modifier) AS modifierName  <!-- modifierName 필드 추가 -->
-    FROM tbl_dep_transfer d
-    JOIN tbl_employee e ON e.emp_no = d.emp_no
-    WHERE
-        (
-            (#{searchType} = 'empNo' AND TO_CHAR(d.emp_no) = #{searchValue})
-            OR (#{searchType} = 'empName' AND UPPER(e.emp_name) = UPPER(#{searchValue}))
-        )
-        AND d.transfer_date BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')  <!-- 날짜 범위 필터링 추가 -->
-        AND d.transfer_date >= TO_DATE(#{startDate}, 'YYYY-MM-DD')
-</select>
+	  <select id="selectSearchEmployeeByName" resultType="DepartmentDto">
+				select
+			e.emp_name,
+			e.emp_no,
+			c.nm,
+			d.dept_upstair,
+			d.dept_name
+		from 
+			tbl_employee e
+		join tbl_common_code c on e.emp_auth = c.cd
+		join tbl_department d on e.dept_code = d.dept_code
+		WHERE emp_name LIKE '%' || #{empName} || '%'
 
+
+    </select>
+    
+	<select id="selectChangeHistory" resultMap="departmentChangeResultMap">
+	    SELECT 
+	        d.transfer_code,
+	        d.transfer_date,
+	        d.transfer_before,
+	        d.transfer_after,
+	        d.emp_no,
+	        e.emp_name,
+	        d.modifier,
+	        (SELECT e2.emp_name
+	         FROM tbl_employee e2
+	         WHERE e2.emp_no = d.modifier) AS modifierName  <!-- modifierName 필드 추가 -->
+	    FROM tbl_dep_transfer d
+	    JOIN tbl_employee e ON e.emp_no = d.emp_no
+	    WHERE
+	        (
+	            (#{searchType} = 'empNo' AND TO_CHAR(d.emp_no) = #{searchValue})
+	            OR (#{searchType} = 'empName' AND UPPER(e.emp_name) = UPPER(#{searchValue}))
+	        )
+	        AND d.transfer_date BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')  <!-- 날짜 범위 필터링 추가 -->
+	        AND d.transfer_date >= TO_DATE(#{startDate}, 'YYYY-MM-DD')
+	</select>
 	
+		
 
 
 

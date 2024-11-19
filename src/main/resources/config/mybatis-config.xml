@@ -35,7 +35,7 @@
 		<mapper resource="mappers/edoc-mapper.xml" />									<!-- 전자결재 mapper -->
 		
 		<mapper resource="mappers/personnel-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
-  	    <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
+  	<mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
 		<mapper resource="mappers/department-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
 
 		<mapper resource="mappers/system-mapper.xml"/>								<!-- 시스템 관련 mapper -->
