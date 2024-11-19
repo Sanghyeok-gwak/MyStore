@@ -142,11 +142,13 @@
               <div class="left_line">
                 <div class="left_title_txt" style="z-index: 3">메뉴 관리</div>
                 <div class="btn-box-hover" id="left_head_btn">
-                	<form action="${contextPath}/system/boardsDelete.do">
+                	<form action="${contextPath}/system/boardsDelete.do" method="get">
+	                  <input type="hidden" id="input_No" name="boardTypeNo" />
 	                  <button class="btn2-hover" id="btn_remove" type="submit" >
 	                    <b style="font-weight: 900">-</b> 삭제
 	                  </button>
                 	</form>
+                	
                   <form action="${contextPath}/system/boardsAdd.do">
 	                  <button class="btn2-hover" id="btn_add" type="submit" >
 	                    <b style="font-weight: 900">+</b> 추가
