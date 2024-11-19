@@ -381,7 +381,7 @@
    </script>
   <div class="my-head">
   <div class="head-icon">
-    <img src="https://i.ibb.co/nCMNZqH/image.png" style="width: 131px; height: 90%; margin: 3px 0 0 20px;">
+    <a href="${ contextPath }/"><img src="https://i.ibb.co/nCMNZqH/image.png" style="width: 131px; height: 90%; margin: 3px 0 0 20px;"></a>
   </div>
   <div class="head-text">
     <div class="head_right_logo">
@@ -485,7 +485,7 @@
         
       <div class="icon header_right_list">
         <i class="bi bi-box-arrow-in-right"></i>
-        <a href=""><span>로그아웃</span></a>
+        <a href="${ contextPath }/login/logOut.do"><span>로그아웃</span></a>
       </div>
 
     </div>
