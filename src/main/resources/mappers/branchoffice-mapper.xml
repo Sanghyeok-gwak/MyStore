@@ -108,7 +108,7 @@
 		 where PRODUCT_NO = #{productNo}     
 					 
 	</update>
-	<insert id="productDto">
+	<insert id="insertProduct">
 		insert 
 		  into TBL_PRODUCT
 		  (
@@ -118,9 +118,12 @@
 			,	COST
 			,	SAIL_PRICE
 			,	PROFIT_MARGIN
+			,	RECOMMENDED_CATEGORY
 			,	EXPIRATION_PERIOD
 			,	PRODUCT_IMG
+			,	CREATER
 			,	CREATE_DATE
+			,	MODIFIER
 			,	MODIFY_DATE
 			,	DELIVERY_DATE
 			,	USE_YN
@@ -133,13 +136,60 @@
 		 , #{cost}	 
 		 , #{sailPrice}	 
 		 , #{profitMargin}	 
+		 , 'Y'	 
 		 , TO_DATE(#{expirationPeriod}, 'YY-MM-DD')	 
-		 , #{productImg}	 
+		 , #{productImg}
+		 , '1010'	 
 	   , sysdate
+		 , '1010'	 
      , sysdate
 		 , #{deliveryDate}	 
 		 , #{useYn}	 
 		 )
+		
 		  
 	</insert>
+	<delete id="deleteProduct">
+		delete 
+		  from TBL_PRODUCT
+		  <where>
+		 	<foreach item="checkedValues" collection="array"
+		 		 open="PRODUCT_NO in (" separator="," close=")">
+		 		#{checkedValues}
+		 	</foreach>
+		 </where>
+	
+	</delete>
+	<select id="searchCount"  resultType="_int">
+		select 
+					 count(*)
+			from TBL_PRODUCT
+		 where USE_YN = 'Y'
+		   and PRODUCT_NAME like '%' || #{searchValue} || '%'
+  </select>
+	<select id="selectSearchList" resultMap="boResultMap">
+  	select
+		       PRODUCT_NO
+		     , C.NM as "CLASSIFICATION_NO"
+		     , PRODUCT_NAME
+		     , COST
+		     , SAIL_PRICE
+         , PROFIT_MARGIN
+         , RECOMMENDED_CATEGORY
+         , EXPIRATION_PERIOD
+         , PRODUCT_IMG
+         , e.EMP_NAME as "create"
+         , p.CREATE_DATE
+         , e.EMP_NAME as "MODIFIER"
+         , p.MODIFY_DATE
+         , p.DELIVERY_DATE
+         , p.USE_YN
+		  from TBL_PRODUCT p 
+		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
+      join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
+		 where p.USE_YN = 'Y'
+         AND c.CD LIKE 'PC00%'
+         AND PRODUCT_NAME like '%' || #{search} || '%'
+		 order by PRODUCT_NO desc
+  </select>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.CommonCodeDto;
@@ -63,9 +64,9 @@ public class BranchOfficeController {
 		
 		int result = boService.updateProduct(productDto);
 		if(result >0) {
-			rdAttributes.addAttribute("alertMsg","상품 수정이 완료되었습니다");
+			rdAttributes.addFlashAttribute("alertMsg","상품 수정이 완료되었습니다");
 		}else{
-			rdAttributes.addAttribute("alertMsg","상품 수정이 실패되었습니다");
+			rdAttributes.addFlashAttribute("alertMsg","상품 수정이 실패되었습니다");
 		}
 		return "redirect:/branchoffice/adminList.po";	
 	}
@@ -83,11 +84,40 @@ public class BranchOfficeController {
 		int result = boService.insertProduct(productDto);
 		
 		if(result >0) {
-			rdAttributes.addAttribute("alertMsg","상품 수정이 완료되었습니다");
+			rdAttributes.addFlashAttribute("alertMsg","상품 등록이 완료되었습니다");
 		}else{
-			rdAttributes.addAttribute("alertMsg","상품 수정이 실패되었습니다");
+			rdAttributes.addFlashAttribute("alertMsg","상품 등록이 실패되었습니다");
 		}
 		
 		return "redirect:/branchoffice/adminList.po";	
 	}
+	
+	@GetMapping("search.po")
+	public String searchProduct(@RequestParam(value="page", defaultValue="1") int currentPage,
+								@RequestParam(value="keyword", required=false) String keyword,Model model) {
+		
+		log.debug("keyword  : {} ",keyword);
+		int listCount = boService.searchCount(keyword);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
+		List<ProductDto> list = boService.selectSearchList(pi,keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("search", keyword);
+		
+		return "branchoffice/product/adminlist";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("deleteProduct.po")
+	public int deleteProduct(String[] checkedValues) {
+		for(int i=0; i<checkedValues.length; i++) {
+			
+			log.debug("checkedValues : {}",checkedValues[i]);
+		}
+		return boService.deleteProduct(checkedValues);
+	}
+	
+	
 }

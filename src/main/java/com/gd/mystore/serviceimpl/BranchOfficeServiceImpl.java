@@ -47,6 +47,21 @@ public class BranchOfficeServiceImpl implements BranchOfficeService {
 	public int insertProduct(ProductDto productDto) {
 		return boDao.insertProduct(productDto);
 	}
+
+	@Override
+	public int deleteProduct(String[] checkedValues) {
+		return boDao.deleteProduct(checkedValues);
+	}
+
+	@Override
+	public int searchCount(String searchValue) {
+		return boDao.searchCount(searchValue);
+	}
+
+	@Override
+	public List<ProductDto> selectSearchList(PageInfoDto pi, String search) {
+		return boDao.selectSearchList(pi,search);
+	}
 	
 	
 
