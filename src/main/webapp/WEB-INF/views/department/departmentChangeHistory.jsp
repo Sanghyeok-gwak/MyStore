@@ -20,12 +20,6 @@
 	justify-content: flex-end;
 }
 
-.dropdown {
-	width: 150px;
-	height: 35px;
-	margin-right: 15px;
-	border: 1px solid gray;
-}
 
 .card {
 	margin-bottom: 30px;
@@ -89,15 +83,6 @@ input {
 	overflow-y: auto;
 }
 
-.download-btn {
-	margin: 20px 0;
-	padding: 10px 20px;
-	background-color: #007bff;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
 
 .download-btn:hover {
 	background-color: #0056b3;
@@ -142,7 +127,7 @@ input {
 									style="display: flex; align-items: center; margin-left: 15px;">
 									<select class="dropdown dropdown-toggle dropdown-toggle-split"
 										name="searchType" data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false">
+										aria-expanded="false" style="	width: 150px;height: 35px; margin-right: 15px; border: 1px solid gray;" >
 										<option value="empName">사원 명</option>
 										<option value="empNo">사번</option>
 									</select>
