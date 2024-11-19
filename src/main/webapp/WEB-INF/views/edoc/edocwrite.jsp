@@ -546,74 +546,66 @@ input[type=file]::file-selector-button {
 		}
 	</script>
 
-
 	<script>
-		$(function() {
-			// 트리 데이터 로드
-			$.ajax({
-				url : "${contextPath}/edoc/getDeptAndEmployeeData",
-				method : "GET",
-				success : function(data) {
-					console.log("받은 데이터:", data);
-					$("#approvalTree").jstree({
-						core : {
-							data : data
-						},
-						plugins : [ "checkbox", "contextmenu", "dnd" ],
-						checkbox : {
-							three_state : false,
-							keep_selected_style : false
-						}
-					});
-				},
-				error : function() {
-					alert("트리 데이터를 불러오는 데 실패했습니다.");
-				}
-			});
+	$(document).ready(function() {
+	    var maxSelected = 2; // 최대 선택 가능한 결재자 수
+	    var selectedCount = 0; // 현재 선택된 결재자 수
 
-			// 트리 선택 이벤트 처리
-			$('#approvalTree').on(
-					"changed.jstree",
-					function(e, data) {
-						let selectedNodes = data.selected;
-						let $selectedList = $('#selectedList');
+	    // Ajax로 서버에서 직원 데이터 가져오기
+	    $.ajax({
+	        url: '${contextPath}/edoc/approvalTree', // 서버에서 직원 데이터 가져오기
+	        method: 'GET',
+	        dataType: 'json',
+	        success: function(employees) {
+	            // jstree에 사용할 트리 데이터 변환
+	            var treeData = employees.map(function(emp) {
+	                return {
+	                    "id": emp.empNo, // 직원 번호
+	                    "parent": "#", // 최상위 노드로 설정
+	                    "text": emp.empName + " (" + emp.empRank + ")", // 직원 이름과 직급
+	                    "icon": emp.empProfile, // 직원 프로필 이미지 URL
+	                    "state": {
+	                        "checkbox": true // 체크박스를 활성화
+	                    }
+	                };
+	            });
 
-						// 선택된 결재자 목록 초기화
-						$selectedList.empty();
+	            // jsTree 초기화
+	            $('#approvalTree').jstree({
+	                'core': {
+	                    'data': treeData
+	                },
+	                'plugins': ['checkbox'] // 체크박스 플러그인 활성화
+	            })
+	            .on('changed.jstree', function(e, data) {
+	                // 체크된 노드들 가져오기
+	                var selectedNodes = data.selected;
 
-						// 선택된 노드가 2명을 초과하면 경고 및 마지막 선택 해제
-						if (selectedNodes.length > 2) {
-							alert("결재자는 최대 2명까지 선택할 수 있습니다.");
-							$('#approvalTree').jstree(true).deselect_node(
-									data.node.id);
-							return;
-						}
+	                // 결재자 수가 최대인 경우
+	                if (selectedNodes.length > maxSelected) {
+	                    alert("최대 " + maxSelected + "명까지만 선택할 수 있습니다.");
 
-						// 선택된 노드 처리
-						selectedNodes.forEach(function(nodeId) {
-							let tree = $('#approvalTree').jstree(true);
-							let node = tree.get_node(nodeId);
+	                    // 마지막 선택된 항목 취소
+	                    var lastSelectedNodeId = selectedNodes[selectedNodes.length - 1];
+	                    data.instance.deselect_node(lastSelectedNodeId); // 마지막 선택 취소
 
-							// 직원 노드만 처리 (부서는 제외)
-							if (!tree.is_parent(node)) {
-								let parentNode = tree.get_node(node.parent);
-								let approverInfo = node.text;
+	                    return false; // 더 이상 선택되지 않도록
+	                }
 
-								if (parentNode && parentNode.text) {
-									approverInfo += " (" + parentNode.text
-											+ ")";
-								}
-
-								// 결재자 목록에 추가
-								$selectedList
-										.append('<li class="list-group-item">'
-												+ approverInfo + '</li>');
-							}
-						});
-
-						console.log("선택된 결재선:", selectedNodes);
-					});
-		});
+	                // 선택된 노드에 해당하는 직원 목록 업데이트
+	                $('#selectedList').empty(); // 기존 목록 비우기
+	                selectedCount = selectedNodes.length; // 현재 선택된 결재자 수 갱신
+	                selectedNodes.forEach(function(nodeId) {
+	                    var node = data.instance.get_node(nodeId);
+	                    $('#selectedList').append('<li class="list-group-item">' + node.text + '</li>');
+	                });
+	            });
+	        },
+	        error: function() {
+	            alert("직원 데이터를 가져오는 데 실패했습니다.");
+	        }
+	    });
+	});
 	</script>
 
 	<!-- 모달 시작 -->
@@ -651,6 +643,17 @@ input[type=file]::file-selector-button {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
