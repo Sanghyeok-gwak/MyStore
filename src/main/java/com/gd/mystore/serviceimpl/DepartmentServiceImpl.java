@@ -22,10 +22,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 		
 		return departmentDao.selectMemberList();
 	}
-	
+
 	@Override
-	public List<DepTransferDto> selectChangeHistory(String searchValue) {
-		return departmentDao.selectChangeHistory(searchValue);
+	public List<DepTransferDto> selectChangeHistory(String searchType, String searchValue, String startDate,
+			String endDate) {
+		 return departmentDao.selectChangeHistory(startDate, endDate, searchType, searchValue);
 	}
 	
 	

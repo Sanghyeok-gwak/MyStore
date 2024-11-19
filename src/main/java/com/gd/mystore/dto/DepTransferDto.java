@@ -15,15 +15,18 @@ import lombok.ToString;
 @ToString
 public class DepTransferDto {
 
-	private String transferCode;
-	private String transferBefore;
-	private String transferAfter;
-	private String transferDate;
-	private int empNo;
-	private String createDate;
-	private int modifier;
-	private String modifyDate; 
-	private String useYN;
-	
-	private String empName;
+    private String transferCode;
+    private String transferBefore;
+    private String transferAfter;
+    private String transferDate;
+    private int empNo;
+    private String createDate;
+    private int modifier;
+    private String modifyDate;
+    private String useYN;
+
+    private String empName;
+    private String modifierName;  // modifierName 추가
+    private String searchValue;
+    private String searchType;
 }

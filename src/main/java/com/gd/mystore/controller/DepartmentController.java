@@ -1,6 +1,7 @@
 package com.gd.mystore.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,24 +36,47 @@ public class DepartmentController {
 	}
 
 	
-	@GetMapping("/departmentChangeHistory")
-	public String list1(@RequestParam(required = false) String searchValue, Model model) {
-	    log.info("Received searchValue: {}", searchValue);
-	    
-	    // null이나 빈 값이 전달될 경우, 모든 데이터를 반환하는 방식 처리
-	    if (searchValue == null || searchValue.trim().isEmpty()) {
-	        searchValue = "";
-	    }
 
-	    // 서비스에서 부서 이동 이력 조회
-	    List<DepTransferDto> changeHistoryList = departmentService.selectChangeHistory(searchValue);
-	    
-	    // 검색 결과를 모델에 추가
-	    model.addAttribute("changeHistoryList", changeHistoryList);
+    @GetMapping("/departmentChangeHistory")
+    public String search(
+            @RequestParam Map<String, String> search,  // 검색 조건을 담을 Map 객체
+            Model model) {
 
-	    // JSP 페이지 이름 반환 (departmentChangeHistory.jsp)
-	    return "department/departmentChangeHistory";
-	}
+        // 검색 조건을 Map에서 추출
+        String searchType = search.get("searchType");   // 예: 'empNo' or 'empName'
+        String searchValue = search.get("searchValue"); // 예: 검색어
+        String startDate = search.get("startDate");     // 시작 날짜
+        String endDate = search.get("endDate");         // 종료 날짜
+
+        // 검색 조건에 맞는 부서 이동 이력 리스트 조회
+        List<DepTransferDto> list = departmentService.selectChangeHistory(searchType, searchValue, startDate, endDate);
+
+        // 검색된 리스트, 검색 조건을 추가
+        model.addAttribute("list", list);
+        model.addAttribute("search", search);
+
+        return "department/departmentChangeHistory"; // 결과를 표시할 JSP 뷰
+    }
+
+    @GetMapping("/departmentChangeHistory/data")
+    public @ResponseBody List<DepTransferDto> getChangeHistoryData(
+            @RequestParam Map<String, String> search) {
+
+        // 검색 조건을 Map에서 추출
+        String searchType = search.get("searchType");
+        String searchValue = search.get("searchValue");
+        String startDate = search.get("startDate"); // 시작 날짜
+        String endDate = search.get("endDate");     // 종료 날짜
+
+        // 검색 조건에 맞는 부서 이동 이력 리스트 조회
+        List<DepTransferDto> list = departmentService.selectChangeHistory(searchType, searchValue, startDate, endDate);
+
+        // JSON 형식으로 리스트 반환
+        return list;
+    }
+
+
+
 
 
 

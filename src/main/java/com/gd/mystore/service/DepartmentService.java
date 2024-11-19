@@ -9,6 +9,6 @@ public interface DepartmentService {
 
 	List<DepartmentDto> selectMemberList();
 
-	List<DepTransferDto> selectChangeHistory(String searchValue);
+	List<DepTransferDto> selectChangeHistory(String startDate, String endDate, String searchType, String searchValue);
 
 }
