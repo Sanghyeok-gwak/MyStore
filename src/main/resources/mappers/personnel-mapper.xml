@@ -25,7 +25,7 @@
 		<result column="MODIFIER" property="modifier"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
-	</resultMap>
+</resultMap>
 
 <!-- 마이페이지 수정 -->
 <update id="updateEmployee">
@@ -53,7 +53,153 @@
            EMP_PASSWORD
       FROM TBL_EMPLOYEE
      WHERE EMP_PASSWORD = #{checkpwd}
-  </select>
+</select>
+
+<select id="selectEmpMemberList" resultMap="empMemberResultMap">
+  SELECT
+          EMP.EMP_NO,
+           EMP.EMP_NAME,
+           EMP.EMP_GENDER,
+           EMP.EMP_BIRTH,
+           EMP.EMP_PHONE,
+           EMP.EMP_EMAIL,
+           EMP.EMP_ADDRESS,
+           EMP.EMP_EMPLOYMENT,
+           EMP.EMP_DETAILADDRESS,
+           EMP.EMP_POSTCODE,
+           EMP.EMP_PASSWORD,
+           EMP.EMP_AUTH,
+           EMP_PROFILE,
+           POS.NM AS EMP_RANK,           -- 직급명 가져오기
+           DC.DEPT_NAME AS DEPT_CODE,		 -- 부서명
+           EMP.CREATE_DATE,
+           EMP.MODIFY_DATE,
+           EMP.CREATER,
+           EMP.MODIFIER,
+           EMP.USE_YN,
+           EMP.AC_NO,
+           EMP.AC_BANK
+    FROM
+         TBL_EMPLOYEE EMP
+    LEFT JOIN
+         TBL_COMMON_CODE POS ON EMP.EMP_AUTH = POS.CD
+    LEFT JOIN 
+         tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE        	
+   ORDER
+      BY EMP_NO DESC
+</select>
+
+<!-- 사번으로 사원 조회 -->
+<select id="selectEmpByNo" resultMap="empMemberResultMap">
+ SELECT
+         EMP.EMP_NO,
+         EMP.EMP_NAME,
+         EMP.EMP_PHONE,
+         EMP.EMP_EMAIL,
+         EMP.EMP_PROFILE,
+         EMP.EMP_BIRTH,
+         EMP.AC_NO,
+         EMP.AC_BANK,
+         EMP.EMP_POSTCODE,
+         EMP.EMP_ADDRESS,
+         EMP.EMP_DETAILADDRESS,
+         POS.NM AS EMP_RANK,           -- 직급명 가져오기
+         DC.DEPT_NAME AS DEPT_CODE,		 -- 부서명
+         EMP.CREATE_DATE
+    FROM
+         TBL_EMPLOYEE EMP
+    LEFT JOIN
+         TBL_COMMON_CODE POS ON EMP.EMP_AUTH = POS.CD
+    LEFT JOIN 
+         tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE
+   WHERE EMP.EMP_NO = #{empNo}  	
+
+</select>
+
+<!-- 이름으로 사원 조회 -->
+<select id="selectEmpByName" resultMap="empMemberResultMap">
+ SELECT
+         EMP.EMP_NO,
+         EMP.EMP_NAME,
+         EMP.EMP_PHONE,
+         EMP.EMP_EMAIL,
+         POS.NM AS EMP_RANK,           -- 직급명 가져오기
+         DC.DEPT_NAME AS DEPT_CODE,		 -- 부서명
+         EMP.CREATE_DATE
+    FROM
+         TBL_EMPLOYEE EMP
+    LEFT JOIN
+         TBL_COMMON_CODE POS ON EMP.EMP_AUTH = POS.CD
+    LEFT JOIN 
+         tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE
+   WHERE EMP.EMP_NO = #{empName}  	
+
+</select>
+
+
+<!-- 사원 등록 -->
+<insert id="insertEmp">
+	INSERT INTO 
+		TBL_EMPLOYEE
+	(
+		EMP_NO,
+		EMP_NAME,
+		EMP_GENDER,
+		EMP_BIRTH,
+		EMP_EMAIL,
+		EMP_PHONE,
+		AC_NO,
+		AC_BANK,
+		EMP_ADDRESS,
+		EMP_POSTCODE,
+		EMP_DETAILADDRESS,
+		EMP_PASSWORD,
+		DEPT_CODE,
+		EMP_PROFILE
+	)
+	VALUES
+	(
+		EMP_NO_SEQ.NEXTVAL,  
+		#{empName},
+		#{empGender},
+		#{empBirth},
+		#{empEmail},
+		#{empPhone},
+		#{acNo},
+		#{acBank},
+		#{empAddress},
+		#{empPostcode},
+		#{empDetailAddress},
+		0000,           
+		#{deptCode},         
+		#{empProfile}       
+	)
+</insert>
+
+<!-- 사원 수정 -->
+<update id="updateEmp">
+	UPDATE
+		TBL_EMPLOYEE
+	SET
+		EMP_NAME = #{empName},
+		EMP_GENDER = #{empGender},
+		EMP_BIRTH = #{empBirth},
+		EMP_EMAIL = #{empEmail},
+		EMP_PHONE = #{empPhone},
+		AC_NO = #{acNo},
+		AC_BANK = #{acBank},
+		EMP_ADDRESS = #{empAddress},
+		EMP_POSTCODE = #{empPostcode},
+		EMP_DETAILADDRESS = #{empDetailAddress},
+		EMP_PASSWORD = #{empPwd},  
+		EMP_AUTH = #{empAuth},     
+		EMP_RANK = #{empRank},      
+		EMP_PROFILE = #{empProfile} 
+	WHERE
+		EMP_NO = #{empNo}
+</update>
+
+
 
 
 

@@ -1,391 +1,297 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${ pageContext.request.contextPath }"/>     
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-      .product-img-box,.input-box-top,.input-box-body{
-        border-radius: 20px;
-        background-color: white;
-        padding:30px;
-      }
-      .body-body{
-        display: flex;
-        flex-direction: column;
-      }
-      .product-add-top{
-        display: flex;
-        margin-bottom: 20px;
-        height: 100%;
-      }
-      .product-img-box{
-        width: 30%;
-        margin-right: 20px;
-        height: 400px;
-      }
-      .input-box-top{
-        width: 70%;
-        height: 100%;
-      }
-      .product-add-body,.input-box-body{
-        height: 100%;
-      }
-      .upload-image {
-          height: 100%;
-          width: 100%;
-      }
-      .input-box-top{
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사원 등록</title>
+    
+    <!-- CSS 스타일 -->
+    <style>
+        .product-img-box, .input-box-top, .input-box-body {
+            border-radius: 20px;
+            background-color: white;
+            padding: 30px;
+        }
+
+        .body-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-add-top {
+            display: flex;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+
+        .product-img-box {
+            width: 30%;
+            margin-right: 20px;
+            height: 400px;
+        }
+
+        .input-box-top {
+            width: 70%;
+            height: 100%;
+        }
+
+        .upload-image {
+            height: 100%;
+            width: 100%;
+        }
+
+        .input-box-top {
             display: flex;
             flex-direction: column;
             height: 100%;
-          }
-          .input-box-top-box1,.input-box-top-box2,.input-box-top-box3,.input-box-top-box4,.input-box-top-box5
-          ,.input-box-top-box6,.input-box-top-box7,.input-box-top-box8{
+        }
+
+        .input-box-top-box {
             display: flex;
             margin-bottom: 30px;
-          }
-          .input-box-top-box1-text,.input-box-top-box2-text,.input-box-top-box3-text,.input-box-top-box4-text,.input-box-top-box5-text
-          ,.input-box-top-box6-text,.input-box-top-box7-text,.input-box-top-box8-text{
+        }
+
+        .input-box-top-box-text {
             width: 30%;
-          
-          }
-          .input-box-top-box1-input,.input-box-top-box2-input,.input-box-top-box3-input,.input-box-top-box4-input,.input-box-top-box5-input
-          ,.input-box-top-box6-input,.input-box-top-box7-input,.input-box-top-box8-input{
+        }
+
+        .input-box-top-box-input {
             width: 70%;
-          }
-          .input-box-top input{
+        }
+
+        .input-box-top input {
             height: 30px;
             width: 100%;
             border: 1px solid lightgray;
-          }
-          input{
-          	padding-left:10px;
-          }
+        }
+
+        .addr-box {
+            display: flex;
+        }
+
+        .addr-box-left {
+            width: 95%;
+        }
+
+        .addr-box-right {
+            width: 5%;
+        }
+
+        .addr-box-right button {
+            width: 100%;
+            background-color: white;
+            height: 30px;
+            border: 1px solid lightgray;
+        }
+
+        .btn-box-hover button {
+            width: 373px;
+            height: 35px;
+        }
+        .input-box-top input {
+     		padding-left: 10px;
+     	}
+     	
     </style>
-       <!-- 다음주소API-->
-   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <!-- 다음 주소 API 스크립트 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+    	// 이미지 업로드
+    	function fnChangeImg(){
+  			const changeImgUrl = document.getElementById('imageChUrlInput').value;
+  		
+  			document.getElementById('imageUrlInput').src=changeImgUrl;
+  			console.log(document.getElementById('imageUrlInput').value);
+  		}
+    
+        // 주소 API 실행
+        function sample6_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var addr = '';
+                    if (data.userSelectedType === 'R') { 
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+                    document.getElementById('sample6_postcode').value = data.zonecode;
+                    document.getElementById("sample6_address").value = addr;
+                    document.getElementById("sample6_detailAddress").focus();
+                }
+            }).open();
+        }
+    </script>
 </head>
+
 <body>
+    <!-- 헤더 및 사이드바 포함 -->
+    <jsp:include page="/WEB-INF/views/common/header.jsp" />
+    <jsp:include page="/WEB-INF/views/common/side.jsp" />
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<jsp:include page="/WEB-INF/views/common/side.jsp"/>
-<div class="body-body">
-      <!-- 여기 채워서 작업하시면 됩니다 .-->
-      <div class="product-add-top">
-        <br>
-        <div class="product-img-box">
-          <div class="upload-image" onclick="document.getElementById('fileInput').click()" style="cursor: pointer;">
-            <img id="preview" src="https://i.ibb.co/25hzpPd/Component-5.png" alt="Click to upload" style="width: 100%; height: 100%;">
-          </div>
-          <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
-          
-          <script>
-            function handleFileUpload(event) {
-              const file = event.target.files[0];
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                  document.getElementById('preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-              }
-            }
-          </script>
+   	<div class="body-body">
+    <div class="product-add-top">
+   	
+    <!-- 이미지 영역 -->
+    <div class="product-img-box">
+        <div class="img-box" style="width:100%; height:100%;">
+            <img id="imageUrlInput" src="https://i.ibb.co/25hzpPd/Component-5.png" style="width: 100%; height: 100%;">
         </div>
-        
+    </div>
+
+    <!-- 폼 시작 -->
         <div class="input-box-top">
-          <div class="input-box-top-box1">
-            <div class="input-box-top-box1-text">
-              <span class="ffont3">부서</span>
-            </div>
-            <div class="input-box-top-box1-input">
-              <input type="text">
-            </div>
-          </div>
-
-
-          <div class="input-box-top-box2">
-            <div class="input-box-top-box2-text">
-              <span class="ffont3">성명</span>
-            </div>
-            <div class="input-box-top-box2-input">
-              <input type="text">
-            </div>
-          </div>
-
-
-          <div class="input-box-top-box3">
-            <div class="input-box-top-box3-text">
-              <span class="ffont3">사번(자동생성)</span>
-            </div>
-            <div class="input-box-top-box3-input">
-              <input type="text">
-            </div>
-          </div>
-
-
-          <div class="input-box-top-box4">
-            <div class="input-box-top-box4-text">
-              <span class="ffont3">휴대폰</span>
-            </div>
-            <div class="input-box-top-box4-input">
-              <input type="text">
-            </div>
-          </div>
-
-
-          <div class="input-box-top-box5">
-            <div class="input-box-top-box5-text">
-              <span class="ffont3">이메일</span>
-            </div>
-            <div class="input-box-top-box5-input">
-              <input type="text">
-            </div>
-          </div>
-
-
-          <div class="input-box-top-box6">
-            <div class="input-box-top-box6-text">
-              <span class="ffont3">주민등록번호</span>
-            </div>
-            <div class="input-box-top-box6-input">
-              <input type="text">
-            </div>
-          </div>
-
-
-          <div class="input-box-top-box7">
-            <div class="input-box-top-box7-text">
-              <span class="ffont3">계좌번호</span>
-            </div>
-            <div class="input-box-top-box7-input">
-              <input type="text">
-            </div>
-          </div>
-
-
-          <div class="input-box-top-box8">
-            <div class="input-box-top-box6-text">
-              <span class="ffont3">주소</span>
-            </div>
-
-            <div class="input-box-top-box6-input">
-            
-<style>
-	.addr-box {
-		  display:flex;
-	}
-	.addr-box-left{
-		  width:95%;
-	}
-	.addr-box-rigth{
-		  width:5%;
-	}
-	.addr-box-rigth button{
-			width:100%;
-			background-color:white;
-			height: 30px;
-			border: 1px solid lightgray;
-	}
-</style>
-				<!--  
-				
-                <div class="addr-box">
-                
-                	<div class="addr-box-left">
-	  	              <input type="text" id="sample6_postcode" style="margin-bottom: 3%;" placeholder="우편번호">
-                	</div>
-                	
-  	            	<div class="addr-box-rigth">
-	  	              <button onclick="sample6_execDaumPostcode()"><i class="bx bxs-clinic"></i></button>
-  	            	</div>
-  	            	
+		    <form action="${contextPath}/personnel/insert" method="post">
+            <!-- 성명 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">성명</span>
                 </div>
-                
-                <input type="text" id="sample6_address" style="margin-bottom: 3%;" placeholder="주소"><br>
-                <input type="text" id="sample6_detailAddress" style="margin-bottom: 3%;" placeholder="상세주소">
-                <input type="hidden" id="sample6_extraAddress" style="margin-bottom: 3%;" placeholder="참고항목">
-            
-            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-            
-            <script>
-                function sample6_execDaumPostcode() {
-                    new daum.Postcode({
-                        oncomplete: function(data) {
-                            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-            
-                            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                            var addr = ''; // 주소 변수
-                            var extraAddr = ''; // 참고항목 변수
-            
-                            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                                addr = data.roadAddress;
-                            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                                addr = data.jibunAddress;
-                            }
-            
-                            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                            if(data.userSelectedType === 'R'){
-                                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                                    extraAddr += data.bname;
-                                }
-                                // 건물명이 있고, 공동주택일 경우 추가한다.
-                                if(data.buildingName !== '' && data.apartment === 'Y'){
-                                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                                }
-                                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                                if(extraAddr !== ''){
-                                    extraAddr = ' (' + extraAddr + ')';
-                                }
-                                // 조합된 참고항목을 해당 필드에 넣는다.
-                                document.getElementById("sample6_extraAddress").value = extraAddr;
-                            
-                            } else {
-                                document.getElementById("sample6_extraAddress").value = '';
-                            }
-            
-                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                            document.getElementById('sample6_postcode').value = data.zonecode;
-                            document.getElementById("sample6_address").value = addr;
-                            // 커서를 상세주소 필드로 이동한다.
-                            document.getElementById("sample6_detailAddress").focus();
-                        }
-                    }).open();
-                }
-            </script>
-            
-              
-		  -->
-		  
+                <div class="input-box-top-box-input">
+                    <input type="text" name="empName">
+                </div>
+            </div>
 
-		  <div class="addr-box">
-    <div class="addr-box-left">
-        <input type="text" id="sample6_postcode" style="margin-bottom: 3%;" placeholder="우편번호">
-    </div>
-    <div class="addr-box-right">
-        <button onclick="sample6_execDaumPostcode()"><i class="bx bxs-clinic"></i></button>
+            <!-- 이미지 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">이미지</span>
+                </div>
+                <div class="input-box-top-box-input" style="display: flex;">
+                    <input type="text" name="empProfile" id="imageChUrlInput" value="">
+                    <button class="btn4" type="button" onclick="fnChangeImg()">적용하기</button>
+                </div>
+            </div>
+
+            <!-- 부서 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">부서</span>
+                </div>
+                <select class="input-box-top-box-input" id="dept_code" name="deptCode">
+                    <option value="D001">D001 본사</option>
+                    <option value="D002">D002 본사 인사부</option>
+                    <option value="D003">D003 본사 재정관리부</option>
+                    <option value="D004">D004 본사 영업부</option>
+                    <option value="D005">D005 본사 IT부</option>
+                    <option value="D006">D006 본사 지점</option>
+                    <option value="D007">D007 인사부 경영지원실</option>
+                    <option value="D008">D008 인사부 HR실</option>
+                    <option value="D009">D009 재정관리부 회계팀</option>
+                    <option value="D010">D010 재정관리부 재무팀</option>
+                    <option value="D011">D011 영업부 영업지원1팀</option>
+                    <option value="D012">D012 영업부 영업지원2팀</option>
+                    <option value="D013">D013 영업부 온라인 마케팅팀</option>
+                    <option value="D014">D014 IT부 개발팀</option>
+                    <option value="D015">D015 IT부 정보보안팀</option>
+                    <option value="D016">D016 지점 서울지점</option>
+                    <option value="D017">D017 지점 경기지점</option>
+                    <option value="D018">D018 지점 인천지점</option>
+                </select>
+            </div>
+
+            <!-- 성별 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">성별</span>
+                </div>
+                <select class="input-box-top-box-input" id="gender" name="empGender">
+                    <option value="M">남</option>
+                    <option value="F">여</option>
+                </select>
+            </div>
+
+            <!-- 휴대폰 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">휴대폰</span>
+                </div>
+                <div class="input-box-top-box-input">
+                    <input type="text" name="empPhone">
+                </div>
+            </div>
+
+            <!-- 이메일 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">이메일</span>
+                </div>
+                <div class="input-box-top-box-input">
+                    <input type="email" name="empEmail">
+                </div>
+            </div>
+
+            <!-- 생년월일 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">생년월일</span>
+                </div>
+                <div class="input-box-top-box-input">
+                    <input type="text" name="empBirth" placeholder="YYYY-MM-DD">
+                </div>
+            </div>
+
+            <!-- 은행명 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">은행명</span>
+                </div>
+                <div class="input-box-top-box-input">
+                    <input type="text" name="acBank">
+                </div>
+            </div>
+
+            <!-- 계좌번호 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">계좌번호</span>
+                </div>
+                <div class="input-box-top-box-input">
+                    <input type="text" name="acNo">
+                </div>
+            </div>
+
+            <!-- 주소 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">주소</span>
+                </div>
+                <div class="input-box-top-box-input">
+                    <div class="addr-box">
+                        <div class="addr-box-left">
+                            <input type="text" id="sample6_postcode" placeholder="우편번호" style="margin-bottom: 3%;" name="empPostcode" readonly>
+                        </div>
+                        <div class="addr-box-right">
+                            <button type="button" onclick="sample6_execDaumPostcode()">
+                                <i class="bi bi-shop"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="text" id="sample6_address" placeholder="주소" style="margin-bottom: 3%;" name="empAddress" readonly>
+                    <input type="text" id="sample6_detailAddress" placeholder="상세주소" style="margin-bottom: 3%;" name="empDetailAddress">
+                </div>
+            </div>
+
+            <!-- 버튼 -->
+            <div class="input-box-top-box" style="display: flex; justify-content: center;">
+                <button type="submit" class="btn3-hover ffont3" style="width: 373px; height: 35px; margin-right: 10px;">등록하기</button>
+                <button type="button" class="btn3-hover ffont3" style="width: 373px; height: 35px;">홈으로</button>
+            </div>
+            
+   		 </form>
+        </div>
     </div>
 </div>
 
-<input type="text" id="sample6_address" style="margin-bottom: 3%;" placeholder="주소"><br>
-<input type="text" id="sample6_detailAddress" style="margin-bottom: 3%;" placeholder="상세주소">
+           
+	   
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-<script>
-    function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 주소 변수
-                var addr = ''; 
-            
-                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-            
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
-    }
-</script>
-		  
-          
-                      </div>
-          </div>
-
-
-
-
-          <div class="input-box-top-box8">
-
-                <br>
-
-                <div class="btn-box-hover" style="display: flex; justify-content: center; margin-left: 200px;">
-                    <button class="btn3-hover ffont3" style="width: 373px; height: 35px;">등록하기</button> 
-                    <button class="btn3-hover ffont3" style="width: 373px; height: 35px;">홈으로</button> 
-                </div>
-                
-                
-              </div>
-              
-            </div>
-            
-            
-            
-      </div>
-      
-</div>
-
- <!-- <script>
-
-    /*주소검색 다음api 스크립트*/
-    function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
-                
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
-    }
-
-
-
-  </script> -->
-
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
+
 </html>
