@@ -184,131 +184,100 @@ input {
 				<div style="width: 60%; height: 650px; border: #868686 solid;">
 					<!-- 오른쪽 영역 내용 -->
 					<div>
-						<div class="input-bar"
-							style="width: 100%; display: flex; justify-content: flex-end; align-items: center; margin-top: 10px;">
-							<div>
-								<div class="search_box"
-									style="margin-top: 10px; width: 300px; margin-right: 10px;">
-									<input id="empNameInput" class="input_b" type="text"
-										name="empName" placeholder="사원명 검색">
-									<div class="icon">
-										<button id="searchBtn">
-											<i class="bi bi-search"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-
-
-						<!-- 테이블을 감싸는 div 추가하여 높이 제한 -->
-						<div style="height: 500px; overflow-y: auto; margin-top: 30px;">
-							<table id="MemberList" class="table table-hover"
-								style="width: 100%; text-align: center; vertical-align: middle;">
-								<thead>
-									<tr>
-										<th scope="col"></th>
-										<th scope="col">이름</th>
-										<th scope="col">사번</th>
-										<th scope="col">직책</th>
-										<th scope="col">상위부서</th>
-										<th scope="col">하위부서</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:choose>
-										<c:when test="${not empty searchResult}">
-
-											<c:forEach var="b" items="${searchResult}">
-												<tr>
-													<td><input type="checkbox" id="checkbox_${b.empNo}"
-														name="checkbox_${b.empNo}" value="${b.empNo}"
-														style="width: 15px; height: 15px;"></td>
-													<td>${b.empName}</td>
-													<td>${b.empNo}</td>
-													<td>${b.nm}</td>
-													<td>${b.deptUpStair}</td>
-													<td>${b.deptName}</td>
-												</tr>
-											</c:forEach>
-										</c:when>
-										<c:otherwise>
-
-											<c:forEach var="b" items="${list}">
-												<tr>
-													<td><input type="checkbox" id="checkbox_${b.empNo}"
-														name="checkbox_${b.empNo}" value="${b.empNo}"
-														style="width: 15px; height: 15px;"></td>
-													<td>${b.empName}</td>
-													<td>${b.empNo}</td>
-													<td>${b.nm}</td>
-													<td>${b.deptUpStair}</td>
-													<td>${b.deptName}</td>
-												</tr>
-											</c:forEach>
-										</c:otherwise>
-									</c:choose>
-								</tbody>
+						<div class="input-bar" style="width: 100%; display: flex; justify-content: flex-end; align-items: center; margin-top: 10px;">
+    <div>
+        <div class="search_box" style="margin-top: 10px; width: 300px; margin-right: 10px;">
+            <input id="empNameInput" class="input_b" type="text" name="empName" placeholder="사원명 검색">
+            <div class="icon">
+                <button id="searchBtn">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
+				
+					 <!-- 동적으로 데이터를 채울 테이블 -->
+                    <div style="height: 500px; overflow-y: auto; margin-top: 30px;">
+                       <table id="MemberList" class="table table-striped table-bordered table-sm table-hover">
+    <thead>
+        <tr>
+            <th>선택</th>
+            <th>사원명</th>
+            <th>사원번호</th>
+            <th>부서명</th>
+            <th>상위 부서</th>
+            <th>부서 이름</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="dept" items="${searchResult}">
+            <tr>
+                <td><input type="checkbox" name="checkbox" value="${dept.empNo}" style="width: 15px; height: 15px;"></td>
+                <td>${dept.empName}</td>
+                <td>${dept.empNo}</td>
+                <td>${dept.nm}</td>
+                <td>${dept.deptUpStair}</td>
+                <td>${dept.deptName}</td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
 
-							</table>
-						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- jQuery와 jsTree, Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-					</div>
-				</div>
+    <!-- AJAX로 데이터 검색 및 테이블에 반영 -->
+    <script>
+    $(document).ready(function() {
+        $("#searchBtn").click(function() {
+            var empName = $("#empNameInput").val();  // 입력된 사원명
 
+            // AJAX 요청 보내기
+            $.ajax({
+                url: "/mystore/department/departmentModify",  // URL을 '/mystore/department/departmentModify'로 수정
+                type: "GET",  // GET 방식으로 요청
+                data: { empName: empName },  // empName 파라미터 전달
+                success: function(response) {
+                    // 서버에서 받은 데이터가 객체 형태인지 확인
+                    if (Array.isArray(response)) {
+                        var tbody = $("#MemberList tbody");
+                        tbody.empty();  // 기존 데이터를 비웁니다.
 
-
-			</div>
-		</div>
-	</div>
-
-
-
-	<script>
-	$(document).ready(function() {
-	    $("#searchBtn").click(function() {
-	        var empName = $("#empNameInput").val(); // 입력된 사원명
-	        $.ajax({
-	            url: "${contextPath}/department/departmentModify",  // 서버 URL
-	            type: "GET",
-	            data: { empName: empName },  // 사원명 검색 데이터 전송
-	            success: function(response) {
-	                if (response.searchResult && response.searchResult.length > 0) {
-	                    let tableContent = "";  // 테이블 내용 초기화
-
-	                    // 배열을 순회하면서 HTML 콘텐츠 생성
-	                    response.searchResult.forEach(function(dept) {
-	                        tableContent += `
-	                            <tr>
-	                                <td><input type='checkbox' name='checkbox' value='${dept.empNo}' style='width: 15px; height: 15px;'></td>
-	                                <td>${dept.empName}</td> <!-- 사원명 -->
-	                                <td>${dept.empNo}</td>   <!-- 사원번호 -->
-	                                <td>${dept.nm}</td>      <!-- 직책 -->
-	                                <td>${dept.deptUpStair}</td> <!-- 상위부서 -->
-	                                <td>${dept.deptName}</td> <!-- 부서명 -->
-	                            </tr>
-	                        `;
-	                    });
-
-	                    // 테이블 내용 업데이트
-	                    $("#MemberList tbody").html(tableContent);
-	                } else {
-	                    // 검색 결과가 없으면 "조회된 사원이 없습니다." 표시
-	                    tableContent = "<tr><td colspan='6'>조회된 사원이 없습니다.</td></tr>";
-	                    $("#MemberList tbody").html(tableContent);
-	                }
-	            },
-	            error: function(xhr, status, error) {
-	                alert("검색 중 오류가 발생했습니다.");
-	            }
-	        });
-	    });
-	});
-
+                        // 서버에서 받은 데이터(response)로 테이블 행 생성
+                        response.forEach(function(dept) {
+                            var tr = $("<tr>");
+                            tr.append("<td><input type='checkbox' name='checkbox' value='" + dept.empNo + "' style='width: 15px; height: 15px;'></td>");
+                            tr.append("<td>" + dept.empName + "</td>");
+                            tr.append("<td>" + dept.empNo + "</td>");
+                            tr.append("<td>" + dept.deptName + "</td>");
+                            tr.append("<td>" + dept.deptUpStair + "</td>");
+                            tr.append("<td>" + dept.deptName + "</td>");
+                            tbody.append(tr);  // 테이블 본문에 행 추가
+                        });
+                    } else {
+                        // 서버에서 받은 데이터가 예상과 다를 때 처리
+                        alert("서버에서 반환된 데이터가 올바르지 않습니다.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("검색 중 오류가 발생했습니다.");
+                    console.error(xhr.responseText);  // 에러 메시지 확인
+                }
+            });
+        });
+    });
 
 
 

@@ -26,31 +26,21 @@ public class DepartmentController {
 
 	private final DepartmentService departmentService;
 	
-	@GetMapping("/departmentModify")
+	@GetMapping("/departmentModify/data")
 	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName, Model model) {
 	    List<DepartmentDto> searchResult;
 
-	    // empName이 null이거나 빈 값일 경우 기본 리스트 반환
 	    if (empName == null || empName.trim().isEmpty()) {
-	        searchResult = departmentService.selectMemberList();  // 기본 리스트로 대체
+	        searchResult = departmentService.selectMemberList();
 	    } else {
-	        // empName에 해당하는 검색 결과 가져옴
 	        searchResult = departmentService.selectSearchEmployeeByName(empName);
 	    }
 
-	    // 결과를 Model에 담아서 반환
-	    model.addAttribute("searchResult", searchResult);
-	    
-	    // departmentModify.jsp(또는 .html)로 뷰 이름을 반환
-	    return "department/departmentModify";
+	    // response를 JSON 형식으로 반환하는 코드
+	    model.addAttribute("searchResult", searchResult);  
+	    return "department/departmentModify";  
 	}
 
-
-
-
-
-
-	
 	
     @GetMapping("/departmentChangeHistory")
     public String search(
