@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper namespace="salarymapper">
+<mapper namespace="salaryMapper">
+
+<!-- 급여조회 -->
+<select id="selectsalary" resultType="com.gd.mystore.dto.SalaryDto">
+ SELECT
+        S.salary_no AS salaryNo,
+        S.emp_no AS empNo,
+        S.sal_base AS salBase,
+        S.sal_overtime_pay AS salOvertimePay,
+        S.bonus,
+        S.sal_gross_pay AS salGrossPay,
+        S.sal_np AS salNp,
+        S.sal_hi AS salHi,
+        S.sal_ei AS salEi,
+        S.sal_total_dd AS salTotalDd,
+        S.sal_net_salary AS salNetSalary,
+        S.creater,
+        S.create_date AS createDate,
+        S.modifier,
+        S.modify_date AS modifyDate
+ FROM 
+        TBL_EMPLOYEE E
+ JOIN 
+        TBL_SALARY S ON E.EMP_NO = S.EMP_NO
+ WHERE 
+        E.EMP_NO = #{empNo}
+</select>
+
+
+
+
+
+
+
+
+
 
 
 

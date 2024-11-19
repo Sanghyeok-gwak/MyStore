@@ -28,20 +28,7 @@
         font-size: 1.5em;
         margin: 20px 0;
     }
-
-    /* 급여 내역 테이블 스타일 */
-    /*
-    .paytable {
-        width: 70%;
-        margin: 20px auto;
-        text-align: center;
-    }
-    */
-</style>
-</head>
-<body>
-<style>
-	.payment-list{
+    .payment-list{
 	display:flex;
 	flex-direction: column;
 	padding-left: 100px;
@@ -67,9 +54,11 @@
 		border-radius: 10px;
 		border: 0px;
 	}
-	
-	
+
 </style>
+</head>
+<body>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <jsp:include page="/WEB-INF/views/common/side.jsp"/>
 <div class="body-body">
@@ -78,25 +67,28 @@
 	        <div class="title">2024년 11월 지급명세서</div>
     	<div class="payment-list">
 	        <div class="btn-box-print">
+	        
+	        	<!-- 출력하기 로직 추가해야됨  -->
 	        	<button><i class="bi bi-printer" style="font-size:25px"></i></button>
+	        
 	        </div>
 	
 	        <table class="paytable">
 	            <tr>
 	                <th>소속</th>
-	                <td>인사과</td>
+	                <td>${ loginUser.deptCode }</td>
 	                <th>성명</th>
-	                <td>배수지</td>
+	                <td>${ loginUser.empName }</td>
 	            </tr>
 	            <tr>
 	                <th>사번</th>
-	                <td>0001</td>
+	                <td>${ loginUser.empNo }</td>
 	                <th>계좌번호</th>
-	                <td>국민은행 09203-92-2920 배수지</td>
+	                <td>${ loginUser.acBank } ${ loginUser.acNo }</td>
 	            </tr>
 	            <tr>
 	                <th>메일주소</th>
-	                <td colspan="3">user01@naver.com</td>
+	                <td colspan="3">${ loginUser.empEmail }</td>
 	            </tr>
 	
 	            <tr>
@@ -109,10 +101,10 @@
 	                <th>총지급액</th>
 	            </tr>
 	            <tr>
-	                <td>2,500,000</td>
-	                <td>0</td>
-	                <td>0</td>
-	                <td>2,500,000</td>
+	                <td>${ salary.salBase }</td>
+                    <td>${ salary.salOvertimePay }</td>
+                    <td>${ salary.bonus }</td>
+                    <td>${ salary.salGrossPay }</td>
 	            </tr>
 	
 	            <tr>
@@ -125,21 +117,22 @@
 	                <th>총 공제액</th>
 	            </tr>
 	            <tr>
-	                <td>150,000</td>
-	                <td>130,000</td>
-	                <td>20,000</td>
-	                <td>300,000</td>
+	                <td>${ salary.salNp }</td>
+                    <td>${ salary.salHi }</td>
+                    <td>${ salary.salEi }</td>
+                    <td>${ salary.salTotalDd }</td>
 	            </tr>
-	
+				<!-- 
 	            <tr>
-	                <th>총 지급액</th>
-	                <td>2,500,000</td>
-	                <th>총 공제액</th>
-	                <td>300,000</td>
+	                <th></th>
+	                <td></td>
+	                <th></th>
+	                <td></td>
 	            </tr>
+				 -->
 	            <tr>
 	                <th>실수령액</th>
-	                <td colspan="3">2,200,000</td>
+	                <td colspan="3">${ salary.salNetSalary }</td>
 	            </tr>
 	        </table>
 	
