@@ -9,7 +9,6 @@
 		<result column="COST" property="cost"/>
 		<result column="SAIL_PRICE" property="sailPrice"/>
 		<result column="PROFIT_MARGIN" property="profitMargin"/>
-		<result column="RECOMMENDED_CATEGORY" property="recommendedCategory"/>
 		<result column="EXPIRATION_PERIOD" property="expirationPeriod"/>
 		<result column="PRODUCT_IMG" property="productImg"/>
 		<result column="CREATER" property="creater"/>
@@ -43,7 +42,6 @@
 		     , COST
 		     , SAIL_PRICE
          , PROFIT_MARGIN
-         , RECOMMENDED_CATEGORY
          , EXPIRATION_PERIOD
          , PRODUCT_IMG
          , e.EMP_NAME as "create"
@@ -68,7 +66,6 @@
 		     , COST
 		     , SAIL_PRICE
          , PROFIT_MARGIN
-         , RECOMMENDED_CATEGORY
          , TO_CHAR(EXPIRATION_PERIOD,'YY-MM-DD') as "EXPIRATION_PERIOD"
          , PRODUCT_IMG
          , e.EMP_NAME as "create"
@@ -124,7 +121,6 @@
 			,	COST
 			,	SAIL_PRICE
 			,	PROFIT_MARGIN
-			,	RECOMMENDED_CATEGORY
 			,	EXPIRATION_PERIOD
 			,	PRODUCT_IMG
 			,	CREATER
@@ -144,7 +140,6 @@
 		 , #{cost}	 
 		 , #{sailPrice}	 
 		 , #{profitMargin}	 
-		 , 'Y'	 
 		 , TO_DATE(#{expirationPeriod}, 'YY-MM-DD')	 
 		 , #{productImg}
 		 , '1010'	 
@@ -184,7 +179,6 @@
 		     , COST
 		     , SAIL_PRICE
          , PROFIT_MARGIN
-         , RECOMMENDED_CATEGORY
          , EXPIRATION_PERIOD
          , PRODUCT_IMG
          , e.EMP_NAME as "create"
@@ -210,7 +204,6 @@
 		     , COST
 		     , SAIL_PRICE
          , PROFIT_MARGIN
-         , RECOMMENDED_CATEGORY
          , TO_CHAR(EXPIRATION_PERIOD,'YY-MM-DD') as "EXPIRATION_PERIOD"
          , PRODUCT_IMG
          , e.EMP_NAME as "create"

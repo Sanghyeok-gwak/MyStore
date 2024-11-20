@@ -7,21 +7,23 @@
 	
 	<typeAliases>
 	
-		<typeAlias type="com.gd.mystore.dto.EDocDto" alias="EDocDto"/>					<!-- 전자결재 -->
-		<typeAlias type="com.gd.mystore.dto.EDocApprovalDto" alias="EDocApprovalDto"/>	<!-- 전자결재선 -->
-		<typeAlias type="com.gd.mystore.dto.EDocAttachDto" alias="EDocAttachDto"/>		<!-- 전자결재 첨부파일 -->
-		<typeAlias type="com.gd.mystore.dto.EDocSampleDto" alias="EDocSampleDto"/>		<!-- 전자결재 양식 -->
-		<typeAlias type="com.gd.mystore.dto.PersonnelDto" alias="PersonnelDto"/>			<!-- 사원 -->
-		<typeAlias type="com.gd.mystore.dto.SalaryDto" alias="SalaryDto"/>					<!-- 급여 -->
-		<typeAlias type="com.gd.mystore.dto.ProductDto" alias="ProductDto"/>					<!-- 상품 -->
-		<typeAlias type="com.gd.mystore.dto.EmpMemberDto" alias="EmpMemberDto"/>		<!-- 로그인 -->
-		<typeAlias type="com.gd.mystore.dto.BoardTypeDto" alias="BoardTypeDto"/>		<!-- 시스템 게시판타입 -->
-		<typeAlias type="com.gd.mystore.dto.DepartmentDto" alias="DepartmentDto"/>					<!-- 부서조회 -->
+		<typeAlias type="com.gd.mystore.dto.EDocDto" alias="EDocDto"/>												<!-- 전자결재 -->
+		<typeAlias type="com.gd.mystore.dto.EDocApprovalDto" alias="EDocApprovalDto"/>				<!-- 전자결재선 -->
+		<typeAlias type="com.gd.mystore.dto.EDocAttachDto" alias="EDocAttachDto"/>						<!-- 전자결재 첨부파일 -->
+		<typeAlias type="com.gd.mystore.dto.EDocSampleDto" alias="EDocSampleDto"/>						<!-- 전자결재 양식 -->
+		<typeAlias type="com.gd.mystore.dto.PersonnelDto" alias="PersonnelDto"/>							<!-- 사원 -->
+		<typeAlias type="com.gd.mystore.dto.SalaryDto" alias="SalaryDto"/>										<!-- 급여 -->
+		<typeAlias type="com.gd.mystore.dto.ProductDto" alias="ProductDto"/>									<!-- 상품 -->
+		<typeAlias type="com.gd.mystore.dto.EmpMemberDto" alias="EmpMemberDto"/>							<!-- 로그인 -->
+		<typeAlias type="com.gd.mystore.dto.BoardTypeDto" alias="BoardTypeDto"/>							<!-- 시스템 게시판타입 -->
+		<typeAlias type="com.gd.mystore.dto.DepartmentDto" alias="DepartmentDto"/>		  			<!-- 부서조회 -->
 		<typeAlias type="com.gd.mystore.dto.DepTransferDto" alias="DepTransferDto"/>					<!--부서 이동내역 조회 -->
-		<typeAlias type="com.gd.mystore.dto.BoardDto" alias="BoardDto"/>	<!-- 게시판 -->
-		<typeAlias type="com.gd.mystore.dto.BoardFileDto" alias="BoardFileDto"/>		<!-- 게시판 첨부파일 -->
-		<typeAlias type="com.gd.mystore.dto.BoardTypeDto" alias="BoardTypeDto"/>		<!-- 게시판 생성(관리자) -->
-		<typeAlias type="com.gd.mystore.dto.CommonCodeDto" alias="CommonCodeDto"/>		<!-- 공통코드 -->
+		<typeAlias type="com.gd.mystore.dto.BoardDto" alias="BoardDto"/>											<!-- 게시판 -->
+		<typeAlias type="com.gd.mystore.dto.BoardFileDto" alias="BoardFileDto"/>							<!-- 게시판 첨부파일 -->
+		<typeAlias type="com.gd.mystore.dto.BoardTypeDto" alias="BoardTypeDto"/>							<!-- 게시판 생성(관리자) -->
+		<typeAlias type="com.gd.mystore.dto.CommonCodeDto" alias="CommonCodeDto"/>						<!-- 공통코드 -->
+		<typeAlias type="com.gd.mystore.dto.OrderingListDto" alias="OrderingListDto"/>				<!-- 발주상품 -->
+		<typeAlias type="com.gd.mystore.dto.OrderingProductDto" alias="OrderingProductDto"/>	<!-- 발주리스트 -->
 		
 	</typeAliases>
 	
@@ -29,16 +31,13 @@
 	<mappers>
 	
 		<mapper resource="mappers/edoc-mapper.xml" />									<!-- 전자결재 mapper -->
-		
 		<mapper resource="mappers/personnel-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
   	<mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
-		<mapper resource="mappers/department-mapper.xml" />            <!-- 사원 및 인사 관리 매퍼 -->
-
+		<mapper resource="mappers/department-mapper.xml" />           <!-- 사원 및 인사 관리 매퍼 -->
 		<mapper resource="mappers/system-mapper.xml"/>								<!-- 시스템 관련 mapper -->
-		
     <mapper resource="mappers/salary-mapper.xml" />               <!-- 급여 관리 매퍼 -->
 		<mapper resource="mappers/branchoffice-mapper.xml"/>					<!-- 상품 매퍼 -->
-		<mapper resource="mappers/ordering-mapper.xml"/>					<!-- 발주 매퍼 -->
+		<mapper resource="mappers/ordering-mapper.xml"/>							<!-- 발주 매퍼 -->
 		
 		
 		
