@@ -33,36 +33,32 @@ public class EmpMemberController {
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	private final EmailService emailService;
 
-	@RequestMapping("/loginPage") // 쿠키 확인
-	public void loginCookie(@CookieValue(value = "remember-empNo", required = false) Cookie cookie, Model model) {
-
-		String empNo = ""; // 저장된 아이디
-		boolean rememberEmpNo = false; // 아이디 저장 체크 여부
-
-		if (cookie != null) {
-			System.out.println("Ck Name : " + cookie.getName());
-			System.out.println("Ck Value : " + cookie.getValue());
-			empNo = cookie.getValue();
-			rememberEmpNo = true;
-		}
-		model.addAttribute("empNo", empNo);
-		model.addAttribute("rememberEmpNo", rememberEmpNo);
+	@RequestMapping("/loginPage.do")
+	public void loginCookie() {
+		//로그인 페이지 이동
+		//web.xml -> ContextLoaderListener -> contextConfigLocation (빈 컨테이너 생성)
+		//생성된 빈 컨테이너 servlet-context.xml -> InternalResourceViewResolver로 경로 및 확장자를 다 안적어도 됨
+		//void로 아무것도 없을 시 loginPage 즉 /WEB-INF/views/login/loginPage.jsp가 보여짐
 	}
 
 	@RequestMapping("/logOut.do") // 로그아웃
 	public String logOut(HttpSession session, RedirectAttributes rdAttributes) {
-
+		
 		session.invalidate(); // 세션 무효화
 		rdAttributes.addFlashAttribute("alertMsg", "로그아웃 되었습니다.");
 
-		return "redirect:/login/loginPage";
+		return "redirect:/login/loginPage.do";
 	}
 
-	@PostMapping("/signin.do") // 로그인
-	public String login(EmpMemberDto em, HttpServletResponse response, HttpSession session,
-			RedirectAttributes rdAttributes) throws IOException {
+	//로그인
+	@PostMapping("/signin.do")
+	public String login(EmpMemberDto em
+					  , HttpServletResponse response
+					  , HttpSession session
+					  , RedirectAttributes rdAttributes) throws IOException {
 
 		response.setContentType("text/html; charset=utf-8");
+		
 		EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
 
 //		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpNo(), loginUser.getEmpPwd())) { // 로그인 성공
@@ -70,21 +66,22 @@ public class EmpMemberController {
 			session.setAttribute("loginUser", loginUser);
 			
 			if(loginUser.getUseYn().equals("N")) {
-				rdAttributes.addFlashAttribute("alertMsg", "신규 입사자님 환영합니다."
-						+ "                                                       "
-						+ "비밀번호 조건에 맞춰 비밀번호를 변경해주세요☺️");
+				rdAttributes.addFlashAttribute("alertMsg", "최초 로그인, 비밀번호를 변경해주세요☺️");
 				return "redirect:/mypage/passwordRecovery";
 			}else {
-				return "redirect:/";
+				return "main";
 			}
 		} else { // 로그인 실패
 			rdAttributes.addFlashAttribute("alertMsg", "로그인에 실패하였습니다. 사번 및 비밀번호를 다시 확인해주세요.");
 
-			return "redirect:/login/loginPage";
+			return "redirect:/login/loginPage.do";
 		}
 	}
+	
+	@RequestMapping("/pwdRecovery.do")
+	public void pwdRecovery() {}
 
-	@PostMapping("/pwdRecovery.do") // 비밀번호 찾기
+	@PostMapping("/pwdRecoveryCheck.do") // 비밀번호 찾기
 	public void pwdRecovery(EmpMemberDto em, HttpServletResponse response, HttpSession session) throws IOException {
 
 		response.setContentType("text/html; charset=utf-8");
@@ -110,8 +107,8 @@ public class EmpMemberController {
 			}
 
 			out.println("<script>");
-			out.println("alert('인증 성공. 이메일을 확인해주세요');");
-			out.println("location.href='/mystore/login/loginPage';"); // 로그인 페이지로 이동
+			out.println("alert('임시 비밀번호를 이메일로 발송했습니다. 이메일을 확인해주세요.');");
+			out.println("location.href='/mystore/login/loginPage.do';"); // 로그인 페이지로 이동
 			out.println("</script>");
 
 		} else { // 비밀번호 찾기 실패

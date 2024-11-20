@@ -146,7 +146,7 @@
           <div class="body_right_list">
             <div class="right_login">비밀번호 찾기</div>
             
-           	<form action="${ contextPath }/login/pwdRecovery.do" method="post">
+           	<form action="${ contextPath }/login/pwdRecoveryCheck.do" method="post">
 		            <div class="right_id">
 		            	<div>
 			              사번

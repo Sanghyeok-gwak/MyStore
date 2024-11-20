@@ -187,7 +187,7 @@
             </form>
 
             <div class="password_recovery">
-              <a href="${ contextPath }/login/pwdRecovery">비밀번호 찾기</a>
+              <a href="${ contextPath }/login/pwdRecovery.do">비밀번호 찾기</a>
             </div>
             
             <br><br>
