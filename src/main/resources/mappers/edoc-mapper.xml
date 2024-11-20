@@ -157,21 +157,28 @@
 	
 	<!-- jstree 담을 직원 데이터 -->
 	<select id="selectEmployees" resultMap="empMemberResultMap">
-		select 
-		    	emp.emp_no,
-		    	emp.emp_name,
-		    	pos.nm as emp_rank,
-		   	  dept.dept_name as dept_code
-		 from 
-		   	  tbl_employee emp
-		left join
-		    	tbl_common_code pos
-		    	on emp.emp_rank = pos.cd
-		left join
-		    	tbl_department dept
-		    	on emp.dept_code = dept.dept_code
-		where 
-		    	emp.use_yn = 'Y'
+		select a.*, rownum as CREATER from (
+			(SELECT t1.DEPT_CODE as EMP_NO , t1.DEPT_NAME as EMP_NAME, LEVEL as AC_BANK, NVL(t1.DEPT_UPSTAIR, '#') as DEPT_CODE, 'dept' as EMP_GENDER
+			FROM (SELECT *
+				  FROM TBL_DEPARTMENT
+				  WHERE USE_YN = 'Y') t1
+			START WITH t1.DEPT_UPSTAIR is null
+			CONNECT BY PRIOR t1.DEPT_CODE = t1.DEPT_UPSTAIR)
+
+			union all
+
+			(select
+				''||emp.emp_no as EMP_NO,
+				emp.emp_name as EMP_NAME,
+				9 as AC_BANK,
+				emp.dept_code as DEPT_CODE,
+				'emp' as EMP_GENDER
+			from
+				tbl_employee emp
+			where
+				emp.use_yn = 'Y'
+				and emp.emp_name != '정준수')
+		) a
 	</select>
 	
 	

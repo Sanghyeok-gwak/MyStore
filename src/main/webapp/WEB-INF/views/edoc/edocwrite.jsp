@@ -565,18 +565,16 @@ input[type=file]::file-selector-button {
 		        success: function(employees) {
 		            // 직급 순으로 정렬
 		            employees.sort(function(a, b) {
-		                const rankA = rankOrder[a.empRank] || 100; // 기본값 100을 사용하여 순위를 지정
-		                const rankB = rankOrder[b.empRank] || 100;
-		                return rankA - rankB;
+		                return a.CREATER - b.CREATER;
 		            });
 
          var treeData = employees.map(function(emp) {
              return {
                  "id": emp.empNo,
-                 "parent": "#",
-                 "text": emp.empName + " (" + emp.empRank + ")",
+                 "parent": emp.deptCode,
+                 "text": emp.empName,
                  "data": {
-                     "rank": emp.empRank,
+                     //"rank": emp.acBank,
                      "name": emp.empName,
                      "dept": emp.deptCode,
                      "no"	 : emp.empNo
