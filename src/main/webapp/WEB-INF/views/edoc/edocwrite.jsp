@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
 <style>
 /**/
 /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
@@ -379,9 +378,9 @@ input[type=file]::file-selector-button {
 					</div>
 					
 			    <!-- 기안자 이름: 로그인된 사용자의 이름 -->
-			    <input type="hidden" name="draftName" id="draftName" value="${loginUser.empName}">
-			    <!-- 결재 양식 유형: 선택된 결재 양식의 ID (결재양식 선택 드롭다운에서 선택된 값) -->
-			    <input type="hidden" name="formType" id="formType">
+			    <input type="hidden" name="draftName" id="draftName" value="${loginUser.empNo}">
+			    <!-- 결재자 이름 목록: 선택된 결재자들의 이름을 콤마로 구분하여 저장 -->
+			    <input type="hidden" name="approvers" id="approvers">	
 			    <!-- 결재선 순서 정보: 결재자의 순서, 이름, 직급, 부서를 JSON 형식으로 저장 -->
 			    <input type="hidden" name="approvalOrder" id="approvalOrder">
     
@@ -510,7 +509,6 @@ input[type=file]::file-selector-button {
 			// 결재자 이름 수집
 			var selectedNodes = $('#approvalTree').jstree('get_selected', true);
 			if (selectedNodes.length === 0) {
-				alert("결재자를 선택하세요.");
 				return;
 			}
 
@@ -525,18 +523,17 @@ input[type=file]::file-selector-button {
 					name : node.data.name,
 					rank : node.data.rank,
 					dept : node.data.dept,
+					no	 : node.data.no,
 				});
 			});
 
 			// 숨겨진 필드에 데이터 설정
-			$('#draftName').val('${loginUser.empName}'); // 기안자 이름
+			$('#draftName').val('${loginUser.empNo}'); // 기안자 이름
 			$('#approvers').val(approvers.join(',')); // 결재자 이름 (콤마로 구분)
-			$('#formType').val($('#lang').val()); // 결재양식 유형
 			$('#approvalOrder').val(JSON.stringify(approvalOrder)); // 결재선 순서 JSON으로 변환
 
 			// 제목 입력 확인
 			if ($('#title').val().trim() === "") {
-				alert("제목을 입력하세요.");
 				return;
 			}
 
@@ -581,7 +578,8 @@ input[type=file]::file-selector-button {
                  "data": {
                      "rank": emp.empRank,
                      "name": emp.empName,
-                     "dept": emp.deptCode
+                     "dept": emp.deptCode,
+                     "no"	 : emp.empNo
                  }
              };
          });

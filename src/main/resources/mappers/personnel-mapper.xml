@@ -43,6 +43,7 @@
  UPDATE
  		TBL_EMPLOYEE
  	SET EMP_PASSWORD = #{empPwd}
+ 		EMP_USE_YN = 'Y'
   WHERE EMP_NO = #{empNo}
 
 </update>
@@ -55,9 +56,10 @@
      WHERE EMP_PASSWORD = #{checkpwd}
 </select>
 
-<select id="selectEmpMemberList" resultMap="empMemberResultMap">
+<!-- 사원 목록 조회용  -->
+<select id="selectEmpList" resultMap="empMemberResultMap">
   SELECT
-          EMP.EMP_NO,
+           EMP.EMP_NO,
            EMP.EMP_NAME,
            EMP.EMP_GENDER,
            EMP.EMP_BIRTH,
@@ -85,6 +87,42 @@
          TBL_COMMON_CODE POS ON EMP.EMP_AUTH = POS.CD
     LEFT JOIN 
          tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE        	
+   ORDER
+      BY EMP_NO DESC
+</select>
+
+<!-- 페이징 카운트 -->
+<select id="selectEmpListCount" resultType="int">
+SELECT
+       count(*)
+  FROM
+       TBL_EMPLOYEE 
+</select>
+
+<select id="selectSearchListCount" resultType="_int">
+SELECT
+       count(*)
+  FROM
+       TBL_EMPLOYEE
+ where ${condition} like '%' || #{keyword} || '%' 
+</select>
+
+<select id="selectSearchList" resultMap="empMemberResultMap">
+  SELECT
+           EMP.EMP_NO,
+           EMP.EMP_NAME,
+           EMP.EMP_PHONE,
+           EMP.EMP_EMAIL,
+           POS.NM AS EMP_RANK,           -- 직급명 가져오기
+           DC.DEPT_NAME AS DEPT_CODE,		 -- 부서명
+           EMP.CREATE_DATE
+    FROM
+         TBL_EMPLOYEE EMP
+    LEFT JOIN
+         TBL_COMMON_CODE POS ON EMP.EMP_AUTH = POS.CD
+    LEFT JOIN 
+         tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE        	
+   WHERE ${condition} LIKE '%' || #{keyword} || '%'
    ORDER
       BY EMP_NO DESC
 </select>
@@ -170,7 +208,7 @@
 		#{empAddress},
 		#{empPostcode},
 		#{empDetailAddress},
-		0000,           
+		1234,           
 		#{deptCode},         
 		#{empProfile}       
 	)
@@ -182,7 +220,6 @@
 		TBL_EMPLOYEE
 	SET
 		EMP_NAME = #{empName},
-		EMP_GENDER = #{empGender},
 		EMP_BIRTH = #{empBirth},
 		EMP_EMAIL = #{empEmail},
 		EMP_PHONE = #{empPhone},
@@ -191,8 +228,6 @@
 		EMP_ADDRESS = #{empAddress},
 		EMP_POSTCODE = #{empPostcode},
 		EMP_DETAILADDRESS = #{empDetailAddress},
-		EMP_PASSWORD = #{empPwd},  
-		EMP_AUTH = #{empAuth},     
 		EMP_RANK = #{empRank},      
 		EMP_PROFILE = #{empProfile} 
 	WHERE

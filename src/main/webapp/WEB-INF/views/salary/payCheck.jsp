@@ -137,7 +137,9 @@
 	        </table>
 	
 	        <div class="btn-box-home">
+	        	<a href="${ contextPath }">
 	            <button class="btn3-hover ffont3">홈으로</button>
+	            </a>
 	        </div>
         </div>
     </div>

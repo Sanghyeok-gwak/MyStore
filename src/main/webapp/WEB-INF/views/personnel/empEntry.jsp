@@ -163,7 +163,7 @@
                     <span class="ffont3">이미지</span>
                 </div>
                 <div class="input-box-top-box-input" style="display: flex;">
-                    <input type="text" name="empProfile" id="imageChUrlInput" value="">
+                    <input type="text" name="empProfile" id="imageChUrlInput" value="" placeholder="사진경로를 입력해주세요">
                     <button class="btn4" type="button" onclick="fnChangeImg()">적용하기</button>
                 </div>
             </div>
@@ -174,24 +174,24 @@
                     <span class="ffont3">부서</span>
                 </div>
                 <select class="input-box-top-box-input" id="dept_code" name="deptCode">
-                    <option value="D001">D001 본사</option>
-                    <option value="D002">D002 본사 인사부</option>
-                    <option value="D003">D003 본사 재정관리부</option>
-                    <option value="D004">D004 본사 영업부</option>
-                    <option value="D005">D005 본사 IT부</option>
-                    <option value="D006">D006 본사 지점</option>
-                    <option value="D007">D007 인사부 경영지원실</option>
-                    <option value="D008">D008 인사부 HR실</option>
-                    <option value="D009">D009 재정관리부 회계팀</option>
-                    <option value="D010">D010 재정관리부 재무팀</option>
-                    <option value="D011">D011 영업부 영업지원1팀</option>
-                    <option value="D012">D012 영업부 영업지원2팀</option>
-                    <option value="D013">D013 영업부 온라인 마케팅팀</option>
-                    <option value="D014">D014 IT부 개발팀</option>
-                    <option value="D015">D015 IT부 정보보안팀</option>
-                    <option value="D016">D016 지점 서울지점</option>
-                    <option value="D017">D017 지점 경기지점</option>
-                    <option value="D018">D018 지점 인천지점</option>
+                    <option value="D001">본사</option>
+                    <option value="D002">본사 인사부</option>
+                    <option value="D003">본사 재정관리부</option>
+                    <option value="D004">본사 영업부</option>
+                    <option value="D005">본사 IT부</option>
+                    <option value="D006">본사 지점</option>
+                    <option value="D007">인사부 경영지원실</option>
+                    <option value="D008">인사부 HR실</option>
+                    <option value="D009">재정관리부 회계팀</option>
+                    <option value="D010">재정관리부 재무팀</option>
+                    <option value="D011">영업부 영업지원1팀</option>
+                    <option value="D012">영업부 영업지원2팀</option>
+                    <option value="D013">영업부 온라인 마케팅팀</option>
+                    <option value="D014">IT부 개발팀</option>
+                    <option value="D015">IT부 정보보안팀</option>
+                    <option value="D016">지점 서울지점</option>
+                    <option value="D017">지점 경기지점</option>
+                    <option value="D018">지점 인천지점</option>
                 </select>
             </div>
 
@@ -278,9 +278,11 @@
             </div>
 
             <!-- 버튼 -->
-            <div class="input-box-top-box" style="display: flex; justify-content: center;">
-                <button type="submit" class="btn3-hover ffont3" style="width: 373px; height: 35px; margin-right: 10px;">등록하기</button>
+            <div class="input-box-top-box" style="display: flex; justify-content: center;  margin-left: 200px;">
+                <button type="submit" class="btn3-hover ffont3" style="width: 373px; height: 35px; :">등록하기</button>
+                <a href="${ contextPath }">
                 <button type="button" class="btn3-hover ffont3" style="width: 373px; height: 35px;">홈으로</button>
+                </a>
             </div>
             
    		 </form>
