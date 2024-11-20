@@ -99,8 +99,8 @@ public class EDocController {
 	
 	// 기안서 작성
 	// 양식유형만 조회
-	@GetMapping("edocwrite")
-	public void edocwrite(Model model
+	@GetMapping("edocwrite.do")
+	public String edocwrite(Model model
 						, HttpSession session) {
 		
 		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
@@ -114,6 +114,7 @@ public class EDocController {
         String currentDate = dateFormat.format(new Date()); 
         model.addAttribute("currentDate", currentDate);
 		
+        return "edoc/edocwrite";
 	}
 	
 	// 양식유형 선택후 양식을 가져오기
