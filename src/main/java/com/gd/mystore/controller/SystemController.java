@@ -37,9 +37,7 @@ public class SystemController {
 	//게시판 리스트 조회
 	@GetMapping("/systemBoardsList.do")
 	public void systemBoards(Model model) {
-		
 		List<BoardTypeDto> list = systemService.selectBodrList();
-		
 		model.addAttribute("list", list);
 	}
 	

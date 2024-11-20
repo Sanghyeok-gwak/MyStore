@@ -142,7 +142,7 @@
               <div class="left_line">
                 <div class="left_title_txt" style="z-index: 3">메뉴 관리</div>
                 <div class="btn-box-hover" id="left_head_btn">
-	                  <button class="btn2-hover" type="submit" onclick="$('#frm').attr('action', '${contextPath}/system/boardsDelete.do').submit();">
+	                  <button class="btn2-hover" type="submit" onclick="$('#frm').attr('action', '${contextPath}/system/boardsDelete.do').submit();" >
 	                    <b style="font-weight: 900">-</b> 삭제
 	                  </button>
                 	
@@ -187,7 +187,7 @@
                						 data-boardtWrite="${bt.getBoardtWrite()}"
                						 data-boardtContent="${bt.getBoardtContent()}"
                						 data-boardtUse="${bt.getBoardtUse()}"
-               						 data-deptCode="${bt.getOfficeUse()}"
+               						 data-officeUse="${bt.getOfficeUse()}"
                						 >
 			                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
 			                  	${ bt.getBoardtName() }
@@ -317,7 +317,7 @@
                     const boardtWrite = this.getAttribute('data-boardtWrite');
                     const boardtContent = this.getAttribute('data-boardtContent');
                     const boardtUse = this.getAttribute('data-boardtUse');
-                    const deptCode = this.getAttribute('data-deptCode');
+                    const officeUse = this.getAttribute('data-officeUse');
                     
                     //게시판 번호
 					input_No.value = boardTypeNo;
