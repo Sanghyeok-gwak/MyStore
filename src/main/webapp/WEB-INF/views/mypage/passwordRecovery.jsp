@@ -69,7 +69,9 @@
 
               <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary ffont3 me-3" style="width: 200px;" disabled>수정하기</button>
+                <a href="${ contextPath }">
                 <button type="button" class="btn btn-secondary ffont3" style="width: 200px;">홈으로</button>
+                </a>
               </div>
 
             </form>

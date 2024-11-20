@@ -182,8 +182,10 @@
                 <br>
 
                 <div class="btn-box-hover" style="display: flex; justify-content: center;">
-                    <button class="btn3-hover ffont3" style="width: 300px; height: 35px;">수정하기</button> 
+                    <button class="btn3-hover ffont3" style="width: 300px; height: 35px;">수정하기</button>
+                    <a href="${ contextPath }">
                     <button type="button" class="btn3-hover ffont3" style="width: 300px; height: 35px;">홈으로</button> 
+                    </a>>
                 </div>
                 
 

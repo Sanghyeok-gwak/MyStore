@@ -59,7 +59,7 @@
 
         .input-box-top-box-input {
             width: 70%;
-            margin-right: 3%;d
+            margin-right: 3%;
         }
 
         .input-box-top input {
@@ -99,17 +99,13 @@
     <!-- 다음 주소 API 스크립트 -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
-        // 파일 업로드 미리보기
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('preview').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
+		 // 이미지 업로드
+			function fnChangeImg(){
+					const changeImgUrl = document.getElementById('imageChUrlInput').value;
+				
+					document.getElementById('imageUrlInput').src=changeImgUrl;
+					console.log(document.getElementById('imageUrlInput').value);
+				}
 
         // 주소 API 실행
         function sample6_execDaumPostcode() {
@@ -137,18 +133,25 @@
 <div class="body-body">
       <!-- 여기 채워서 작업하시면 됩니다 .-->
       <div class="product-add-top">
+      
         <div class="product-img-box">
-          <div class="upload-image" onclick="document.getElementById('fileInput').click()" style="cursor: pointer;">
-            <input type="image" id="preview" src="${e.empProfile}" alt="Click to upload" style="width: 100%; height: 100%;">
-            
-          </div>
-          <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
-           
-        </div>
+          <!-- 이미지 영역 -->
+		   <div class="img-box" style="width:100%; height:100%;">
+		      <img id="imageUrlInput" src="${ e.empProfile }" style="width: 100%; height: 100%;">
+		   </div>
+		</div>
         
         <div class="input-box-top">
-        
         <form action="${contextPath}/personnel/updateEmp" method="post">
+        
+        	<div class="input-box-top-box" hidden>
+            <div class="input-box-top-box-text">
+              <span class="ffont3">사번</span>
+            </div>
+            <div class="input-box-top-box-input">
+              <input type="text" value="${e.empNo}" name="empNo" >
+            </div>
+          </div>	
         	
            <div class="input-box-top-box">
             <div class="input-box-top-box-text">
@@ -163,9 +166,17 @@
             <div class="input-box-top-box-text">
               <span class="ffont3">직급</span>
             </div>
-            <div class="input-box-top-box-input">
-              <input type="text"  value="${ e.empRank }" name="empRank">
-            </div>
+	          <select class="input-box-top-box-input" id="empRank" name="empRank" value="${e.empRank}">
+				    <option value="RK001" ${e.empRank == '서버관리자' ? 'selected' : ''}>서버관리자</option>
+				    <option value="RK002" ${e.empRank == '대표' ? 'selected' : ''}>대표</option>
+				    <option value="RK003" ${e.empRank == '이사' ? 'selected' : ''}>임원 (이사)</option>
+				    <option value="RK004" ${e.empRank == '사원' ? 'selected' : ''}>사원</option>
+				    <option value="RK005" ${e.empRank == '과장' ? 'selected' : ''}>과장</option>
+				    <option value="RK006" ${e.empRank == '대리' ? 'selected' : ''}>대리</option>
+				    <option value="RK007" ${e.empRank == '주임' ? 'selected' : ''}>주임</option>
+			 </select>
+
+
           </div>
           
           <div class="input-box-top-box">
@@ -176,6 +187,17 @@
               <input type="text" value="${e.empNo}" disabled name="empNo">
             </div>
           </div>
+          
+          <!-- 이미지 입력 -->
+			<div class="input-box-top-box">
+			    <div class="input-box-top-box-text">
+			        <span class="ffont3">이미지</span>
+			    </div>
+			    <div class="input-box-top-box-input" style="display: flex;">
+			        <input type="text" name="empProfile" id="imageChUrlInput" value="${e.empProfile != null ? e.empProfile : ''}" placeholder="사진경로를 입력해주세요">
+			        <button class="btn4" type="button" onclick="fnChangeImg()">적용하기</button>
+			    </div>
+			</div>
           
           <div class="input-box-top-box">
             <div class="input-box-top-box-text">
@@ -223,42 +245,38 @@
             </div>
            </div>
           
-          <!-- 주소 입력 -->
-                <div class="input-box-top-box">
-                    <div class="input-box-top-box-text">
-                        <span class="ffont3">주소</span>
-                    </div>
-                    <div class="input-box-top-box-input">
-                        <div class="addr-box">
-                            <div class="addr-box-left">
-                                <input type="text" id="sample6_postcode" value="${e.empPostcode}" name="empPostcode" style=" margin-bottom: 3%;" disabled>
-                            </div>
-                            <div class="addr-box-right">
-                                <button onclick="sample6_execDaumPostcode()"><i class="bi bi-shop"></i></button>
-                            </div>
-                        </div>
-                        <input type="text" id="sample6_address" style="margin-bottom: 3%;" value="${e.empAddress}" name="empAddress" disabled>
-                        <input type="text" id="sample6_detailAddress" style="margin-bottom: 3%;" value="${e.empDetailAddress}" name="empDetailAddress">
-                    </div>
+                 <!-- 주소 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">주소</span>
                 </div>
+                <div class="input-box-top-box-input">
+                    <div class="addr-box">
+                        <div class="addr-box-left">
+                            <input type="text" id="sample6_postcode" value="${e.empPostcode}" style="margin-bottom: 3%;" name="empPostcode" readonly>
+                        </div>
+                        <div class="addr-box-right">
+                            <button type="button" onclick="sample6_execDaumPostcode()">
+                                <i class="bi bi-shop"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="text" id="sample6_address" value="${e.empAddress}"  style="margin-bottom: 3%;" name="empAddress" readonly>
+                    <input type="text" id="sample6_detailAddress" value="${e.empDetailAddress}" style="margin-bottom: 3%;" name="empDetailAddress">
+                </div>
+            </div>
           
-
-                <br>
-			
-			 <div class="input-box-top-box">
                 <div class="btn-box-hover" style="display: block; justify-content: center; margin-left: 200px; ">
                     <button type="submit" class="btn3-hover ffont3" style="width: 300px; height: 35px; ">수정하기</button> 
-                    <button class="btn3-hover ffont3" style="width: 300px; height: 35px;">홈으로</button> 
+                    <a href="${ contextPath }">
+                <button type="button" class="btn3-hover ffont3" style="width: 373px; height: 35px;">홈으로</button>
+                </a>
                 </div>
-            </div>    	
+            
             </form>
 
-            </div>
-            
+          </div>
         </div>
-
-
-
       </div>
       
       
