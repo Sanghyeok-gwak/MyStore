@@ -9,21 +9,13 @@
 <title>Insert title here</title>
 
 <!-- 네이버 스마트에디터 -->
-<script type="text/javascript"
-	src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 
-<!-- jQuery 라이브러리 (한 번만 포함) -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<!-- Font Awesome 아이콘 라이브러리 -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <!-- jsTree 라이브러리 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
 
 
 <style>
@@ -370,7 +362,7 @@ input[type=file]::file-selector-button {
 	#writer_content {
 		border: 1px solid lightgray;
 	}
-}
+
 </style>
 
 </head>
@@ -617,6 +609,7 @@ input[type=file]::file-selector-button {
 			                 var lastSelectedNodeId = data.selected[data.selected.length - 1];
 			                 data.instance.deselect_node(lastSelectedNodeId);
 			                 return false;
+
 			             }
 
 		             $('#selectedList').empty();
