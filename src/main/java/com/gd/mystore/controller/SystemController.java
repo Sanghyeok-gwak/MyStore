@@ -50,8 +50,7 @@ public class SystemController {
 	}
 
 	@GetMapping("/boardsDelete.do")
-	public String systemBoardDelete(@Value= boardTypeNo, RedirectAttributes rdAttributes){
-		log.debug("", )
+	public String systemBoardDelete(RedirectAttributes rdAttributes){
 		rdAttributes.addFlashAttribute("alertMsg", "삭제 기능 개발중🚫");
 		return "redirect:/system/systemBoardsList.do";
 	}
