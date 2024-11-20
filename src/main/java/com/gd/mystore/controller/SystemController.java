@@ -52,17 +52,19 @@ public class SystemController {
 	@PostMapping("/boardsDelete.do")
 	public String systemBoardDelete(BoardTypeDto bt ,RedirectAttributes rdAttributes){
 		
-		log.debug("@@@@@@@@ {}", bt.getBoardTypeNo());
-		rdAttributes.addFlashAttribute("alertMsg", "삭제 기능 개발중🚫");
+		int result = systemService.boardDelete(bt);
+		
+		if(result > 0) {
+			rdAttributes.addFlashAttribute("alertMsg", "성공적으로 삭제 되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "시스템 에러, 삭제 실패.");
+		}
 		return "redirect:/system/systemBoardsList.do";
 	}
 	
 	@PostMapping("/boardUpdate.do")
 	public String systemBoardsEdit(BoardTypeDto bt
 								 , RedirectAttributes rdAttributes) {
-		
-		log.debug("@@@@@@@@@@@@  :  {}", bt.toString());
-		
 		//체크박스 변환처리
 		if(bt.getBoardtUse() != null) {
 			bt.setBoardtUse("N");

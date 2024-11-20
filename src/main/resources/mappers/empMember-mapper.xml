@@ -59,7 +59,7 @@
       LEFT JOIN
            tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE
      WHERE EMP.EMP_EMPLOYMENT = 'Y' 
-       AND EMP.USE_YN = 'Y'
+       AND EMP.EMP_EMPLOYMENT = 'Y'
        AND EMP.EMP_NO = #{empNo}
   </select>
   

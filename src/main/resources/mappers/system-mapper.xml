@@ -20,19 +20,19 @@
 
 	<select id="selectSystemBoardList" resultMap="boardTypeResultMap">
 		select
-					 BOARD_TYPE_NO
-				 , BOARDT_NAME
-				 , BOARDT_TYPE
-				 , BOARDT_READ
-				 , BOARDT_WRITE
-				 , BOARDT_CONTENT
-				 , BOARDT_USE
-				 , DEPT_CODE
-				 , EMP_NO
-				 , CREATE_DATE
-				 , MODIFIER
-				 , MODIFY_DATE
-				 , USE_YN
+			   BOARD_TYPE_NO
+			 , BOARDT_NAME
+			 , BOARDT_TYPE
+			 , BOARDT_READ
+			 , BOARDT_WRITE
+			 , BOARDT_CONTENT
+			 , BOARDT_USE
+			 , DEPT_CODE
+			 , EMP_NO
+			 , CREATE_DATE
+			 , MODIFIER
+			 , MODIFY_DATE
+			 , USE_YN
 		  from TBL_BOARDTYPE
 		 where USE_YN = 'Y'
 	</select>
@@ -77,17 +77,24 @@
 	<!-- 게시판 수정	--> 
 	<update id="boardsUpdate">
 		update
-					 TBL_BOARDTYPE
+			   TBL_BOARDTYPE
 		   set BOARDT_NAME = #{boardtName}
-				 , BOARDT_TYPE = #{boardtType}
-				 , BOARDT_READ = #{boardtRead}
-				 , BOARDT_WRITE = #{boardtWrite}
-				 , BOARDT_CONTENT = #{boardtContent}
-				 , BOARDT_USE = #{boardtUse}
-				 , DEPT_CODE = #{deptCode}
+			 , BOARDT_TYPE = #{boardtType}
+			 , BOARDT_READ = #{boardtRead}
+			 , BOARDT_WRITE = #{boardtWrite}
+			 , BOARDT_CONTENT = #{boardtContent}
+			 , BOARDT_USE = #{boardtUse}
+			 , DEPT_CODE = #{deptCode}
 		 where BOARD_TYPE_NO = #{boardTypeNo}
 	</update>
-
+	
+	<!-- 게시판 삭제 -->
+	<delete id="boardsDelete">
+		update 
+			   TBL_BOARDTYPE
+		   set USE_YN = 'N'
+		 where BOARD_TYPE_NO = #{boardTypeNo}
+	</delete>
 
 
 

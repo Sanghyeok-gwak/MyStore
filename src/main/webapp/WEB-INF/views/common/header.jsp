@@ -387,14 +387,25 @@
     <a href="${ contextPath }/"><img src="https://i.ibb.co/nCMNZqH/image.png" style="width: 131px; height: 90%; margin: 3px 0 0 20px;"></a>
   </div>
   <div class="head-text">
+		
+		<form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
+           	<button>1001 로그인</button>
+           	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1001"/>
+           	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
+        </form>
+        <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
+           	<button>1002 로그인</button>
+           	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
+           	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
+        </form>
+        
     <div class="head_right_logo">
-
       <div class="header_right_list">   
           <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
               <li class="nav-item dropdown">
-      
+              
                 <a class="nav-link nav-icon" id="head_img_4" href="#" data-bs-toggle="dropdown">
                 	<c:choose>
                 		<c:when test="${ empty loginUser.empProfile }">

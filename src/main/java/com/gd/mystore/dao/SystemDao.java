@@ -27,4 +27,8 @@ public class SystemDao {
 		return sqlSession.update("systemMapper.boardsUpdate", bt);
 	}
 
+	public int boardDelete(BoardTypeDto bt) {
+		return sqlSession.delete("systemMapper.boardsDelete", bt);
+	}
+
 }

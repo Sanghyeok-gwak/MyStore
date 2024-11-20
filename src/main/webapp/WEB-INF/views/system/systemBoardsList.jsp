@@ -142,7 +142,6 @@
               <div class="left_line">
                 <div class="left_title_txt" style="z-index: 3">메뉴 관리</div>
                 <div class="btn-box-hover" id="left_head_btn">
-                	<%-- <form action="${contextPath}/system/boardsDelete.do" method="get"> --%>
 	                  <button class="btn2-hover" type="submit" onclick="$('#frm').attr('action', '${contextPath}/system/boardsDelete.do').submit();">
 	                    <b style="font-weight: 900">-</b> 삭제
 	                  </button>
@@ -155,6 +154,15 @@
                 </div>
               </div>
               
+             <script>
+				function checkSelection() {
+				    if ($('input[type="checkbox"]:checked').length == 0) {
+				        alert("삭제할 항목을 선택하세요.");
+				        return false;
+				    }
+				    return true;
+				}
+			</script>
               <!-- 
               	삭제 클릭시 실행되는 function
               		오른쪽의 form 요소 선택한후 
@@ -348,7 +356,7 @@
 					selectElementHide.checked = boardtUse == 'N';
 					
 					//지점 여부 (보류- 사유: 지점 dept_code 전부 다름, 쿼리문 방법 찾은 후 작업)
-										
+					
                   });
                 });
               });

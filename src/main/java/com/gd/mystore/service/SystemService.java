@@ -15,6 +15,7 @@ public interface SystemService {
 	int boardUpdate(BoardTypeDto bt);
 	
 	//시스템 게시글 유형 삭제
+	int boardDelete(BoardTypeDto bt);
 	
 	
 	

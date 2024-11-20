@@ -33,4 +33,9 @@ public class SystemServiceImpl implements SystemService {
 		return systemDao.boardsUpdate(bt);
 	}
 
+	@Override
+	public int boardDelete(BoardTypeDto bt) {
+		return systemDao.boardDelete(bt);
+	}
+
 }
