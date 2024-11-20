@@ -26,7 +26,7 @@ public class DepartmentController {
 
 	private final DepartmentService departmentService;
 	
-	@GetMapping("/departmentModify/data")
+	@GetMapping("/departmentModify")
 	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName, Model model) {
 	    List<DepartmentDto> searchResult;
 
@@ -39,6 +39,21 @@ public class DepartmentController {
 	    // response를 JSON 형식으로 반환하는 코드
 	    model.addAttribute("searchResult", searchResult);  
 	    return "department/departmentModify";  
+	}
+
+	@GetMapping("/departmentModify/data")
+	public @ResponseBody List<DepartmentDto> searchDepartmentData(@RequestParam(value = "empName", required = false) String empName) {
+	    List<DepartmentDto> searchResult;
+
+	    // 검색 조건에 따라 결과 조회
+	    if (empName == null || empName.trim().isEmpty()) {
+	        searchResult = departmentService.selectMemberList();  // 전체 직원 리스트
+	    } else {
+	        searchResult = departmentService.selectSearchEmployeeByName(empName);  // 이름으로 검색한 직원 리스트
+	    }
+
+	    // JSON 형식으로 반환
+	    return searchResult;
 	}
 
 	
