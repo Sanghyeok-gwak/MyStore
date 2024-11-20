@@ -14,5 +14,7 @@ public interface DepartmentService {
 
 	List<DepartmentDto> selectSearchEmployeeByName(String empName);
 
+	List<DepartmentDto> DeptTree(String deptUpStair);
 
+	
 }

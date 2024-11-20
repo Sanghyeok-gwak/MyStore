@@ -33,6 +33,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public List<DepartmentDto> selectSearchEmployeeByName(String empName) {
 		return departmentDao.selectSearchEmployeeByName(empName);
 	}
+
+	@Override
+	public List<DepartmentDto> DeptTree(String deptUpStair) {
+		return departmentDao.DeptTree(deptUpStair);
+	}
 	
 	
 }

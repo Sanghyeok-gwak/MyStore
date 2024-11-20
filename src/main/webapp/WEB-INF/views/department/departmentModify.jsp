@@ -248,261 +248,153 @@ input {
 
 		<!-- AJAX로 데이터 검색 및 테이블에 반영 -->
 		<script>
-		$(document).ready(function() {
-		    // Enter 키를 눌렀을 때 검색 실행
-		    $("#empNameInput").keypress(function(event) {
-		        if (event.which == 13) {  // 엔터 키의 코드값 13
-		            event.preventDefault();  // 기본 엔터 키 동작을 막고
-		            searchEmployees();  // 검색 실행
-		        }
-		    });
-
-		    // 검색 버튼 클릭 시 검색 실행
-		    $("#searchBtn").click(function() {
-		        searchEmployees();  // 검색 실행
-		    });
-
-		    // 검색 실행 함수
-		    function searchEmployees() {
-		        var empName = $("#empNameInput").val();  // 입력된 사원명
-
-		        // AJAX 요청 보내기
-		        $.ajax({
-		            url: "/mystore/department/departmentModify/data",  // URL을 '/mystore/department/departmentModify'로 수정
-		            type: "GET",  // GET 방식으로 요청
-		            data: { empName: empName },  // empName 파라미터 전달
-		            success: function(response) {
-		                // 서버에서 받은 데이터가 객체 형태인지 확인
-		                if (Array.isArray(response)) {
-		                    var tbody = $("#MemberList tbody");
-
-		                    // 검색된 결과가 없으면 경고 메시지를 출력하고, 기존 데이터를 그대로 유지
-		                    if (response.length === 0) {
-		                        alert("검색된 결과가 없습니다.");
-		                        // 기존 데이터는 그대로 두기 위해 테이블을 비우지 않음
-		                    } else {
-		                        tbody.empty();  // 기존 데이터를 비웁니다.
-
-		                        // 서버에서 받은 데이터(response)로 테이블 행 생성
-		                        response.forEach(function(dept) {
-		                            var tr = $("<tr>");
-		                            tr.append("<td><input type='checkbox' name='checkbox' value='" + dept.empNo + "' style='width: 15px; height: 15px;'></td>");
-		                            tr.append("<td>" + dept.empName + "</td>");
-		                            tr.append("<td>" + dept.empNo + "</td>");
-		                            tr.append("<td>" + dept.deptName + "</td>");
-		                            tr.append("<td>" + dept.deptUpStair + "</td>");
-		                            tr.append("<td>" + dept.deptName + "</td>");
-		                            tbody.append(tr);  // 테이블 본문에 행 추가
-		                        });
-		                    }
-		                } else {
-		                    // 서버에서 받은 데이터가 예상과 다를 때 처리
-		                    alert("서버에서 반환된 데이터가 올바르지 않습니다.");
-		                }
-		            },
-		            error: function(xhr, status, error) {
-		                alert("검색 중 오류가 발생했습니다.");
-		                console.error(xhr.responseText);  // 에러 메시지 확인
-		            }
-		        });
-		    }
-		});
-
-
-
-
-
-
-
-
-
-
-$(function() {
-    // 수정 모드 활성화 상태 변수
-    var editMode = false;
-    // 수정된 데이터를 저장할 변수
-    var previousData = [];
-
-    // 수정 버튼 클릭 시 상태 토글
-    $("#editNodeBtn").click(function() {
-        editMode = !editMode; // 클릭 시 수정모드 활성화 / 비활성화
-
-        if (editMode) {
-            // 수정 모드 활성화: contextmenu 플러그인 활성화
-            $("#jstree").jstree("enable_plugin", "contextmenu");
-            alert("수정 모드 활성화");
-        } else {
-            // 수정 모드 비활성화: contextmenu 플러그인 비활성화
-            $("#jstree").jstree("disable_plugin", "contextmenu");
-            alert("수정 모드 비활성화");
-
-            // 수정되지 않았다면 이전 상태로 되돌리기
-            if (previousData.length > 0) {
-                // 트리 상태를 previousData로 복원
-                $('#jstree').jstree(true).settings.core.data = previousData;
-                $('#jstree').jstree(true).refresh();
-            }
+$(document).ready(function() {
+    // Enter 키를 눌렀을 때 검색 실행
+    $("#empNameInput").keypress(function(event) {
+        if (event.which == 13) {  // 엔터 키의 코드값 13
+            event.preventDefault();  // 기본 엔터 키 동작을 막고
+            searchEmployees();  // 검색 실행
         }
     });
 
-    // 등록 버튼 클릭 시
-   $("#submitNodeBtn").click(function() {
-    if (editMode) {
-        // 수정된 데이터를 서버로 전송하는 부분
-        alert("수정된 내용을 저장합니다.");
-        
-        // 수정된 트리 데이터를 가져옴
-        var modifiedData = $('#jstree').jstree(true).get_json('#', { 'flat': true });
-        
-        // 서버에 데이터를 전송하는 AJAX 요청
+    // 검색 버튼 클릭 시 검색 실행
+    $("#searchBtn").click(function() {
+        searchEmployees();  // 검색 실행
+    });
+
+    // 검색 실행 함수
+    function searchEmployees() {
+        var empName = $("#empNameInput").val();  // 입력된 사원명
+
+        // AJAX 요청 보내기
         $.ajax({
-            url: contextPath + "/saveTreeData", // 데이터를 저장할 서버 URL
-            type: "POST",
-            contentType: "application/json; charset=UTF-8",
-            data: JSON.stringify(modifiedData), // 트리 데이터를 JSON 형식으로 변환하여 전송
+            url: "/mystore/department/departmentModify/data",  // URL을 '/mystore/department/departmentModify/data'로 수정
+            type: "GET",  // GET 방식으로 요청
+            data: { empName: empName },  // empName 파라미터 전달
             success: function(response) {
-                if (response.status === 'success') {
-                    alert("수정 완료!");
+                var tbody = $("#MemberList tbody");
+                if (response.searchResult && response.searchResult.length === 0) {
+                    alert("검색된 결과가 없습니다.");
+                    // 기존 데이터는 그대로 두기 위해 테이블을 비우지 않음
+                } else if (response.searchResult) {
+                    tbody.empty(); 
+                    // searchResult 데이터가 있으면 테이블에 추가
+                    response.searchResult.forEach(function(dept) {
+                        var tr = $("<tr>");
+                        tr.append("<td><input type='checkbox' name='checkbox' value='" + dept.empNo + "' style='width: 15px; height: 15px;'></td>");
+                        tr.append("<td>" + dept.empName + "</td>");
+                        tr.append("<td>" + dept.empNo + "</td>");
+                        tr.append("<td>" + dept.deptName + "</td>");
+                        tr.append("<td>" + dept.deptUpStair + "</td>");
+                        tr.append("<td>" + dept.deptName + "</td>");
+                        tbody.append(tr);  // 테이블 본문에 행 추가
+                    });
                 } else {
-                    alert("수정 중 오류가 발생했습니다.");
+                    alert("검색된 결과가 없습니다.");
                 }
+
+                // 부서 트리 출력 부분 (필요 시 추가)
+                if (response.departmentTree) {
+                    // 부서 트리 관련 처리가 필요하다면 이곳에 추가
+                    // 예: response.departmentTree를 사용하여 부서 트리 UI 업데이트
+                    console.log(response.departmentTree);
+                }
+
             },
             error: function(xhr, status, error) {
-                alert("서버 통신 중 오류가 발생했습니다.");
+                alert("검색 중 오류가 발생했습니다.");
+                console.error(xhr.responseText);  // 에러 메시지 확인
             }
         });
-
-        // 수정된 데이터를 이전 상태로 저장
-        previousData = modifiedData;
-
-        // 트리 수정 불가능하게 처리
-        $('#jstree').jstree(true).settings.core.data = previousData;
-        $('#jstree').jstree(true).refresh();
-
-        // 수정 모드 비활성화
-        editMode = false;
-        $("#jstree").jstree("disable_plugin", "contextmenu");
-    } else {
-        alert("수정 모드가 아닙니다.");
     }
 });
 
-
-    // jsTree 초기화
+$(function() {
     $("#jstree").jstree({
         core: {
-            data: [
-                {
-                    "id": "1",
-                    "parent": "#",
-                    "text": "본부",
-                    "state": {
-                        "disabled": true
+            data: function(node, cb) {
+                console.log("node:", node);  // node 객체 출력
+
+                // 루트 노드일 경우 deptUpStair을 빈 문자열로 설정
+                var deptUpStair = (node.id === "#") ? "" : node.id; 
+                console.log("deptUpStair:", deptUpStair);  // deptUpStair 값 확인
+
+                // AJAX로 트리 데이터를 서버에서 가져오기
+                $.ajax({
+                    url: "/mystore/department/departmentModify/data",  // 트리 데이터를 가져올 URL
+                    type: "GET",
+                    data: {
+                        deptUpStair: deptUpStair  // deptUpStair 값을 서버로 전송
                     },
-                    "icon": "fa fa-building"
-                },
-                {
-                    "id": "2",
-                    "parent": "1",
-                    "text": "부서 A",
-                    "icon": "fa fa-briefcase"
-                },
-                {
-                    "id": "3",
-                    "parent": "1",
-                    "text": "부서 B",
-                    "icon": "fa fa-briefcase"
-                },
-                {
-                    "id": "4",
-                    "parent": "2",
-                    "text": "결재자 1",
-                    "icon": "fa fa-user"
-                },
-                {
-                    "id": "5",
-                    "parent": "2",
-                    "text": "결재자 2",
-                    "icon": "fa fa-user"
-                },
-                {
-                    "id": "6",
-                    "parent": "2",
-                    "text": "결재자 3",
-                    "icon": "fa fa-user"
-                },
-                {
-                    "id": "7",
-                    "parent": "3",
-                    "text": "결재자 4",
-                    "icon": "fa fa-user"
-                },
-                {
-                    "id": "8",
-                    "parent": "3",
-                    "text": "결재자 5",
-                    "icon": "fa fa-user"
-                },
-                {
-                    "id": "9",
-                    "parent": "3",
-                    "text": "결재자 6",
-                    "icon": "fa fa-user"
-                }
-            ],
-            check_callback: true
-        },
-        plugins: ["types", "contextmenu", "dnd"], // contextmenu 플러그인 추가
-        'types': {
-            '#': { // ROOT
-                "max_depth": 3 // 하위 depth 제한
+                    success: function(response) {
+                        var treeData = [];
+                        console.log("응답 데이터:", response);  // 응답 데이터 확인
+
+                        // 응답이 departmentTree 배열이 있을 경우, 그 값을 트리 데이터 형식으로 변환
+                        if (response.departmentTree && Array.isArray(response.departmentTree)) {
+                            response.departmentTree.forEach(function(dept) {
+                                if (dept && dept.deptCode && dept.deptName) {
+                                    treeData.push({
+                                        "id": dept.deptCode,  // 부서 코드 (deptCode)
+                                        "parent": dept.deptUpStair ? dept.deptUpStair : "#",  // 부모 부서가 없으면 루트로 설정
+                                        "text": dept.deptName,  // 부서 이름
+                                        "icon": "fa fa-briefcase",  // 부서 아이콘
+                                        "employees": dept.employees || [],  // 부서 내 직원 정보 (없으면 빈 배열)
+                                        "children": dept.children || []  // 자식 부서 (없으면 빈 배열)
+                                    });
+                                }
+                            });
+                        }
+
+                        console.log("트리 데이터:", treeData);  // 변환된 트리 데이터 확인
+                        cb(treeData);  // 트리 데이터 전달
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX 요청 오류:", error);
+                        alert("부서 데이터를 불러오는 중 오류가 발생했습니다.");
+                    }
+                });
             }
         },
+        check_callback: true,  // 트리 내에서 항목을 추가, 삭제 등의 작업을 가능하게 합니다.
+        plugins: ["contextmenu", "dnd"],  // 사용하려는 플러그인
         contextmenu: {
             items: function($node) {
-                var tree = $('#jstree').jstree(true);
-                var nodeId = $node.id; // 클릭된 노드의 id 가져오기
-
-                // 기본 메뉴 항목
                 var menuItems = {};
 
-                // 수정 모드인 경우에만 contextmenu 활성화
                 if (!editMode) {
-                    return {}; // 수정 모드가 아닌 경우 메뉴 항목을 반환하지 않음
+                    return {};  // 수정 모드가 아니면 메뉴 항목을 반환하지 않음
                 }
 
-                // 최상위 노드일 경우 "부서추가" 메뉴 추가
-                if ($node.parent === "#") { // 최상위 노드일 때
+                if ($node.parent === "#") {  // 루트 노드일 경우
                     menuItems["create"] = {
                         "label": "부서추가",
                         "action": function() {
-                            // 새 부서(노드)를 최상위 노드에 추가하는 로직
+                            var tree = $('#jstree').jstree(true);
                             var newNode = {
                                 "text": "새 부서",
-                                "icon": "fa fa-briefcase",
-                                "parent": $node.id // 클릭된 노드 아래에 추가
+                                "parent": $node.id
                             };
                             tree.create_node($node, newNode, "last", function(newNode) {
-                                // 새로 생성된 노드가 추가된 후 처리할 사항을 여기에 추가
-                                tree.edit(newNode); // 자동으로 이름 편집 상태로 전환
+                                tree.edit(newNode);
                             });
                         }
                     };
                 }
 
-                if ($node.parent === "1") { // 최상위에서 바로 아래 노드일 때
-                    // 이름 변경 메뉴
+                if ($node.parent !== "#") {  // 루트 노드가 아닐 경우
                     menuItems["rename"] = {
                         "label": "이름 변경",
                         "action": function() {
+                            var tree = $('#jstree').jstree(true);
                             tree.edit($node);
                         }
                     };
 
-                    // 삭제 메뉴
                     menuItems["remove"] = {
                         "label": "삭제",
                         "action": function() {
+                            var tree = $('#jstree').jstree(true);
                             if (confirm("정말로 삭제하시겠습니까?")) {
                                 tree.delete_node($node);
                             }
@@ -510,11 +402,12 @@ $(function() {
                     };
                 }
 
-                return menuItems; // 여기서 메뉴 항목을 반환해야 합니다.
+                return menuItems;  // 메뉴 항목 반환
             }
         }
     });
 });
+
 </script>
 
 

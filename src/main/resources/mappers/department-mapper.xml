@@ -11,6 +11,8 @@
 		<result column="modifier" property="modifier" />
 		<result column="modify_date" property="modifyDate" />	
 		<result column="use_yn" property="useYN" />	
+		
+		<collection property="children" ofType="DepartmentDto" />
 	</resultMap>
 	
 	<resultMap id="departmentChangeResultMap" type="DepTransferDto">
@@ -123,7 +125,29 @@
 	        AND d.transfer_date >= TO_DATE(#{startDate}, 'YYYY-MM-DD')
 	</select>
 	
-		
+	
+
+<!-- DepartmentMapper.xml -->
+<select id="DeptTree" resultMap="departmentResultMap">
+SELECT 
+    dept_code AS id,           
+    dept_name AS text,        
+    dept_upstair AS parent      
+FROM 
+    tbl_department
+CONNECT BY 
+    PRIOR dept_code = dept_upstair 
+START WITH 
+    dept_upstair IS NULL   
+ORDER SIBLINGS BY 
+    dept_name
+
+    
+
+</select>
+
+
+
 
 
 

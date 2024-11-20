@@ -1,5 +1,6 @@
 package com.gd.mystore.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
+import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.service.DepartmentService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,35 +28,95 @@ public class DepartmentController {
 
 	private final DepartmentService departmentService;
 	
+	// 부서 수정 페이지를 로드하는 메서드
 	@GetMapping("/departmentModify")
-	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName, Model model) {
-	    List<DepartmentDto> searchResult;
+	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName,
+	                               @RequestParam(value = "deptUpStair", required = false) String deptUpStair,
+	                               Model model) {
+	    List<DepartmentDto> searchResult = new ArrayList<>();
+	    List<DepartmentDto> departmentTree = new ArrayList<>();
 
-	    if (empName == null || empName.trim().isEmpty()) {
-	        searchResult = departmentService.selectMemberList();
-	    } else {
+	    // empName 파라미터가 제공되면 이름으로 직원 검색
+	    if (empName != null && !empName.trim().isEmpty()) {
+	        // 이름이 있을 경우 검색된 직원 리스트
 	        searchResult = departmentService.selectSearchEmployeeByName(empName);
-	    }
-
-	    // response를 JSON 형식으로 반환하는 코드
-	    model.addAttribute("searchResult", searchResult);  
-	    return "department/departmentModify";  
-	}
-
-	@GetMapping("/departmentModify/data")
-	public @ResponseBody List<DepartmentDto> searchDepartmentData(@RequestParam(value = "empName", required = false) String empName) {
-	    List<DepartmentDto> searchResult;
-
-	    // 검색 조건에 따라 결과 조회
-	    if (empName == null || empName.trim().isEmpty()) {
-	        searchResult = departmentService.selectMemberList();  // 전체 직원 리스트
 	    } else {
-	        searchResult = departmentService.selectSearchEmployeeByName(empName);  // 이름으로 검색한 직원 리스트
+	        // empName이 없으면 전체 직원 리스트
+	        searchResult = departmentService.selectMemberList();
 	    }
 
-	    // JSON 형식으로 반환
-	    return searchResult;
+	    // deptUpStair 파라미터가 제공되면 부서 트리 조회
+	    if (deptUpStair != null && !deptUpStair.trim().isEmpty()) {
+	        // 상위 부서에 속하는 부서들 조회
+	        departmentTree = departmentService.DeptTree(deptUpStair);
+	    } else {
+	        // deptUpStair가 없으면 전체 부서 트리 조회
+	        departmentTree = departmentService.DeptTree("root");  // 예를 들어, 'root'로 모든 부서 트리 조회
+	    }
+
+	    // 결과가 있는 경우에만 모델에 데이터를 추가
+	    if (!searchResult.isEmpty()) {
+	        model.addAttribute("searchResult", searchResult);  // 직원 검색 결과
+	    }
+
+	    if (!departmentTree.isEmpty()) {
+	        model.addAttribute("departmentTree", departmentTree);  // 부서 트리 결과
+	    }
+
+	    // 모델에 기본값을 추가할 수도 있음 (예: 빈 리스트 또는 메시지 등)
+	    if (searchResult.isEmpty() && deptUpStair != null && !deptUpStair.trim().isEmpty()) {
+	        model.addAttribute("noEmployeesFound", "상위 부서에 속한 직원이 없습니다.");
+	    }
+
+	    if (departmentTree.isEmpty() && empName != null && !empName.trim().isEmpty()) {
+	        model.addAttribute("noDepartmentsFound", "직원에 대한 부서 정보가 없습니다.");
+	    }
+
+	    return "department/departmentModify";  // 부서 수정 페이지 JSP
 	}
+
+
+
+	// 직원 또는 부서 트리 데이터를 반환하는 API
+	@GetMapping("/departmentModify/data")
+	public @ResponseBody Map<String, Object> searchDepartmentData(
+	        @RequestParam(value = "empName", required = false) String empName,
+	        @RequestParam(value = "deptUpStair", required = false) String deptUpStair) {
+
+	    List<DepartmentDto> departmentTree = new ArrayList<>();
+	    List<DepartmentDto> searchResult = new ArrayList<>();
+	    
+	    // 직원 검색
+	    if (empName != null && !empName.trim().isEmpty()) {
+	        searchResult = departmentService.selectSearchEmployeeByName(empName);
+	    } else {
+	        searchResult = departmentService.selectMemberList();
+	    }
+
+	    // 부서 트리 조회
+	    if (deptUpStair != null && !deptUpStair.trim().isEmpty()) {
+	        departmentTree = departmentService.DeptTree(deptUpStair);
+	    } else {
+	        departmentTree = departmentService.DeptTree("root");
+	    }
+
+	    // 응답 전 로그 출력
+	    log.debug("searchResult: {}", searchResult);  // 직원 검색 결과 확인
+	    log.debug("departmentTree: {}", departmentTree);  // 부서 트리 결과 확인
+
+	    Map<String, Object> response = new HashMap<>();
+	    if (!searchResult.isEmpty()) {
+	        response.put("searchResult", searchResult);
+	    }
+	    if (!departmentTree.isEmpty()) {
+	        response.put("departmentTree", departmentTree);
+	    }
+
+	    return response;
+	}
+
+
+
 
 	
     @GetMapping("/departmentChangeHistory")
@@ -95,6 +157,8 @@ public class DepartmentController {
         return list;
     }
 
+
+    
 
 
 

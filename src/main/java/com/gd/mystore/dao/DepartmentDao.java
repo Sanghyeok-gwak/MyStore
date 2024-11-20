@@ -39,4 +39,10 @@ public class DepartmentDao {
 		}
 
 
+	   public List<DepartmentDto> DeptTree(String deptUpStair) {
+	      
+	       return sqlSession.selectList("departmentMapper.DeptTree", deptUpStair);
+	   }
+
+
 }

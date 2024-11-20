@@ -1,5 +1,7 @@
 package com.gd.mystore.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +29,5 @@ public class DepartmentDto {
 	private String nm; // 부서 이름
 	private String empName;
 	 
-	
+	private List<DepartmentDto> children;
 }
