@@ -30,10 +30,11 @@ public class SystemController {
 	
 	@GetMapping("/log.do")
 	public void systemlog() {}
-
+	
 	@GetMapping("/systemLv.do")
 	public void systemLv() {}
 	
+	//게시판 리스트 조회
 	@GetMapping("/systemBoardsList.do")
 	public void systemBoards(Model model) {
 		
@@ -42,13 +43,14 @@ public class SystemController {
 		model.addAttribute("list", list);
 	}
 	
-
+	//게시판 추가
 	@GetMapping("/boardsAdd.do")
 	public String systemBoardAdd(String userData){
 		systemService.insertBoard(userData);
 		return "redirect:/system/systemBoardsList.do";
 	}
-
+	
+	//게시판 삭제
 	@PostMapping("/boardsDelete.do")
 	public String systemBoardDelete(BoardTypeDto bt ,RedirectAttributes rdAttributes){
 		
@@ -62,6 +64,7 @@ public class SystemController {
 		return "redirect:/system/systemBoardsList.do";
 	}
 	
+	//게시판 수정
 	@PostMapping("/boardUpdate.do")
 	public String systemBoardsEdit(BoardTypeDto bt
 								 , RedirectAttributes rdAttributes) {
@@ -82,7 +85,5 @@ public class SystemController {
 		// 추후 히스토리백 적용
 		return "redirect:/system/systemBoardsList.do";
 	}
-	
-	
 	
 }

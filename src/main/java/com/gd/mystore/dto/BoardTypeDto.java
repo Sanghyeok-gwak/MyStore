@@ -24,7 +24,7 @@ public class BoardTypeDto {
 	private String boardtWrite;
 	private String boardtContent;
 	private String boardtUse;
-	private String deptCode;
+	private String officeUse;
 	private int empNo;
 	private Date createDate;
 	private int modifier;

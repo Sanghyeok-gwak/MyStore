@@ -3,14 +3,14 @@
 <mapper namespace="systemMapper">
 	
 	<resultMap id="boardTypeResultMap" type="BoardTypeDto">
-	 	<result column="BOARD_TYPE_NO" property="boardTypeNo" />
-	 	<result column="BOARDT_NAME" property="boardtName" />
+ 	<result column="BOARD_TYPE_NO" property="boardTypeNo" />
+ 	<result column="BOARDT_NAME" property="boardtName" />
     <result column="BOARDT_TYPE" property="boardtType" />
     <result column="BOARDT_READ" property="boardtRead" />
     <result column="BOARDT_WRITE" property="boardtWrite" />
     <result column="BOARDT_CONTENT" property="boardtContent" />
     <result column="BOARDT_USE" property="boardtUse" />
-    <result column="DEPT_CODE" property="deptCode" />
+    <result column="OFFICE_USE" property="officeUse" />
     <result column="EMP_NO" property="empNo" />
     <result column="CREATE_DATE" property="createDate" />
     <result column="MODIFIER" property="modifier" />
@@ -27,7 +27,7 @@
 			 , BOARDT_WRITE
 			 , BOARDT_CONTENT
 			 , BOARDT_USE
-			 , DEPT_CODE
+			 , OFFICE_USE
 			 , EMP_NO
 			 , CREATE_DATE
 			 , MODIFIER
@@ -49,7 +49,7 @@
 		  , BOARDT_WRITE
 		  , BOARDT_CONTENT
 		  , BOARDT_USE
-		  , DEPT_CODE
+		  , OFFICE_USE
 		  , EMP_NO
 		  , CREATE_DATE
 		  , MODIFIER
@@ -83,8 +83,8 @@
 			 , BOARDT_READ = #{boardtRead}
 			 , BOARDT_WRITE = #{boardtWrite}
 			 , BOARDT_CONTENT = #{boardtContent}
-			 , BOARDT_USE = #{boardtUse}
-			 , DEPT_CODE = #{deptCode}
+			 , BOARDT_USE = #{officeUse}
+			 , OFFICE_USE = #{deptCode}
 		 where BOARD_TYPE_NO = #{boardTypeNo}
 	</update>
 	
