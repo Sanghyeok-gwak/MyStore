@@ -187,7 +187,7 @@
                						 data-boardtWrite="${bt.getBoardtWrite()}"
                						 data-boardtContent="${bt.getBoardtContent()}"
                						 data-boardtUse="${bt.getBoardtUse()}"
-               						 data-deptCode="${bt.getDeptCode()}"
+               						 data-deptCode="${bt.getOfficeUse()}"
                						 >
 			                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
 			                  	${ bt.getBoardtName() }
