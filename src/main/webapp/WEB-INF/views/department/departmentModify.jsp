@@ -184,100 +184,131 @@ input {
 				<div style="width: 60%; height: 650px; border: #868686 solid;">
 					<!-- 오른쪽 영역 내용 -->
 					<div>
-						<div class="input-bar" style="width: 100%; display: flex; justify-content: flex-end; align-items: center; margin-top: 10px;">
-    <div>
-        <div class="search_box" style="margin-top: 10px; width: 300px; margin-right: 10px;">
-            <input id="empNameInput" class="input_b" type="text" name="empName" placeholder="사원명 검색">
-            <div class="icon">
-                <button id="searchBtn">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+						<div class="input-bar"
+							style="width: 100%; display: flex; justify-content: flex-end; align-items: center; margin-top: 10px;">
+							<div>
+								<div class="search_box"
+									style="margin-top: 10px; width: 300px; margin-right: 10px;">
+									<input id="empNameInput" class="input_b" type="text"
+										name="empName" placeholder="사원명 검색">
+									<div class="icon">
+										<button id="searchBtn">
+											<i class="bi bi-search"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
 
 
 
-				
-					 <!-- 동적으로 데이터를 채울 테이블 -->
-                    <div style="height: 500px; overflow-y: auto; margin-top: 30px;">
-                       <table id="MemberList" class="table table-striped table-bordered table-sm table-hover">
-    <thead>
-        <tr>
-            <th>선택</th>
-            <th>사원명</th>
-            <th>사원번호</th>
-            <th>부서명</th>
-            <th>상위 부서</th>
-            <th>부서 이름</th>
-        </tr>
-    </thead>
-    <tbody>
-        <c:forEach var="dept" items="${searchResult}">
-            <tr>
-                <td><input type="checkbox" name="checkbox" value="${dept.empNo}" style="width: 15px; height: 15px;"></td>
-                <td>${dept.empName}</td>
-                <td>${dept.empNo}</td>
-                <td>${dept.nm}</td>
-                <td>${dept.deptUpStair}</td>
-                <td>${dept.deptName}</td>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+						<!-- 동적으로 데이터를 채울 테이블 -->
+						<div style="height: 500px; overflow-y: auto; margin-top: 30px;">
+							<table id="MemberList"
+								class="table table-striped table-bordered table-sm table-hover">
+								<thead>
+									<tr>
+										<th>선택</th>
+										<th>사원명</th>
+										<th>사원번호</th>
+										<th>부서명</th>
+										<th>상위 부서</th>
+										<th>부서 이름</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="dept" items="${searchResult}">
+										<tr>
+											<td><input type="checkbox" name="checkbox"
+												value="${dept.empNo}" style="width: 15px; height: 15px;"></td>
+											<td>${dept.empName}</td>
+											<td>${dept.empNo}</td>
+											<td>${dept.nm}</td>
+											<td>${dept.deptUpStair}</td>
+											<td>${dept.deptName}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
 
-    <!-- jQuery와 jsTree, Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <!-- AJAX로 데이터 검색 및 테이블에 반영 -->
-    <script>
-    $(document).ready(function() {
-        $("#searchBtn").click(function() {
-            var empName = $("#empNameInput").val();  // 입력된 사원명
+		<!-- jQuery와 jsTree, Bootstrap JS -->
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
-            // AJAX 요청 보내기
-            $.ajax({
-                url: "/mystore/department/departmentModify",  // URL을 '/mystore/department/departmentModify'로 수정
-                type: "GET",  // GET 방식으로 요청
-                data: { empName: empName },  // empName 파라미터 전달
-                success: function(response) {
-                    // 서버에서 받은 데이터가 객체 형태인지 확인
-                    if (Array.isArray(response)) {
-                        var tbody = $("#MemberList tbody");
-                        tbody.empty();  // 기존 데이터를 비웁니다.
+		<!-- AJAX로 데이터 검색 및 테이블에 반영 -->
+		<script>
+		$(document).ready(function() {
+		    // Enter 키를 눌렀을 때 검색 실행
+		    $("#empNameInput").keypress(function(event) {
+		        if (event.which == 13) {  // 엔터 키의 코드값 13
+		            event.preventDefault();  // 기본 엔터 키 동작을 막고
+		            searchEmployees();  // 검색 실행
+		        }
+		    });
 
-                        // 서버에서 받은 데이터(response)로 테이블 행 생성
-                        response.forEach(function(dept) {
-                            var tr = $("<tr>");
-                            tr.append("<td><input type='checkbox' name='checkbox' value='" + dept.empNo + "' style='width: 15px; height: 15px;'></td>");
-                            tr.append("<td>" + dept.empName + "</td>");
-                            tr.append("<td>" + dept.empNo + "</td>");
-                            tr.append("<td>" + dept.deptName + "</td>");
-                            tr.append("<td>" + dept.deptUpStair + "</td>");
-                            tr.append("<td>" + dept.deptName + "</td>");
-                            tbody.append(tr);  // 테이블 본문에 행 추가
-                        });
-                    } else {
-                        // 서버에서 받은 데이터가 예상과 다를 때 처리
-                        alert("서버에서 반환된 데이터가 올바르지 않습니다.");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert("검색 중 오류가 발생했습니다.");
-                    console.error(xhr.responseText);  // 에러 메시지 확인
-                }
-            });
-        });
-    });
+		    // 검색 버튼 클릭 시 검색 실행
+		    $("#searchBtn").click(function() {
+		        searchEmployees();  // 검색 실행
+		    });
+
+		    // 검색 실행 함수
+		    function searchEmployees() {
+		        var empName = $("#empNameInput").val();  // 입력된 사원명
+
+		        // AJAX 요청 보내기
+		        $.ajax({
+		            url: "/mystore/department/departmentModify/data",  // URL을 '/mystore/department/departmentModify'로 수정
+		            type: "GET",  // GET 방식으로 요청
+		            data: { empName: empName },  // empName 파라미터 전달
+		            success: function(response) {
+		                // 서버에서 받은 데이터가 객체 형태인지 확인
+		                if (Array.isArray(response)) {
+		                    var tbody = $("#MemberList tbody");
+
+		                    // 검색된 결과가 없으면 경고 메시지를 출력하고, 기존 데이터를 그대로 유지
+		                    if (response.length === 0) {
+		                        alert("검색된 결과가 없습니다.");
+		                        // 기존 데이터는 그대로 두기 위해 테이블을 비우지 않음
+		                    } else {
+		                        tbody.empty();  // 기존 데이터를 비웁니다.
+
+		                        // 서버에서 받은 데이터(response)로 테이블 행 생성
+		                        response.forEach(function(dept) {
+		                            var tr = $("<tr>");
+		                            tr.append("<td><input type='checkbox' name='checkbox' value='" + dept.empNo + "' style='width: 15px; height: 15px;'></td>");
+		                            tr.append("<td>" + dept.empName + "</td>");
+		                            tr.append("<td>" + dept.empNo + "</td>");
+		                            tr.append("<td>" + dept.deptName + "</td>");
+		                            tr.append("<td>" + dept.deptUpStair + "</td>");
+		                            tr.append("<td>" + dept.deptName + "</td>");
+		                            tbody.append(tr);  // 테이블 본문에 행 추가
+		                        });
+		                    }
+		                } else {
+		                    // 서버에서 받은 데이터가 예상과 다를 때 처리
+		                    alert("서버에서 반환된 데이터가 올바르지 않습니다.");
+		                }
+		            },
+		            error: function(xhr, status, error) {
+		                alert("검색 중 오류가 발생했습니다.");
+		                console.error(xhr.responseText);  // 에러 메시지 확인
+		            }
+		        });
+		    }
+		});
+
+
 
 
 
@@ -487,6 +518,6 @@ $(function() {
 </script>
 
 
-	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
