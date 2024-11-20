@@ -578,7 +578,8 @@ input[type=file]::file-selector-button {
                      "name": emp.empName,
                      "dept": emp.deptCode,
                      "no"	 : emp.empNo
-                 }
+                 },
+				 "icon" : emp.empGender
              };
          });
 

@@ -158,7 +158,7 @@
 	<!-- jstree 담을 직원 데이터 -->
 	<select id="selectEmployees" resultMap="empMemberResultMap">
 		select a.*, rownum as CREATER from (
-			(SELECT t1.DEPT_CODE as EMP_NO , t1.DEPT_NAME as EMP_NAME, LEVEL as AC_BANK, NVL(t1.DEPT_UPSTAIR, '#') as DEPT_CODE, 'dept' as EMP_GENDER
+			(SELECT t1.DEPT_CODE as EMP_NO , t1.DEPT_NAME as EMP_NAME, LEVEL as AC_BANK, NVL(t1.DEPT_UPSTAIR, '#') as DEPT_CODE, '' as EMP_GENDER
 			FROM (SELECT *
 				  FROM TBL_DEPARTMENT
 				  WHERE USE_YN = 'Y') t1
@@ -172,7 +172,7 @@
 				emp.emp_name as EMP_NAME,
 				9 as AC_BANK,
 				emp.dept_code as DEPT_CODE,
-				'emp' as EMP_GENDER
+				'bi bi-person-circle' as EMP_GENDER
 			from
 				tbl_employee emp
 			where
