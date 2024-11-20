@@ -29,6 +29,5 @@ public interface EDocService {
 	EDocSampleDto selectEDocForm(int sampleNoInt);
 	
 	// jstree에 데이터 담기
-	List<DepartmentDto> selectDepartments();
 	List<EmpMemberDto> selectEmployees();
 }

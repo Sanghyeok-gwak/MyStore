@@ -46,10 +46,6 @@ public class EDocDao {
 		return sqlSession.selectOne("edocMapper.selectEDocForm", sampleNoInt);
 	}
 
-	public List<DepartmentDto> selectDepartments() {
-		return sqlSession.selectList("edocMapper.selectDepartments");
-	}
-
 	public List<EmpMemberDto> selectEmployees() {
 		return sqlSession.selectList("edocMapper.selectEmployees");
 	}

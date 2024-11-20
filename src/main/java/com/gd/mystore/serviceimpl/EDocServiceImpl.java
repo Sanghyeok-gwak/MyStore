@@ -50,11 +50,6 @@ public class EDocServiceImpl implements EDocService {
 	}
 
 	@Override
-	public List<DepartmentDto> selectDepartments() {
-		return edocDao.selectDepartments();
-	}
-
-	@Override
 	public List<EmpMemberDto> selectEmployees() {
 		return edocDao.selectEmployees();
 	}
