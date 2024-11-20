@@ -353,6 +353,8 @@ input[type=file]::file-selector-button {
 		border: 1px solid lightgray;
 	}
 
+}
+
 </style>
 
 </head>
@@ -405,12 +407,12 @@ input[type=file]::file-selector-button {
 
 					<table>
 						<tr>
-							<td id="writer">기안자</td>
-							<td id="writer_content">${loginUser.empName}</td>
-						</tr>
-						<tr>
 							<td id="writer">부서</td>
 							<td id="writer_content">${loginUser.deptCode}</td>
+						</tr>
+						<tr>
+							<td id="writer">기안자</td>
+							<td id="writer_content">${loginUser.empName}</td>
 						</tr>
 						<tr>
 							<td id="writer">기안일</td>
@@ -543,135 +545,133 @@ input[type=file]::file-selector-button {
 	</script>
 
 	<script>
-		$(document).ready(function() {
-		    var maxSelected = 2; // 최대 선택 가능한 결재자 수
-		
-		    // 직급 순서를 정의
-		    var rankOrder = {
-		        '대표': 1,
-		        '임원 (이사)': 2,
-		        '과장': 3,
-		        '대리': 4,
-		        '주임': 5,
-		        '사원': 6,
-		        '서버관리자': 7
-		    };
-		
-		    // Ajax로 서버에서 직원 데이터 가져오기
-		    $.ajax({
-		        url: '${contextPath}/edoc/approvalTree',
-		        method: 'GET',
-		        dataType: 'json',
-		        success: function(employees) {
-		            // 직급 순으로 정렬
-		            employees.sort(function(a, b) {
-		                return a.CREATER - b.CREATER;
-		            });
+	$(document).ready(function() {
+	    var maxSelected = 2; // 최대 선택 가능한 결재자 수
 
-         var treeData = employees.map(function(emp) {
-             return {
-                 "id": emp.empNo,
-                 "parent": emp.deptCode,
-                 "text": emp.empName,
-                 "data": {
-                     //"rank": emp.acBank,
-                     "name": emp.empName,
-                     "dept": emp.deptCode,
-                     "no"	 : emp.empNo
-                 },
-				 "icon" : emp.empGender
-             };
-         });
+	    // Ajax로 서버에서 직원 데이터 가져오기
+	    $.ajax({
+	        url: '${contextPath}/edoc/approvalTree',
+	        method: 'GET',
+	        dataType: 'json',
+	        success: function(employees) {
+	            // 직급 순으로 정렬
+	            employees.sort(function(a, b) {
+	                return a.CREATER - b.CREATER;
+	            });
 
+	            var treeData = employees.map(function(emp) {
 
-         $('#approvalTree').jstree({
-             'core': {
-                 'data': treeData
-             },
-             'plugins': ['checkbox']}).on('changed.jstree', 
-            		function(e, data) {
-			             if (data.selected.length > maxSelected) {
-			                 alert("최대 " + maxSelected + "명까지만 선택할 수 있습니다.");
-			                 var lastSelectedNodeId = data.selected[data.selected.length - 1];
-			                 data.instance.deselect_node(lastSelectedNodeId);
-			                 return false;
+	                return {
+	                    "id": emp.empNo,
+	                    "parent": emp.deptCode,
+	                    "text": emp.empName + (emp.empRank ? " (" + emp.empRank + ")" : ""),
+	                    "data": {
+	                        "rank": emp.empRank,
+	                        "name": emp.empName,
+	                        "dept": emp.deptName,
+	                        "no": emp.empNo
+	                    },
+	                    "icon": emp.empGender
+	                };
+	            });
 
-			             }
+	            $('#approvalTree').jstree({
+	                'core': {
+	                    'data': treeData
+	                },
+	                'plugins': ['checkbox'],
+	                'checkbox': {
+	                    'three_state': false,  // 부모가 선택되더라도 자식만 선택되도록
+	                    'cascade': 'down'      // 부모를 선택할 때 자식만 선택
+	                }
+	            }).on('loaded.jstree', function() {
+	                // 특정 레벨의 노드에서 체크박스를 제거
+	                removeCheckboxesAtLevels([1, 2, 3]);
 
-		             $('#selectedList').empty();
-		
-		             // 선택된 결재자들을 반대로 정렬하여 가장 먼저 선택된 사람이 1차 결재자가 되도록 처리
-		             var selectedApprovers = data.selected.map(function(nodeId) {
-		                 return data.instance.get_node(nodeId);
-		             }).reverse(); // 순서를 역으로 변경
+	                // 노드가 열렸을 때 체크박스를 제거
+	                $('#approvalTree').on('open_node.jstree', function (e, data) {
+	                    removeCheckboxesAtLevels([1, 2, 3]);
+	                });
+	            }).on('changed.jstree', function(e, data) {
+	                if (data.selected.length > maxSelected) {
+	                    alert("최대 " + maxSelected + "명까지만 선택할 수 있습니다.");
+	                    var lastSelectedNodeId = data.selected[data.selected.length - 1];
+	                    data.instance.deselect_node(lastSelectedNodeId);
+	                    return false;
+	                }
 
-			             selectedApprovers.slice(0, 2).forEach(function(node, index) {
-			                 var approverNo = (index + 1) + '차';
-			                 var listItem = '<li class="list-group-item">' + node.text + '</li>';
+	                $('#selectedList').empty();
 
-			                 // 첫 번째 결재자는 1차 결재자라는 표시를 추가
-			                 if (index === 0) {
-			                     listItem = '<li class="list-group-item list-group-item-primary">1차 결재자: ' + node.text + '</li>';
-			                 }
-			
-			                    $('#selectedList').append(listItem);
-			                });
-			            });
-			        },
-        error: function() {
-            alert("직원 데이터를 가져오는 데 실패했습니다.");
-        }
-    });
+	                // 선택된 결재자들을 반대로 정렬하여 가장 먼저 선택된 사람이 1차 결재자가 되도록 처리
+	                var selectedApprovers = data.selected.map(function(nodeId) {
+	                    return data.instance.get_node(nodeId);
+	                }).reverse(); // 순서를 역으로 변경
 
-    // 모달 완료 버튼 클릭 시
-    $('#basicModal .btn-primary').on('click', function() {
-        var selectedNodes = $('#approvalTree').jstree('get_selected', true);
-        if (selectedNodes.length === 0) {
-            alert("결재자를 선택하세요.");
-            return;
-        }
+	                selectedApprovers.slice(0, 2).forEach(function(node, index) {
+	                    var approverNo = (index + 1) + '차';
+	                    var listItem = '<li class="list-group-item">' + node.text + '</li>';
 
-        var tableContent = '';
-        
-        // 선택된 결재자들을 반대로 정렬하여 가장 먼저 선택된 사람이 1차 결재자가 되도록 처리
-        selectedNodes.slice(0, 2).reverse().forEach(function(node, index) {
-            var approverNo = (index + 1) + '차';
+	                    // 첫 번째 결재자는 1차 결재자라는 표시를 추가
+	                    if (index === 0) {
+	                        listItem = '<li class="list-group-item list-group-item-primary">1차 결재자: ' + node.text + '</li>';
+	                    }
 
-            console.log('Approver No:', approverNo);
-            console.log(node.data);
-            console.log('Rank:', node.data.rank); // rank 속성 값 확인
-            console.log('Name:', node.data.name); // name 속성 값 확인
-            console.log('Dept:', node.data.dept); // dept 속성 값 확인
+	                    $('#selectedList').append(listItem);
+	                });
+	            });
+	        },
+	        error: function() {
+	            alert("직원 데이터를 가져오는 데 실패했습니다.");
+	        }
+	    });
 
-            // 문자열 결합을 이용한 테이블 내용 생성
-            tableContent += '<table>' +
-                            '<tr>' +
-                            '<td id="aprr1" rowspan="5">' + approverNo + '</td>' +
-                            '<td id="aprr1_content">' + node.data.rank + '</td>' +
-                            '</tr>' +
-                            '<tr>' +
-                            '<td id="aprr1_content2" rowspan="3">' + node.data.name + '</td>' +
-                            '</tr>' +
-                            '<tr>' +
-                            '<td></td>' +
-                            '</tr>' +
-                            '<tr>' +
-                            '<td></td>' +
-                            '</tr>' +    
-                            '<tr>' +
-                            '<td id="aprr1_content">' + node.data.dept + '</td>' +
-                            '</tr>' +
-                            '</table>';
-	       	 });
-	
-	       	 $('.containe11').html(tableContent);
-	        
-	        	console.log(tableContent);
-	        
-	        	// 모달 닫기
-	       	 $('#basicModal').modal('hide');
-	    	});
-		});
+	    // 모달 완료 버튼 클릭 시
+	    $('#basicModal .btn-primary').on('click', function() {
+	        var selectedNodes = $('#approvalTree').jstree('get_selected', true);
+	        if (selectedNodes.length === 0) {
+	            alert("결재자를 선택하세요.");
+	            return;
+	        }
+
+	        var tableContent = '';
+
+	        // 선택된 결재자들을 반대로 정렬하여 가장 먼저 선택된 사람이 1차 결재자가 되도록 처리
+	        selectedNodes.slice(0, 2).reverse().forEach(function(node, index) {
+	            var approverNo = (index + 1) + '차';
+
+	            tableContent += '<table>' +
+	                            '<tr>' +
+	                            '<td id="aprr1" rowspan="5">' + approverNo + '</td>' +
+	                            '<td id="aprr1_content">' + node.data.rank + '</td>' +
+	                            '</tr>' +
+	                            '<tr>' +
+	                            '<td id="aprr1_content2" rowspan="3">' + node.data.name + '</td>' +
+	                            '</tr>' +
+	                            '<tr>' +
+	                            '<td></td>' +
+	                            '</tr>' +
+	                            '<tr>' +
+	                            '<td></td>' +
+	                            '</tr>' +    
+	                            '<tr>' +
+	                            '<td id="aprr1_content">' + node.data.dept + '</td>' +
+	                            '</tr>' +
+	                            '</table>';
+	        });
+
+	        $('.containe11').html(tableContent);
+	        $('#basicModal').modal('hide');
+	    });
+
+	    function removeCheckboxesAtLevels(levels) {
+	        levels.forEach(function(level) {
+	            $('#approvalTree').find("[aria-level='" + level + "']").each(function() {
+	                $(this).find('.jstree-checkbox').remove();
+	            });
+	        });
+	    }
+	});
+
 	</script>
 		
 	<script>
@@ -742,7 +742,34 @@ input[type=file]::file-selector-button {
 
 
 
+<!-- 
+원리 설명
 
+loaded.jstree 이벤트:
+loaded.jstree 이벤트는 트리가 처음으로 완전히 로드될 때 발생합니다. 
+이 이벤트를 이용해 트리가 처음 로드될 때 특정 레벨의 노드에서 체크박스를 제거합니다.
+
+open_node.jstree 이벤트:
+open_node.jstree 이벤트는 노드가 열릴 때마다 발생합니다. 
+사용자가 트리의 노드를 열 때마다 해당 노드와 그 하위 노드들에 대해 다시 체크박스를 제거합니다.
+
+removeCheckboxesAtLevels 함수:
+이 함수는 인자로 받은 레벨(들)에 대해 트리 내 해당 레벨의 모든 노드를 찾아내고, 각 노드의 체크박스를 제거합니다. 
+이를 위해 jQuery의 find 메서드를 사용하여 aria-level 속성이 일치하는 노드를 선택하고, 
+find('.jstree-checkbox').remove()를 통해 체크박스를 제거합니다.
+
+
+
+작동 과정
+
+트리가 처음 로드될 때 loaded.jstree 이벤트가 발생합니다. 
+이 때 removeCheckboxesAtLevels([1, 2, 3]) 함수가 호출되어 aria-level이 1, 2, 3인 모든 노드의 체크박스를 제거합니다.
+
+사용자가 트리의 노드를 열 때마다 open_node.jstree 이벤트가 발생합니다. 
+이 때도 removeCheckboxesAtLevels([1, 2, 3]) 함수가 호출되어 다시 한 번 aria-level이 1, 2, 3인 모든 노드의 체크박스를 제거합니다.
+
+이 두 가지 이벤트를 통해 초기 로드 시와 노드 열림 시마다 체크박스가 제거되어 원하는 대로 특정 레벨의 노드에서는 체크박스가 나타나지 않게 됩니다.
+ -->
 
 
 
