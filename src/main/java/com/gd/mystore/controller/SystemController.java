@@ -49,9 +49,10 @@ public class SystemController {
 		return "redirect:/system/systemBoardsList.do";
 	}
 
-	@GetMapping("/boardsDelete.do")
+	@PostMapping("/boardsDelete.do")
 	public String systemBoardDelete(BoardTypeDto bt ,RedirectAttributes rdAttributes){
-		System.out.println(bt.getBoardTypeNo());
+		
+		log.debug("@@@@@@@@ {}", bt.getBoardTypeNo());
 		rdAttributes.addFlashAttribute("alertMsg", "삭제 기능 개발중🚫");
 		return "redirect:/system/systemBoardsList.do";
 	}
@@ -60,7 +61,7 @@ public class SystemController {
 	public String systemBoardsEdit(BoardTypeDto bt
 								 , RedirectAttributes rdAttributes) {
 		
-		log.debug("@@@@@@@@@@@@{}", bt.toString());
+		log.debug("@@@@@@@@@@@@  :  {}", bt.toString());
 		
 		//체크박스 변환처리
 		if(bt.getBoardtUse() != null) {

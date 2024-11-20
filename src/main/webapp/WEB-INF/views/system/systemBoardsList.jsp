@@ -142,12 +142,10 @@
               <div class="left_line">
                 <div class="left_title_txt" style="z-index: 3">메뉴 관리</div>
                 <div class="btn-box-hover" id="left_head_btn">
-                	<form action="${contextPath}/system/boardsDelete.do" method="get">
-	                  <input type="hidden" id="input_No2" name="boardNo" />
-	                  <button class="btn2-hover" id="btn_remove" type="submit" >
+                	<%-- <form action="${contextPath}/system/boardsDelete.do" method="get"> --%>
+	                  <button class="btn2-hover" type="submit" onclick="$('#frm').attr('action', '${contextPath}/system/boardsDelete.do').submit();">
 	                    <b style="font-weight: 900">-</b> 삭제
 	                  </button>
-                	</form>
                 	
                   <form action="${contextPath}/system/boardsAdd.do">
 	                  <button class="btn2-hover" id="btn_add" type="submit" >
@@ -156,6 +154,13 @@
                   </form>
                 </div>
               </div>
+              
+              <!-- 
+              	삭제 클릭시 실행되는 function
+              		오른쪽의 form 요소 선택한후 
+              		해당 form 의 action 속성값을 삭제용 url로 변경후
+              		해당 form.submit();
+               -->
       
               <div class="left_body_list">
                 <!-- 메뉴 리스트 -->
@@ -187,7 +192,7 @@
             </div>
             
             <!-- 오른쪽 설정 영역 -->
-            <form action="${ contextPath }/system/boardUpdate.do" method="post">
+            <form id="frm" action="${ contextPath }/system/boardUpdate.do" method="post">
             		<input type="hidden" id="input_No" name="boardTypeNo" />
 		            <div class="right_main">
 		              <div style="margin-left: 57px; border: 1px solid rgb(201, 201, 201); width: 100%;">
@@ -308,7 +313,8 @@
                     
                     //게시판 번호
 					input_No.value = boardTypeNo;
-					input_No2.value = boardTypeNo;
+                    
+					//input_No2.value = boardTypeNo;
 					console.log(boardTypeNo);
                     
                     //제목
@@ -345,25 +351,6 @@
 										
                   });
                 });
-             		// 삭제 버튼 클릭 시
-	                const deleteButton = document.querySelector('#btn_remove');
-	                if (deleteButton) {
-                  		deleteButton.addEventListener('click', function (event) {
-                   		event.preventDefault();  // 기본 제출 동작을 막음
-
-	                    // active 클래스를 가진 메뉴 항목 찾기
-	                    const activeItem = document.querySelector('.left_body_listItem.active');
-	                    if (activeItem) {
-	                      const boardTypeNo = activeItem.getAttribute('data-boardTypeNo');
-	                      
-	                      // boardTypeNo를 쿼리 파라미터로 URL에 추가하여 삭제 요청을 보냄
-	                      const deleteUrl = `${contextPath}/system/boardsDelete.do?${boardTypeNo}`;
-	
-	                      // 삭제 요청을 위한 폼 제출
-	                      window.location.href = deleteUrl;
-                    	}
-	                  });
-	                }
               });
 			</script>
 	</div><!-- body-body End -->
