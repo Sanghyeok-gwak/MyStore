@@ -53,7 +53,7 @@
    .left_body_list {
      border: solid 0px red;
      margin-top: 5px;
-     height: 93%;
+     height: 89%;
      width: 100%;
      overflow-y: auto;
    }
@@ -143,7 +143,7 @@
                 <div class="left_title_txt" style="z-index: 3">메뉴 관리</div>
                 <div class="btn-box-hover" id="left_head_btn">
                 	<form action="${contextPath}/system/boardsDelete.do" method="get">
-	                  <input type="hidden" id="input_No" name="boardTypeNo" />
+	                  <input type="hidden" id="input_No2" name="boardNo" />
 	                  <button class="btn2-hover" id="btn_remove" type="submit" >
 	                    <b style="font-weight: 900">-</b> 삭제
 	                  </button>
@@ -287,7 +287,7 @@
 		        </div> <!-- text-box end -->
           </div>
           
-					<script>
+			<script>
               document.addEventListener('DOMContentLoaded', () => {
                 const menuItems = document.querySelectorAll('.left_body_listItem');
             
@@ -307,13 +307,15 @@
                     const deptCode = this.getAttribute('data-deptCode');
                     
                     //게시판 번호
-										input_No.value = boardTypeNo
+					input_No.value = boardTypeNo;
+					input_No2.value = boardTypeNo;
+					console.log(boardTypeNo);
                     
                     //제목
                     input_name.value = boardTypeName;
                     
                     //게시판 유형
- 										const selectElement = document.getElementById('boardTypeSelect');
+					const selectElement = document.getElementById('boardTypeSelect');
                     
                     if (boardtType == 'N') {
                         selectElement.value = 'N';
@@ -328,42 +330,42 @@
                     selectElementLv.value = boardtContent;
                     
                     //댓글 쓰기 설정
-										const selectElementComment = document.getElementById('SelectComment');
-										selectElementComment.value = boardtWrite;
+					const selectElementComment = document.getElementById('SelectComment');
+					selectElementComment.value = boardtWrite;
 
                     //읽기 쓰기 설정
-										const selectElementWrite = document.getElementById('SelectWrite');
-										selectElementWrite.value = boardtRead;
-										
-										//감추기 설정
-										const selectElementHide = document.getElementById('gridCheck1');
-										selectElementHide.checked = boardtUse == 'N';
-										
-										//지점 여부 (보류- 사유: 지점 dept_code 전부 다름, 쿼리문 방법 찾은 후 작업)
+					const selectElementWrite = document.getElementById('SelectWrite');
+					selectElementWrite.value = boardtRead;
+					
+					//감추기 설정
+					const selectElementHide = document.getElementById('gridCheck1');
+					selectElementHide.checked = boardtUse == 'N';
+					
+					//지점 여부 (보류- 사유: 지점 dept_code 전부 다름, 쿼리문 방법 찾은 후 작업)
 										
                   });
                 });
              		// 삭제 버튼 클릭 시
-                const deleteButton = document.querySelector('#btn_remove');
-                if (deleteButton) {
-                  deleteButton.addEventListener('click', function (event) {
-                    event.preventDefault();  // 기본 제출 동작을 막음
+	                const deleteButton = document.querySelector('#btn_remove');
+	                if (deleteButton) {
+                  		deleteButton.addEventListener('click', function (event) {
+                   		event.preventDefault();  // 기본 제출 동작을 막음
 
-                    // active 클래스를 가진 메뉴 항목 찾기
-                    const activeItem = document.querySelector('.left_body_listItem.active');
-                    if (activeItem) {
-                      const boardTypeNo = activeItem.getAttribute('data-boardTypeNo');
-                      
-                      // boardTypeNo를 쿼리 파라미터로 URL에 추가하여 삭제 요청을 보냄
-                      const deleteUrl = `${contextPath}/system/boardsDelete.do?${boardTypeNo}`;
-
-                      // 삭제 요청을 위한 폼 제출
-                      window.location.href = deleteUrl;
-                    }
-                  });
-                }
+	                    // active 클래스를 가진 메뉴 항목 찾기
+	                    const activeItem = document.querySelector('.left_body_listItem.active');
+	                    if (activeItem) {
+	                      const boardTypeNo = activeItem.getAttribute('data-boardTypeNo');
+	                      
+	                      // boardTypeNo를 쿼리 파라미터로 URL에 추가하여 삭제 요청을 보냄
+	                      const deleteUrl = `${contextPath}/system/boardsDelete.do?${boardTypeNo}`;
+	
+	                      // 삭제 요청을 위한 폼 제출
+	                      window.location.href = deleteUrl;
+                    	}
+	                  });
+	                }
               });
-					</script>
+			</script>
 	</div><!-- body-body End -->
 
 

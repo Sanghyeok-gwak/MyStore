@@ -23,8 +23,8 @@ public class SystemDao {
 		sqlSession.insert("systemMapper.insertBoard", userData);
 	}
 
-	public void boardsUpdate(BoardTypeDto bt) {
-		sqlSession.update("systemMapper.boardsUpdate", bt);
+	public int boardsUpdate(BoardTypeDto bt) {
+		return sqlSession.update("systemMapper.boardsUpdate", bt);
 	}
 
 }

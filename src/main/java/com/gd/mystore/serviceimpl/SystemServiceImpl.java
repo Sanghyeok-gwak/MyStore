@@ -29,8 +29,8 @@ public class SystemServiceImpl implements SystemService {
 	}
 
 	@Override
-	public void boardUpdate(BoardTypeDto bt) {
-		systemDao.boardsUpdate(bt);
+	public int boardUpdate(BoardTypeDto bt) {
+		return systemDao.boardsUpdate(bt);
 	}
 
 }

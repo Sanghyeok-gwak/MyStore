@@ -50,7 +50,8 @@ public class SystemController {
 	}
 
 	@GetMapping("/boardsDelete.do")
-	public String systemBoardDelete(RedirectAttributes rdAttributes){
+	public String systemBoardDelete(BoardTypeDto bt ,RedirectAttributes rdAttributes){
+		System.out.println(bt.getBoardTypeNo());
 		rdAttributes.addFlashAttribute("alertMsg", "삭제 기능 개발중🚫");
 		return "redirect:/system/systemBoardsList.do";
 	}
@@ -59,6 +60,8 @@ public class SystemController {
 	public String systemBoardsEdit(BoardTypeDto bt
 								 , RedirectAttributes rdAttributes) {
 		
+		log.debug("@@@@@@@@@@@@{}", bt.toString());
+		
 		//체크박스 변환처리
 		if(bt.getBoardtUse() != null) {
 			bt.setBoardtUse("N");
@@ -66,8 +69,12 @@ public class SystemController {
 			bt.setBoardtUse("Y");
 		}
 		
-		systemService.boardUpdate(bt);
-		rdAttributes.addFlashAttribute("alertMsg", "수정되었습니다.");
+		int result = systemService.boardUpdate(bt);
+		if(result > 0) {
+			rdAttributes.addFlashAttribute("alertMsg", "수정되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "수정을 실패하였습니다.");
+		}
 		
 		// 추후 히스토리백 적용
 		return "redirect:/system/systemBoardsList.do";
