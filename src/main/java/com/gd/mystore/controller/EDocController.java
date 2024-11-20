@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gd.mystore.dto.EDocApprovalDto;
+import com.gd.mystore.dto.EDocDto;
 import com.gd.mystore.dto.EDocSampleDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -128,9 +130,7 @@ public class EDocController {
 	
 	@ResponseBody
     @GetMapping(value = "/approvalTree", produces = "application/json")
-    public List<EmpMemberDto> getApprovalTree(Model model
-    										, HttpSession session) {
-		
+    public List<EmpMemberDto> getApprovalTree() {
 		
         // employeeService를 통해 데이터 가져오기
         List<EmpMemberDto> employees = edocService.selectEmployees();
@@ -139,17 +139,17 @@ public class EDocController {
     }
 	
 	@PostMapping("/edocinsert.do")
-	public String edocinsert(@RequestParam("draftName") String draftName
-						   , @RequestParam("approvers") String approvers
-					       , @RequestParam("formType") String formType
+	public String edocinsert(@RequestParam("draftName") int draftName
+						   , @RequestParam("languages") int languages
 					       , @RequestParam("approvalOrder") String approvalOrder
-					       , @RequestParam("lang") String lang				// 결재양식
-					       , @RequestParam("title") String title				// 제목
-					       , @RequestParam("editorTxt0") String editorTxt	// 스마트에디터 내용
-					       , Model model) {
+					       , HttpSession session) {
 		
+		EDocDto edoc = new EDocDto();
+		EDocApprovalDto approval = new EDocApprovalDto();
 		
-		return "redirect:/";
+		edoc.setEmpNo(draftName);
+	
+		return "asd";
 	}
     
     
