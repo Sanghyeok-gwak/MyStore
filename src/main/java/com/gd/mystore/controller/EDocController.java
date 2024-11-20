@@ -139,10 +139,10 @@ public class EDocController {
     }
 	
 	@PostMapping("/edocinsert.do")
-	public String edocinsert(@RequestParam("approverOrder") String approverOrder
-						   , @RequestParam("approverNames") String approverNames
-					       , @RequestParam("creatorName") String creatorName
-					       , @RequestParam("creatorDept") String creatorDept
+	public String edocinsert(@RequestParam("draftName") String draftName
+						   , @RequestParam("approvers") String approvers
+					       , @RequestParam("formType") String formType
+					       , @RequestParam("approvalOrder") String approvalOrder
 					       , @RequestParam("lang") String lang				// 결재양식
 					       , @RequestParam("title") String title				// 제목
 					       , @RequestParam("editorTxt0") String editorTxt	// 스마트에디터 내용

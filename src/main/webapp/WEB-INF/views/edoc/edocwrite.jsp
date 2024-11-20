@@ -8,15 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<!-- 네이버 스마트에디터 -->
-<script type="text/javascript" src="${contextPath}/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-<!-- jsTree 라이브러리 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
-
 
 <style>
 /**/
@@ -389,8 +380,6 @@ input[type=file]::file-selector-button {
 					
 			    <!-- 기안자 이름: 로그인된 사용자의 이름 -->
 			    <input type="hidden" name="draftName" id="draftName" value="${loginUser.empName}">
-			    <!-- 결재자 이름 목록: 선택된 결재자들의 이름을 콤마로 구분하여 저장 -->
-			    <input type="hidden" name="approvers" id="approvers">	
 			    <!-- 결재 양식 유형: 선택된 결재 양식의 ID (결재양식 선택 드롭다운에서 선택된 값) -->
 			    <input type="hidden" name="formType" id="formType">
 			    <!-- 결재선 순서 정보: 결재자의 순서, 이름, 직급, 부서를 JSON 형식으로 저장 -->
