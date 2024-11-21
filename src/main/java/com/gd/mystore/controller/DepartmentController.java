@@ -33,7 +33,7 @@ public class DepartmentController {
 	
 	@GetMapping("/departmentModify")
 	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName,
-	                               @RequestParam(value = "deptUpStair", required = false) String deptUpStair,
+	                           
 	                               Model model) {
 	    List<DepartmentDto> searchResult = new ArrayList<>();
 	    List<EmpMemberDto> departmentTree = new ArrayList<>();
@@ -59,8 +59,8 @@ public class DepartmentController {
 	    }
 
 	    // 결과가 없을 때 메시지 처리
-	    if (searchResult.isEmpty() && deptUpStair != null && !deptUpStair.trim().isEmpty()) {
-	        model.addAttribute("noEmployeesFound", "상위 부서에 속한 직원이 없습니다.");
+	    if (searchResult.isEmpty() ) {
+	        model.addAttribute("noEmployeesFound", "해당하는 직원이 없습니다.");
 	    }
 
 	    if (departmentTree.isEmpty() && empName != null && !empName.trim().isEmpty()) {
@@ -76,8 +76,8 @@ public class DepartmentController {
 	// 직원 또는 부서 트리 데이터를 반환하는 API
 	@GetMapping("/departmentModify/data")
 	public @ResponseBody Map<String, Object> searchDepartmentData(
-	        @RequestParam(value = "empName", required = false) String empName,
-	        @RequestParam(value = "deptUpStair", required = false) String deptUpStair){
+	        @RequestParam(value = "empName", required = false) String empName
+	     ){
 		
 	    List<EmpMemberDto> departmentTree = new ArrayList<>();
 	    List<DepartmentDto> searchResult = new ArrayList<>();
