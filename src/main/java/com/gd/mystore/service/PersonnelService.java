@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.SalaryDto;
 
 public interface PersonnelService {
 	
@@ -35,5 +36,7 @@ public interface PersonnelService {
 	// 사원 검색 조회 (페이징 처리)
 	 int selectSearchListCount(Map<String, String> search);
 	 List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
+	 
+	 List<SalaryDto> selectSalaryList(int empNo);
 
 }

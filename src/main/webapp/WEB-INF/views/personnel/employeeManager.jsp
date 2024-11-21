@@ -152,7 +152,7 @@
 							<td>${ e.createDate }</td>
 							<td>${ e.empEmail }</td>
 							<td>${ e.empPhone }</td>
-							<td><button class="enroll"  data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+							<td><button id="salarybutton" class="enroll"  data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
 						</tr>
 					  </c:forEach>
 					</tbody>
@@ -195,38 +195,57 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="salaryModalLabel">천예찬님 급여지급</h5>
+                <h5 class="modal-title" id="">${ e.empName }님 급여지급</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <!-- 급여 항목 입력 시작 -->
+            
                 <div class="mb-3">
-                    <label for="baseSalary" class="form-label">기본급</label>
-                    <input type="number" class="form-control" id="baseSalary" placeholder="기본급을 입력하세요" min="0" required>
-                    <button class="btn btn-info mt-2" id="applyInsurance">보험료 적용</button>
-                </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">항목</th>
+        <th scope="col">금액</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 기본급 입력 -->
+      <tr>
+        <td><label for="baseSalary" class="form-label">기본급</label></td>
+        <td>
+          <input type="number" class="form-control" id="baseSalary" placeholder="기본급을 입력하세요" min="0" required>
+          <button class="btn btn-secondary mt-2" id="salBase">보험료 적용</button>
+        </td>
+      </tr>
 
-                <div class="mb-3">
-                    <label for="nationalPension" class="form-label">국민연금</label>
-                    <input type="text" class="form-control" id="nationalPension" readonly>
-                </div>
+      <!-- 국민연금 -->
+      <tr>
+        <td><label for="nationalPension" class="form-label">국민연금</label></td>
+        <td><input type="text" class="form-control" id="salNp" readonly></td>
+      </tr>
 
-                <div class="mb-3">
-                    <label for="healthInsurance" class="form-label">건강보험</label>
-                    <input type="text" class="form-control" id="healthInsurance" readonly>
-                </div>
+      <!-- 건강보험 -->
+      <tr>
+        <td><label for="healthInsurance" class="form-label">건강보험</label></td>
+        <td><input type="text" class="form-control" id="salHi" readonly></td>
+      </tr>
 
-                <div class="mb-3">
-                    <label for="unemploymentInsurance" class="form-label">고용보험</label>
-                    <input type="text" class="form-control" id="unemploymentInsurance" readonly>
-                </div>
+      <!-- 고용보험 -->
+      <tr>
+        <td><label for="unemploymentInsurance" class="form-label">고용보험</label></td>
+        <td><input type="text" class="form-control" id="salEi" readonly></td>
+      </tr>
 
-                <div class="mb-3">
-                    <label for="actualPayment" class="form-label">실지급급액</label>
-                    <input type="text" class="form-control" id="actualPayment" readonly>
-                </div>
-                <!-- 급여 항목 입력 끝 -->
+      <!-- 실지급급액 -->
+      <tr>
+        <td><label for="actualPayment" class="form-label">실지급급액</label></td>
+        <td><input type="text" class="form-control" id="salNetSalary" readonly></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
             </div>
 
             <div class="modal-footer">
@@ -238,12 +257,52 @@
 </div>
 <!-- 모달 끝 -->
 
-<script>
+	<script>
+  	 $(document).ready(function(){
+  	   fn_salaryList();
+  	 })
+  	
+  	 // 해당 사원의 급여 목록 조회용 (ajax) 함수
+  	 function fn_salaryList(){
+  	   $.ajax({
+  		   url: '${contextPath}/personnel/slist.do',
+  	   	   data: "no=" + 1003,
+  	   	   success: function(resData){
+  	   		console.log(resData);
+  	   		
+  	   	 let tr = "";
+         for (let i = 0; i < resData.length; i++) {
+             tr += "<tr>"
+                 + "<td><label for='salNp' class='form-label'>국민연금</label></td>"
+                 + "<td><input type='text' class='form-control' id='salNp' readonly value='" + resData[i].salNp + "'></td>"
+                 + "</tr>"
+                 + "<tr>"
+                 + "<td><label for='salBase' class='form-label'>기본급</label></td>"
+                 + "<td><input type='text' class='form-control' id='salBase' readonly value='" + resData[i].salBase + "'></td>"
+                 + "</tr>"
+                 + "<tr>"
+                 + "<td><label for='salHi' class='form-label'>건강보험</label></td>"
+                 + "<td><input type='text' class='form-control' id='salHi' readonly value='" + resData[i].salHi + "'></td>"
+                 + "</tr>"
+                 + "<tr>"
+                 + "<td><label for='salEi' class='form-label'>고용보험</label></td>"
+                 + "<td><input type='text' class='form-control' id='salEi' readonly value='" + resData[i].salEi + "'></td>"
+                 + "</tr>"
+                 + "<tr>"
+                 + "<td><label for='salNetSalary' class='form-label'>실지급급액</label></td>"
+                 + "<td><input type='text' class='form-control' id='salNetSalary' readonly value='" + resData[i].salNetSalary + "'></td>"
+                 + "</tr>";
+         }
+
+         $("#salarybutton").html(tr);
+			 
+  	   	 }
+  	   })
+  	 }
 
 
 
-
-</script>
+	</script>
 
 
         

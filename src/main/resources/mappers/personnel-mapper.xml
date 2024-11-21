@@ -27,6 +27,18 @@
 		<result column="MODIFY_DATE" property="modifyDate"/>
 </resultMap>
 
+<resultMap id="salaryResultMap" type="SalaryDto">
+	<result column="SALARY_NO" property="salaryNo" />
+	<result column="EMP_NO" property="empNo" />
+	<result column="EMP_NAME" property="empName" />
+	<result column="SAL_BASE" property="salBase" />
+	<result column="SAL_NP" property="salNp" />
+	<result column="SAL_HI" property="salHi" />
+	<result column="SAL_EI" property="salEi" />
+	<result column="SAL_NET_SALARY" property="salNetSalary" />
+	
+</resultMap>
+
 <!-- 마이페이지 수정 -->
 <update id="updateEmployee">
  UPDATE 
@@ -249,8 +261,24 @@ SELECT
 
 </update>
 
+<select id="selectSalaryList" resultMap="salaryResultMap">
+   SELECT
+        S.salary_no,
+        S.emp_no,
+        e.emp_name,
+        S.sal_base,
+        S.sal_np,
+        S.sal_hi,
+        S.sal_ei,
+        S.sal_net_salary
+ FROM 
+        TBL_EMPLOYEE E
+ JOIN 
+        TBL_SALARY S ON E.EMP_NO = S.EMP_NO
+ WHERE 
+        E.EMP_NO = #{empNo}
 
-
+</select>
 
 
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.gd.mystore.dao.PersonnelDao;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.SalaryDto;
 import com.gd.mystore.service.PersonnelService;
 
 import lombok.RequiredArgsConstructor;
@@ -68,6 +69,11 @@ public class PersonnelServiceImpl implements PersonnelService {
 	@Override
 	public List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
 		return personnelDao.selectSearchList(search, pi);
+	}
+
+	@Override
+	public List<SalaryDto> selectSalaryList(int empNo) {
+		return personnelDao.selectSalaryList(empNo);
 	}
 
 

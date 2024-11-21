@@ -31,4 +31,5 @@ public class SalaryDto {
     private String modifier;                // 수정자
     private String modifyDate;              // 수정일
     
+    private String empName;                 // 사원이름
 }

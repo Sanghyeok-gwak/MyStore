@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.SalaryDto;
 import com.gd.mystore.service.PersonnelService;
 import com.gd.mystore.util.PagingUtil;
 
@@ -128,10 +130,13 @@ public class PersonnelController {
     		return "redirect:/";
     	}
     	
-    	
     }
    
-    
+    @ResponseBody
+    @GetMapping(value="/slist.do", produces="application/json")
+    public List<SalaryDto> salaryList(int no) {
+    	return personnelService.selectSalaryList(no);
+    }
     
     
     

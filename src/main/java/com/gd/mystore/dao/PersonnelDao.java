@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.SalaryDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -62,6 +63,10 @@ public class PersonnelDao {
 	
 	public int updatequit(EmpMemberDto e) {
 		return sqlSession.update("personnelMapper.updatequit", e);
+	}
+	
+	public List<SalaryDto> selectSalaryList(int empNo){
+		return sqlSession.selectList("personnelMapper.selectSalaryList", empNo);
 	}
 	
 	
