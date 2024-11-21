@@ -95,7 +95,7 @@
 					<div class="search_box" style="width: 300px;">
 						<input class="input_b" type="text" name="keyword" placeholder="검색">
 						<div class="icon">
-							<button>
+							<button type="submit">
 								<i class="bi bi-search"></i>
 							</button>
 						</div>

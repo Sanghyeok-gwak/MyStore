@@ -49,6 +49,7 @@ public class PersonnelController {
 	@GetMapping("/search")
 	public String search(@RequestParam(value="page", defaultValue="1") int currentPage
 					   , @RequestParam Map<String, String> search
+					   	 /*String condition , String keyword*/
 					   , Model model) {
 		// Map<String ,String> => 
 		

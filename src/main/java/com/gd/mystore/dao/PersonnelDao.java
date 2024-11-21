@@ -40,7 +40,7 @@ public class PersonnelDao {
 	/* 검색 조회하면서 페이징 */
 	public List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() -1) * pi.getBoardLimit() ,pi.getBoardLimit());
-		return sqlSession.selectList("personnelMapper.selectSearchList",null, rowBounds);
+		return sqlSession.selectList("personnelMapper.selectSearchList", search, rowBounds);
 	}
 	
 	

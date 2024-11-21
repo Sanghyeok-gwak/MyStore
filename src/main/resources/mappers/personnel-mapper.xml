@@ -108,6 +108,7 @@ SELECT
 </select>
 
 <select id="selectSearchList" resultMap="empMemberResultMap">
+  
   SELECT
            EMP.EMP_NO,
            EMP.EMP_NAME,
@@ -121,11 +122,11 @@ SELECT
     LEFT JOIN
          TBL_COMMON_CODE POS ON EMP.EMP_AUTH = POS.CD
     LEFT JOIN 
-         tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE        	
-   WHERE ${condition} LIKE '%' || #{keyword} || '%'
-   ORDER
-      BY EMP_NO DESC
+         TBL_DEPARTMENT DC ON EMP.DEPT_CODE = DC.DEPT_CODE        	
+   WHERE emp.${condition} LIKE '%' || #{keyword} || '%'
+   ORDER BY EMP_NO DESC
 </select>
+
 
 <!-- 사번으로 사원 조회 -->
 <select id="selectEmpByNo" resultMap="empMemberResultMap">
