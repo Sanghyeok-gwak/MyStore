@@ -16,7 +16,7 @@ import lombok.ToString;
 
 public class OrderingProductDto {
 	private int productNo;
-	private int orderCount;
+	private int inventory;
 	private String createDate;
 	private String modifier;
 	private String modifyDate;

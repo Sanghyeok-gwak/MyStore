@@ -5,6 +5,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.gd.mystore.dto.OrderingListDto;
+import com.gd.mystore.dto.OrderingProductDto;
 import com.gd.mystore.dto.ProductDto;
 
 import lombok.RequiredArgsConstructor;
@@ -19,5 +21,12 @@ public class OrderingDao {
 	public List<ProductDto> selectProductList(){
 		return sqlSession.selectList("orderingMapper.selectProductList");
 	}
-	
+	public int insertOrderingList(OrderingListDto orderingDto) {
+		log.debug("orderingDto : {}",orderingDto);
+		return sqlSession.insert("orderingMapper.insertOrderingList",orderingDto);
+	}
+	public int insertOrderingPro(OrderingProductDto productList) {
+		log.debug("productList : {}",productList);
+		return sqlSession.insert("orderingMapper.insertOrderingPro",productList);
+	}
 }

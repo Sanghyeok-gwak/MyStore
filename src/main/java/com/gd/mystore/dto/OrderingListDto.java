@@ -1,6 +1,6 @@
 package com.gd.mystore.dto;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +27,6 @@ public class OrderingListDto {
 	private String modifier;
 	private String modifyDate;
 	private String useYn;
-	private List<OrderingProductDto> productList;
+	private ArrayList<OrderingProductDto> productList;
 	
 }

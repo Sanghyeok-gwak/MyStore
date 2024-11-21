@@ -2,6 +2,8 @@ package com.gd.mystore.service;
 
 import java.util.List;
 
+import com.gd.mystore.dto.OrderingListDto;
+import com.gd.mystore.dto.OrderingProductDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ProductDto;
 
@@ -15,6 +17,9 @@ public interface OrderingService {
 	
 	// 발주 리스트
 	int selectOrderList(PageInfoDto pi);
+	
+	// 발주 등록 
+	int insertOrderingList(OrderingListDto orderingDto,List<OrderingProductDto> orderingProList );
 	
 	
 }

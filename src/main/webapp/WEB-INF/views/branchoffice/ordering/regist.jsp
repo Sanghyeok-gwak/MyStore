@@ -14,12 +14,12 @@
         height: 100%;
       }
       .ordering-top{
-        height: 60%;
+        height: 70%;
         margin-bottom: 10px;
       }
       .ordering-bottom{
         margin-top: 10px;
-        height: 40%;
+        height: 30%;
       }
       .ordering-detail,.order-box{
         width: 100%;
@@ -47,7 +47,20 @@
       thead{
       	text-align: center;
       }
-      
+      .ordering-detail-img  {
+			    width: 20%;
+			}
+			div#order-details {
+			    width: 80%;
+			    justify-content: center;
+			}
+			.ordering-detail-product-cost ,.ordering-detail-product-sail-price,.ordering-detail-product-expiration,.ordering-detail-product-delivery-date{
+			    width: 50%;
+			}
+			.order-box {
+			    display: flex;
+			    flex-direction: column;
+			}
 </style>
 </head>
 <body>
@@ -58,9 +71,42 @@
      <div class="ordering">
         <div class="ordering-top">
           <div class="order-box">
+            <style>
+              .ordering-detail-text{
+                width: 40%;
+                align-content: end;
+              }
+              .btn-edit-add-box{
+                align-content: end;
+                text-align: right;
+                width: 100%;
+						    display:flex;
+						    margin-bottom: 20px;
+						    justify-content: space-between;
+              }
+              .calendar-box{
+              	width:50%;
+              	display:flex;
+              }
+              #ordering-form{
+              	display:flex;
+              	height: 100%;
+						    display: flex;
+						    flex-direction: column;
+              }
+            </style>
+            
+           <form id="ordering-form" action="${contextPath}/ordering/insert.or" method="post">
+            <div class="btn-edit-add-box">
+            	<div class="calendar-box">
+            		<input type="date">
+            	</div>
+            	<div class="btn4-box">
+	              <button type="submit" class="btn4">등록 하기</button>
+            	</div>
+            </div>
             <div class="table-box">
-             <form action="" method="post">
-              <table>
+              <table class="table table-hover">
                 <thead>
                   <tr>
                     <th>분류</th>
@@ -72,7 +118,9 @@
                   </tr>
                 </thead>
 	                <tbody>
-	                	<c:forEach var="p" items="${pro}">
+	                	 <c:forEach var="p" items="${pro}" varStatus="status">
+	                    <input type="hidden" name="productList[${status.index}].productNo" value="${p.productNo}">
+	                    <input type="hidden" name="productList[${status.index}].productName" value="${p.productName}">
 		                  <tr class="product-row" data-productimg="${p.productImg}" data-productno="${p.productNo}" 
 		                      data-productname="${p.productName}" data-cost="${p.cost}" data-sailprice="${p.sailPrice}" 
 		                      data-expiration="${p.expirationPeriod}" data-delivery="${p.deliveryDate}">
@@ -80,14 +128,14 @@
 			                	<td>${p.productName }</td>
 		                    <td>${p.event == null ? '행사없음' : p.event}</td>
 		                    <td>${p.inventory }</td>
-		                    <td><input type="number" name="count"></td>
+		                    <td><input style="padding-left:10px;" type="number" name="productList[${status.index}].inventory" value="0"></td>
 		                    <td>${p.useYn == 'Y' ? '발주가능' : '발주불가능'}</td>
 		                  </tr>
 	                	</c:forEach>
 	                </tbody>
-              </table>
-             </form>
-            </div>
+              	</table>
+            	</div>
+          	</form>
           </div>
         </div>
         <style>
@@ -106,9 +154,6 @@
               <div class="order-detail-image">
                 <img id="preview" src="https://i.ibb.co/25hzpPd/Component-5.png" alt="Click to upload" style="width: 100%; height: 100%;" >
               </div>
-              
-              
-              
             </div>
               <style>
                 .ordering-detail-product-cost,.ordering-detail-product-sail-price,.ordering-detail-product-expiration,
@@ -177,24 +222,6 @@
 				        });
 				      });
 				    </script>
-            <style>
-              .ordering-detail-img{
-                width: 30%;
-              }
-              .ordering-detail-text{
-                width: 40%;
-                align-content: end;
-              }
-              .btn-edit-add-box{
-                align-content: end;
-                text-align: right;
-                width: 30%;
-              }
-            </style>
-            <div class="btn-edit-add-box">
-              <button class="btn4">임시 저장</button>
-              <button class="btn4">등록 하기</button>
-            </div>
           </div>
         </div>
      </div> 

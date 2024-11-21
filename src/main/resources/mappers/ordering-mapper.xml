@@ -19,6 +19,27 @@
 		<result column="INVENTORY" property="inventory" />
 		<result column="EVENT" property="event" />
   </resultMap>	
+  <resultMap id="OrderingListResultMap" type="OrderingListDto">
+  	<result column="ORDER_NO" property="orderNo" />
+  	<result column="EMP_NO" property="empNo" />
+  	<result column="BRANCH_NAME" property="branchName" />
+  	<result column="ORDER_STATUS" property="orderStatus" />
+  	<result column="ORDER_CHECKDATE" property="orderCheckDate" />
+  	<result column="CREATE_DATE" property="createDate" />
+  	<result column="MODIFIER" property="modifier" />
+  	<result column="MODIFY_DATE" property="modifyDate" />
+  	<result column="USE_YN" property="useYn" />
+  </resultMap>
+  <resultMap id="OrderingProductResultMap" type="OrderingProductDto">
+  	<result column="PRODUCT_NO" property="productNo" />
+  	<result column="ORDER_COUNT" property="inventory" />
+  	<result column="CREATE_DATE" property="createDate" />
+  	<result column="MODIFIER" property="modifier" />
+  	<result column="MODIFY_DATE" property="modifyDate" />
+  	<result column="USE_YN" property="useYn" />
+  	<result column="ORDER_NO" property="orderNo" />
+  	<result column="PRODUCT_NAME" property="productName" />
+  </resultMap>
 
 	<select id="selectProductList" resultMap="productResultMap">
   	select
@@ -44,5 +65,40 @@
 		 where c.CD LIKE 'PC00%'
 		 order by PRODUCT_NO desc
   </select>
-
+	<insert id="insertOrderingList">
+		INSERT INTO TBL_ORDERING (
+		    ORDER_NO,
+		    EMP_NO,
+		    BRANCH_NAME,
+		    ORDER_STATUS,
+		    ORDER_CHECKDATE,
+		    CREATE_DATE,
+		    MODIFY_DATE
+		) 
+		VALUES (
+		    ORDER_NO_SEQ.nextval
+		  , #{empNo}
+		  , 'BRANCH_NAME'
+		  , 'N'
+		  , sysdate
+		  , sysdate
+		  , sysdate
+		);
+	</insert>
+	<insert id="insertOrderingPro">
+		INSERT INTO 테이블명 (
+		    PRODUCT_NO,
+		    ORDER_COUNT,
+		    CREATE_DATE,
+		    ORDER_NO,
+		    PRODUCT_NAME
+		)
+		VALUES (
+		    #{productNo}
+			, #{inventory}
+			, sysdate
+		  , ORDER_NO_SEQ.currval
+		  , #{productName}
+		);
+	</insert>
 </mapper>
