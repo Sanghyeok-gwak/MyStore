@@ -83,8 +83,8 @@
 			 , BOARDT_READ = #{boardtRead}
 			 , BOARDT_WRITE = #{boardtWrite}
 			 , BOARDT_CONTENT = #{boardtContent}
-			 , BOARDT_USE = #{officeUse}
-			 , OFFICE_USE = #{deptCode}
+			 , BOARDT_USE = #{boardtUse}
+			 , OFFICE_USE = #{officeUse}
 		 where BOARD_TYPE_NO = #{boardTypeNo}
 	</update>
 	

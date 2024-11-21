@@ -157,28 +157,40 @@
 	
 	<!-- jstree 담을 직원 데이터 -->
 	<select id="selectEmployees" resultMap="empMemberResultMap">
-		select a.*, rownum as CREATER from (
-			(SELECT t1.DEPT_CODE as EMP_NO , t1.DEPT_NAME as EMP_NAME, LEVEL as AC_BANK, NVL(t1.DEPT_UPSTAIR, '#') as DEPT_CODE, '' as EMP_GENDER
-			FROM (SELECT *
-				  FROM TBL_DEPARTMENT
-				  WHERE USE_YN = 'Y') t1
-			START WITH t1.DEPT_UPSTAIR is null
-			CONNECT BY PRIOR t1.DEPT_CODE = t1.DEPT_UPSTAIR)
-
-			union all
-
-			(select
-				''||emp.emp_no as EMP_NO,
-				emp.emp_name as EMP_NAME,
-				9 as AC_BANK,
-				emp.dept_code as DEPT_CODE,
-				'bi bi-person-circle' as EMP_GENDER
-			from
-				tbl_employee emp
-			where
-				emp.use_yn = 'Y'
-				and emp.emp_name != '정준수')
-		) a
+				SELECT a.*, rownum as CREATER
+				FROM (
+		    		(SELECT 
+		         t1.DEPT_CODE as EMP_NO,
+		         t1.DEPT_NAME as EMP_NAME,
+		         LEVEL as AC_BANK,
+		         NVL(t1.DEPT_UPSTAIR, '#') as DEPT_CODE,
+		         '' as EMP_GENDER,
+		         '' as EMP_RANK
+		     FROM (
+		         SELECT *
+		         FROM TBL_DEPARTMENT
+		         WHERE USE_YN = 'Y'
+		     ) t1
+		     START WITH t1.DEPT_UPSTAIR IS NULL
+		     CONNECT BY PRIOR t1.DEPT_CODE = t1.DEPT_UPSTAIR)
+		
+		    UNION ALL
+		
+		    (SELECT
+		         '' || emp.emp_no as EMP_NO,
+		         emp.emp_name as EMP_NAME,
+		         9 as AC_BANK,
+		         emp.dept_code as DEPT_CODE,
+		         'bi bi-person-circle' as EMP_GENDER,
+		         (SELECT comm.nm 
+		          FROM tbl_common_code comm 
+		          WHERE comm.cd = emp.emp_rank) as EMP_RANK
+		     FROM
+		         tbl_employee emp
+		     WHERE
+		         emp.use_yn = 'Y'
+		         AND emp.emp_name != '정준수')
+				) a
 	</select>
 	
 	
