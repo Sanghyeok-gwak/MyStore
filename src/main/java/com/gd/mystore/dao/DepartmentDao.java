@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
+import com.gd.mystore.dto.EmpMemberDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,10 +40,10 @@ public class DepartmentDao {
 		}
 
 
-	   public List<DepartmentDto> DeptTree(String deptUpStair) {
-	      
-	       return sqlSession.selectList("departmentMapper.DeptTree", deptUpStair);
-	   }
+
+		public List<EmpMemberDto> DeptTree() {
+			 return sqlSession.selectList("departmentMapper.DeptTree");
+		}
 
 
 }

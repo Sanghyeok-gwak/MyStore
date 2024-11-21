@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
+import com.gd.mystore.dto.EmpMemberDto;
 
 public interface DepartmentService {
 
@@ -14,7 +15,7 @@ public interface DepartmentService {
 
 	List<DepartmentDto> selectSearchEmployeeByName(String empName);
 
-	List<DepartmentDto> DeptTree(String deptUpStair);
+	List<EmpMemberDto> DeptTree();
 
 	
 }

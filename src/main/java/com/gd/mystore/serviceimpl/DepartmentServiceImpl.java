@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.gd.mystore.dao.DepartmentDao;
 import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
+import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.service.DepartmentService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,9 +36,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public List<DepartmentDto> DeptTree(String deptUpStair) {
-		return departmentDao.DeptTree(deptUpStair);
+	public List<EmpMemberDto> DeptTree() {
+		return departmentDao.DeptTree();
 	}
-	
+
+
 	
 }

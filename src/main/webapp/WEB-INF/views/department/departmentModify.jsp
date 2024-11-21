@@ -54,19 +54,8 @@ input {
 }
 </style>
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 </head>
 <body>
-
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
@@ -237,14 +226,7 @@ input {
 				</div>
 			</div>
 		</div>
-
-		<!-- jQuery와 jsTree, Bootstrap JS -->
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-		<script
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	</div>
 
 		<!-- AJAX로 데이터 검색 및 테이블에 반영 -->
 		<script>
@@ -310,63 +292,24 @@ $(document).ready(function() {
 });
 
 $(function() {
-    $("#jstree").jstree({
+    // jstree 초기화 (한 번만 초기화)
+    $('#jstree').jstree({
         core: {
-            data: function(node, cb) {
-                console.log("node:", node);  // node 객체 출력
-
-                // 루트 노드일 경우 deptUpStair을 빈 문자열로 설정
-                var deptUpStair = (node.id === "#") ? "" : node.id; 
-                console.log("deptUpStair:", deptUpStair);  // deptUpStair 값 확인
-
-                // AJAX로 트리 데이터를 서버에서 가져오기
-                $.ajax({
-                    url: "/mystore/department/departmentModify/data",  // 트리 데이터를 가져올 URL
-                    type: "GET",
-                    data: {
-                        deptUpStair: deptUpStair  // deptUpStair 값을 서버로 전송
-                    },
-                    success: function(response) {
-                        var treeData = [];
-                        console.log("응답 데이터:", response);  // 응답 데이터 확인
-
-                        // 응답이 departmentTree 배열이 있을 경우, 그 값을 트리 데이터 형식으로 변환
-                        if (response.departmentTree && Array.isArray(response.departmentTree)) {
-                            response.departmentTree.forEach(function(dept) {
-                                if (dept && dept.deptCode && dept.deptName) {
-                                    treeData.push({
-                                        "id": dept.deptCode,  // 부서 코드 (deptCode)
-                                        "parent": dept.deptUpStair ? dept.deptUpStair : "#",  // 부모 부서가 없으면 루트로 설정
-                                        "text": dept.deptName,  // 부서 이름
-                                        "icon": "fa fa-briefcase",  // 부서 아이콘
-                                        "employees": dept.employees || [],  // 부서 내 직원 정보 (없으면 빈 배열)
-                                        "children": dept.children || []  // 자식 부서 (없으면 빈 배열)
-                                    });
-                                }
-                            });
-                        }
-
-                        console.log("트리 데이터:", treeData);  // 변환된 트리 데이터 확인
-                        cb(treeData);  // 트리 데이터 전달
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX 요청 오류:", error);
-                        alert("부서 데이터를 불러오는 중 오류가 발생했습니다.");
-                    }
-                });
-            }
+            data: [],  // 초기 데이터는 빈 배열로 설정, AJAX로 데이터 업데이트 예정
+            check_callback: true  // 트리 내에서 항목을 추가, 삭제 등의 작업을 가능하게 합니다.
         },
-        check_callback: true,  // 트리 내에서 항목을 추가, 삭제 등의 작업을 가능하게 합니다.
         plugins: ["contextmenu", "dnd"],  // 사용하려는 플러그인
         contextmenu: {
             items: function($node) {
                 var menuItems = {};
 
+                // 수정 모드 확인 (editMode 변수를 외부에서 정의해야 합니다)
                 if (!editMode) {
                     return {};  // 수정 모드가 아니면 메뉴 항목을 반환하지 않음
                 }
 
-                if ($node.parent === "#") {  // 루트 노드일 경우
+                // 루트 노드일 경우
+                if ($node.parent === "#") {
                     menuItems["create"] = {
                         "label": "부서추가",
                         "action": function() {
@@ -382,7 +325,8 @@ $(function() {
                     };
                 }
 
-                if ($node.parent !== "#") {  // 루트 노드가 아닐 경우
+                // 루트 노드가 아닐 경우
+                if ($node.parent !== "#") {
                     menuItems["rename"] = {
                         "label": "이름 변경",
                         "action": function() {
@@ -406,7 +350,75 @@ $(function() {
             }
         }
     });
+
+ // 트리 데이터를 AJAX로 로드하는 부분
+    function loadTreeData() {
+        $.ajax({
+            url: "/mystore/department/departmentModify/data",  // 트리 데이터를 가져올 URL
+            method: 'GET',
+            dataType: 'json',
+            success: function(departmentTree) {
+                // 응답받은 트리 데이터를 콘솔로 확인
+                console.log(departmentTree);
+
+                // 데이터가 배열이 아니라면 배열 형식으로 변환
+                if (!Array.isArray(departmentTree)) {
+                    departmentTree = Object.values(departmentTree);  // 객체를 배열로 변환
+                }
+
+                // 데이터가 없으면 경고
+                if (departmentTree.length === 0) {
+                    alert("부서 트리 데이터가 없습니다.");
+                    return;
+                }
+
+                // 데이터를 jstree 형식에 맞게 변환
+                var treeData = departmentTree.map(function(emp) {
+                    // 로그로 emp 객체 출력 (디버깅)
+                    console.log(emp);
+                    
+                    // 필수 값들 확인 (id, parent, text)
+                    if (!emp.empNo || !emp.deptCode || !emp.empName) {
+                        console.error("필수 데이터가 없습니다:", emp);
+                    }
+
+                    return {
+                        "id": emp.empNo,  // 직원 번호
+                        "parent": emp.dept || '#',  // 부서 코드, 상위 항목은 '#'로 처리
+                        "text": emp.empName + (emp.empRank ? " (" + emp.empRank + ")" : ""),  // 이름 + 직급
+                        "data": {
+                            "rank": emp.empRank,  // 직급
+                            "name": emp.empName,  // 이름
+                            "dept": emp.deptName,  // 부서명
+                            "no": emp.empNo  // 직원 번호
+                        },
+                        "icon": 'bi bi-person-circle'  // 성별 아이콘, 기본값 설정
+                    };
+                });
+
+                // 트리 데이터 출력 (디버깅)
+                console.log("변환된 트리 데이터:", treeData);
+
+                // jstree에 새로운 데이터를 설정
+                $('#jstree').jstree(true).settings.core.data = treeData;
+                $('#jstree').jstree(true).refresh();  // 트리 새로 고침
+            },
+            error: function(xhr, status, error) {
+                alert("트리 데이터 로딩 중 오류 발생");
+                console.error(xhr.responseText);  // 에러 메시지 확인
+            }
+        });
+    }
+
+    // 초기 데이터 로드
+    loadTreeData();
+
+
+
 });
+
+
+
 
 </script>
 

@@ -28,14 +28,19 @@ public class DepartmentController {
 
 	private final DepartmentService departmentService;
 	
-	// 부서 수정 페이지를 로드하는 메서드
+	
+	
+	
 	@GetMapping("/departmentModify")
 	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName,
 	                               @RequestParam(value = "deptUpStair", required = false) String deptUpStair,
 	                               Model model) {
 	    List<DepartmentDto> searchResult = new ArrayList<>();
-	    List<DepartmentDto> departmentTree = new ArrayList<>();
+	    List<EmpMemberDto> departmentTree = new ArrayList<>();
 
+	    // 부서 트리 조회
+	    departmentTree = departmentService.DeptTree();
+	    
 	    // empName 파라미터가 제공되면 이름으로 직원 검색
 	    if (empName != null && !empName.trim().isEmpty()) {
 	        // 이름이 있을 경우 검색된 직원 리스트
@@ -45,25 +50,15 @@ public class DepartmentController {
 	        searchResult = departmentService.selectMemberList();
 	    }
 
-	    // deptUpStair 파라미터가 제공되면 부서 트리 조회
-	    if (deptUpStair != null && !deptUpStair.trim().isEmpty()) {
-	        // 상위 부서에 속하는 부서들 조회
-	        departmentTree = departmentService.DeptTree(deptUpStair);
-	    } else {
-	        // deptUpStair가 없으면 전체 부서 트리 조회
-	        departmentTree = departmentService.DeptTree("root");  // 예를 들어, 'root'로 모든 부서 트리 조회
-	    }
-
-	    // 결과가 있는 경우에만 모델에 데이터를 추가
+	    // 모델에 부서 트리와 직원 검색 결과 추가
 	    if (!searchResult.isEmpty()) {
 	        model.addAttribute("searchResult", searchResult);  // 직원 검색 결과
 	    }
-
 	    if (!departmentTree.isEmpty()) {
 	        model.addAttribute("departmentTree", departmentTree);  // 부서 트리 결과
 	    }
 
-	    // 모델에 기본값을 추가할 수도 있음 (예: 빈 리스트 또는 메시지 등)
+	    // 결과가 없을 때 메시지 처리
 	    if (searchResult.isEmpty() && deptUpStair != null && !deptUpStair.trim().isEmpty()) {
 	        model.addAttribute("noEmployeesFound", "상위 부서에 속한 직원이 없습니다.");
 	    }
@@ -72,7 +67,8 @@ public class DepartmentController {
 	        model.addAttribute("noDepartmentsFound", "직원에 대한 부서 정보가 없습니다.");
 	    }
 
-	    return "department/departmentModify";  // 부서 수정 페이지 JSP
+	    // JSP 페이지 반환
+	    return "department/departmentModify";
 	}
 
 
@@ -81,11 +77,13 @@ public class DepartmentController {
 	@GetMapping("/departmentModify/data")
 	public @ResponseBody Map<String, Object> searchDepartmentData(
 	        @RequestParam(value = "empName", required = false) String empName,
-	        @RequestParam(value = "deptUpStair", required = false) String deptUpStair) {
-
-	    List<DepartmentDto> departmentTree = new ArrayList<>();
+	        @RequestParam(value = "deptUpStair", required = false) String deptUpStair){
+		
+	    List<EmpMemberDto> departmentTree = new ArrayList<>();
 	    List<DepartmentDto> searchResult = new ArrayList<>();
 	    
+	    departmentTree = departmentService.DeptTree();
+
 	    // 직원 검색
 	    if (empName != null && !empName.trim().isEmpty()) {
 	        searchResult = departmentService.selectSearchEmployeeByName(empName);
@@ -94,15 +92,6 @@ public class DepartmentController {
 	    }
 
 	    // 부서 트리 조회
-	    if (deptUpStair != null && !deptUpStair.trim().isEmpty()) {
-	        departmentTree = departmentService.DeptTree(deptUpStair);
-	    } else {
-	        departmentTree = departmentService.DeptTree("root");
-	    }
-
-	    // 응답 전 로그 출력
-	    log.debug("searchResult: {}", searchResult);  // 직원 검색 결과 확인
-	    log.debug("departmentTree: {}", departmentTree);  // 부서 트리 결과 확인
 
 	    Map<String, Object> response = new HashMap<>();
 	    if (!searchResult.isEmpty()) {
@@ -114,7 +103,6 @@ public class DepartmentController {
 
 	    return response;
 	}
-
 
 
 
