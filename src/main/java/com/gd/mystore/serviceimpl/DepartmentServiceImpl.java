@@ -40,6 +40,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return departmentDao.DeptTree();
 	}
 
+	@Override
+	public int insertDepartment(String deptName) {
+		return departmentDao.insertDepartment(deptName);
+	}
 
+
+	
 	
 }

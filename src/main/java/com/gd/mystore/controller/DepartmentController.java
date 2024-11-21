@@ -8,9 +8,11 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
@@ -104,6 +106,23 @@ public class DepartmentController {
 	    return response;
 	}
 
+	@PostMapping("/departmentModify/data")
+	@ResponseBody
+	public Map<String, Object> signup(String deptName) {
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    int result = departmentService.insertDepartment(deptName);
+	    
+	    if(result > 0) {
+	        response.put("success", true);
+	        response.put("message", "부서 추가 완료");
+	    } else {
+	        response.put("success", false);
+	        response.put("message", "부서 추가 실패");
+	    }
+	    
+	    return response;
+	}
 
 
 	

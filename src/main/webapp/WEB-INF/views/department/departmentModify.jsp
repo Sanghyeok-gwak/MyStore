@@ -52,6 +52,20 @@ input {
 	position: absolute;
 	z-index: 1000;
 }
+
+#jstree {
+    max-height: 320px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; /* 터치스크린에서 스크롤 부드럽게 하기 */
+}
+#jstree .jstree-children {
+    max-height: 320px; /* 높이를 300px로 제한 */
+    width: 424px;
+    overflow-y: auto;  /* 자식 요소가 높이를 초과할 경우 수직 스크롤 추가 */
+    overflow-x: hidden;  /* 하단(수평) 스크롤을 없앰 */
+}
+
 </style>
 
 </head>
@@ -71,22 +85,22 @@ input {
 				<div style="display: flex; flex-direction: column; height: 100%;">
 
 					<div style="width: 430px; height: 400px; border: #868686 solid;">
-						<!-- 왼쪽 영역 내용 -->
-						<div class="d-flex"
-							style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
-							<div>
-								<b>조직도</b>
-							</div>
-							<div class="btn-box-hover">
-								<button id="editNodeBtn" class="btn2-hover" style="width: 50px;">수정</button>
-								<button id="submitNodeBtn" class="btn3-hover"
-									style="width: 50px;">등록</button>
-							</div>
+    <!-- 왼쪽 영역 내용 -->
+    <div class="d-flex" style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
+        <div>
+            <b>조직도</b>
+        </div>
+        <div class="btn-box-hover">
+            <button id="editNodeBtn" class="btn2-hover" style="width: 50px;">수정</button>
+            <button id="submitNodeBtn" class="btn3-hover" style="width: 50px;">등록</button>
+        </div>
+    <!-- 트리 영역에 스크롤 적용 -->
+    </div>
+    <div style="height: 336px; overflow-y: auto; box-sizing: border-box; ">
+        <div id="jstree"></div>
+    </div>
+</div>
 
-						</div>
-						<div id="jstree"></div>
-
-					</div>
 
 
 					<!-- 아래쪽 영역 (오른쪽 영역) -->
@@ -292,18 +306,29 @@ $(document).ready(function() {
 });
 
 $(function() {
- 
+    // 수정 모드를 제어할 변수, 기본값은 false (수정 비활성화)
+    var editMode = false;
+    var newDeptData = null;  // 새 부서 데이터를 저장할 변수
 
- // 트리 데이터를 AJAX로 로드하는 부분
+    // 수정 버튼 클릭 시 수정 모드 활성화/비활성화
+    $("#editNodeBtn").click(function() {
+        editMode = !editMode;  // 수정 모드 토글
+        if (editMode) {
+            alert("수정 모드가 활성화되었습니다.");
+        } else {
+            alert("수정 모드가 비활성화되었습니다.");
+        }
+    });
+
+    // 트리 데이터를 AJAX로 로드하는 부분
     function loadTreeData() {
         $.ajax({
             url: "/mystore/department/departmentModify/data",  // 트리 데이터를 가져올 URL
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                console.log(response);  // 응답 데이터 확인
+      
 
-                // 응답에서 departmentTree만 추출하여 처리
                 var departmentTree = response.departmentTree || [];  // departmentTree가 없으면 빈 배열
 
                 // 데이터가 없으면 경고
@@ -314,29 +339,19 @@ $(function() {
 
                 // 데이터를 jstree 형식에 맞게 변환
                 var treeData = departmentTree.map(function(emp) {
-                    console.log(emp);
-
-                    // 필수 값들 확인 (id, parent, text)
-                    if (!emp.empNo || !emp.deptCode || !emp.empName) {
-                        console.error("필수 데이터가 없습니다:", emp);
-                    }
-
                     return {
-	                    "id": emp.empNo,
-	                    "parent": emp.deptCode,
-	                    "text": emp.empName + (emp.empRank ? " (" + emp.empRank + ")" : ""),
-	                    "data": {
-	                        "rank": emp.empRank,
-	                        "name": emp.empName,
-	                        "dept": emp.deptName,
-	                        "no": emp.empNo
-	                    },
-	                    "icon": emp.empGender
-	                };
+                        "id": emp.empNo,
+                        "parent": emp.deptCode || "#", // 루트는 "#"로 설정
+                        "text": emp.empName + (emp.empRank ? " (" + emp.empRank + ")" : ""),
+                        "data": {
+                            "rank": emp.empRank,
+                            "name": emp.empName,
+                            "dept": emp.deptName,
+                            "no": emp.empNo
+                        },
+                        "icon": emp.empGender
+                    };
                 });
-
-                // 변환된 트리 데이터 출력
-                console.log("변환된 트리 데이터:", treeData);
 
                 // jstree에 새로운 데이터를 설정
                 $('#jstree').jstree(true).settings.core.data = treeData;
@@ -352,7 +367,7 @@ $(function() {
     // 초기 데이터 로드
     loadTreeData();
 
-    // jstree 초기화 (한 번만 초기화)
+    // jsTree 초기화
     $('#jstree').jstree({
         core: {
             data: [],  // 초기 데이터는 빈 배열로 설정, AJAX로 데이터 업데이트 예정
@@ -363,7 +378,7 @@ $(function() {
             items: function($node) {
                 var menuItems = {};
 
-                // 수정 모드 확인 (editMode 변수를 외부에서 정의해야 합니다)
+                // 수정 모드 확인
                 if (!editMode) {
                     return {};  // 수정 모드가 아니면 메뉴 항목을 반환하지 않음
                 }
@@ -380,6 +395,11 @@ $(function() {
                             };
                             tree.create_node($node, newNode, "last", function(newNode) {
                                 tree.edit(newNode);
+                                // 새 부서 데이터를 설정
+                                newDeptData = {
+                                    deptName: newNode.text,
+                                    deptUpStair: $node.id
+                                };
                             });
                         }
                     };
@@ -391,7 +411,7 @@ $(function() {
                         "label": "이름 변경",
                         "action": function() {
                             var tree = $('#jstree').jstree(true);
-                            tree.edit($node);
+                            tree.edit($node);  // 해당 노드를 수정 가능하도록 편집 모드로 진입
                         }
                     };
 
@@ -400,7 +420,7 @@ $(function() {
                         "action": function() {
                             var tree = $('#jstree').jstree(true);
                             if (confirm("정말로 삭제하시겠습니까?")) {
-                                tree.delete_node($node);
+                                tree.delete_node($node);  // 해당 노드를 삭제
                             }
                         }
                     };
@@ -411,8 +431,38 @@ $(function() {
         }
     });
 
+    // 부서 등록 버튼 클릭 시 서버로 데이터 전송
+    $("#submitNodeBtn").click(function() {
+        if (newDeptData) {
+            $.ajax({
+                url: '/mystore/department/departmentModify/data',  // 부서 추가 API URL
+                type: 'POST',  // POST 방식으로 요청
+                data: { deptName: newDeptData.deptName },  // 부서 이름만 전송
+                success: function(response) {
+                    if (response.success) {
+                        alert("부서 추가 완료");
+                        loadTreeData();  // 트리 새로 고침
+                    } else {
+                        alert("부서 추가 실패: " + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("부서 추가 중 오류가 발생했습니다.");
+                    console.error(error);
+                }
+            });
+        } else {
+            alert("새 부서를 먼저 추가해주세요.");
+        }
+    });
 
+    // 수정 모드 활성화/비활성화 토글 함수 (예시)
+    $('#toggleEditMode').on('click', function() {
+        editMode = !editMode;  // 수정 모드를 토글
+        console.log("수정 모드:", editMode);
+    });
 });
+
 
 
 

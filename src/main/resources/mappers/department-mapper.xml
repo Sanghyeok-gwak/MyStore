@@ -157,6 +157,31 @@
 </select>
 
 
+<insert id="insertDepartment" >
+    INSERT INTO tbl_department
+    (
+        DEPT_CODE,
+        DEPT_UPSTAIR,
+        DEPT_NAME,
+        EMP_NO,
+        CREATE_DATE,
+        MODIFIER,
+        MODIFY_DATE,
+        USE_YN
+    )
+    VALUES
+    (
+         'D' || LPAD(TO_CHAR(DEPARTMENT_DEPT_CODE_SEQ.NEXTVAL), 3, '0'),
+        'D001',
+        #{deptName},  
+        1002, 
+        SYSDATE,  
+        NULL,  
+        NULL, 
+        'Y'
+    )
+</insert>
+
 
 
 

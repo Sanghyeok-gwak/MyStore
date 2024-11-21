@@ -46,4 +46,11 @@ public class DepartmentDao {
 		}
 
 
+		public int insertDepartment(String deptName) {
+			return sqlSession.insert("departmentMapper.insertDepartment",deptName);
+		}
+		
+		
+		
+		
 }
