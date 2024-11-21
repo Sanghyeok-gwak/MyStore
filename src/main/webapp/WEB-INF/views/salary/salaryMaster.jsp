@@ -45,17 +45,7 @@
               color: red;
               background-color: white;
     }
-    .payment-top{
-      	margin-top:20px;
-      	margin-bottom:20px;
-				display:flex;   
-				justify-content: space-between;   
-      }
-      .payment-top-right{
-      	display:flex;
-      }
-      .search_box input{
-      	 height:38px; 
+    
     
 
   </style>
@@ -69,7 +59,20 @@
       
       <div class="text-box">             
       <span class="ffont1" style="font-weight: bold;">급여입력</span>
-      
+      <style>
+      .payment-top{
+      	margin-top:20px;
+      	margin-bottom:20px;
+				display:flex;   
+				justify-content: space-between;   
+      }
+      .payment-top-right{
+      	display:flex;
+      }
+      .search_box input{
+      	 height:38px; 
+      }
+      </style>
       <div class="payment-top">
       	<div class="payment-top-left">
         <table class="table table-bordered" style="width: 500px; text-align: center;  ">
@@ -114,13 +117,145 @@
 
 
 
-      <td><button class="enroll"  data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+      <!-- 드롭다운 버튼 -->
 
 
 
+        <!-- Table with hoverable rows -->
+        <table class="table table-hover" style="text-align: center;" >
+          <thead>
+            <tr>
+              <th scope="co1">이름</th>
+              <th scope="col">부서</th>
+              <th scope="col">직위/직급</th>
+              <th scope="col">지급총액</th>
+              <th scope="col">총지급액</th>
+              <th scope="col">실지급액</th>
+              <th scope="co1">급여등록</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>천예찬</td>
+              <td>개발</td>
+              <td>사원</td>
+              <td>1,234,567</td>
+              <td>10,000</td>
+              <td>2,500,000</td>
+              <td><button class="enroll"  data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>이영희</th>
+              <td>마케팅</td>
+              <td>주임</td>
+              <td>2345,678</td>
+              <td>15,000</td>
+              <td>3,000,000</td>
+              <td><button  class="enroll" data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>박철수</th>
+              <td>인사</td>
+              <td>대리</td>
+              <td>3,456,789</td>
+              <td>20,000</td>
+              <td>3,500,000</td>
+              <td><button  class="enroll" data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>최미영</th>
+              <td>영업</td>
+              <td>과장</td>
+              <td>4,567,890</td>
+              <td>25,000</td>
+              <td>4,000,000</td>
+              <td><button  class="enroll" data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>김민수</th>
+              <td>개발</td>
+              <td>부장</td>
+              <td>5,678,901</td>
+              <td>30,000</td>
+              <td>4,500,000</td>
+              <td><button data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>이수진</th>
+              <td>회계</td>
+              <td>대리</td>
+              <td>6,789,012</td>
+              <td>22,000</td>
+              <td>3,200,000</td>
+              <td><button data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>박영수</th>
+              <td>총무</td>
+              <td>사원</td>
+              <td>7890123</td>
+              <td>18000</td>
+              <td>2,700,000</td>
+              <td><button data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>김소영</th>
+              <td>기획</td>
+              <td>부장</td>
+              <td>8901234</td>
+              <td>32000</td>
+              <td>5,000,000</td>
+              <td><button data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>정우성</th>
+              <td>개발</td>
+              <td>과장</td>
+              <td>9012345</td>
+              <td>27000</td>
+              <td>4,200,000</td>
+              <td><button data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+            <tr>
+              <td>한지민</th>
+              <td>인사</td>
+              <td>주임</td>
+              <td>0123456</td>
+              <td>19000</td>
+              <td>3,000,000</td>
+              <td><button data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+            </tr>
+          </tbody>
+          
+          </table>
+
+          
+          
+          <div class="paging"> 
+          <ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
+            <li class="page-item disabled">
+              <a class="page-link" href="">
+                <i class="bi bi-chevron-double-left"></i> <span>이전</span>
+              </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="">1</a></li>
+            <li class="page-item"><a class="page-link" href="">2</a></li>
+            <li class="page-item"><a class="page-link" href="">3</a></li>
+            <li class="page-item"><a class="page-link" href="">4</a></li>
+            <li class="page-item"><a class="page-link" href="">5</a></li>
+            <li class="page-item">
+              <a class="page-link" href="">
+                <span>다음</span>&nbsp;<i class="bi bi-chevron-double-right"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
 
 
-
+          </div>
+      
+</div>
 <!-- 급여등록 모달 -->
           <div class="modal fade" id="scrollingModal" tabindex="-1" style="display: none;" aria-hidden="true">
             <div class="modal-dialog">
