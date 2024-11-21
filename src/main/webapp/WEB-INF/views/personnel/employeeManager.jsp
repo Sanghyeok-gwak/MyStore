@@ -64,8 +64,12 @@
 }
 
 </style>
+
+
 </head>
+
 <body>
+
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
@@ -134,6 +138,8 @@
 							<th scope="col">입사일자</th>
 							<th scope="col">이메일</th>
 							<th scope="col">휴대폰</th>
+							<th scope="col">급여</th>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -146,6 +152,7 @@
 							<td>${ e.createDate }</td>
 							<td>${ e.empEmail }</td>
 							<td>${ e.empPhone }</td>
+							<td><button class="enroll"  data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
 						</tr>
 					  </c:forEach>
 					</tbody>
@@ -182,6 +189,64 @@
 		</div>
 
 	</div>
+	
+		<!-- 급여등록 모달 -->
+<div class="modal fade" id="scrollingModal" tabindex="-1" aria-labelledby="salaryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="salaryModalLabel">천예찬님 급여지급</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- 급여 항목 입력 시작 -->
+                <div class="mb-3">
+                    <label for="baseSalary" class="form-label">기본급</label>
+                    <input type="number" class="form-control" id="baseSalary" placeholder="기본급을 입력하세요" min="0" required>
+                    <button class="btn btn-info mt-2" id="applyInsurance">보험료 적용</button>
+                </div>
+
+                <div class="mb-3">
+                    <label for="nationalPension" class="form-label">국민연금</label>
+                    <input type="text" class="form-control" id="nationalPension" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="healthInsurance" class="form-label">건강보험</label>
+                    <input type="text" class="form-control" id="healthInsurance" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="unemploymentInsurance" class="form-label">고용보험</label>
+                    <input type="text" class="form-control" id="unemploymentInsurance" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label for="actualPayment" class="form-label">실지급급액</label>
+                    <input type="text" class="form-control" id="actualPayment" readonly>
+                </div>
+                <!-- 급여 항목 입력 끝 -->
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="saveSalary">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 모달 끝 -->
+
+<script>
+
+
+
+
+</script>
+
+
+        
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
