@@ -7,6 +7,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.gd.mystore.dto.DepartmentDto;
+import com.gd.mystore.dto.EDocApprovalDto;
+import com.gd.mystore.dto.EDocAttachDto;
+import com.gd.mystore.dto.EDocDto;
 import com.gd.mystore.dto.EDocSampleDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -46,7 +49,19 @@ public class EDocDao {
 		return sqlSession.selectOne("edocMapper.selectEDocForm", sampleNoInt);
 	}
 
-	public List<EmpMemberDto> selectEmployees() {
-		return sqlSession.selectList("edocMapper.selectEmployees");
+	public List<EmpMemberDto> selectEmployees(String no) {
+		return sqlSession.selectList("edocMapper.selectEmployees", no);
+	}
+
+	public int insertEdoc(EDocDto edoc) {
+		return sqlSession.insert("edocMapper.insertEdoc", edoc);
+	}
+
+	public int insertAttach(EDocAttachDto attach) {
+		return sqlSession.insert("edocMapper.insertAttach", attach);
+	}
+
+	public int saveApproval(EDocApprovalDto approval) {
+		return sqlSession.insert("edocMapper.saveApproval", approval);
 	}
 }

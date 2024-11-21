@@ -21,7 +21,7 @@ public class EDocSampleDto {
 	private String sampleFormat;	// 양식 서식
 	private String empNo;				// 생성자
 	private String createDt;		// 생성일
-	private int modyfy;				// 수정자
+	private String modyfy;				// 수정자
 	private String modifyDt;		// 수정일
 	private String useYN;			// 사용여부(Y/N)
 }

@@ -23,4 +23,5 @@ public class EDocAttachDto {
 	private String createDt;				// 생성일
 	private int modyfy;						// 수정자(사원번호)
 	private String modifyDt;				// 수정일
+	private String filePath;				// 파일경로
 }

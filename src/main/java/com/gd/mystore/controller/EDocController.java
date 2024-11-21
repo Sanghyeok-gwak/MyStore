@@ -1,8 +1,10 @@
 package com.gd.mystore.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,14 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.EDocApprovalDto;
+import com.gd.mystore.dto.EDocAttachDto;
 import com.gd.mystore.dto.EDocDto;
 import com.gd.mystore.dto.EDocSampleDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.EDocService;
+import com.gd.mystore.util.FileUtil;
 import com.gd.mystore.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -34,6 +39,7 @@ public class EDocController {
 	
 	private final EDocService edocService;
 	private final PagingUtil pagingUtil;
+	private final FileUtil fileUtil;
 	
 	// 문서 양식 관리
 	// 양식 목록 조회(페이징)
@@ -129,29 +135,87 @@ public class EDocController {
 	    return sample != null ? sample.getSampleFormat() : "";
 	}
 	
+	// jstree 가져오기
 	@ResponseBody
     @GetMapping(value = "/approvalTree", produces = "application/json")
-    public List<EmpMemberDto> getApprovalTree() {
+    public List<EmpMemberDto> getApprovalTree(HttpSession session) {
+		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo();
 		
         // employeeService를 통해 데이터 가져오기
-        List<EmpMemberDto> employees = edocService.selectEmployees();
+        List<EmpMemberDto> employees = edocService.selectEmployees(no);
         
         return employees; // 자동으로 JSON 형식으로 변환되어 반환됨
     }
 	
 	@PostMapping("/edocinsert.do")
-	public String edocinsert(@RequestParam("draftName") int draftName
-						   , @RequestParam("languages") int languages
-					       , @RequestParam("approvalOrder") String approvalOrder
-					       , HttpSession session) {
+	public String edocinsert(@RequestParam("draftName") String empNo,				// 기안자 번호	
+	                         @RequestParam("languages") int sampleNo,				// 양식유형 번호
+	                         @RequestParam("approvalOrder") String approvalOrder,	// 결재자 정보
+	                         @RequestParam("title") String EdocTitle,				// 기안 제목
+	                         @RequestParam("editorTxt") String EdocContent,			// 기안 내용
+	                         List<MultipartFile> uploadFiles,						// 파일 업로드
+	                         RedirectAttributes rdAttributes) {						
+	    
+	    EDocDto edoc = new EDocDto();
+	    List<EDocApprovalDto> approvalList = new ArrayList<>();
+	    List<EDocAttachDto> attachList = new ArrayList<>();
+	    
+		for(MultipartFile file : uploadFiles) {
+			if(file != null && !file.isEmpty()) {
+				Map<String, String> map = fileUtil.fileupload(file, "edoc");
+				attachList.add(EDocAttachDto.builder()
+										.filePath(map.get("filePath"))
+										.attachOriginalName(map.get("originalName"))
+										.attachRenameFileName(map.get("filesystemName"))
+										.build());
+			}
+		}
+	    
+	    // edoc 객체에 담기
+	    edoc.setEmpNo(empNo);
+	    edoc.setSampleNo(sampleNo);
+	    edoc.setEdocTitle(EdocTitle);
+	    edoc.setEdocContent(EdocContent);
+	    edoc.setAttachList(attachList);
+	    
+	    // approvalOrder 값 처리
+	    String[] approvals = approvalOrder.split(";");
+	    for (String approvalDetail : approvals) {
+	        String[] detail = approvalDetail.split("-");
+	        int aprvlRank = Integer.parseInt(detail[0].trim());
+	        String name = detail[1].trim();
+	        String rank = detail[2].trim();
+	        String dept = detail[3].trim();
+	        String no = detail[4].trim();
+	        
+	        EDocApprovalDto approval = new EDocApprovalDto();
+	        
+	        // 결재자 정보를 필요한 로직에 따라 처리
+	         approval.setAprvlRank(aprvlRank);
+	         approval.setEmpNo(no);
+	         
+	         approvalList.add(approval);
+	    }
+	    
+	    log.debug("approvalList : {}", approvalList);
+	    
+	    int result = edocService.edocInsert(edoc, approvalList);
+	    int totalSize = attachList.size() + approvalList.size();
+	    
+		if(attachList.isEmpty() && result ==  approvalList.size() + 1
+				|| !attachList.isEmpty() && result == totalSize ) {
+			rdAttributes.addFlashAttribute("alertMsg", "게시글 등록 성공");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "게시글 등록 실패");			
+		}
 		
-		EDocDto edoc = new EDocDto();
-		EDocApprovalDto approval = new EDocApprovalDto();
-		
-		edoc.setEmpNo(draftName);
-	
-		return "asd";
+		return "redirect:/";
+	    
+	    
 	}
+
     
     
     

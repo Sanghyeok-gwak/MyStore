@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.EDocDao;
-import com.gd.mystore.dto.DepartmentDto;
+import com.gd.mystore.dto.EDocApprovalDto;
+import com.gd.mystore.dto.EDocAttachDto;
+import com.gd.mystore.dto.EDocDto;
 import com.gd.mystore.dto.EDocSampleDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -50,8 +52,31 @@ public class EDocServiceImpl implements EDocService {
 	}
 
 	@Override
-	public List<EmpMemberDto> selectEmployees() {
-		return edocDao.selectEmployees();
+	public List<EmpMemberDto> selectEmployees(String no) {
+		return edocDao.selectEmployees(no);
+	}
+
+	@Override
+	public int edocInsert(EDocDto edoc, List<EDocApprovalDto> approvalList) {
+		
+		// 1) edoc테이블에 insert
+		int result = edocDao.insertEdoc(edoc);
+		
+		// 2) attachment테이블에 insert
+		List<EDocAttachDto> list = edoc.getAttachList();
+		if(result > 0 && !list.isEmpty()) {
+			result = 0;
+			for(EDocAttachDto attach : list) {
+				result += edocDao.insertAttach(attach);
+			}
+		}
+		
+		// 3) approval테이블에 insert
+		for(EDocApprovalDto approval : approvalList) {
+			result += edocDao.saveApproval(approval);
+		}
+		
+		return result;
 	}
 
 }

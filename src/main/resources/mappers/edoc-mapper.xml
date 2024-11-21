@@ -165,7 +165,8 @@
 		         LEVEL as AC_BANK,
 		         NVL(t1.DEPT_UPSTAIR, '#') as DEPT_CODE,
 		         '' as EMP_GENDER,
-		         '' as EMP_RANK
+		         '' as EMP_RANK,
+		         t1.DEPT_NAME as DEPT_NAME
 		     FROM (
 		         SELECT *
 		         FROM TBL_DEPARTMENT
@@ -184,14 +185,92 @@
 		         'bi bi-person-circle' as EMP_GENDER,
 		         (SELECT comm.nm 
 		          FROM tbl_common_code comm 
-		          WHERE comm.cd = emp.emp_rank) as EMP_RANK
+		          WHERE comm.cd = emp.emp_rank) as EMP_RANK,
+		         (SELECT dep.dept_name
+		          FROM tbl_department dep
+		          WHERE dep.dept_code = emp.dept_code) as DEPT_NAME
 		     FROM
 		         tbl_employee emp
 		     WHERE
 		         emp.use_yn = 'Y'
-		         AND emp.emp_name != '정준수')
+		         AND emp.emp_no != #{no})
 				) a
 	</select>
+	
+	<!-- 기안서 작성 -->
+	<insert id="insertEdoc">
+		insert
+			into tbl_edoc
+			(
+				EDOC_NO
+			, SAMPLE_NO
+			, EDOC_TITLE
+			, EDOC_CONTENT
+			, EDOC_STARTDATE
+			, EDOC_ENDDATE
+			, EMP_NO
+			)
+			values
+			(
+				edoc_no_seq.nextval
+			,	#{sampleNo}
+			,	#{edocTitle}
+			,	#{edocContent}
+			,	SYSDATE
+			,	SYSDATE	+ INTERVAL '14' DAY
+			, #{empNo}
+			)
+	</insert>
+	
+	<!-- 첨부파일 업로드 -->
+	<insert id="insertAttach">
+		insert
+		  into tbl_edoc_attachment
+		  (
+		    attach_no
+		  , attach_original_filename
+		  , attach_rename_filename
+		  , file_path
+		  , attach_edoc_ref
+		  )
+		  values
+		  (
+		    attach_no_seq.nextval
+		  , #{attachOriginalName}
+		  , #{attachRenameFileName}
+		  , #{filePath}
+		  , edoc_no_seq.currval  
+		  )
+	</insert>
+	
+	<!-- 결재자 -->
+	<insert id="saveApproval">
+		insert 
+			into tbl_edoc_approval
+			(
+			    aprvl_no,
+			    aprvl_edoc_no,
+			    aprvl_rank,
+			    aprvl_status,
+			    emp_no
+			)
+			values
+			(
+			    aprvl_no_seq.nextval,
+			    edoc_no_seq.currval,
+			    #{aprvlRank},
+			    case 
+			        when #{aprvlRank} = '1' then 'N' 
+			        else 'W'
+			    end,
+			    #{empNo}
+			)
+
+	</insert>
+	
+	
+	
+
 	
 	
 

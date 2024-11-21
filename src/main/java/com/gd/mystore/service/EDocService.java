@@ -3,6 +3,8 @@ package com.gd.mystore.service;
 import java.util.List;
 
 import com.gd.mystore.dto.DepartmentDto;
+import com.gd.mystore.dto.EDocApprovalDto;
+import com.gd.mystore.dto.EDocDto;
 import com.gd.mystore.dto.EDocSampleDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -29,5 +31,8 @@ public interface EDocService {
 	EDocSampleDto selectEDocForm(int sampleNoInt);
 	
 	// jstree에 데이터 담기
-	List<EmpMemberDto> selectEmployees();
+	List<EmpMemberDto> selectEmployees(String no);
+	
+	// 기안서 담기
+	int edocInsert(EDocDto edoc, List<EDocApprovalDto> approvalList);
 }

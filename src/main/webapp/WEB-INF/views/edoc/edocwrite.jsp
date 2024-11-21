@@ -364,7 +364,7 @@ input[type=file]::file-selector-button {
 
 	<div class="body-body">
 		<div class="text-box">
-			<form action="${contextPath}/edoc/edocinsert.do" method="post" name="editorForm">
+			<form action="${contextPath}/edoc/edocinsert.do" method="post" name="editorForm" enctype="multipart/form-data">
 				<div id="topdiv">
 					<div class="bbox-box" style="width: 50%;">
 						<span class="ffont1" style="font-weight: bold;">전자문서 작성하기</span> <select
@@ -381,8 +381,6 @@ input[type=file]::file-selector-button {
 					
 			    <!-- 기안자 이름: 로그인된 사용자의 이름 -->
 			    <input type="hidden" name="draftName" id="draftName" value="${loginUser.empNo}">
-			    <!-- 결재자 이름 목록: 선택된 결재자들의 이름을 콤마로 구분하여 저장 -->
-			    <input type="hidden" name="approvers" id="approvers">	
 			    <!-- 결재선 순서 정보: 결재자의 순서, 이름, 직급, 부서를 JSON 형식으로 저장 -->
 			    <input type="hidden" name="approvalOrder" id="approvalOrder">
     
@@ -447,7 +445,7 @@ input[type=file]::file-selector-button {
 
 				<!-- 파일업로드 -->
 				<div id="middiv3">
-					<input type="file" id="fileupload" name="uploadFile" multiple><br>
+					<input type="file" id="fileupload" name="uploadFiles"  class="file" multiple><br>
 				</div>
 			</form>
 		</div>
@@ -515,24 +513,18 @@ input[type=file]::file-selector-button {
 			}
 
 			// 결재자 정보 수집 (결재선 순서 포함)
-			var approvers = [];
+		
 			var approvalOrder = [];
 
-			selectedNodes.slice(0, 2).reverse().forEach(function(node, index) {
-				approvers.push(node.data.name);
-				approvalOrder.push({
-					order : index + 1,
-					name : node.data.name,
-					rank : node.data.rank,
-					dept : node.data.dept,
-					no	 : node.data.no,
+			selectedNodes.slice(0, 2).reverse().forEach(function(node, index) { 
+				approvalOrder.push( 
+						(index + 1) + "-" + node.data.name + "-" + node.data.rank + "-" + node.data.dept + "-" + node.data.no 
+						); 
 				});
-			});
 
 			// 숨겨진 필드에 데이터 설정
 			$('#draftName').val('${loginUser.empNo}'); // 기안자 이름
-			$('#approvers').val(approvers.join(',')); // 결재자 이름 (콤마로 구분)
-			$('#approvalOrder').val(JSON.stringify(approvalOrder)); // 결재선 순서 JSON으로 변환
+			$('#approvalOrder').val(approvalOrder.join(';')); // 각 결재자 정보를 세미콜론으로 구분된 문자열로 저장
 
 			// 제목 입력 확인
 			if ($('#title').val().trim() === "") {
@@ -735,6 +727,8 @@ input[type=file]::file-selector-button {
 
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	
+	<script src="${ contextPath }/resources/js/fileValidate.js"></script>
 
 </body>
 </html>
