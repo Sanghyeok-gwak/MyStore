@@ -79,4 +79,34 @@ public class EDocServiceImpl implements EDocService {
 		return result;
 	}
 
+	@Override
+	public int aprvlWaitListCount(String no) {
+		return edocDao.aprvlWaitListCount(no);
+	}
+
+	@Override
+	public List<EDocDto> aprvlWaitList(String no, PageInfoDto pi) {
+		return edocDao.aprvlWaitList(no, pi);
+	}
+
+	@Override
+	public int aprvlScheduledListCount(String no) {
+		return edocDao.aprvlScheduledListCount(no);
+	}
+
+	@Override
+	public List<EDocDto> aprvlScheduledList(String no, PageInfoDto pi) {
+		return edocDao.aprvlScheduledList(no, pi);
+	}
+
+	@Override
+	public int aprvlCompleteListCount(String no) {
+		return edocDao.aprvlCompleteListCount(no);
+	}
+
+	@Override
+	public List<EDocDto> aprvlCompleteList(String no, PageInfoDto pi) {
+		return edocDao.aprvlCompleteList(no, pi);
+	}
+
 }

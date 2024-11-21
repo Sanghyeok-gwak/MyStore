@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 public class EDocDto {
 	private int edocNo;						// 전자문서 번호
-	private int sampleNo;					// 양식유형 번호
+	private String sampleNo;				// 양식유형 번호(양식유형)
 	private String edocTitle;				// 문서제목
 	private String edocContent;				// 문서내용
 	private String startDt;					// 시작일시
@@ -28,6 +28,9 @@ public class EDocDto {
 	private String modyfy;					// 수정자
 	private	String modifyDt;				// 수정일
 	private String useYN;					// 사용여부(Y/N)
+	
+	private String nm;						// 직급
+	private String deptName;				// 부서
 	
 	private List<EDocAttachDto> attachList;	// 첨부파일
 }

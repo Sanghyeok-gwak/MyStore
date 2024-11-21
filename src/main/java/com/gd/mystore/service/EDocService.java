@@ -33,6 +33,21 @@ public interface EDocService {
 	// jstree에 데이터 담기
 	List<EmpMemberDto> selectEmployees(String no);
 	
-	// 기안서 담기
+	// 기안서 작성
 	int edocInsert(EDocDto edoc, List<EDocApprovalDto> approvalList);
+	
+	
+	// 결재 목록 조회
+	// 결재 대기 목록(페이징)
+	int aprvlWaitListCount(String no);
+	List<EDocDto> aprvlWaitList(String no, PageInfoDto pi);
+	
+	// 결재 예정 목록(페이징)
+	int aprvlScheduledListCount(String no);
+	List<EDocDto> aprvlScheduledList(String no, PageInfoDto pi);
+	
+	// 결재 완료 목록(페이징)
+	int aprvlCompleteListCount(String no);
+	List<EDocDto> aprvlCompleteList(String no, PageInfoDto pi);
+	
 }

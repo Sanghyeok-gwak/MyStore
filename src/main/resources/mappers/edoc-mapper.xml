@@ -48,12 +48,49 @@
 		<result column="USE_YN" property="useYn"/>
 		<result column="AC_NO" property="acNo"/>
 		<result column="AC_BANK" property="acBank"/>	
-		 <!-- CommonCode 테이블에서 가져온 nm 컬럼 -->
+		<!-- CommonCode 테이블에서 가져온 nm 컬럼 -->
     <result property="nm" column="nm"/>
     
     <!-- Department 테이블에서 가져온 dept_upstair, dept_name 컬럼 -->
     <result property="deptUpStair" column="dept_upstair"/>
     <result property="deptName" column="dept_name"/>
+	</resultMap>
+	
+	<resultMap id="EdocDtoMap" type="EDocDto">
+		<result column="EDOC_NO" property="sampleNo" />
+		<result column="SAMPLE_NO" property="sampleDotCode" />
+		<result column="EDOC_TITLE" property="sampleDesc" />
+		<result column="EDOC_CONTENT" property="sampleFormat" />
+		<result column="EDOC_STARTDATE" property="empNo" />
+		<result column="EDOC_ENDDATE" property="createDt" />
+		<result column="FINAL_DATE" property="modyfy" />
+		<result column="EDOC_STATUS" property="modifyDt" />
+		<result column="EMP_NO" property="useYN" />
+		<result column="MODIFIER" property="useYN" />
+		<result column="MODIFY_DATE" property="useYN" />
+		<result column="USE_YN" property="useYN" />
+		
+		<result column="APRVL_STATUS" property="aprvlStatus" />
+		
+		<!-- CommonCode 테이블에서 가져온 nm 컬럼 -->
+		<result column="NM"  property="nm" />
+		
+		<!-- Department 테이블에서 가져온 dept_name 컬럼 -->
+    <result column="DEPT_NAME" property="deptName" />
+	
+		<collection resultMap="attachResultMap" property="attachList" />
+	</resultMap>
+	
+	<resultMap id="attachResultMap" type="EDocAttachDto">
+		<result column="ATTACH_NO" property="fileNo"/>
+		<result column="ATTACH_EDOC_REF" property="filePath"/>
+		<result column="ATTACH_ORIGINAL_FILENAME" property="filesystemName"/>
+		<result column="ATTACH_RENAME_FILENAME" property="originalName"/>
+		<result column="EMP_NO" property="originalName"/>
+		<result column="CREATE_DATE" property="originalName"/>
+		<result column="MODIFIER" property="originalName"/>
+		<result column="MODIFY_DATE" property="originalName"/>
+		<result column="FILE_PATH" property="originalName"/>
 	</resultMap>
 		
 	
@@ -267,6 +304,109 @@
 			)
 
 	</insert>
+	<!-- 기안서 작성 완료 -->
+	
+	
+	
+	<!-- 결재 목록 조회 -->
+	<!-- 페이징 -->
+	<select id="aprvlWaitListCount" resultType="_int">
+		select
+		    	count(*)
+			from
+		    	tbl_edoc edoc
+			join
+		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		 where
+		    	approval.emp_no = #{no}
+		    	and approval.aprvl_status = 'N';
+	</select>
+	<!-- 결재 대기 목록 -->
+	<select id="aprvlWaitList" resultMap="EdocDtoMap">
+		select 
+			    edoc.edoc_no,
+			    edoc.edoc_title,
+			    edoc.edoc_content,
+			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
+			    edoc.emp_no as drafter,
+			    approval.aprvl_status,
+			from 
+		   	  tbl_edoc edoc
+			join 
+		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		 where 
+		    	approval.emp_no = #{no}
+		    	and approval.aprvl_status = 'N'
+		order by 
+		    	edoc.edoc_startdate desc;						
+	</select>
+	
+	<!-- 페이징 -->
+	<select id="aprvlScheduledListCount" resultType="_int">
+		select
+		    	count(*)
+			from
+		    	tbl_edoc edoc
+			join
+		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		 where
+		    	approval.emp_no = #{no}
+		    	and approval.aprvl_status = 'W';
+	</select>
+	<!-- 결재 예정 목록 -->
+	<select id="aprvlScheduledList" resultMap="EdocDtoMap">
+		select 
+			    edoc.edoc_no,
+			    edoc.edoc_title,
+			    edoc.edoc_content,
+			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
+			    edoc.emp_no as drafter,
+			    approval.aprvl_status,
+			from 
+		   	  tbl_edoc edoc
+			join 
+		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		 where 
+		    	approval.emp_no = #{no}
+		    	and approval.aprvl_status = 'W'
+		order by 
+		    	edoc.edoc_startdate desc;				
+	</select>
+	
+	<!-- 페이징 -->
+	<select id="aprvlCompleteListCount" resultType="_int">
+		select
+		    	count(*)
+			from
+		    	tbl_edoc edoc
+			join
+		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		 where
+		    	approval.emp_no = #{no}
+		    	and approval.aprvl_status = 'Y';
+	</select>
+	<!-- 결재 완료 목록 -->
+	<select id="aprvlCompleteList" resultMap="EdocDtoMap">
+		select 
+			    edoc.edoc_no,
+			    edoc.edoc_title,
+			    edoc.edoc_content,
+			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    to_char(final_date, 'YYYY-MM-DD') final_date,
+			    edoc.emp_no as drafter,
+			    approval.aprvl_status,
+			from 
+		   	  tbl_edoc edoc
+			join 
+		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		 where 
+		    	approval.emp_no = #{no}
+		    	and approval.aprvl_status = 'Y'
+		order by 
+		    	edoc.edoc_startdate desc;							
+	</select>
 	
 	
 	

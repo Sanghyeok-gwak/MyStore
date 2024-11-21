@@ -64,4 +64,39 @@ public class EDocDao {
 	public int saveApproval(EDocApprovalDto approval) {
 		return sqlSession.insert("edocMapper.saveApproval", approval);
 	}
+
+	public int aprvlWaitListCount(String no) {
+		return sqlSession.selectOne("edocMapper.aprvlWaitListCount", no);
+	}
+
+	public List<EDocDto> aprvlWaitList(String no, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.aprvlWaitList", no, rowBounds);
+	}
+
+	public int aprvlScheduledListCount(String no) {
+		return sqlSession.selectOne("edocMapper.aprvlScheduledListCount", no);
+	}
+
+	public List<EDocDto> aprvlScheduledList(String no, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.aprvlScheduledList", no, rowBounds);
+	}
+
+	public int aprvlCompleteListCount(String no) {
+		return sqlSession.selectOne("edocMapper.aprvlCompleteListCount", no);
+	}
+
+	public List<EDocDto> aprvlCompleteList(String no, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.aprvlCompleteList", no, rowBounds);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
