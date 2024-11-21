@@ -46,6 +46,11 @@ public class PersonnelServiceImpl implements PersonnelService {
 	}
 
 	@Override
+	public int updatequit(EmpMemberDto e) {
+		return personnelDao.updatequit(e);
+	}
+	
+	@Override
 	public int selectEmpListCount() {
 		return personnelDao.selectEmpListCount();
 	}
@@ -64,6 +69,7 @@ public class PersonnelServiceImpl implements PersonnelService {
 	public List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
 		return personnelDao.selectSearchList(search, pi);
 	}
+
 
 
 }

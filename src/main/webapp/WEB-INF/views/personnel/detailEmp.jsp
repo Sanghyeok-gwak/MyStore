@@ -123,8 +123,8 @@
                 }
             }).open();
         }
+        
     </script>
-</head>
 </head>
 <body>
 
@@ -266,18 +266,37 @@
                 </div>
             </div>
           
-                <div class="btn-box-hover" style="display: block; justify-content: center; margin-left: 200px; ">
-                    <button type="submit" class="btn3-hover ffont3" style="width: 300px; height: 35px; ">수정하기</button> 
-                    <a href="${ contextPath }">
-                <button type="button" class="btn3-hover ffont3" style="width: 373px; height: 35px;">홈으로</button>
-                </a>
-                </div>
-            
+                <div class="btn-box-hover" style="display: flex; justify-content: center; margin-left: 200px; gap: 20px;">
+                    <!-- '수정하기' 버튼 -->
+                    <button type="submit" class="btn3-hover ffont3" style="width: 300px; height: 35px;">수정하기</button>
             </form>
+            
+				<form action="${contextPath}/personnel/quit.do" method="post" id="confirmQuit">
+				    <div class="input-box-top-box" hidden>
+				        <div class="input-box-top-box-input">
+				            <input type="text" value="${e.empNo}" name="empNo" >
+				        </div>
+				    </div>  
+				
+				    <!-- '퇴사' 버튼 -->
+				    <button type="button" class="btn3-hover ffont3" style="background-color: red; width: 300px; height: 35px;" onclick="confirmQuit()">
+				        퇴사
+				    </button>
+				</form>
+				
+				<script>
+				function confirmQuit() {
+				    // confirm 다이얼로그 띄우기
+				    if (confirm("정말 퇴사처리를 진행 하시겠습니까?")) {
+				        // 사용자가 확인을 누르면 폼 제출
+				        document.getElementById("confirmQuit").submit();  // form ID를 'confirmQuit'로 수정
+				    } else {
+				        // 사용자가 취소를 누르면 콘솔에 메시지 출력
+				        console.log("취소되었습니다.");
+				    }
+				}
+				</script>
 
-          </div>
-        </div>
-      </div>
       
       
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

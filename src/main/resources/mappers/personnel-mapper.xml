@@ -34,6 +34,9 @@
  	SET 
  		EMP_PHONE = #{empPhone}
  	  , EMP_EMAIL = #{empEmail}
+ 	  , EMP_POSTCODE = #{empPostcode}
+ 	  , EMP_ADDRESS = #{empAddress}
+ 	  , EMP_DETAILADDRESS = #{empDetailAddress}
   where EMP_NO = #{empNo}
 
 </update>
@@ -218,21 +221,32 @@ SELECT
 <!-- 사원 수정 -->
 <update id="updateEmp">
 	UPDATE
-		TBL_EMPLOYEE
-	SET
-		EMP_NAME = #{empName},
-		EMP_BIRTH = #{empBirth},
-		EMP_EMAIL = #{empEmail},
-		EMP_PHONE = #{empPhone},
-		AC_NO = #{acNo},
-		AC_BANK = #{acBank},
-		EMP_ADDRESS = #{empAddress},
-		EMP_POSTCODE = #{empPostcode},
-		EMP_DETAILADDRESS = #{empDetailAddress},
-		EMP_RANK = #{empRank},      
-		EMP_PROFILE = #{empProfile} 
-	WHERE
-		EMP_NO = #{empNo}
+		   TBL_EMPLOYEE
+	   SET
+		   EMP_NAME = #{empName},
+		   EMP_BIRTH = #{empBirth},
+		   EMP_EMAIL = #{empEmail},
+		   EMP_PHONE = #{empPhone},
+		   AC_NO = #{acNo},
+		   AC_BANK = #{acBank},
+		   EMP_ADDRESS = #{empAddress},
+		   EMP_POSTCODE = #{empPostcode},
+		   EMP_DETAILADDRESS = #{empDetailAddress},
+		   EMP_RANK = #{empRank},      
+		   EMP_PROFILE = #{empProfile} 
+	 WHERE 
+		   EMP_NO = #{empNo}
+</update>
+
+<!-- 퇴사처리 -->
+<update id="updatequit">
+	UPDATE
+	       TBL_EMPLOYEE
+	   SET 
+	       EMP_EMPLOYMENT = 'N'
+	 WHERE 
+	       EMP_NO = #{empNo}
+
 </update>
 
 
