@@ -55,12 +55,16 @@
         background-color: rgba(123, 131, 211, 0.9) !important;
         color: #ffffff !important;
     }
+    .left_body{
+        width: 50%;
+    }
 
     /* 오른쪽 css */
     .right_body{
         border-left: 1px solid rgb(219, 219, 219);
-        width: 30%;
+        width: 26%;
         padding: 95px 20px;
+        margin-left: 2%;
     }
     .right_Lv_title{
         background-color: rgba(123, 131, 211, 0.9);
@@ -136,46 +140,37 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th scope="row">1</th>
-								<td>123456789123</td>
-								<td>홍길동</td>
-								<td>
-									<div>
-										<select class="form-select"
-											aria-label="Default select example">
-											<option value="1">Lv 5</option>
-											<option value="2">Lv 4</option>
-											<option value="3">Lv 3</option>
-											<option value="2">Lv 2</option>
-											<option value="3">Lv 1</option>
-										</select>
-									</div>
-								</td>
-								<td>null</td>
-								<td>2016-05-25</td>
-								<td>2024-11-9</td>
-							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>1234123442</td>
-								<td>강개순</td>
-								<td>
-									<div>
-										<select class="form-select"
-											aria-label="Default select example">
-											<option value="1">Lv 5</option>
-											<option value="2">Lv 4</option>
-											<option value="3">Lv 3</option>
-											<option value="2">Lv 2</option>
-											<option value="3">Lv 1</option>
-										</select>
-									</div>
-								</td>
-								<td>인사과</td>
-								<td>2016-08-25</td>
-								<td>2024-11-10</td>
-							</tr>
+							<c:choose>
+								<c:when test="${ empty list }">
+									<tr>
+										<td colspan="7">조회된 사원이 없습니다.</td>
+									</tr>
+								</c:when>
+								
+								<c:otherwise>
+									<c:forEach var="e" items="${ list }" varStatus="status">
+										<tr>
+											<th scope="row">${ status.index + 1 }</th>
+											<td>${ e.getEmpNo() }</td>
+											<td>${ e.getEmpName() }</td>
+											<td>
+												<div>
+													<select id="target_box" class="form-select" aria-label="Default select example" data-Lv="${	e.getEmpAuth() }" >
+														<option value="PS005">Lv 5</option>
+														<option value="PS004">Lv 4</option>
+														<option value="PS003">Lv 3</option>
+														<option value="PS002">Lv 2</option>
+														<option value="PS001">Lv 1</option>
+													</select>
+												</div>
+											</td>
+											<td>${ e.getDeptCode() }</td>
+											<td>${ e.getCreateDate() }</td>
+											<td>${ e.getModifyDate() }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 					<!-- End Table with hoverable rows -->
@@ -183,24 +178,35 @@
 						<button class="btn3-hover">수정하기</button>
 					</div>
 				</form>
+				
+				<script>
+				    document.addEventListener('DOMContentLoaded', function () {
+				        const selectElements = document.querySelectorAll('.form-select');
+				
+				        //select 요소 value 설정
+				        selectElements.forEach(function (select) {
+				            const empAuth = select.getAttribute('data-Lv');
+				            select.value = empAuth;
+				        });
+				    });
+				</script>
 
-
-				<div class="pageing">
-					<!-- Pagination with icons -->
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
-					</nav>
-					<!-- End Pagination with icons -->
+				<div class="paging">
+					<ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
+						<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : ''}" >
+							<a class="page-link" href="${ contextPath }/system/systemLv.do?page=${pi.currentPage-1}">
+							<i class="bi bi-chevron-double-left"></i> <span>이전</span></a>
+						</li>
+	
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }" >						
+						<li class="page-item ${ pi.currentPage == p ? 'active' : '' }"><a class="page-link" href="${ contextPath }/system/systemLv.do?page=${p}">${ p }</a></li>
+						</c:forEach>
+						
+						<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' } ">
+							<a class="page-link" href="${ contextPath }/system/systemLv.do?page=${pi.currentPage+1}"> <span>다음</span>&nbsp;
+							<i class="bi bi-chevron-double-right"></i></a>
+						</li> 
+					</ul>
 				</div>
 			</div>
 			<!-- 왼쪽끝 -->

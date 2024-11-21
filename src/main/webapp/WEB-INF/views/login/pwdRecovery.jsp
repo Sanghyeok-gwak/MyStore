@@ -152,7 +152,7 @@
 			              사번
 		            	</div>
 		              <div class="input-bar">
-		                <input type="number" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
+		                <input type="number" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1002" required/>
 		              </div>
 		            </div>
 		            <div class="right_id">
@@ -160,7 +160,7 @@
 			              이메일
 		            	</div>
 		              <div class="input-bar">
-		                <input type="text" class="input-bar1" name="empEmail" id="right_pwd" placeholder="abc@admin.com" value="yechan9981@naver.com"/>
+		                <input type="text" class="input-bar1" name="empEmail" id="right_pwd" placeholder="abc@admin.com" value="yechan9981@naver.com" required/>
 		              </div>
 		            </div>
 		

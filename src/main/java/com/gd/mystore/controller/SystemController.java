@@ -11,11 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardTypeDto;
+import com.gd.mystore.dto.EmpMemberDto;
+import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.service.BoardService;
 import com.gd.mystore.service.SystemService;
+import com.gd.mystore.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,18 +33,17 @@ import lombok.extern.slf4j.Slf4j;
 public class SystemController {
 	
 	private final SystemService systemService;
+	private final PagingUtil pagingUtil;
 	
 	@GetMapping("/log.do")
 	public void systemlog() {}
-	
-	@GetMapping("/systemLv.do")
-	public void systemLv() {}
 	
 	//게시판 리스트 조회
 	@GetMapping("/systemBoardsList.do")
 	public void systemBoards(Model model) {
 		List<BoardTypeDto> list = systemService.selectBodrList();
 		model.addAttribute("list", list);
+		log.debug("@@@@@@ {} : ", list);
 	}
 	
 	//게시판 추가
@@ -66,6 +71,9 @@ public class SystemController {
 	@PostMapping("/boardUpdate.do")
 	public String systemBoardsEdit(BoardTypeDto bt
 								 , RedirectAttributes rdAttributes) {
+		
+		log.debug("###### : {}", bt.getDeptCode());
+		
 		//체크박스 변환처리
 		if(bt.getBoardtUse() != null) {
 			bt.setBoardtUse("N");
@@ -83,5 +91,33 @@ public class SystemController {
 		// 추후 히스토리백 적용
 		return "redirect:/system/systemBoardsList.do";
 	}
+	
+	/*
+	 * =================================================================================
+	 * 시스템 레벨 페이지 컨트롤러
+	 */
+	
+	@GetMapping("/systemLv.do")
+	public void list(@RequestParam(value="page", defaultValue = "1") int currentPage
+					, Model model) {
+		
+		int listCount = systemService.selectEmpMemberCount();
+		
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		List<EmpMemberDto> list = systemService.selectEmpMemberList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

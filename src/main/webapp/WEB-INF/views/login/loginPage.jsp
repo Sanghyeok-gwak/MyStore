@@ -20,7 +20,8 @@
  
    <!-- Template Main CSS File -->
    <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
-
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <style>
       @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600;700&family=Noto+Sans+KR:wght@100..900&display=swap");
@@ -164,13 +165,13 @@
 		            <div class="right_id">
 		              계정
 		              <div class="input-bar">
-		                <input type="number" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="${empNo}"/>
+		                <input id="userId" type="number" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="${empNo}" required/>
 		              </div>
 		            </div>
 		            <div class="right_id">
 		              비밀번호
 		              <div class="input-bar">
-		                <input type="password" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요"/>
+		                <input type="password" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" required/>
 		              </div>
 		            </div>
 		

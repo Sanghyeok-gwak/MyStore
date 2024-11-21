@@ -11,30 +11,59 @@
     <result column="BOARDT_CONTENT" property="boardtContent" />
     <result column="BOARDT_USE" property="boardtUse" />
     <result column="OFFICE_USE" property="officeUse" />
+    <result column="DEPT_CODE" property="deptCode" />
     <result column="EMP_NO" property="empNo" />
     <result column="CREATE_DATE" property="createDate" />
     <result column="MODIFIER" property="modifier" />
     <result column="MODIFY_DATE" property="modifyDate" />
     <result column="USE_YN" property="useYN" />
 	</resultMap>
+	
+	<resultMap id="empMemberResultMap" type="EmpMemberDto">
+		<result column="EMP_NO" property="empNo"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_GENDER" property="empGender"/>
+		<result column="EMP_BIRTH" property="empBirth"/>
+		<result column="EMP_PHONE" property="empPhone"/>
+		<result column="EMP_EMAIL" property="empEmail"/>
+		<result column="EMP_ADDRESS" property="empAddress"/>
+		<result column="EMP_EMPLOYMENT" property="empEmployment"/>
+		<result column="EMP_DETAILADDRESS" property="empDetailAddress"/>
+		<result column="EMP_POSTCODE" property="empPostcode"/>
+		<result column="EMP_PASSWORD" property="empPwd"/>
+		<result column="EMP_AUTH" property="empAuth"/>
+		<result column="EMP_RANK" property="empRank"/>
+		<result column="EMP_PROFILE" property="empProfile"/>
+		<result column="DEPT_CODE" property="deptCode"/>
+		<result column="USE_YN" property="useYn"/>
+		<result column="AC_NO" property="acNo"/>
+		<result column="AC_BANK" property="acBank"/>
+		<result column="CREATER" property="creater"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
+	</resultMap>
 
 	<select id="selectSystemBoardList" resultMap="boardTypeResultMap">
-		select
-			   BOARD_TYPE_NO
-			 , BOARDT_NAME
-			 , BOARDT_TYPE
-			 , BOARDT_READ
-			 , BOARDT_WRITE
-			 , BOARDT_CONTENT
-			 , BOARDT_USE
-			 , OFFICE_USE
-			 , EMP_NO
-			 , CREATE_DATE
-			 , MODIFIER
-			 , MODIFY_DATE
-			 , USE_YN
-		  from TBL_BOARDTYPE
-		 where USE_YN = 'Y'
+		SELECT 
+		       BOARD_TYPE_NO,
+		       BOARDT_NAME,
+		       BOARDT_TYPE,
+		       BOARDT_READ,
+		       BOARDT_WRITE,
+		       BOARDT_CONTENT,
+		       BOARDT_USE,
+		       OFFICE_USE,
+		       D.DEPT_NAME AS DEPT_CODE,
+		       BT.EMP_NO,
+		       BT.CREATE_DATE,
+		       BT.MODIFIER,
+		       BT.MODIFY_DATE,
+		       BT.USE_YN
+		  FROM tbl_boardtype BT
+		  LEFT join tbl_department d
+		    ON D.DEPT_CODE = BT.DEPT_CODE
+		 WHERE BT.USE_YN = 'Y'
 	</select>
 	
 	<!-- 게시판 추가 	-->
@@ -50,6 +79,7 @@
 		  , BOARDT_CONTENT
 		  , BOARDT_USE
 		  , OFFICE_USE
+		  , DEPT_CODE
 		  , EMP_NO
 		  , CREATE_DATE
 		  , MODIFIER
@@ -65,6 +95,7 @@
 			, 5
 			, 5
 			, 'N'
+			, NULL
 			, #{userData}
 			, NULL
 			, SYSDATE
@@ -85,6 +116,7 @@
 			 , BOARDT_CONTENT = #{boardtContent}
 			 , BOARDT_USE = #{boardtUse}
 			 , OFFICE_USE = #{officeUse}
+			 , DEPT_CODE = #{deptCode}
 		 where BOARD_TYPE_NO = #{boardTypeNo}
 	</update>
 	
@@ -96,7 +128,22 @@
 		 where BOARD_TYPE_NO = #{boardTypeNo}
 	</delete>
 
-
-
+	<select id="selectEmpMemberCount" resultType="_int">
+		select count(*)
+		  from tbl_employee
+		 where EMP_EMPLOYMENT = 'Y'
+	</select>
+	
+	<select id="selectEmpMemberList" resultMap="empMemberResultMap">
+     select
+            EMP_NO
+          , EMP_NAME
+          , EMP_AUTH
+          , (select dept_name from tbl_department where dept_code = e.dept_code) as DEPT_CODE
+          , CREATE_DATE
+          , MODIFY_DATE
+		   from tbl_employee e
+		  where EMP_EMPLOYMENT = 'Y'
+	</select>
 
 </mapper>

@@ -73,7 +73,6 @@ public class EmpMemberController {
 			}
 		} else { // 로그인 실패
 			rdAttributes.addFlashAttribute("alertMsg", "로그인에 실패하였습니다. 사번 및 비밀번호를 다시 확인해주세요.");
-
 			return "redirect:/login/loginPage.do";
 		}
 	}

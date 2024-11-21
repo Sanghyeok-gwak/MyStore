@@ -413,15 +413,7 @@
               <li class="nav-item dropdown">
               
                 <a class="nav-link nav-icon" id="head_img_4" href="#" data-bs-toggle="dropdown">
-                	<c:choose>
-                		<c:when test="${ empty loginUser.empProfile }">
-                			<img src="${ contextPath }/resources/images/defaultImg.png" class="head_img">
-                		</c:when>
-                		
-                		<c:otherwise> 		
-                			<img src="${ loginUser.empProfile }" class="head_img">
-                		</c:otherwise>
-                	</c:choose>
+                <img src="<c:out value='${ loginUser.empProfile }' default='${ contextPath }/resources/images/defaultImg.png' />" class="head_img">
                   
                   <span class="badge bg-primary badge-number">4</span>
                 </a><!-- End Notification Icon -->

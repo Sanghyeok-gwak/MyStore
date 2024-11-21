@@ -142,7 +142,7 @@
               <div class="left_line">
                 <div class="left_title_txt" style="z-index: 3">메뉴 관리</div>
                 <div class="btn-box-hover" id="left_head_btn">
-	                  <button class="btn2-hover" type="submit" onclick="$('#frm').attr('action', '${contextPath}/system/boardsDelete.do').submit();" >
+	                  <button id="target_btn" disabled class="btn2-hover" type="submit" onclick="$('#frm').attr('action', '${contextPath}/system/boardsDelete.do').submit();" >
 	                    <b style="font-weight: 900">-</b> 삭제
 	                  </button>
                 	
@@ -154,15 +154,15 @@
                 </div>
               </div>
               
-             <script>
-				function checkSelection() {
-				    if ($('input[type="checkbox"]:checked').length == 0) {
-				        alert("삭제할 항목을 선택하세요.");
-				        return false;
-				    }
-				    return true;
-				}
-			</script>
+			       <script>
+								function checkSelection() {
+								    if ($('input[type="checkbox"]:checked').length == 0) {
+								        alert("삭제할 항목을 선택하세요.");
+								        return false;
+								    }
+								    return true;
+								}
+						</script>
               <!-- 
               	삭제 클릭시 실행되는 function
               		오른쪽의 form 요소 선택한후 
@@ -188,6 +188,7 @@
                						 data-boardtContent="${bt.getBoardtContent()}"
                						 data-boardtUse="${bt.getBoardtUse()}"
                						 data-officeUse="${bt.getOfficeUse()}"
+               						 data-deptCode="${bt.getDeptCode()}"
                						 >
 			                  <div class="icon"><i class="bi bi-file-earmark"></i></div>
 			                  	${ bt.getBoardtName() }
@@ -282,7 +283,25 @@
 		                      <td style="display: flex">
 		                        지점
 		                        <div class="form-check" style="margin: 0 0 0 10px">
-		                          <input class="form-check-input" type="checkbox" name="deptCode" id="gridCheck2" />
+		                          <input class="form-check-input" type="checkbox" name="officeUse" id="gridCheck2" />
+		                        </div>
+		                        <div style="width: 60%;">
+			                        <select class="form-select" name="deptCode" aria-label="Default select example">
+			                        
+																<c:choose>
+																	<c:when test=" ${ empty bt.getDeptCode()}">
+																		<option value="">비고</option>
+																	</c:when>
+																	<c:otherwise>
+																	
+																		<c:forEach var="bl" items="${ bt.getDeptCode() }">
+																		 	<option value="">${bl.getDeptCode()}</option>
+								               			</c:forEach>
+								               			
+																	</c:otherwise>
+																</c:choose>
+																
+	                           </select>
 		                        </div>
 		                      </td>
 		                    </tr>
@@ -303,13 +322,18 @@
 			<script>
               document.addEventListener('DOMContentLoaded', () => {
                 const menuItems = document.querySelectorAll('.left_body_listItem');
-            
+                const target = document.getElementById('target_btn');
+                
                 menuItems.forEach(item => {
                   item.addEventListener('click', function () {
                     document.querySelectorAll('.left_body_listItem.active').forEach(activeItem => activeItem.classList.remove('active'));
             
                     this.classList.add('active');
+                    
+                    //선택시 삭제버튼 활성화
+                    target.disabled = false;
             
+                    //오른쪽 요소에 데이터 넣기
                     const boardTypeNo = this.getAttribute('data-boardTypeNo');
                     const boardTypeName = this.getAttribute('data-boardtName');
                     const boardtType = this.getAttribute('data-boardtType');
@@ -318,18 +342,21 @@
                     const boardtContent = this.getAttribute('data-boardtContent');
                     const boardtUse = this.getAttribute('data-boardtUse');
                     const officeUse = this.getAttribute('data-officeUse');
+                    const deptCode = this.getAttribute('data-deptCode');
+                    
+                    console.log(officeUse);
                     
                     //게시판 번호
-					input_No.value = boardTypeNo;
+										input_No.value = boardTypeNo;
                     
-					//input_No2.value = boardTypeNo;
-					console.log(boardTypeNo);
+										//input_No2.value = boardTypeNo;
+										//console.log(boardTypeNo);
                     
                     //제목
                     input_name.value = boardTypeName;
                     
                     //게시판 유형
-					const selectElement = document.getElementById('boardTypeSelect');
+										const selectElement = document.getElementById('boardTypeSelect');
                     
                     if (boardtType == 'N') {
                         selectElement.value = 'N';
@@ -344,19 +371,22 @@
                     selectElementLv.value = boardtContent;
                     
                     //댓글 쓰기 설정
-					const selectElementComment = document.getElementById('SelectComment');
-					selectElementComment.value = boardtWrite;
-
-                    //읽기 쓰기 설정
-					const selectElementWrite = document.getElementById('SelectWrite');
-					selectElementWrite.value = boardtRead;
+										const selectElementComment = document.getElementById('SelectComment');
+										selectElementComment.value = boardtWrite;
 					
-					//감추기 설정
-					const selectElementHide = document.getElementById('gridCheck1');
-					selectElementHide.checked = boardtUse == 'N';
-					
-					//지점 여부 (보류- 사유: 지점 dept_code 전부 다름, 쿼리문 방법 찾은 후 작업)
-					
+					          //읽기 쓰기 설정
+										const selectElementWrite = document.getElementById('SelectWrite');
+										selectElementWrite.value = boardtRead;
+										
+										//감추기 설정
+										const selectElementHide = document.getElementById('gridCheck1');
+										selectElementHide.checked = boardtUse == 'N';
+										
+										//지점 여부
+										const selectElementofficeUse = document.getElementById('gridCheck2');
+										selectElementofficeUse.checked = officeUse == 'N';
+										
+										
                   });
                 });
               });

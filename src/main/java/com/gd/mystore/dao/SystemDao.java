@@ -2,10 +2,13 @@ package com.gd.mystore.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.gd.mystore.dto.BoardTypeDto;
+import com.gd.mystore.dto.EmpMemberDto;
+import com.gd.mystore.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +32,15 @@ public class SystemDao {
 
 	public int boardDelete(BoardTypeDto bt) {
 		return sqlSession.delete("systemMapper.boardsDelete", bt);
+	}
+
+	public int selectEmpMemberCount() {
+		return sqlSession.selectOne("systemMapper.selectEmpMemberCount");
+	}
+
+	public List<EmpMemberDto> selectEmpMemberList(PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() -1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("systemMapper.selectEmpMemberList", null, rowBounds);
 	}
 
 }
