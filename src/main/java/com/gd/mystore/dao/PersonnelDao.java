@@ -60,6 +60,10 @@ public class PersonnelDao {
 		return sqlSession.update("personnelMapper.updateEmp", e);
 	}
 	
+	public int updatequit(EmpMemberDto e) {
+		return sqlSession.update("personnelMapper.updatequit", e);
+	}
+	
 	
 	
 }

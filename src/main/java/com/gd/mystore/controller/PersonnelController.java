@@ -64,8 +64,6 @@ public class PersonnelController {
 	}
 
 	
-	
-	
 	// 직원 상세 조회 및 수정 기능
     @GetMapping("/detailEmp")
     public void detailEmp(String no, Model model) {
@@ -83,16 +81,33 @@ public class PersonnelController {
     	
     	if(result > 0) {
 			rdAttributes.addFlashAttribute("alertMsg", "성공적으로 정보수정 되었습니다.");
-    		return "redirect:/personnel/detailEmp?no=" + e.getEmpNo();
+    		return "redirect:/personnel/employeeManager";
     		
     	}else {
 			rdAttributes.addFlashAttribute("alertMsg", "정보수정에 실패했습니다 다시 시도해주세요.");
-    		return "redirect:/personnel/employeeManager";
+    		return "redirect:/";
     	}
     }
     
+    @PostMapping("/quit.do")
+    public String updatequit(EmpMemberDto e
+    					   , RedirectAttributes rdAttributes) {
+    	
+    	int result = personnelService.updatequit(e);
+    	
+    	if(result > 0) {
+    		rdAttributes.addFlashAttribute("alertMsg", "성공적으로 퇴사처리 되었습니다.");
+    		return "redirect:/personnel/employeeManager";
+    		
+    	} else {
+    		rdAttributes.addFlashAttribute("alertMsg", "퇴사처리에 실패했습니다. 다시시도해주세요.");
+    		return "redirect:/";
+    	}
+    						   
+     }
     
-    // 직원 등록 페이지로
+
+	// 직원 등록 페이지로
     @GetMapping("/empEntry")
     public void empEntry() {
     }

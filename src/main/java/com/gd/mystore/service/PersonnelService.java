@@ -25,6 +25,9 @@ public interface PersonnelService {
 	// 사원수정
 	 int updateEmp(EmpMemberDto e);
 	 
+	// 퇴사처리
+	 int updatequit(EmpMemberDto e);
+	 
 	// 사원 목록 조회 (페이징 처리)
 	 int selectEmpListCount();
 	 List<EmpMemberDto> selectEmpList(PageInfoDto pi);

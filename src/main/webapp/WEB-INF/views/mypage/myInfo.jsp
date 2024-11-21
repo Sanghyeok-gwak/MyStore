@@ -8,61 +8,115 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-      .product-img-box,.input-box-top,.input-box-body{
-        border-radius: 20px;
-        background-color: white;
-        padding:30px;
-      }
-      .body-body{
-        display: flex;
-        flex-direction: column;
-      }
-      .product-add-top{
-        display: flex;
-        margin-bottom: 20px;
-        height: 100%;
-      }
-      .product-img-box{
-        width: 30%;
-        margin-right: 20px;
-        height: 400px;
-      }
-      .input-box-top{
-        width: 90%;
-        height: 100%;
-      }
-      .product-add-body,.input-box-body{
-        height: 100%;
-      }
-      .upload-image {
-          height: 100%;
-          width: 100%;
-      }
-      .input-box-top{
+.product-img-box, .input-box-top, .input-box-body {
+            border-radius: 20px;
+            background-color: white;
+            padding: 30px;
+        }
+
+        .body-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-add-top {
+            display: flex;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+
+        .product-img-box {
+            width: 30%;
+            margin-right: 20px;
+            height: 400px;
+        }
+
+        .input-box-top {
+            width: 70%;
+            height: 100%;
+        }
+
+        .upload-image {
+            height: 100%;
+            width: 100%;
+        }
+
+        .input-box-top {
             display: flex;
             flex-direction: column;
             height: 100%;
-          }
-          .input-box-top-box1,.input-box-top-box2,.input-box-top-box3,.input-box-top-box4,.input-box-top-box5
-          ,.input-box-top-box6,.input-box-top-box7,.input-box-top-box8{
+        }
+
+        .input-box-top-box {
             display: flex;
             margin-bottom: 30px;
-          }
-          .input-box-top-box1-text,.input-box-top-box2-text,.input-box-top-box3-text,.input-box-top-box4-text,.input-box-top-box5-text
-          ,.input-box-top-box6-text,.input-box-top-box7-text,.input-box-top-box8-text{
+        }
+
+        .input-box-top-box-text {
             width: 30%;
-          }
-          .input-box-top-box1-input,.input-box-top-box2-input,.input-box-top-box3-input,.input-box-top-box4-input,.input-box-top-box5-input
-          ,.input-box-top-box6-input,.input-box-top-box7-input,.input-box-top-box8-input{
+            padding-: 3%;
+        }
+
+        .input-box-top-box-input {
             width: 70%;
-          }
-          .input-box-top input{
+            margin-right: 3%;
+        }
+
+        .input-box-top input {
             height: 30px;
             width: 100%;
             border: 1px solid lightgray;
-           	padding-left:10px;
-          }
-    </style>
+        }
+
+        .addr-box {
+            display: flex;
+        }
+
+        .addr-box-left {
+            width: 95%;
+        }
+
+        .addr-box-right {
+            width: 5%;
+        }
+
+        .addr-box-right button {
+            width: 100%;
+            background-color: white;
+            height: 30px;
+            border: 1px solid lightgray;
+        }
+
+        .btn-box-hover button {
+            width: 373px;
+            height: 35px;
+        }	
+     	
+     	.input-box-top input {
+     		padding-left: 10px;
+     	}
+</style>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+
+        // 주소 API 실행
+        function sample6_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var addr = '';
+                    if (data.userSelectedType === 'R') { 
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+                    document.getElementById('sample6_postcode').value = data.zonecode;
+                    document.getElementById("sample6_address").value = addr;
+                    document.getElementById("sample6_detailAddress").focus();
+                }
+            }).open();
+        }
+        
+     </script>    
 </head>
 <body>
 
@@ -87,97 +141,86 @@
           <div class="upload-image"  style="">
             <input type="image" id="preview" src="${ loginUser.empProfile }"  style="width: 100%; height: 100%;" readonly>
           </div>
-          <!--
-          <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
-            <script>
-              function handleFileUpload(event) {
-                const file = event.target.files[0];
-                if (file) {
-                  const reader = new FileReader();
-                  reader.onload = function(e) {
-                    document.getElementById('preview').src = e.target.result;
-                  };
-                  reader.readAsDataURL(file);
-                }
-              }
-            </script>
-            -->
         </div>
         
         
-        <form class="input-box-top" action="${ contextPath }/mypage/update.do" method="post" id="myinfo_form">
         <div class="input-box-top">
-          <div class="input-box-top-box1">
-            <div class="input-box-top-box1-text">
+        <form action="${ contextPath }/mypage/update.do" method="post" id="myinfo_form">
+          <div class="input-box-top-box">
+            <div class="input-box-top-box-text">
               <span class="ffont3">부서</span>
             </div>
-            <div class="input-box-top-box1-input">
+            <div class="input-box-top-box-input">
               <input type="text"  id="deptCode" name="deptCode" value="${ loginUser.deptCode }" style="background-color: lightgray;" readonly>
             </div>
           </div>
           
-          <div class="input-box-top-box2">
-            <div class="input-box-top-box2-text">
+          <div class="input-box-top-box">
+            <div class="input-box-top-box-text">
               <span class="ffont3">직급</span>
             </div>
-            <div class="input-box-top-box2-input">
+            <div class="input-box-top-box-input">
               <input type="text" id="empRank" name="empRank" value="${ loginUser.empRank }" style="background-color: lightgray;" readonly>
             </div>
           </div>
           
-          <div class="input-box-top-box3">
-            <div class="input-box-top-box3-text">
+          <div class="input-box-top-box">
+            <div class="input-box-top-box-text">
               <span class="ffont3">성명</span>
             </div>
-            <div class="input-box-top-box3-input">
+            <div class="input-box-top-box-input">
               <input type="text" id="empName" name="empName" value="${ loginUser.empName }" style="background-color: lightgray;" readonly>
             </div>
           </div>
           
-          <div class="input-box-top-box4">
-            <div class="input-box-top-box4-text">
+          <div class="input-box-top-box">
+            <div class="input-box-top-box-text">
               <span class="ffont3">사번</span>
             </div>
-            <div class="input-box-top-box4-input">
+            <div class="input-box-top-box-input">
               <input type="text" id="empNo" name=empNo value="${ loginUser.empNo }" style="background-color: lightgray;" readonly>
             </div>
           </div>
           
-          <div class="input-box-top-box5">
-            <div class="input-box-top-box5-text">
+          <div class="input-box-top-box">
+            <div class="input-box-top-box-text">
               <span class="ffont3">휴대폰</span>
             </div>
-            <div class="input-box-top-box5-input">
+            <div class="input-box-top-box-input">
               <input type="text" id="empPhone" name="empPhone" value="${ loginUser.empPhone }">
               
             </div>
           </div>
           
-          <div class="input-box-top-box6">
-            <div class="input-box-top-box6-text">
+          <div class="input-box-top-box">
+            <div class="input-box-top-box-text">
               <span class="ffont3">이메일</span>
             </div>
-            <div class="input-box-top-box6-input">
+            <div class="input-box-top-box-input">
               <input type="text" id="empEmail" name="empEmail" value="${ loginUser.empEmail }">
             </div>
           </div>
 
-          <div class="input-box-top-box7">
-            <div class="input-box-top-box7-text">
-              <span class="ffont3">주소</span>
+           <!-- 주소 입력 -->
+            <div class="input-box-top-box">
+                <div class="input-box-top-box-text">
+                    <span class="ffont3">주소</span>
+                </div>
+                <div class="input-box-top-box-input">
+                    <div class="addr-box">
+                        <div class="addr-box-left">
+                            <input type="text" id="sample6_postcode" value="${ loginUser.empPostcode }" style="margin-bottom: 3%;" name="empPostcode" readonly>
+                        </div>
+                        <div class="addr-box-right">
+                            <button type="button" onclick="sample6_execDaumPostcode()">
+                                <i class="bi bi-shop"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <input type="text" id="sample6_address" value="${ loginUser.empAddress }"  style="margin-bottom: 3%;" name="empAddress" readonly>
+                    <input type="text" id="sample6_detailAddress" value="${ loginUser.empDetailAddress }" style="margin-bottom: 3%;" name="empDetailAddress">
+                </div>
             </div>
-            <div class="input-box-top-box7-input">
-
-              <input type="text" id="empPostcode" name="empPostcode" value="${ loginUser.empPostcode }" style="margin-bottom: 10px;" readonly>
-              <input type="text" value="${ loginUser.empAddress }" style="margin-bottom: 10px;" readonly>
-              <input type="text" value="${ loginUser.empDetailAddress }" style="margin-bottom: 10px;" readonly>
-              <!--
-                <input type="text" value="서울시 서울구 서울동" style="margin-bottom: 10px;">
-                <input type="text" value="힐스테이트" style="margin-bottom: 10px;">
-                -->
-              
-            </div>
-          </div>
           
                 <br>
 
@@ -185,20 +228,16 @@
                     <button class="btn3-hover ffont3" style="width: 300px; height: 35px;">수정하기</button>
                     <a href="${ contextPath }">
                     <button type="button" class="btn3-hover ffont3" style="width: 300px; height: 35px;">홈으로</button> 
-                    </a>>
+                    </a>
                 </div>
                 
 
             
-        </div>
-        
 		</form>
+        </div>
 
-
+        
       </div>
-
-    
-    
     </div>
     <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>
