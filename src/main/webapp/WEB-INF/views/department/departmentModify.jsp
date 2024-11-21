@@ -292,6 +292,66 @@ $(document).ready(function() {
 });
 
 $(function() {
+ 
+
+ // 트리 데이터를 AJAX로 로드하는 부분
+    function loadTreeData() {
+        $.ajax({
+            url: "/mystore/department/departmentModify/data",  // 트리 데이터를 가져올 URL
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);  // 응답 데이터 확인
+
+                // 응답에서 departmentTree만 추출하여 처리
+                var departmentTree = response.departmentTree || [];  // departmentTree가 없으면 빈 배열
+
+                // 데이터가 없으면 경고
+                if (departmentTree.length === 0) {
+                    alert("부서 트리 데이터가 없습니다.");
+                    return;
+                }
+
+                // 데이터를 jstree 형식에 맞게 변환
+                var treeData = departmentTree.map(function(emp) {
+                    console.log(emp);
+
+                    // 필수 값들 확인 (id, parent, text)
+                    if (!emp.empNo || !emp.deptCode || !emp.empName) {
+                        console.error("필수 데이터가 없습니다:", emp);
+                    }
+
+                    return {
+	                    "id": emp.empNo,
+	                    "parent": emp.deptCode,
+	                    "text": emp.empName + (emp.empRank ? " (" + emp.empRank + ")" : ""),
+	                    "data": {
+	                        "rank": emp.empRank,
+	                        "name": emp.empName,
+	                        "dept": emp.deptName,
+	                        "no": emp.empNo
+	                    },
+	                    "icon": emp.empGender
+	                };
+                });
+
+                // 변환된 트리 데이터 출력
+                console.log("변환된 트리 데이터:", treeData);
+
+                // jstree에 새로운 데이터를 설정
+                $('#jstree').jstree(true).settings.core.data = treeData;
+                $('#jstree').jstree(true).refresh();  // 트리 새로 고침
+            },
+            error: function(xhr, status, error) {
+                alert("트리 데이터 로딩 중 오류 발생");
+                console.error(xhr.responseText);  // 에러 메시지 확인
+            }
+        });
+    }
+
+    // 초기 데이터 로드
+    loadTreeData();
+
     // jstree 초기화 (한 번만 초기화)
     $('#jstree').jstree({
         core: {
@@ -350,69 +410,6 @@ $(function() {
             }
         }
     });
-
- // 트리 데이터를 AJAX로 로드하는 부분
-    function loadTreeData() {
-        $.ajax({
-            url: "/mystore/department/departmentModify/data",  // 트리 데이터를 가져올 URL
-            method: 'GET',
-            dataType: 'json',
-            success: function(departmentTree) {
-                // 응답받은 트리 데이터를 콘솔로 확인
-                console.log(departmentTree);
-
-                // 데이터가 배열이 아니라면 배열 형식으로 변환
-                if (!Array.isArray(departmentTree)) {
-                    departmentTree = Object.values(departmentTree);  // 객체를 배열로 변환
-                }
-
-                // 데이터가 없으면 경고
-                if (departmentTree.length === 0) {
-                    alert("부서 트리 데이터가 없습니다.");
-                    return;
-                }
-
-                // 데이터를 jstree 형식에 맞게 변환
-                var treeData = departmentTree.map(function(emp) {
-                    // 로그로 emp 객체 출력 (디버깅)
-                    console.log(emp);
-                    
-                    // 필수 값들 확인 (id, parent, text)
-                    if (!emp.empNo || !emp.deptCode || !emp.empName) {
-                        console.error("필수 데이터가 없습니다:", emp);
-                    }
-
-                    return {
-                        "id": emp.empNo,  // 직원 번호
-                        "parent": emp.dept || '#',  // 부서 코드, 상위 항목은 '#'로 처리
-                        "text": emp.empName + (emp.empRank ? " (" + emp.empRank + ")" : ""),  // 이름 + 직급
-                        "data": {
-                            "rank": emp.empRank,  // 직급
-                            "name": emp.empName,  // 이름
-                            "dept": emp.deptName,  // 부서명
-                            "no": emp.empNo  // 직원 번호
-                        },
-                        "icon": 'bi bi-person-circle'  // 성별 아이콘, 기본값 설정
-                    };
-                });
-
-                // 트리 데이터 출력 (디버깅)
-                console.log("변환된 트리 데이터:", treeData);
-
-                // jstree에 새로운 데이터를 설정
-                $('#jstree').jstree(true).settings.core.data = treeData;
-                $('#jstree').jstree(true).refresh();  // 트리 새로 고침
-            },
-            error: function(xhr, status, error) {
-                alert("트리 데이터 로딩 중 오류 발생");
-                console.error(xhr.responseText);  // 에러 메시지 확인
-            }
-        });
-    }
-
-    // 초기 데이터 로드
-    loadTreeData();
-
 
 
 });
