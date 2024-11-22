@@ -66,27 +66,27 @@
 		 order by PRODUCT_NO desc
   </select>
 	<insert id="insertOrderingList">
-		INSERT INTO TBL_ORDERING (
-		    ORDER_NO,
-		    EMP_NO,
-		    BRANCH_NAME,
-		    ORDER_STATUS,
-		    ORDER_CHECKDATE,
-		    CREATE_DATE,
-		    MODIFY_DATE
-		) 
-		VALUES (
-		    ORDER_NO_SEQ.nextval
-		  , #{empNo}
-		  , 'BRANCH_NAME'
-		  , 'N'
-		  , sysdate
-		  , sysdate
-		  , sysdate
-		);
-	</insert>
+    INSERT INTO TBL_ORDERING (
+        ORDER_NO,
+        EMP_NO,
+        BRANCH_NAME,
+        ORDER_STATUS,
+        ORDER_CHECKDATE,
+        CREATE_DATE,
+        MODIFY_DATE
+    ) 
+    VALUES (
+        ORDER_NO_SEQ.nextval,  
+        #{empNo},  
+        'branchName',            
+        'N',                 
+        sysdate,            
+        sysdate,            
+        sysdate             
+    )
+</insert>
 	<insert id="insertOrderingPro">
-		INSERT INTO 테이블명 (
+		INSERT INTO TBL_ORDERING_PRODUCT (
 		    PRODUCT_NO,
 		    ORDER_COUNT,
 		    CREATE_DATE,
@@ -99,6 +99,6 @@
 			, sysdate
 		  , ORDER_NO_SEQ.currval
 		  , #{productName}
-		);
+		)
 	</insert>
 </mapper>
