@@ -296,27 +296,30 @@ input[type=file]::file-selector-button {
 			<hr>
 
 			<!-- 중간1 start-->
-			<div id="middiv">
-
-				<div>
-					<select name="languages" id="lang"
-						style="height: 40px; margin-bottom: 20px;">
-						<option value="select">분류</option>
-						<option value="vac">제목</option>
-						<option value="dept">기안자</option>
-					</select>
-				</div>
-				<div class="search_box" style="width: 500px; height: 40px;">
-					<input class="input_b" type="text" placeholder="검색"
-						style="height: auto;">
-					<div class="icon">
-						<button>
-							<i class="bi bi-search"></i>
-						</button>
+			<form action="${contextPath}/edoc/draftprogressListsearch.do"
+				method="get">
+				<div style="display: flex; justify-content: flex-end;">
+					<div>
+						<select name="condition" id="lang"
+							style="height: 40px; margin-bottom: 20px;">
+							<option value="sample_desc">제목</option>
+							<option value="emp_no">기안자</option>
+						</select>
 					</div>
-				</div>
 
-			</div>
+					<!-- width값은 페이지에 맞게 조절해주세요 -->
+					<div class="search_box" style="width: 500px; height: 40px;">
+						<input class="input_b" type="text" placeholder="검색"
+							style="height: auto;">
+						<div class="icon">
+							<button type="submit">
+								<i class="bi bi-search"></i>
+							</button>
+						</div>
+					</div>
+
+				</div>
+			</form>
 			<!-- 중간1 end-->
 
 
@@ -336,86 +339,28 @@ input[type=file]::file-selector-button {
 					</thead>
 
 					<tbody style="cursor: pointer;">
-						<tr>
-							<th scope="row">10</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>진행</td>
-						</tr>
-						<tr>
-							<th scope="row">9</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>진행</td>
-						</tr>
-						<tr>
-							<th scope="row">8</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>진행</td>
-						</tr>
-						<tr>
-							<th scope="row">7</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>진행</td>
-						</tr>
-						<tr>
-							<th scope="row">6</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">5</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">4</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
-						<tr>
-							<th scope="row">1</th>
-							<td>휴가</td>
-							<td>양식제목입니다.</td>
-							<td>2016-05-25</td>
-							<td>2016-06-09</td>
-							<td>대기</td>
-						</tr>
+						<c:choose>
+							<c:when test="${ empty list }">
+								<tr>
+									<td colspan="6"
+										style="text-align: center; vertical-align: middle;">조회된
+										기안 진행 문서가 없습니다.</td>
+								</tr>
+							</c:when>
+
+							<c:otherwise>
+								<c:forEach var="fl" items="${ list }">
+									<tr>
+										<td>${ fl.edocNo }</td>
+										<td>${ fl.sampleNo }</td>
+										<td>${ fl.edocTitle }</td>
+										<td>${ fl.startDt }</td>
+										<td>${ fl.endDt }</td>
+										<td>${ fl.edocStatus }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 
 
 					</tbody>
@@ -424,24 +369,38 @@ input[type=file]::file-selector-button {
 			<!-- 중간2 end -->
 
 
-			<!-- 끝 start-->
-			<div class="paging">
-				<ul class="pagination d-flex justify-content-center text-dark"
-					style="margin-top: 40px;">
-					<li class="page-item disabled"><a class="page-link" href="">
-							<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-					</a></li>
-					<li class="page-item active"><a class="page-link" href="">1</a></li>
-					<li class="page-item"><a class="page-link" href="">2</a></li>
-					<li class="page-item"><a class="page-link" href="">3</a></li>
-					<li class="page-item"><a class="page-link" href="">4</a></li>
-					<li class="page-item"><a class="page-link" href="">5</a></li>
-					<li class="page-item"><a class="page-link" href=""> <span>다음</span>&nbsp;<i
-							class="bi bi-chevron-double-right"></i>
-					</a></li>
-				</ul>
-			</div>
-			<!-- 끝 end-->
+			<!-- 페이징 -->
+			<c:if test="${ not empty list }">
+				<div class="paging">
+					<ul class="pagination d-flex justify-content-center text-dark"
+						style="margin-top: 40px;">
+						<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+							<a class="page-link"
+							href="${ contextPath }/edoc/draftprogressList.do?page=${pi.currentPage-1}">
+								<i class="bi bi-chevron-double-left"></i> <span>이전</span>
+						</a>
+						</li>
+
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
+								<a class="page-link"
+								href="${ contextPath }/edoc/draftprogressList.do?page=${p}">${p}</a>
+							</li>
+						</c:forEach>
+
+						<li
+							class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+							<a class="page-link"
+							href="${ contextPath }/edoc/draftprogressList.do?page=${pi.currentPage+1}">
+								<span>다음</span>&nbsp; <i class="bi bi-chevron-double-right"></i>
+						</a>
+						</li>
+					</ul>
+				</div>
+			</c:if>
+			<!-- 페이징 end -->
+
+
 		</div>
 	</div>
 

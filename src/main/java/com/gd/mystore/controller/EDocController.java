@@ -212,7 +212,7 @@ public class EDocController {
 			rdAttributes.addFlashAttribute("alertMsg", "게시글 등록 실패");			
 		}
 		
-		return "redirect:/";
+		return "redirect:/edoc/draftwaitList.do";
 	    
 	}
 	

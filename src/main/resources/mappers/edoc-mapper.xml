@@ -526,7 +526,7 @@
 			    sam.sample_dot_code as sample_no,
 			    edoc.edoc_title,
 			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
-			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
+			    to_char(final_date, 'YYYY-MM-DD') final_date,
 			    emp.emp_name as emp_name,
 			    CASE 
 			    		WHEN edoc.edoc_status = 'F' THEN '승인' 
@@ -562,7 +562,7 @@
 			    sam.sample_dot_code as sample_no,
 			    edoc.edoc_title,
 			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
-			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
+			    to_char(final_date, 'YYYY-MM-DD') final_date,
 			    emp.emp_name as emp_name,
 			    CASE 
 			    		WHEN edoc.edoc_status = 'R' THEN '반려' 

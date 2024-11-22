@@ -281,7 +281,7 @@ pageEncoding="UTF-8"%>
             <hr>
 
             <!-- 중간1 start-->
-		        <form action="${contextPath}/edoc/schedulelistsearch.do" method="get">
+		        <form action="${contextPath}/edoc/aprvlscheduledListsearch.do" method="get">
 							<div style="display: flex; justify-content: flex-end;">
 								<div>
 									<select name="condition" id="lang"

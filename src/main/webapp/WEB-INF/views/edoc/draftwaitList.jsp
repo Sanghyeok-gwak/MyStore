@@ -296,29 +296,30 @@ input[type=file]::file-selector-button {
 			<hr>
 
 			<!-- 중간1 start-->
-			<form action="${contextPath}/edoc/draftwaitListsearch.do" method="get">
-							<div style="display: flex; justify-content: flex-end;">
-								<div>
-									<select name="condition" id="lang"
-										style="height: 40px; margin-bottom: 20px;">
-										<option value="sample_desc">제목</option>
-										<option value="emp_no">기안자</option>
-									</select>
-								</div>
-		
-								<!-- width값은 페이지에 맞게 조절해주세요 -->
-								<div class="search_box" style="width: 500px; height: 40px;">
-									<input class="input_b" type="text" placeholder="검색"
-										style="height: auto;">
-									<div class="icon">
-										<button type="submit">
-											<i class="bi bi-search"></i>
-										</button>
-									</div>
-								</div>
-		
-							</div>
-						</form> 
+			<form action="${contextPath}/edoc/draftwaitListsearch.do"
+				method="get">
+				<div style="display: flex; justify-content: flex-end;">
+					<div>
+						<select name="condition" id="lang"
+							style="height: 40px; margin-bottom: 20px;">
+							<option value="sample_desc">제목</option>
+							<option value="emp_no">기안자</option>
+						</select>
+					</div>
+
+					<!-- width값은 페이지에 맞게 조절해주세요 -->
+					<div class="search_box" style="width: 500px; height: 40px;">
+						<input class="input_b" type="text" placeholder="검색"
+							style="height: auto;">
+						<div class="icon">
+							<button type="submit">
+								<i class="bi bi-search"></i>
+							</button>
+						</div>
+					</div>
+
+				</div>
+			</form>
 			<!-- 중간1 end-->
 
 
@@ -339,27 +340,27 @@ input[type=file]::file-selector-button {
 
 					<tbody style="cursor: pointer;">
 						<c:choose>
-								<c:when test="${ empty list }">
+							<c:when test="${ empty list }">
+								<tr>
+									<td colspan="6"
+										style="text-align: center; vertical-align: middle;">조회된
+										기안 대기 문서가 없습니다.</td>
+								</tr>
+							</c:when>
+
+							<c:otherwise>
+								<c:forEach var="fl" items="${ list }">
 									<tr>
-										<td colspan="6"
-											style="text-align: center; vertical-align: middle;">
-											조회된 결재 대기 문서가 없습니다.</td>
+										<td>${ fl.edocNo }</td>
+										<td>${ fl.sampleNo }</td>
+										<td>${ fl.edocTitle }</td>
+										<td>${ fl.startDt }</td>
+										<td>${ fl.endDt }</td>
+										<td>${ fl.edocStatus }</td>
 									</tr>
-								</c:when>
-	
-								<c:otherwise>
-									<c:forEach var="fl" items="${ list }">
-										<tr>
-											<td>${ fl.edocNo }</td>
-											<td>${ fl.sampleNo }</td>
-											<td>${ fl.edocTitle }</td>
-											<td>${ fl.startDt }</td>
-											<td>${ fl.endDt }</td>
-											<td>${ fl.edocStatus }</td>
-										</tr>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 
 
 					</tbody>
@@ -368,35 +369,38 @@ input[type=file]::file-selector-button {
 			<!-- 중간2 end -->
 
 
-	    <!-- 페이징 -->
+			<!-- 페이징 -->
 			<c:if test="${ not empty list }">
 				<div class="paging">
 					<ul class="pagination d-flex justify-content-center text-dark"
 						style="margin-top: 40px;">
 						<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-							<a class="page-link" href="${ contextPath }/edoc/draftwaitList.do?page=${pi.currentPage-1}">
+							<a class="page-link"
+							href="${ contextPath }/edoc/draftwaitList.do?page=${pi.currentPage-1}">
 								<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-							</a>
+						</a>
 						</li>
-	
+
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 							<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
-								<a class="page-link" href="${ contextPath }/edoc/draftwaitList.do?page=${p}">${p}</a>
+								<a class="page-link"
+								href="${ contextPath }/edoc/draftwaitList.do?page=${p}">${p}</a>
 							</li>
 						</c:forEach>
-	
-						<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-							<a class="page-link" href="${ contextPath }/edoc/draftwaitList.do?page=${pi.currentPage+1}">
-								<span>다음</span>&nbsp; 
-								<i class="bi bi-chevron-double-right"></i>
-						 </a>
+
+						<li
+							class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+							<a class="page-link"
+							href="${ contextPath }/edoc/draftwaitList.do?page=${pi.currentPage+1}">
+								<span>다음</span>&nbsp; <i class="bi bi-chevron-double-right"></i>
+						</a>
 						</li>
 					</ul>
 				</div>
 			</c:if>
 			<!-- 페이징 end -->
-			
-			
+
+
 		</div>
 	</div>
 

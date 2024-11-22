@@ -342,107 +342,37 @@ input[type=file]::file-selector-button {
 								<th scope="col">번호</th>
 								<th scope="col">유형</th>
 								<th scope="col">양식설명</th>
-								<th scope="col">생성자</th>
-								<th scope="col">생성일</th>
+								<th scope="col">기안일</th>
+								<th scope="col">만료일</th>
 								<th scope="col">상태</th>
 							</tr>
 						</thead>
 
-						<tbody>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-								<td>회수</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-								<td>회수</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-								<td>회수</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-								<td>회수</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
-							<tr>
-								<th><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
-								<th scope="row">10</th>
-								<td>휴가</td>
-								<td>양식설명입니다.</td>
-								<td>생성자</td>
-								<td>2016-05-25</td>
-							</tr>
+						<tbody style="cursor: pointer;">
+							<c:choose>
+								<c:when test="${ empty list }">
+									<tr>
+										<td colspan="6"
+											style="text-align: center; vertical-align: middle;">조회된
+											기안 회수 문서가 없습니다.</td>
+									</tr>
+								</c:when>
+
+								<c:otherwise>
+									<c:forEach var="fl" items="${ list }">
+										<tr>
+											<td><input type="checkbox" class="list-checkbox"
+												style="width: 18px; height: 18px;"></td>
+											<td>${ fl.edocNo }</td>
+											<td>${ fl.sampleNo }</td>
+											<td>${ fl.edocTitle }</td>
+											<td>${ fl.startDt }</td>
+											<td>${ fl.endDt }</td>
+											<td>${ fl.edocStatus }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 
 						</tbody>
 					</table>
@@ -451,44 +381,58 @@ input[type=file]::file-selector-button {
 
 			</form>
 
-			<!-- 끝 start-->
-			<div class="paging">
-				<ul class="pagination d-flex justify-content-center text-dark"
-					style="margin-top: 40px;">
-					<li class="page-item disabled"><a class="page-link" href="">
-							<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-					</a></li>
-					<li class="page-item active"><a class="page-link" href="">1</a></li>
-					<li class="page-item"><a class="page-link" href="">2</a></li>
-					<li class="page-item"><a class="page-link" href="">3</a></li>
-					<li class="page-item"><a class="page-link" href="">4</a></li>
-					<li class="page-item"><a class="page-link" href="">5</a></li>
-					<li class="page-item"><a class="page-link" href=""> <span>다음</span>&nbsp;<i
-							class="bi bi-chevron-double-right"></i>
-					</a></li>
-				</ul>
-			</div>
-			<!-- 끝 end-->
+			<!-- 페이징 -->
+			<c:if test="${ not empty list }">
+				<div class="paging">
+					<ul class="pagination d-flex justify-content-center text-dark"
+						style="margin-top: 40px;">
+						<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+							<a class="page-link"
+							href="${ contextPath }/edoc/draftrecoveryList.do?page=${pi.currentPage-1}">
+								<i class="bi bi-chevron-double-left"></i> <span>이전</span>
+						</a>
+						</li>
+
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+							<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
+								<a class="page-link"
+								href="${ contextPath }/edoc/draftrecoveryList.do?page=${p}">${p}</a>
+							</li>
+						</c:forEach>
+
+						<li
+							class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+							<a class="page-link"
+							href="${ contextPath }/edoc/draftrecoveryList.do?page=${pi.currentPage+1}">
+								<span>다음</span>&nbsp; <i class="bi bi-chevron-double-right"></i>
+						</a>
+						</li>
+					</ul>
+				</div>
+			</c:if>
+			<!-- 페이징 end -->
 
 		</div>
 	</div>
-	
-	  <script>
-  // 체크박스 전체 선택
-  document.getElementById('checkAll').addEventListener('change', function(){
-  
-  const allChecked = this.checked;
-  
-  const checkboxes = document.querySelectorAll('.list-checkbox');
-  
-  checkboxes.forEach(function(cbox){
-    cbox.checked = allChecked;
-  });
-});
 
-  </script>
-  
-  <jsp:include page="/WEB-INF/views/common/footer.jsp" />
-  
+	<script>
+		// 체크박스 전체 선택
+		document.getElementById('checkAll').addEventListener(
+				'change',
+				function() {
+
+					const allChecked = this.checked;
+
+					const checkboxes = document
+							.querySelectorAll('.list-checkbox');
+
+					checkboxes.forEach(function(cbox) {
+						cbox.checked = allChecked;
+					});
+				});
+	</script>
+
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+
 </body>
 </html>

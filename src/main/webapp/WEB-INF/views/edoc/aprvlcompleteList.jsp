@@ -299,7 +299,7 @@ input[type=file]::file-selector-button {
 			<hr>
 
 			<!-- 중간1 start-->
-       <form action="${contextPath}/edoc/schedulelistsearch.do" method="get">
+			<form action="${contextPath}/edoc/aprvlcompleteListsearch.do" method="get">
 				<div style="display: flex; justify-content: flex-end;">
 					<div>
 						<select name="condition" id="lang"
@@ -321,7 +321,7 @@ input[type=file]::file-selector-button {
 					</div>
 
 				</div>
-			</form> 
+			</form>
 			<!-- 중간1 end-->
 
 
@@ -342,31 +342,31 @@ input[type=file]::file-selector-button {
 					</thead>
 
 					<tbody style="cursor: pointer;">
-					
-					<c:choose>
-								<c:when test="${ empty list }">
+
+						<c:choose>
+							<c:when test="${ empty list }">
+								<tr>
+									<td colspan="6"
+										style="text-align: center; vertical-align: middle;">조회된
+										결재 완료 문서가 없습니다.</td>
+								</tr>
+							</c:when>
+
+							<c:otherwise>
+								<c:forEach var="cl" items="${ list }">
 									<tr>
-										<td colspan="6"
-											style="text-align: center; vertical-align: middle;">
-											조회된 결재 완료 문서가 없습니다.</td>
+										<td>${ cl.edocNo }</td>
+										<td>${ cl.sampleNo }</td>
+										<td>${ cl.edocTitle }</td>
+										<td>${ cl.empName }</td>
+										<td>${ cl.startDt }</td>
+										<td>${ cl.finalDt }</td>
+										<td>${ cl.aprvlStatus }</td>
 									</tr>
-								</c:when>
-	
-								<c:otherwise>
-									<c:forEach var="cl" items="${ list }">
-										<tr>
-											<td>${ cl.edocNo }</td>
-											<td>${ cl.sampleNo }</td>
-											<td>${ cl.edocTitle }</td>
-											<td>${ cl.empName }</td>
-											<td>${ cl.startDt }</td>
-											<td>${ cl.finalDt }</td>
-											<td>${ cl.aprvlStatus }</td>
-										</tr>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+
 
 					</tbody>
 				</table>
@@ -380,22 +380,25 @@ input[type=file]::file-selector-button {
 					<ul class="pagination d-flex justify-content-center text-dark"
 						style="margin-top: 40px;">
 						<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-							<a class="page-link" href="${ contextPath }/edoc/faprvlcompleteList.do?page=${pi.currentPage-1}">
+							<a class="page-link"
+							href="${ contextPath }/edoc/aprvlcompleteList.do?page=${pi.currentPage-1}">
 								<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-							</a>
+						</a>
 						</li>
 
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 							<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
-								<a class="page-link" href="${ contextPath }/edoc/faprvlcompleteList.do?page=${p}">${p}</a>
+								<a class="page-link"
+								href="${ contextPath }/edoc/aprvlcompleteList.do?page=${p}">${p}</a>
 							</li>
 						</c:forEach>
 
-						<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-							<a class="page-link" href="${ contextPath }/edoc/aprvlcompleteList.do?page=${pi.currentPage+1}">
-								<span>다음</span>&nbsp; 
-								<i class="bi bi-chevron-double-right"></i>
-						 </a>
+						<li
+							class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+							<a class="page-link"
+							href="${ contextPath }/edoc/aprvlcompleteList.do?page=${pi.currentPage+1}">
+								<span>다음</span>&nbsp; <i class="bi bi-chevron-double-right"></i>
+						</a>
 						</li>
 					</ul>
 				</div>
@@ -404,7 +407,7 @@ input[type=file]::file-selector-button {
 
 		</div>
 	</div>
-	
+
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>
