@@ -217,6 +217,7 @@ public class EDocController {
 	}
 	
 	
+	
 	// 결재 목록 조회
 	// 결재 목록 대기(페이징)
 	@GetMapping("/aprvlwaitList.do")
@@ -237,7 +238,7 @@ public class EDocController {
 		
 		log.debug("list: {}", list);
 		
-		return "edoc/pendinglist";
+		return "edoc/aprvlwaitList";
 	}
 	
 	// 결재 목록 예정(페이징)
@@ -259,7 +260,7 @@ public class EDocController {
 		
 		log.debug("list: {}", list);
 		
-		return "edoc/scheduledlist";
+		return "edoc/aprvlscheduledList";
 	}
 	
 	// 결재 목록 완료(페이징)
@@ -281,57 +282,127 @@ public class EDocController {
 		
 		log.debug("list: {}", list);
 		
-		return "edoc/aprvlcompletelist";
+		return "edoc/aprvlcompleteList";
+	}
+	
+	
+	// 기안서 목록 조회
+	// 기안 대기 문서(페이징)
+	@GetMapping("/draftwaitList.do")
+	public String draftwaitList(@RequestParam(value="page", defaultValue="1") int currentPage
+								  , Model model
+								  , HttpSession session) {
+		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo();
+		
+		int listCount = edocService.aprvlCompleteListCount(no);
+		
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		log.debug("list: {}", list);
+		
+		return "edoc/completelist";
+	}
+	
+	// 기안 진행 문서(페이징)
+	@GetMapping("/draftprogressList.do")
+	public String draftprogressList(@RequestParam(value="page", defaultValue="1") int currentPage
+								  , Model model
+								  , HttpSession session) {
+		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo();
+		
+		int listCount = edocService.aprvlCompleteListCount(no);
+		
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		log.debug("list: {}", list);
+		
+		return "edoc/completelist";
+	}
+	
+	// 기안 승인 문서(페이징)
+	@GetMapping("/draftapprovalList.do")
+	public String draftapprovalList(@RequestParam(value="page", defaultValue="1") int currentPage
+								  , Model model
+								  , HttpSession session) {
+		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo();
+		
+		int listCount = edocService.aprvlCompleteListCount(no);
+		
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		log.debug("list: {}", list);
+		
+		return "edoc/completelist";
+	}
+	
+	// 기안 반려 문서(페이징)
+	@GetMapping("/draftrejectList.do")
+	public String draftrejectList(@RequestParam(value="page", defaultValue="1") int currentPage
+								  , Model model
+								  , HttpSession session) {
+		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo();
+		
+		int listCount = edocService.aprvlCompleteListCount(no);
+		
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		log.debug("list: {}", list);
+		
+		return "edoc/completelist";
+	}
+	
+	// 기안 회수 문서(페이징)
+	@GetMapping("/draftrecoveryList.do")
+	public String draftrecoveryList(@RequestParam(value="page", defaultValue="1") int currentPage
+								  , Model model
+								  , HttpSession session) {
+		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo();
+		
+		int listCount = edocService.aprvlCompleteListCount(no);
+		
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		log.debug("list: {}", list);
+		
+		return "edoc/completelist";
 	}
 
     
     
     
-    
-    @GetMapping("collectlist")
-	public void collectlist() {}
-	
-	@GetMapping("completedetail")
-	public void completedetail() {}
 
-	@GetMapping("completelist")
-	public void completelist() {}
 	
-	@GetMapping("draftcompanion")
-	public void draftcompanion() {}
-	
-	@GetMapping("draftcompanionlist")
-	public void draftcompanionlist() {}
-	
-	@GetMapping("draftcomplete")
-	public void draftcomplete() {}
-	
-	@GetMapping("draftcompletelist")
-	public void draftcompletelist() {}
-	
-	@GetMapping("draftprogress")
-	public void draftprogress() {}
-	
-	@GetMapping("draftprogresslist")
-	public void draftprogresslist() {}
-	
-	@GetMapping("draftwait")
-	public void draftwait() {}
-	
-	@GetMapping("draftwaitlist")
-	public void draftwaitlist() {}
-	
-	@GetMapping("pendingdetail")
-	public void pendingdetail() {}
-	
-	@GetMapping("pendinglist")
-	public void pendinglist() {}
-	
-	@GetMapping("scheduleddetail")
-	public void scheduleddetail() {}
-	
-	@GetMapping("scheduledlist")
-	public void scheduledlist() {}
+
 	
 
 	

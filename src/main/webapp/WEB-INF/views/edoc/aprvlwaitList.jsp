@@ -9,7 +9,63 @@ pageEncoding="UTF-8"%>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
- /**/
+ /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
+      .text-box{
+        border-radius: 20px;
+        height: 100%;
+        width: 100%;
+        background-color: white;
+        padding:30px;
+      }
+    
+      .head_right_logo{
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin: 0px 3%;
+      }
+  
+      .d-flex{
+        justify-content: space-between;
+      }
+      .head_img{
+          width: 23px;
+          height: 23px;
+          border-radius: 100%;
+      }
+      .header_right_list{
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+      }
+      .header_right_list > a{
+        text-decoration: none;
+        text-decoration: none;
+        color: inherit;
+        font-weight: 500;
+      }
+      .header_right_list > i{
+        font-size: 20px;
+        margin-right: 5px;
+      }
+      .header-nav .nav-icon {
+          font-size: 22px;
+          color: #012970;
+          margin-right: 5px;
+          position: relative;
+      }
+      .bg-primary {
+          --bs-bg-opacity: 1;
+          background-color: rgb(255 72 72) !important;
+      }
+      .header-nav .badge-number {
+          position: absolute;
+          inset: -4px -9px auto auto;
+          font-weight: normal;
+          font-size: 12px;
+          padding: 3px 6px;
+      }
+      /**/
     /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
     .text-box{
       border-radius: 20px;
@@ -113,7 +169,7 @@ pageEncoding="UTF-8"%>
       line-height: 30px; 
       font-weight: 400;
     }
-    /* topdiv 스타일 end */
+    /* topdiv 스타일 end */  
 
     /* middiv 스타일 start */
     #middiv{
@@ -187,7 +243,6 @@ pageEncoding="UTF-8"%>
     .spacer {
     margin-left: auto; /* 왼쪽 여백을 최대화하여 오른쪽으로 밀기 */
     }
-
     .icon > button{
         border: none;
         background: none;
@@ -222,7 +277,6 @@ pageEncoding="UTF-8"%>
       font-weight: 400;
     }
 
-
     /* middiv2 스타일 end */
 
 
@@ -246,7 +300,6 @@ pageEncoding="UTF-8"%>
       margin-top: 10px;
     }
 
-
   /* paging 스타일 start*/
   .pagination .page-link {
     color: rgba(109, 105, 108, 1);
@@ -266,14 +319,16 @@ pageEncoding="UTF-8"%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <jsp:include page="/WEB-INF/views/common/side.jsp"/>
+
 <div class="body-body">
 <!-- 여기 채워서 작업하시면 됩니다 .-->
-<div class="text-box">
+
+  <div class="text-box">
 
             <!-- 처음 start -->
             <div id="topdiv"> 
 
-              <span class="ffont1" style="font-weight: bold;">결재 예정 문서</span>
+              <span class="ffont1" style="font-weight: bold;">결재 대기 문서</span>
 
             </div> 
             <!-- 처음 end -->
@@ -281,23 +336,29 @@ pageEncoding="UTF-8"%>
             <hr>
 
             <!-- 중간1 start-->
-            <div id="middiv" > 
-
-              <div>
-                <select name="languages" id="lang" style="height: 40px; margin-bottom: 20px;">
-                  <option value="select">분류</option>
-                  <option value="vac">제목</option>
-                  <option value="dept">기안자</option>
-                </select>
-              </div>
-              <div class="search_box" style="width:500px; height: 40px;">
-                <input class="input_b" type="text" placeholder="검색" style="height: auto;">
-                <div class="icon">
-                    <button><i class="bi bi-search"></i></button>
-                </div>
-              </div>
-    
-            </div> 
+		        <form action="${contextPath}/edoc/schedulelistsearch.do" method="get">
+							<div style="display: flex; justify-content: flex-end;">
+								<div>
+									<select name="condition" id="lang"
+										style="height: 40px; margin-bottom: 20px;">
+										<option value="sample_desc">제목</option>
+										<option value="emp_no">기안자</option>
+									</select>
+								</div>
+		
+								<!-- width값은 페이지에 맞게 조절해주세요 -->
+								<div class="search_box" style="width: 500px; height: 40px;">
+									<input class="input_b" type="text" placeholder="검색"
+										style="height: auto;">
+									<div class="icon">
+										<button type="submit">
+											<i class="bi bi-search"></i>
+										</button>
+									</div>
+								</div>
+		
+							</div>
+						</form> 
             <!-- 중간1 end-->
 
 
@@ -305,7 +366,7 @@ pageEncoding="UTF-8"%>
             <div id="middiv2">  
               <table class="table table-hover">
 
-                <thead style="cursor: pointer;">
+                <thead>
                   <tr>
                     <th scope="col">번호</th>
                     <th scope="col">유형</th>
@@ -317,97 +378,31 @@ pageEncoding="UTF-8"%>
                   </tr>
                 </thead>
 
-                <tbody>
-                  <tr>
-                    <th scope="row">10</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">9</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">8</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">7</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">6</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">5</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>휴가</td>
-                    <td>양식제목입니다.</td>
-                    <td>기안자</td>
-                    <td>2016-05-25</td>
-                    <td>2016-06-09</td>
-                    <td>예정</td>
-                  </tr>
+                <tbody style="cursor: pointer;">
+			     			
+			     			<c:choose>
+											<c:when test="${ empty list }">
+												<tr>
+													<td colspan="6"
+														style="text-align: center; vertical-align: middle;">
+														조회된 결재 완료 문서가 없습니다.</td>
+												</tr>
+											</c:when>
+				
+											<c:otherwise>
+												<c:forEach var="cl" items="${ list }">
+													<tr>
+														<td>${ cl.edocNo }</td>
+														<td>${ cl.sampleNo }</td>
+														<td>${ cl.edocTitle }</td>
+														<td>${ cl.empName }</td>
+														<td>${ cl.startDt }</td>
+														<td>${ cl.endDt }</td>
+														<td>${ cl.aprvlStatus }</td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
 
 
                 </tbody>
@@ -416,29 +411,43 @@ pageEncoding="UTF-8"%>
             <!-- 중간2 end -->
 
 
-            <!-- 끝 start-->
-            <div class="paging"> 
-              <ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
-                <li class="page-item disabled">
-                  <a class="page-link" href="">
-                    <i class="bi bi-chevron-double-left"></i> <span>이전</span>
-                  </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="">1</a></li>
-                <li class="page-item"><a class="page-link" href="">2</a></li>
-                <li class="page-item"><a class="page-link" href="">3</a></li>
-                <li class="page-item"><a class="page-link" href="">4</a></li>
-                <li class="page-item"><a class="page-link" href="">5</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="">
-                    <span>다음</span>&nbsp;<i class="bi bi-chevron-double-right"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <!-- 끝 end-->
+            <!-- 페이징 -->
+						<c:if test="${ not empty list }">
+							<div class="paging">
+								<ul class="pagination d-flex justify-content-center text-dark"
+									style="margin-top: 40px;">
+									<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+										<a class="page-link" href="${ contextPath }/edoc/aprvlwaitList.do?page=${pi.currentPage-1}">
+											<i class="bi bi-chevron-double-left"></i> <span>이전</span>
+										</a>
+									</li>
+			
+									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+										<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
+											<a class="page-link" href="${ contextPath }/edoc/aprvlwaitList.do?page=${p}">${p}</a>
+										</li>
+									</c:forEach>
+			
+									<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+										<a class="page-link" href="${ contextPath }/edoc/aprvlwaitList.do?page=${pi.currentPage+1}">
+											<span>다음</span>&nbsp; 
+											<i class="bi bi-chevron-double-right"></i>
+									 </a>
+									</li>
+								</ul>
+							</div>
+						</c:if>
+						<!-- 페이징 end -->
 
       </div>
+
+
+
+
+
+
+
+
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>

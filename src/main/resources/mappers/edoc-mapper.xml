@@ -57,19 +57,21 @@
 	</resultMap>
 	
 	<resultMap id="EdocDtoMap" type="EDocDto">
-		<result column="EDOC_NO" property="sampleNo" />
-		<result column="SAMPLE_NO" property="sampleDotCode" />
-		<result column="EDOC_TITLE" property="sampleDesc" />
-		<result column="EDOC_CONTENT" property="sampleFormat" />
-		<result column="EDOC_STARTDATE" property="empNo" />
-		<result column="EDOC_ENDDATE" property="createDt" />
-		<result column="FINAL_DATE" property="modyfy" />
-		<result column="EDOC_STATUS" property="modifyDt" />
-		<result column="EMP_NO" property="useYN" />
-		<result column="MODIFIER" property="useYN" />
-		<result column="MODIFY_DATE" property="useYN" />
+		<result column="EDOC_NO" property="edocNo" />
+		<result column="SAMPLE_NO" property="sampleNo" />
+		<result column="EDOC_TITLE" property="edocTitle" />
+		<result column="EDOC_CONTENT" property="edocContent" />
+		<result column="EDOC_STARTDATE" property="startDt" />
+		<result column="EDOC_ENDDATE" property="endDt" />
+		<result column="FINAL_DATE" property="finalDt" />
+		<result column="EDOC_STATUS" property="edocStatus" />
+		<result column="EMP_NO" property="empNo" />
+		<result column="EMP_NAME" property="empName" />
+		<result column="MODIFIER" property="modyfy" />
+		<result column="MODIFY_DATE" property="modifyDt" />
 		<result column="USE_YN" property="useYN" />
 		
+		<!-- edoc_aproval 테이블에서 가져온 aprvl_status 컬럼 -->
 		<result column="APRVL_STATUS" property="aprvlStatus" />
 		
 		<!-- CommonCode 테이블에서 가져온 nm 컬럼 -->
@@ -82,15 +84,15 @@
 	</resultMap>
 	
 	<resultMap id="attachResultMap" type="EDocAttachDto">
-		<result column="ATTACH_NO" property="fileNo"/>
-		<result column="ATTACH_EDOC_REF" property="filePath"/>
-		<result column="ATTACH_ORIGINAL_FILENAME" property="filesystemName"/>
-		<result column="ATTACH_RENAME_FILENAME" property="originalName"/>
-		<result column="EMP_NO" property="originalName"/>
-		<result column="CREATE_DATE" property="originalName"/>
-		<result column="MODIFIER" property="originalName"/>
-		<result column="MODIFY_DATE" property="originalName"/>
-		<result column="FILE_PATH" property="originalName"/>
+		<result column="ATTACH_NO" property="attachNo"/>
+		<result column="ATTACH_EDOC_REF" property="attachEDocRef"/>
+		<result column="ATTACH_ORIGINAL_FILENAME" property="attachOriginalName"/>
+		<result column="ATTACH_RENAME_FILENAME" property="attachRenameFileName"/>
+		<result column="EMP_NO" property="empNo"/>
+		<result column="CREATE_DATE" property="createDt"/>
+		<result column="MODIFIER" property="modyfy"/>
+		<result column="MODIFY_DATE" property="modifyDt"/>
+		<result column="FILE_PATH" property="filePath"/>
 	</resultMap>
 		
 	
@@ -319,27 +321,32 @@
 		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
 		 where
 		    	approval.emp_no = #{no}
-		    	and approval.aprvl_status = 'N';
+		    	and approval.aprvl_status = 'N'
 	</select>
 	<!-- 결재 대기 목록 -->
 	<select id="aprvlWaitList" resultMap="EdocDtoMap">
 		select 
 			    edoc.edoc_no,
+			    sam.sample_dot_code as sample_no,
 			    edoc.edoc_title,
 			    edoc.edoc_content,
 			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
 			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
-			    edoc.emp_no as drafter,
-			    approval.aprvl_status,
+			    emp.emp_name as emp_name,
+			    approval.aprvl_status
 			from 
 		   	  tbl_edoc edoc
 			join 
 		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		  join
+		  		tbl_employee emp on emp.emp_no = edoc.emp_no
+		  join
+		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
 		 where 
 		    	approval.emp_no = #{no}
 		    	and approval.aprvl_status = 'N'
 		order by 
-		    	edoc.edoc_startdate desc;						
+		    	edoc.edoc_startdate desc				
 	</select>
 	
 	<!-- 페이징 -->
@@ -352,27 +359,32 @@
 		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
 		 where
 		    	approval.emp_no = #{no}
-		    	and approval.aprvl_status = 'W';
+		    	and approval.aprvl_status = 'W'
 	</select>
 	<!-- 결재 예정 목록 -->
 	<select id="aprvlScheduledList" resultMap="EdocDtoMap">
 		select 
 			    edoc.edoc_no,
+			    sam.sample_dot_code as sample_no,
 			    edoc.edoc_title,
 			    edoc.edoc_content,
 			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
 			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
-			    edoc.emp_no as drafter,
-			    approval.aprvl_status,
+			    emp.emp_name as emp_name,
+			    approval.aprvl_status
 			from 
 		   	  tbl_edoc edoc
 			join 
 		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		  join
+		  		tbl_employee emp on emp.emp_no = edoc.emp_no
+		  join
+		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
 		 where 
 		    	approval.emp_no = #{no}
 		    	and approval.aprvl_status = 'W'
 		order by 
-		    	edoc.edoc_startdate desc;				
+		    	edoc.edoc_startdate desc		
 	</select>
 	
 	<!-- 페이징 -->
@@ -385,27 +397,32 @@
 		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
 		 where
 		    	approval.emp_no = #{no}
-		    	and approval.aprvl_status = 'Y';
+		    	and approval.aprvl_status = 'Y'
 	</select>
 	<!-- 결재 완료 목록 -->
 	<select id="aprvlCompleteList" resultMap="EdocDtoMap">
 		select 
 			    edoc.edoc_no,
+			    sam.sample_dot_code as sample_no,
 			    edoc.edoc_title,
 			    edoc.edoc_content,
 			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
 			    to_char(final_date, 'YYYY-MM-DD') final_date,
-			    edoc.emp_no as drafter,
-			    approval.aprvl_status,
+			    emp.emp_name as emp_name,
+			    approval.aprvl_status
 			from 
 		   	  tbl_edoc edoc
 			join 
 		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
+		  join
+		  		tbl_employee emp on emp.emp_no = edoc.emp_no
+		  join
+		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
 		 where 
 		    	approval.emp_no = #{no}
 		    	and approval.aprvl_status = 'Y'
 		order by 
-		    	edoc.edoc_startdate desc;							
+		    	edoc.edoc_startdate desc			
 	</select>
 	
 	
