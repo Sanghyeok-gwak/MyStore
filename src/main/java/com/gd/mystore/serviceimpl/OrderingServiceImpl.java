@@ -21,22 +21,25 @@ public class OrderingServiceImpl implements OrderingService{
 	private final OrderingDao orderingDao;
 	
 	@Override
-	public int selectOrderListCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int selectOrderList(PageInfoDto pi) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public List<ProductDto> selectProductList() {
 		return orderingDao.selectProductList();
 	}
 
+	@Override
+	public int selectOrderListCount() {
+		return orderingDao.selectOrderListCount();
+	}
+	
+	@Override
+	public List<OrderingListDto> selectOrderList(PageInfoDto pi) {
+		return orderingDao.selectOrderList(pi);
+	}
+	@Override
+	public List<OrderingProductDto> selectOrderProductList(int orderingNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public int insertOrderingList(OrderingListDto orderingDto, List<OrderingProductDto> orderingProList) {
 		
@@ -51,6 +54,14 @@ public class OrderingServiceImpl implements OrderingService{
 		
 		return result;
 	}
+
+
+
+	
+
+	
+
+
 
 
 	

@@ -56,7 +56,7 @@
         <span>지점</span>
       </div>
       <div class="submenu">
-        <a href="${contextPath }/ordering/regist.or">발주 관리</a>
+        <a href="${contextPath }/ordering/adminList.or">발주 관리</a>
         <a href="${contextPath }/branchoffice/adminList.po">상품 관리</a>
         <a href="${contextPath }/ordering/regist.or">test</a>
         <a href="${contextPath }/branchoffice/list.po">test</a>

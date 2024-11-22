@@ -32,7 +32,6 @@
 		select 
 					 count(*)
 			from TBL_PRODUCT
-		 where USE_YN = 'Y'
   </select>
   <select id="selectList" resultMap="boResultMap">
   	select

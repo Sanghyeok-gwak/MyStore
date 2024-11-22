@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.OrderingListDto;
 import com.gd.mystore.dto.OrderingProductDto;
+import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ProductDto;
 import com.gd.mystore.service.OrderingService;
 import com.gd.mystore.util.PagingUtil;
@@ -26,10 +28,30 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/ordering")
+
 public class OrderingController {
 	
 	private final PagingUtil pagingUtil;
 	private final OrderingService orderingService;
+	
+	
+	@GetMapping("adminList.or")
+	public String adminList(@RequestParam(value="page", defaultValue="1") int currentPage , Model model) {
+		int listCount = orderingService.selectOrderListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
+		
+		List<OrderingListDto> list = orderingService.selectOrderList(pi);
+		
+		
+		log.debug("list : {} ",list);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "branchoffice/ordering/adminlist";
+	}
+	
+	
 	
 	@GetMapping("regist.or")
 	public String list(Model model) {

@@ -16,7 +16,11 @@ public interface OrderingService {
 	int selectOrderListCount();
 	
 	// 발주 리스트
-	int selectOrderList(PageInfoDto pi);
+	List<OrderingListDto> selectOrderList(PageInfoDto pi);
+	
+	// 발주 상품 리스트
+	List<OrderingProductDto> selectOrderProductList(int orderingNo);
+	
 	
 	// 발주 등록 
 	int insertOrderingList(OrderingListDto orderingDto,List<OrderingProductDto> orderingProList );
