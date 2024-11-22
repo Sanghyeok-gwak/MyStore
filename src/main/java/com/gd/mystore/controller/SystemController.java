@@ -111,6 +111,14 @@ public class SystemController {
 		
 	}
 	
+	@PostMapping("/lvUpdate.do")
+	public String lvUpdate(EmpMemberDto em, RedirectAttributes rdAttributes) {
+		log.debug("@@@@@@@@@@@@@@@@@@ {}", em);
+		
+		
+		rdAttributes.addFlashAttribute("alertMsg", "수정되었습니다.");
+		return "redirect:/system/systemLv.do";
+	}
 	
 	
 	

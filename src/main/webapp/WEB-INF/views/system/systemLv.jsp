@@ -32,7 +32,6 @@
         outline: none;
         box-shadow: none;
         margin-left: 10px;
-        margin-right: 10px;
     }
     .icon > button{
         border: none;
@@ -125,7 +124,7 @@
 					</div>
 				</div>
 
-				<form action="#">
+				<form action="${ contextPath }/system/lvUpdate.do" method="post">
 					<!-- Table with hoverable rows -->
 					<table class="table table-hover">
 						<thead>
@@ -150,12 +149,12 @@
 								<c:otherwise>
 									<c:forEach var="e" items="${ list }" varStatus="status">
 										<tr>
-											<th scope="row">${ e.getListNo() }</th>
+											<th scope="row">${ e.getListNo() } <input type="hidden" name="empNo" value="${ e.getEmpNo() }"></th>
 											<td>${ e.getEmpNo() }</td>
 											<td>${ e.getEmpName() }</td>
 											<td>
 												<div>
-													<select id="target_box" class="form-select" aria-label="Default select example" data-Lv="${	e.getEmpAuth() }" >
+													<select id="target_box" name="empAuth" class="form-select" aria-label="Default select example" data-Lv="${	e.getEmpAuth() }" >
 														<option value="PS005">Lv 5</option>
 														<option value="PS004">Lv 4</option>
 														<option value="PS003">Lv 3</option>
