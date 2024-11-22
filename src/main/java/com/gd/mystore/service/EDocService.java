@@ -50,4 +50,26 @@ public interface EDocService {
 	int aprvlCompleteListCount(String no);
 	List<EDocDto> aprvlCompleteList(String no, PageInfoDto pi);
 	
+	
+	// 기안서 목록 조회
+	// 기안 대기 목록(페이징)
+	int draftWaitListCount(String no);
+	List<EDocDto> draftWaitList(String no, PageInfoDto pi);
+	
+	// 기안 진행 문서(페이징)
+	int draftProgressListCount(String no);
+	List<EDocDto> draftProgressList(String no, PageInfoDto pi);
+	
+	// 기안 승인 문서(페이징)
+	int draftCompleteListCount(String no);
+	List<EDocDto> draftCompleteList(String no, PageInfoDto pi);
+	
+	// 기안 반려 문서(페이징)
+	int draftRejectListCount(String no);
+	List<EDocDto> draftRejectList(String no, PageInfoDto pi);
+	
+	// 기안 회수 문서(페이징)
+	int draftRecoveryListCount(String no);
+	List<EDocDto> draftRecoveryList(String no, PageInfoDto pi);
+	
 }

@@ -24,6 +24,7 @@ public class EDocDao {
 	
 	private final SqlSessionTemplate sqlSession;
 	
+	// 결재양식
 	public int selectEDocSampleListCount() {
 		return sqlSession.selectOne("edocMapper.selectEDocSampleListCount");
 	}
@@ -41,6 +42,8 @@ public class EDocDao {
 		return sqlSession.update("edocMapper.deleteEdocSample", deleteNo);
 	}
 
+	
+	// 기안서 작성
 	public List<EDocSampleDto> selectEdocFormList() {
 		return sqlSession.selectList("edocMapper.selectEDocFormList");
 	}
@@ -48,7 +51,7 @@ public class EDocDao {
 	public EDocSampleDto selectEdocForm(int sampleNoInt) {
 		return sqlSession.selectOne("edocMapper.selectEDocForm", sampleNoInt);
 	}
-
+	
 	public List<EmpMemberDto> selectEmployees(String no) {
 		return sqlSession.selectList("edocMapper.selectEmployees", no);
 	}
@@ -64,7 +67,9 @@ public class EDocDao {
 	public int saveApproval(EDocApprovalDto approval) {
 		return sqlSession.insert("edocMapper.saveApproval", approval);
 	}
-
+	
+	
+	// 결재 목록 조회
 	public int aprvlWaitListCount(String no) {
 		return sqlSession.selectOne("edocMapper.aprvlWaitListCount", no);
 	}
@@ -90,6 +95,53 @@ public class EDocDao {
 	public List<EDocDto> aprvlCompleteList(String no, PageInfoDto pi) {
 		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
 		return sqlSession.selectList("edocMapper.aprvlCompleteList", no, rowBounds);
+	}
+
+	
+	// 기안서 목록 조회
+	public int draftWaitListCount(String no) {
+		return sqlSession.selectOne("edocMapper.draftWaitListCount", no);
+	}
+
+	public List<EDocDto> draftWaitList(String no, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.draftWaitList", no, rowBounds);
+	}
+
+	public int draftProgressListCount(String no) {
+		return sqlSession.selectOne("edocMapper.draftProgressListCount", no);
+	}
+
+	public List<EDocDto> draftProgressList(String no, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.draftProgressList", no, rowBounds);
+	}
+
+	public int draftCompleteListCount(String no) {
+		return sqlSession.selectOne("edocMapper.draftCompleteListCount", no);
+	}
+
+	public List<EDocDto> draftCompleteList(String no, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.draftCompleteList", no, rowBounds);
+	}
+
+	public int draftRejectListCount(String no) {
+		return sqlSession.selectOne("edocMapper.draftRejectListCount", no);
+	}
+
+	public List<EDocDto> draftRejectList(String no, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.draftRejectList", no, rowBounds);
+	}
+
+	public int draftRecoveryListCount(String no) {
+		return sqlSession.selectOne("edocMapper.draftRecoveryListCount", no);
+	}
+
+	public List<EDocDto> draftRecoveryList(String no, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.draftRecoveryList", no, rowBounds);
 	}
 	
 	

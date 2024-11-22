@@ -21,6 +21,7 @@ public class EDocServiceImpl implements EDocService {
 	
 	private final EDocDao edocDao;
 
+	// 문서 양식 관리
 	@Override
 	public int selectEDocListCount() {
 		return edocDao.selectEDocSampleListCount();
@@ -41,6 +42,8 @@ public class EDocServiceImpl implements EDocService {
 		return edocDao.deleteEDocSample(deleteNo);
 	}
 
+	
+	// 기안서 작성
 	@Override
 	public List<EDocSampleDto> selectEDocFormList() {
 		return edocDao.selectEdocFormList();
@@ -79,6 +82,8 @@ public class EDocServiceImpl implements EDocService {
 		return result;
 	}
 
+	
+	// 결재 목록 조회
 	@Override
 	public int aprvlWaitListCount(String no) {
 		return edocDao.aprvlWaitListCount(no);
@@ -107,6 +112,58 @@ public class EDocServiceImpl implements EDocService {
 	@Override
 	public List<EDocDto> aprvlCompleteList(String no, PageInfoDto pi) {
 		return edocDao.aprvlCompleteList(no, pi);
+	}
+
+	
+	// 기안서 목록 조회
+	@Override
+	public int draftWaitListCount(String no) {
+		return edocDao.draftWaitListCount(no);
+	}
+
+	@Override
+	public List<EDocDto> draftWaitList(String no, PageInfoDto pi) {
+		return edocDao.draftWaitList(no, pi);
+	}
+
+	@Override
+	public int draftProgressListCount(String no) {
+		return edocDao.draftProgressListCount(no);
+	}
+
+	@Override
+	public List<EDocDto> draftProgressList(String no, PageInfoDto pi) {
+		return edocDao.draftProgressList(no, pi);
+	}
+
+	@Override
+	public int draftCompleteListCount(String no) {
+		return edocDao.draftCompleteListCount(no);
+	}
+
+	@Override
+	public List<EDocDto> draftCompleteList(String no, PageInfoDto pi) {
+		return edocDao.draftCompleteList(no, pi);
+	}
+
+	@Override
+	public int draftRejectListCount(String no) {
+		return edocDao.draftRejectListCount(no);
+	}
+
+	@Override
+	public List<EDocDto> draftRejectList(String no, PageInfoDto pi) {
+		return edocDao.draftRejectList(no, pi);
+	}
+
+	@Override
+	public int draftRecoveryListCount(String no) {
+		return edocDao.draftRecoveryListCount(no);
+	}
+
+	@Override
+	public List<EDocDto> draftRecoveryList(String no, PageInfoDto pi) {
+		return edocDao.draftRecoveryList(no, pi);
 	}
 
 }

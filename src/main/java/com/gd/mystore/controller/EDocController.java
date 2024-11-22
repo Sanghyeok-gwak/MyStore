@@ -48,7 +48,7 @@ public class EDocController {
 		
 		int listCount = edocService.selectEDocListCount();
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
 		List<EDocSampleDto> list = edocService.selectEDocFormList(pi);
 		
 		model.addAttribute("pi", pi);
@@ -230,7 +230,7 @@ public class EDocController {
 		
 		int listCount = edocService.aprvlWaitListCount(no);		
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
 		List<EDocDto> list = edocService.aprvlWaitList(no, pi);
 		
 		model.addAttribute("pi", pi);
@@ -252,7 +252,7 @@ public class EDocController {
 		
 		int listCount = edocService.aprvlScheduledListCount(no);
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
 		List<EDocDto> list = edocService.aprvlScheduledList(no, pi);
 		
 		model.addAttribute("pi", pi);
@@ -274,7 +274,7 @@ public class EDocController {
 		
 		int listCount = edocService.aprvlCompleteListCount(no);
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
 		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
 		
 		model.addAttribute("pi", pi);
@@ -286,115 +286,116 @@ public class EDocController {
 	}
 	
 	
+	
 	// 기안서 목록 조회
 	// 기안 대기 문서(페이징)
 	@GetMapping("/draftwaitList.do")
-	public String draftwaitList(@RequestParam(value="page", defaultValue="1") int currentPage
+	public String draftWaitList(@RequestParam(value="page", defaultValue="1") int currentPage
 								  , Model model
 								  , HttpSession session) {
 		
 		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
 		String no = loginUser.getEmpNo();
 		
-		int listCount = edocService.aprvlCompleteListCount(no);
+		int listCount = edocService.draftWaitListCount(no);
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
-		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EDocDto> list = edocService.draftWaitList(no, pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		log.debug("list: {}", list);
 		
-		return "edoc/completelist";
+		return "edoc/draftwaitList";
 	}
 	
 	// 기안 진행 문서(페이징)
 	@GetMapping("/draftprogressList.do")
-	public String draftprogressList(@RequestParam(value="page", defaultValue="1") int currentPage
+	public String draftProgressList(@RequestParam(value="page", defaultValue="1") int currentPage
 								  , Model model
 								  , HttpSession session) {
 		
 		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
 		String no = loginUser.getEmpNo();
 		
-		int listCount = edocService.aprvlCompleteListCount(no);
+		int listCount = edocService.draftProgressListCount(no);
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
-		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EDocDto> list = edocService.draftProgressList(no, pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		log.debug("list: {}", list);
 		
-		return "edoc/completelist";
+		return "edoc/draftprogressList";
 	}
 	
 	// 기안 승인 문서(페이징)
-	@GetMapping("/draftapprovalList.do")
-	public String draftapprovalList(@RequestParam(value="page", defaultValue="1") int currentPage
+	@GetMapping("/draftcompleteList.do")
+	public String draftCompleteList(@RequestParam(value="page", defaultValue="1") int currentPage
 								  , Model model
 								  , HttpSession session) {
 		
 		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
 		String no = loginUser.getEmpNo();
 		
-		int listCount = edocService.aprvlCompleteListCount(no);
+		int listCount = edocService.draftCompleteListCount(no);
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
-		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EDocDto> list = edocService.draftCompleteList(no, pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		log.debug("list: {}", list);
 		
-		return "edoc/completelist";
+		return "edoc/draftcompleteList";
 	}
 	
 	// 기안 반려 문서(페이징)
 	@GetMapping("/draftrejectList.do")
-	public String draftrejectList(@RequestParam(value="page", defaultValue="1") int currentPage
+	public String draftRejectList(@RequestParam(value="page", defaultValue="1") int currentPage
 								  , Model model
 								  , HttpSession session) {
 		
 		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
 		String no = loginUser.getEmpNo();
 		
-		int listCount = edocService.aprvlCompleteListCount(no);
+		int listCount = edocService.draftRejectListCount(no);
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
-		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EDocDto> list = edocService.draftRejectList(no, pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		log.debug("list: {}", list);
 		
-		return "edoc/completelist";
+		return "edoc/draftrejectList";
 	}
 	
 	// 기안 회수 문서(페이징)
 	@GetMapping("/draftrecoveryList.do")
-	public String draftrecoveryList(@RequestParam(value="page", defaultValue="1") int currentPage
+	public String draftRecoveryList(@RequestParam(value="page", defaultValue="1") int currentPage
 								  , Model model
 								  , HttpSession session) {
 		
 		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
 		String no = loginUser.getEmpNo();
 		
-		int listCount = edocService.aprvlCompleteListCount(no);
+		int listCount = edocService.draftRecoveryListCount(no);
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 5);
-		List<EDocDto> list = edocService.aprvlCompleteList(no, pi);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EDocDto> list = edocService.draftRecoveryList(no, pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		log.debug("list: {}", list);
 		
-		return "edoc/completelist";
+		return "edoc/draftrecoveryList";
 	}
 
     

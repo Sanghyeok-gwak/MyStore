@@ -12,6 +12,7 @@
 		<result column="modifier" property="modyfy" />
 		<result column="modify_date" property="modifyDt" />
 		<result column="use_yn" property="useYN" />
+		<result column="emp_name" property="empName" />
 	</resultMap>
 	
 	<resultMap id="departmentResultMap" type="DepartmentDto">
@@ -109,15 +110,17 @@
 	<!-- 양식 목록 조회 -->
 	<select id="selectEDocSampleList" resultMap="edocSampleResultMap">
 		select 
-					sample_no
-				, sample_dot_code
-				, sample_desc
-				, emp_no
-				, to_char(create_date, 'YYYY-MM-DD') create_date
-	 	 from 
-	 	 			tbl_edoc_sample
-		where	use_yn = 'Y'
-		order by sample_no desc					
+					sam.sample_no
+				, sam.sample_dot_code
+				, sam.sample_desc
+				, emp.emp_name as emp_name
+				, to_char(sam.create_date, 'YYYY-MM-DD') create_date
+	 	  from 
+	 	 			tbl_edoc_sample sam
+	 	  join
+		  		tbl_employee emp on emp.emp_no = sam.emp_no 
+		where	sam.use_yn = 'Y'
+		order by sam.sample_no desc					
 	</select>
 	
 	<!-- 양식 등록 -->
@@ -325,28 +328,30 @@
 	</select>
 	<!-- 결재 대기 목록 -->
 	<select id="aprvlWaitList" resultMap="EdocDtoMap">
-		select 
-			    edoc.edoc_no,
-			    sam.sample_dot_code as sample_no,
+		SELECT 
+		    	edoc.edoc_no,
+			    sam.sample_dot_code AS sample_no,
 			    edoc.edoc_title,
-			    edoc.edoc_content,
-			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
-			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
-			    emp.emp_name as emp_name,
-			    approval.aprvl_status
-			from 
-		   	  tbl_edoc edoc
-			join 
-		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
-		  join
-		  		tbl_employee emp on emp.emp_no = edoc.emp_no
-		  join
-		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
-		 where 
-		    	approval.emp_no = #{no}
-		    	and approval.aprvl_status = 'N'
-		order by 
-		    	edoc.edoc_startdate desc				
+			    TO_CHAR(edoc_startdate, 'YYYY-MM-DD') AS edoc_startdate,
+			    TO_CHAR(edoc_enddate, 'YYYY-MM-DD') AS edoc_enddate,
+			    emp.emp_name AS emp_name,
+			    CASE 
+			        WHEN approval.aprvl_status = 'N' THEN '대기' 
+			        ELSE approval.aprvl_status 
+			    END AS aprvl_status
+		  FROM 
+		    	tbl_edoc edoc
+		  JOIN 
+		    	tbl_edoc_approval approval ON edoc.edoc_no = approval.aprvl_edoc_no
+		  JOIN
+		    	tbl_employee emp ON emp.emp_no = edoc.emp_no
+		  JOIN
+		    	tbl_edoc_sample sam ON sam.sample_no = edoc.sample_no
+		 WHERE 
+			    approval.emp_no = #{no}
+			    AND approval.aprvl_status = 'N'
+		ORDER BY 
+		    	edoc.edoc_startdate DESC				
 	</select>
 	
 	<!-- 페이징 -->
@@ -363,28 +368,30 @@
 	</select>
 	<!-- 결재 예정 목록 -->
 	<select id="aprvlScheduledList" resultMap="EdocDtoMap">
-		select 
-			    edoc.edoc_no,
-			    sam.sample_dot_code as sample_no,
+		SELECT 
+		    	edoc.edoc_no,
+			    sam.sample_dot_code AS sample_no,
 			    edoc.edoc_title,
-			    edoc.edoc_content,
-			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
-			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
-			    emp.emp_name as emp_name,
-			    approval.aprvl_status
-			from 
-		   	  tbl_edoc edoc
-			join 
-		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
-		  join
-		  		tbl_employee emp on emp.emp_no = edoc.emp_no
-		  join
-		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
-		 where 
-		    	approval.emp_no = #{no}
-		    	and approval.aprvl_status = 'W'
-		order by 
-		    	edoc.edoc_startdate desc		
+			    TO_CHAR(edoc_startdate, 'YYYY-MM-DD') AS edoc_startdate,
+			    TO_CHAR(edoc_enddate, 'YYYY-MM-DD') AS edoc_enddate,
+			    emp.emp_name AS emp_name,
+			    CASE 
+			        WHEN approval.aprvl_status = 'W' THEN '예정' 
+			        ELSE approval.aprvl_status 
+			    END AS aprvl_status
+		  FROM 
+		    	tbl_edoc edoc
+		  JOIN 
+		    	tbl_edoc_approval approval ON edoc.edoc_no = approval.aprvl_edoc_no
+		  JOIN
+		    	tbl_employee emp ON emp.emp_no = edoc.emp_no
+		  JOIN
+		    	tbl_edoc_sample sam ON sam.sample_no = edoc.sample_no
+		 WHERE 
+			    approval.emp_no = #{no}
+			    AND approval.aprvl_status = 'W'
+		ORDER BY 
+		    	edoc.edoc_startdate DESC		
 	</select>
 	
 	<!-- 페이징 -->
@@ -401,29 +408,216 @@
 	</select>
 	<!-- 결재 완료 목록 -->
 	<select id="aprvlCompleteList" resultMap="EdocDtoMap">
+		SELECT 
+		    	edoc.edoc_no,
+			    sam.sample_dot_code AS sample_no,
+			    edoc.edoc_title,
+			    TO_CHAR(edoc_startdate, 'YYYY-MM-DD') AS edoc_startdate,
+			    TO_CHAR(final_date, 'YYYY-MM-DD') AS final_date,
+			    emp.emp_name AS emp_name,
+			    CASE 
+			        WHEN approval.aprvl_status = 'Y' THEN '완료' 
+			        ELSE approval.aprvl_status 
+			    END AS aprvl_status
+		  FROM 
+		    	tbl_edoc edoc
+		  JOIN 
+		    	tbl_edoc_approval approval ON edoc.edoc_no = approval.aprvl_edoc_no
+		  JOIN
+		    	tbl_employee emp ON emp.emp_no = edoc.emp_no
+		  JOIN
+		    	tbl_edoc_sample sam ON sam.sample_no = edoc.sample_no
+		 WHERE 
+			    approval.emp_no = #{no}
+			    AND approval.aprvl_status = 'Y'
+		ORDER BY 
+		    	edoc.edoc_startdate DESC		
+	</select>
+	<!-- 결재 목록 조회 완료 -->
+	
+	
+	<!-- 기안서 목록 조회 -->
+	<!-- 페이징 -->
+	<select id="draftWaitListCount" resultType="_int">
+		select
+		    	count(*)
+			from
+		    	tbl_edoc edoc
+		 where
+		    	emp_no = #{no}
+		    	and edoc_status = 'S'
+	</select>
+	<!-- 기안 대기 목록 -->
+	<select id="draftWaitList" resultMap="EdocDtoMap">
 		select 
 			    edoc.edoc_no,
 			    sam.sample_dot_code as sample_no,
 			    edoc.edoc_title,
-			    edoc.edoc_content,
 			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
-			    to_char(final_date, 'YYYY-MM-DD') final_date,
+			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
 			    emp.emp_name as emp_name,
-			    approval.aprvl_status
+			    CASE 
+			    		WHEN edoc.edoc_status = 'S' THEN '대기' 
+			    		ELSE edoc.edoc_status 
+			    END AS edoc_status
 			from 
 		   	  tbl_edoc edoc
-			join 
-		    	tbl_edoc_approval approval on edoc.edoc_no = approval.aprvl_edoc_no
 		  join
 		  		tbl_employee emp on emp.emp_no = edoc.emp_no
 		  join
 		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
 		 where 
-		    	approval.emp_no = #{no}
-		    	and approval.aprvl_status = 'Y'
+		    	edoc.emp_no = #{no}
+		    	and edoc_status = 'S'
 		order by 
-		    	edoc.edoc_startdate desc			
+		    	edoc.edoc_startdate desc		
 	</select>
+	
+	<!-- 페이징 -->
+	<select id="draftProgressListCount" resultType="_int">
+		select
+		    	count(*)
+			from
+		    	tbl_edoc edoc
+		 where
+		    	emp_no = #{no}
+		    	and edoc_status = 'O'
+	</select>
+	<!-- 기안 진행 목록 -->
+	<select id="draftProgressList" resultMap="EdocDtoMap">
+		select 
+			    edoc.edoc_no,
+			    sam.sample_dot_code as sample_no,
+			    edoc.edoc_title,
+			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
+			    emp.emp_name as emp_name,
+			    CASE 
+			    		WHEN edoc.edoc_status = 'O' THEN '진행' 
+			    		ELSE edoc.edoc_status 
+			    END AS edoc_status
+			from 
+		   	  tbl_edoc edoc
+		  join
+		  		tbl_employee emp on emp.emp_no = edoc.emp_no
+		  join
+		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
+		 where 
+		    	edoc.emp_no = #{no}
+		    	and edoc_status = 'O'
+		order by 
+		    	edoc.edoc_startdate desc		
+	</select>
+	
+	<!-- 페이징 -->
+	<select id="draftCompleteListCount" resultType="_int">
+		select
+		    	count(*)
+			from
+		    	tbl_edoc edoc
+		 where
+		    	emp_no = #{no}
+		    	and edoc_status = 'F'
+	</select>
+	<!-- 기안 승인 목록 -->
+	<select id="draftCompleteList" resultMap="EdocDtoMap">
+		select 
+			    edoc.edoc_no,
+			    sam.sample_dot_code as sample_no,
+			    edoc.edoc_title,
+			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
+			    emp.emp_name as emp_name,
+			    CASE 
+			    		WHEN edoc.edoc_status = 'F' THEN '승인' 
+			    		ELSE edoc.edoc_status 
+			    END AS edoc_status
+			from 
+		   	  tbl_edoc edoc
+		  join
+		  		tbl_employee emp on emp.emp_no = edoc.emp_no
+		  join
+		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
+		 where 
+		    	edoc.emp_no = #{no}
+		    	and edoc_status = 'F'
+		order by 
+		    	edoc.edoc_startdate desc		
+	</select>
+	
+	<!-- 페이징 -->
+	<select id="draftRejectListCount" resultType="_int">
+		select
+		    	count(*)
+			from
+		    	tbl_edoc edoc
+		 where
+		    	emp_no = #{no}
+		    	and edoc_status = 'R'
+	</select>
+	<!-- 기안 반려 목록 -->
+	<select id="draftRejectList" resultMap="EdocDtoMap">
+		select 
+			    edoc.edoc_no,
+			    sam.sample_dot_code as sample_no,
+			    edoc.edoc_title,
+			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
+			    emp.emp_name as emp_name,
+			    CASE 
+			    		WHEN edoc.edoc_status = 'R' THEN '반려' 
+			    		ELSE edoc.edoc_status 
+			    END AS edoc_status
+			from 
+		   	  tbl_edoc edoc
+		  join
+		  		tbl_employee emp on emp.emp_no = edoc.emp_no
+		  join
+		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
+		 where 
+		    	edoc.emp_no = #{no}
+		    	and edoc_status = 'R'
+		order by 
+		    	edoc.edoc_startdate desc		
+	</select>
+	
+	<!-- 페이징 -->
+	<select id="draftRecoveryListCount" resultType="_int">
+		select
+		    	count(*)
+			from
+		    	tbl_edoc edoc
+		 where
+		    	emp_no = #{no}
+		    	and edoc_status = 'T'
+	</select>
+	<!-- 기안 회수 목록 -->
+	<select id="draftRecoveryList" resultMap="EdocDtoMap">
+		select 
+			    edoc.edoc_no,
+			    sam.sample_dot_code as sample_no,
+			    edoc.edoc_title,
+			    to_char(edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    to_char(edoc_enddate, 'YYYY-MM-DD') edoc_enddate,
+			    emp.emp_name as emp_name,
+			    CASE 
+			    		WHEN edoc.edoc_status = 'T' THEN '회수' 
+			    		ELSE edoc.edoc_status 
+			    END AS edoc_status
+			from 
+		   	  tbl_edoc edoc
+		  join
+		  		tbl_employee emp on emp.emp_no = edoc.emp_no
+		  join
+		  		tbl_edoc_sample sam on sam.sample_no = edoc.sample_no
+		 where 
+		    	edoc.emp_no = #{no}
+		    	and edoc_status = 'T'
+		order by 
+		    	edoc.edoc_startdate desc		
+	</select>
+	
+	
 	
 	
 	

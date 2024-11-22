@@ -288,7 +288,7 @@ input[type=file]::file-selector-button {
 			<!-- 처음 start -->
 			<div id="topdiv">
 
-				<span class="ffont1" style="font-weight: bold;">기안 대기 문서</span>
+				<span class="ffont1" style="font-weight: bold;">기안 진행 문서</span>
 
 			</div>
 			<!-- 처음 end -->
@@ -342,7 +342,7 @@ input[type=file]::file-selector-button {
 							<td>양식제목입니다.</td>
 							<td>2016-05-25</td>
 							<td>2016-06-09</td>
-							<td>대기</td>
+							<td>진행</td>
 						</tr>
 						<tr>
 							<th scope="row">9</th>
@@ -350,7 +350,7 @@ input[type=file]::file-selector-button {
 							<td>양식제목입니다.</td>
 							<td>2016-05-25</td>
 							<td>2016-06-09</td>
-							<td>대기</td>
+							<td>진행</td>
 						</tr>
 						<tr>
 							<th scope="row">8</th>
@@ -358,7 +358,7 @@ input[type=file]::file-selector-button {
 							<td>양식제목입니다.</td>
 							<td>2016-05-25</td>
 							<td>2016-06-09</td>
-							<td>대기</td>
+							<td>진행</td>
 						</tr>
 						<tr>
 							<th scope="row">7</th>
@@ -366,7 +366,7 @@ input[type=file]::file-selector-button {
 							<td>양식제목입니다.</td>
 							<td>2016-05-25</td>
 							<td>2016-06-09</td>
-							<td>대기</td>
+							<td>진행</td>
 						</tr>
 						<tr>
 							<th scope="row">6</th>

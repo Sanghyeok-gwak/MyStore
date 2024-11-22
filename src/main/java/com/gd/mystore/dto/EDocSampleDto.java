@@ -24,4 +24,5 @@ public class EDocSampleDto {
 	private String modyfy;				// 수정자
 	private String modifyDt;		// 수정일
 	private String useYN;			// 사용여부(Y/N)
+	private String empName;			// 사용여부(Y/N)
 }

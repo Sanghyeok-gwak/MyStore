@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
 /* body에들어가는 양식입니다. 원페이지 이신분들은 이거 사용하신됩니다. */
 .text-box {
 	border-radius: 20px;
@@ -131,7 +130,7 @@ input {
 	line-height: 30px;
 	font-weight: 400;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 }
 
 #lang {
@@ -285,59 +284,41 @@ input[type=file]::file-selector-button {
 
 	<div class="body-body">
 		<div class="text-box">
-
 			<!-- 여기 채워서 작업하시면 됩니다 .-->
 			<!-- 처음 start -->
 			<div id="topdiv">
 
-				<span class="ffont1" style="font-weight: bold;">문서 양식 관리</span>
+				<span class="ffont1" style="font-weight: bold;">기안 대기 문서</span>
+
 			</div>
 			<!-- 처음 end -->
 
 			<hr>
 
 			<!-- 중간1 start-->
-			<div id="middiv">
-
-				<div style="display: flex;">
-					<a class="btn-box-hover" href="${contextPath}/edoc/sampleadd.do">
-						<button class="btn3-hover" style="width: 120px; font-size: 18px;">추가
-						</button>
-					</a>
-
-					<form action="${contextPath}/edoc/sampledelete.do" method="post" >
-					  <input type="hidden" name="deleteNo" value="${s.sampleNo}">
-					  <div class="btn-box-hover">
-					  <button type="submit" class="btn1-hover" style="width: 120px; font-size: 18px;">삭제</button>
-					  </div>
-					</form>
-				</div>
-
-				<form action="${contextPath}/edoc/samplesearch.do" method="get">
-					<div style="display: flex;">
-						<div>
-							<select name="condition" id="lang"
-								style="height: 40px; margin-bottom: 20px;">
-								<option value="sample_desc">유형</option>
-								<option value="emp_no">기안자</option>
-							</select>
-						</div>
-
-						<!-- width값은 페이지에 맞게 조절해주세요 -->
-						<div class="search_box" style="width: 500px; height: 40px;">
-							<input class="input_b" type="text" placeholder="검색"
-								style="height: auto;">
-							<div class="icon">
-								<button type="submit">
-									<i class="bi bi-search"></i>
-								</button>
+			<form action="${contextPath}/edoc/draftwaitListsearch.do" method="get">
+							<div style="display: flex; justify-content: flex-end;">
+								<div>
+									<select name="condition" id="lang"
+										style="height: 40px; margin-bottom: 20px;">
+										<option value="sample_desc">제목</option>
+										<option value="emp_no">기안자</option>
+									</select>
+								</div>
+		
+								<!-- width값은 페이지에 맞게 조절해주세요 -->
+								<div class="search_box" style="width: 500px; height: 40px;">
+									<input class="input_b" type="text" placeholder="검색"
+										style="height: auto;">
+									<div class="icon">
+										<button type="submit">
+											<i class="bi bi-search"></i>
+										</button>
+									</div>
+								</div>
+		
 							</div>
-						</div>
-
-					</div>
-				</form>
-
-			</div>
+						</form> 
 			<!-- 중간1 end-->
 
 
@@ -347,70 +328,65 @@ input[type=file]::file-selector-button {
 
 					<thead>
 						<tr>
-							<th scope="col"><input type="checkbox" id="checkAll"
-									style="width: 18px; height: 18px;"></th>
 							<th scope="col">번호</th>
 							<th scope="col">유형</th>
-							<th scope="col">양식설명</th>
-							<th scope="col">생성자</th>
-							<th scope="col">생성일</th>
+							<th scope="col">제목</th>
+							<th scope="col">기안일</th>
+							<th scope="col">만료일</th>
+							<th scope="col">상태</th>
 						</tr>
 					</thead>
 
-					<tbody>
+					<tbody style="cursor: pointer;">
 						<c:choose>
-							<c:when test="${ empty list }">
-								<tr>
-									<td colspan="6"
-										style="text-align: center; vertical-align: middle;">조회된
-										양식이 없습니다.</td>
-								</tr>
-							</c:when>
-
-							<c:otherwise>
-								<c:forEach var="s" items="${ list }">
+								<c:when test="${ empty list }">
 									<tr>
-										<td>
-											<input type="checkbox" class="list-checkbox" 
-														 style="width: 18px; height: 18px;">
-										</td>
-										<td>${ s.sampleNo }</td>
-										<td>${ s.sampleDotCode }</td>
-										<td>${ s.sampleDesc }</td>
-										<td>${ s.empName }</td>
-										<td>${ s.createDt }</td>
+										<td colspan="6"
+											style="text-align: center; vertical-align: middle;">
+											조회된 결재 대기 문서가 없습니다.</td>
 									</tr>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
+								</c:when>
+	
+								<c:otherwise>
+									<c:forEach var="fl" items="${ list }">
+										<tr>
+											<td>${ fl.edocNo }</td>
+											<td>${ fl.sampleNo }</td>
+											<td>${ fl.edocTitle }</td>
+											<td>${ fl.startDt }</td>
+											<td>${ fl.endDt }</td>
+											<td>${ fl.edocStatus }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+
 
 					</tbody>
-
 				</table>
 			</div>
 			<!-- 중간2 end -->
 
 
-
-			<!-- 페이징 -->
+	    <!-- 페이징 -->
 			<c:if test="${ not empty list }">
 				<div class="paging">
 					<ul class="pagination d-flex justify-content-center text-dark"
 						style="margin-top: 40px;">
 						<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-							<a class="page-link" href="${ contextPath }/edoc/formlist.do?page=${pi.currentPage-1}">
+							<a class="page-link" href="${ contextPath }/edoc/draftwaitList.do?page=${pi.currentPage-1}">
 								<i class="bi bi-chevron-double-left"></i> <span>이전</span>
 							</a>
 						</li>
-
+	
 						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 							<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
-								<a class="page-link" href="${ contextPath }/edoc/formlist.do?page=${p}">${p}</a>
+								<a class="page-link" href="${ contextPath }/edoc/draftwaitList.do?page=${p}">${p}</a>
 							</li>
 						</c:forEach>
-
+	
 						<li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-							<a class="page-link" href="${ contextPath }/edoc/formlist.do?page=${pi.currentPage+1}">
+							<a class="page-link" href="${ contextPath }/edoc/draftwaitList.do?page=${pi.currentPage+1}">
 								<span>다음</span>&nbsp; 
 								<i class="bi bi-chevron-double-right"></i>
 						 </a>
@@ -419,71 +395,10 @@ input[type=file]::file-selector-button {
 				</div>
 			</c:if>
 			<!-- 페이징 end -->
-
-
+			
+			
 		</div>
 	</div>
-
-	<script>
-		// 체크박스 전체 선택
-		document.getElementById('checkAll').addEventListener('change', function() {
-		    const allChecked = this.checked;
-	
-		    // 현재 페이지에 있는 체크박스들만 선택하도록 처리
-		    const checkboxes = document.querySelectorAll('#middiv2 .list-checkbox');
-		    
-		    checkboxes.forEach(function(cbox) {
-		        cbox.checked = allChecked;
-		    });
-		});
-	
-	 	
-		// 삭제 버튼 클릭 시 선택된 항목만 삭제하도록 처리 
-		document
-				.querySelector('.btn1-hover')
-				.addEventListener(
-						'click',
-						function(event) {
-							event.preventDefault(); // 폼 기본 제출 방지
-
-							// 체크된 항목의 sampleNo 값을 배열로 수집
-							const selectedItems = [];
-							const checkboxes = document
-									.querySelectorAll('#middiv2 .list-checkbox:checked');
-
-							checkboxes
-									.forEach(function(cbox) {
-										const sampleNo = cbox.closest('tr')
-												.querySelector(
-														'td:nth-child(2)').textContent; // sampleNo가 2번째 열에 있다고 가정
-										selectedItems.push(sampleNo);
-									});
-
-							if (selectedItems.length === 0) {
-								alert('삭제할 항목을 선택해주세요.');
-								return;
-							}
-
-							// 삭제할 항목이 있으면 폼을 동적으로 생성하여 전송
-							const form = document.createElement('form');
-							form.method = 'post';
-							form.action = '${contextPath}/edoc/sampledelete.do';
-
-							// 선택된 sampleNo를 hidden input으로 추가
-							selectedItems.forEach(function(sampleNo) {
-								const input = document.createElement('input');
-								input.type = 'hidden';
-								input.name = 'deleteNo';
-								input.value = sampleNo;
-								form.appendChild(input);
-							});
-
-							// 폼을 제출하여 삭제 요청
-							document.body.appendChild(form);
-							form.submit();
-						});
-	</script>
-
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

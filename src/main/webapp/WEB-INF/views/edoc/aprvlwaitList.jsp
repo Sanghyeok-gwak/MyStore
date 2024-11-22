@@ -385,7 +385,7 @@ pageEncoding="UTF-8"%>
 												<tr>
 													<td colspan="6"
 														style="text-align: center; vertical-align: middle;">
-														조회된 결재 완료 문서가 없습니다.</td>
+														조회된 결재 대기 문서가 없습니다.</td>
 												</tr>
 											</c:when>
 				
