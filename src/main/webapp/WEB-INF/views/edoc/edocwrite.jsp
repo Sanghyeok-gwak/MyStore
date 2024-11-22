@@ -552,7 +552,6 @@ input[type=file]::file-selector-button {
 	            });
 
 	            var treeData = employees.map(function(emp) {
-
 	                return {
 	                    "id": emp.empNo,
 	                    "parent": emp.deptCode,
@@ -569,22 +568,34 @@ input[type=file]::file-selector-button {
 
 	            $('#approvalTree').jstree({
 	                'core': {
-	                    'data': treeData
+	                    'data': treeData,
+	                    'check_callback': true // 노드 조작 허용
 	                },
 	                'plugins': ['checkbox'],
 	                'checkbox': {
 	                    'three_state': false,  // 부모가 선택되더라도 자식만 선택되도록
 	                    'cascade': 'down'      // 부모를 선택할 때 자식만 선택
 	                }
-	            }).on('loaded.jstree', function() {
+	            })
+	            .on('select_node.jstree', function(e, data) {
+	                // 부모 노드인지 확인
+	                if (data.node.children.length > 0) {
+	                    // 부모 노드일 경우 선택을 취소하고 하위 노드를 열기
+	                    data.instance.deselect_node(data.node);
+	                    data.instance.open_node(data.node);
+	                }
+	            })
+	            .on('loaded.jstree', function() {
 	                // 특정 레벨의 노드에서 체크박스를 제거
 	                removeCheckboxesAtLevels([1, 2, 3]);
 
 	                // 노드가 열렸을 때 체크박스를 제거
-	                $('#approvalTree').on('open_node.jstree', function (e, data) {
+	                $('#approvalTree').on('open_node.jstree', function(e, data) {
 	                    removeCheckboxesAtLevels([1, 2, 3]);
 	                });
-	            }).on('changed.jstree', function(e, data) {
+	            })
+	            .on('changed.jstree', function(e, data) {
+	                // 선택 가능한 최대 수를 초과할 경우 경고 및 선택 취소
 	                if (data.selected.length > maxSelected) {
 	                    alert("최대 " + maxSelected + "명까지만 선택할 수 있습니다.");
 	                    var lastSelectedNodeId = data.selected[data.selected.length - 1];
@@ -592,9 +603,9 @@ input[type=file]::file-selector-button {
 	                    return false;
 	                }
 
+	                // 선택된 결재자를 표시 영역에 업데이트
 	                $('#selectedList').empty();
 
-	                // 선택된 결재자들을 반대로 정렬하여 가장 먼저 선택된 사람이 1차 결재자가 되도록 처리
 	                var selectedApprovers = data.selected.map(function(nodeId) {
 	                    return data.instance.get_node(nodeId);
 	                }).reverse(); // 순서를 역으로 변경
