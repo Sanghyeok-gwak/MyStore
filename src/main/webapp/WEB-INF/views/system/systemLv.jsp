@@ -149,13 +149,12 @@
 								<c:otherwise>
 									<c:forEach var="e" items="${ list }" varStatus="status">
 										<tr>
-											<th scope="row">${ e.getListNo() }<input type="hidden" name="lvList[${status.index}].${e.getEmpNo()}"></th>
+											<th scope="row">${ e.getListNo() }<input type="hidden" name="lvList[${status.index}].empNo" value="${ e.empNo }"></th>
 											<td>${ e.getEmpNo() }</td>
 											<td>${ e.getEmpName() }</td>
 											<td>
 												<div>
-													<input type="hidden" name="lvList[${status.index}].${e.getEmpAuth()}">
-													<select id="target_box" class="form-select" aria-label="Default select example" data-Lv="${	e.getEmpAuth() }" >
+													<select id="target_box" name="lvList[${status.index}].empAuth"  class="form-select" aria-label="Default select example" data-Lv="${	e.getEmpAuth() }" >
 														<option value="PS005">Lv 5</option>
 														<option value="PS004">Lv 4</option>
 														<option value="PS003">Lv 3</option>
