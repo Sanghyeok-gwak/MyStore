@@ -143,6 +143,12 @@ public class EDocDao {
 		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
 		return sqlSession.selectList("edocMapper.draftRecoveryList", no, rowBounds);
 	}
+
+	
+	// 결재 목록 상세페이지
+	public EDocDto aprvlWait(int no) {
+		return sqlSession.selectOne("edoMapper.aprvlWait", no);
+	}
 	
 	
 	

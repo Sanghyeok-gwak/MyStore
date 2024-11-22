@@ -337,7 +337,7 @@ pageEncoding="UTF-8"%>
 											<c:otherwise>
 												<c:forEach var="cl" items="${ list }">
 													<tr>
-														<td>${ cl.edocNo }</td>
+														<td>${ cl.aprvlNo }</td>
 														<td>${ cl.sampleNo }</td>
 														<td>${ cl.edocTitle }</td>
 														<td>${ cl.empName }</td>

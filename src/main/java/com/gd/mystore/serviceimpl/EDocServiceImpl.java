@@ -166,4 +166,11 @@ public class EDocServiceImpl implements EDocService {
 		return edocDao.draftRecoveryList(no, pi);
 	}
 
+	
+	// 결재 목록 상세페이지
+	@Override
+	public EDocDto aprvlWait(int no) {
+		return edocDao.aprvlWait(no);
+	}
+
 }

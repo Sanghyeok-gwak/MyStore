@@ -30,6 +30,7 @@ public class EDocDto {
 	private	String modifyDt;				// 수정일
 	private String useYN;					// 사용여부(Y/N)
 	
+	private String aprvlNo;					// 결재문서 번호
 	private String aprvlStatus;				// 결재자 문서 상태 ( w(예정) y(완료) n(대기))
 	
 	private String nm;						// 직급

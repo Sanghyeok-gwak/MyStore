@@ -72,4 +72,9 @@ public interface EDocService {
 	int draftRecoveryListCount(String no);
 	List<EDocDto> draftRecoveryList(String no, PageInfoDto pi);
 	
+	
+	// 결재 목록 상세페이지
+	// 결재 대기 상세페이지
+	EDocDto aprvlWait(int no);
+	
 }
