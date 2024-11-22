@@ -42,6 +42,7 @@
 		<result column="MODIFIER" property="modifier"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="rnum" property="listNo"/>
 	</resultMap>
 
 	<select id="selectSystemBoardList" resultMap="boardTypeResultMap">
@@ -142,6 +143,7 @@
           , (select dept_name from tbl_department where dept_code = e.dept_code) as DEPT_CODE
           , CREATE_DATE
           , MODIFY_DATE
+          , ROWNUM as rnum
 		   from tbl_employee e
 		  where EMP_EMPLOYMENT = 'Y'
 	</select>

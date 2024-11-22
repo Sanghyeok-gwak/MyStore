@@ -150,7 +150,7 @@
 								<c:otherwise>
 									<c:forEach var="e" items="${ list }" varStatus="status">
 										<tr>
-											<th scope="row">${ status.index + 1 }</th>
+											<th scope="row">${ e.getListNo() }</th>
 											<td>${ e.getEmpNo() }</td>
 											<td>${ e.getEmpName() }</td>
 											<td>

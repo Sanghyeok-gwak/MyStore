@@ -35,7 +35,8 @@ public class EmpMemberDto {
     			 , deptCode
     			 , useYn
     			 , acNo
-    			 , acBank;
+    			 , acBank
+    			 , listNo;
     private Date createDate, modifyDate;
     
     private String nm;  // 부서에서 회원리스트 조회
