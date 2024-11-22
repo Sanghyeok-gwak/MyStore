@@ -61,7 +61,7 @@ input {
 }
 #jstree .jstree-children {
     max-height: 320px; /* 높이를 300px로 제한 */
-    width: 424px;
+    width: 444px;
     overflow-y: auto;  /* 자식 요소가 높이를 초과할 경우 수직 스크롤 추가 */
     overflow-x: hidden;  /* 하단(수평) 스크롤을 없앰 */
 }
@@ -84,7 +84,7 @@ input {
 				style="display: flex; justify-content: space-between; margin-top: 20px;">
 				<div style="display: flex; flex-direction: column; height: 100%;">
 
-					<div style="width: 430px; height: 400px; border: #868686 solid;">
+					<div style="width: 450px; height: 400px; border: #868686 solid;">
     <!-- 왼쪽 영역 내용 -->
     <div class="d-flex" style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
         <div>
@@ -169,22 +169,8 @@ input {
 					</div>
 				</div>
 
-				<div class="btn-box-hover"
-					style="display: flex; justify-content: center; align-items: center; margin-left: 10px;">
-					<div
-						style="display: flex; flex-direction: column; align-items: center;">
-						<button class="btn3-hover" style="width: 120px; height: 120px;">
-							<span style="font-size: 50px">←</span><br>부서이동
-						</button>
-						<button class="btn3-hover"
-							style="width: 120px; height: 120px; color: #000000; margin-top: 80px;">
-							<span style="font-size: 50px">→</span><br>부서이동
-						</button>
-					</div>
-				</div>
 
-
-				<div style="width: 60%; height: 650px; border: #868686 solid;">
+				<div style="width: 64%; height: 650px; border: #868686 solid;">
 					<!-- 오른쪽 영역 내용 -->
 					<div>
 						<div class="input-bar"
@@ -193,7 +179,7 @@ input {
 								<div class="search_box"
 									style="margin-top: 10px; width: 300px; margin-right: 10px;">
 									<input id="empNameInput" class="input_b" type="text"
-										name="empName" placeholder="사원명 검색">
+										name="empName" placeholder="사원명 검색 (공백입력시 전체조회)">
 									<div class="icon">
 										<button id="searchBtn">
 											<i class="bi bi-search"></i>
@@ -209,29 +195,32 @@ input {
 						<!-- 동적으로 데이터를 채울 테이블 -->
 						<div style="height: 500px; overflow-y: auto; margin-top: 30px;">
 							<table id="MemberList"
-								class="table table-striped table-bordered table-sm table-hover">
+								class="table table-striped table-bordered table-sm table-hover"
+								style="text-align: center; vertical-align: middle;">
 								<thead>
 									<tr>
-										<th>선택</th>
+										<th></th>
 										<th>사원명</th>
 										<th>사원번호</th>
-										<th>부서명</th>
+										<th>직책</th>
 										<th>상위 부서</th>
-										<th>부서 이름</th>
+										<th>부서명</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="dept" items="${searchResult}">
-										<tr>
-											<td><input type="checkbox" name="checkbox"
-												value="${dept.empNo}" style="width: 15px; height: 15px;"></td>
-											<td>${dept.empName}</td>
-											<td>${dept.empNo}</td>
-											<td>${dept.nm}</td>
-											<td>${dept.deptUpStair}</td>
-											<td>${dept.deptName}</td>
-										</tr>
-									</c:forEach>
+									<c:set var="counter" value="1" /> <!-- 시작 번호 설정 -->
+										
+										<c:forEach var="dept" items="${searchResult}">
+										    <tr>
+										        <td>${counter}</td> <!-- 증가하는 번호 출력 -->
+										        <td>${dept.empName}</td>
+										        <td>${dept.empNo}</td>
+										        <td>${dept.nm}</td>
+										        <td>${dept.deptUpStair}</td>
+										        <td>${dept.deptName}</td>
+										    </tr>
+										    <c:set var="counter" value="${counter + 1}" /> <!-- 번호를 1 증가 -->
+										</c:forEach>
 								</tbody>
 							</table>
 
@@ -275,15 +264,22 @@ $(document).ready(function() {
                 } else if (response.searchResult) {
                     tbody.empty(); 
                     // searchResult 데이터가 있으면 테이블에 추가
+                    var counter = 1;  // 번호 변수 초기화 (1부터 시작)
                     response.searchResult.forEach(function(dept) {
                         var tr = $("<tr>");
-                        tr.append("<td><input type='checkbox' name='checkbox' value='" + dept.empNo + "' style='width: 15px; height: 15px;'></td>");
+                        
+                        // 첫 번째 td 셀에 증가하는 번호 추가
+                        tr.append("<td>" + counter + "</td>");  // 번호 출력
                         tr.append("<td>" + dept.empName + "</td>");
                         tr.append("<td>" + dept.empNo + "</td>");
                         tr.append("<td>" + dept.deptName + "</td>");
                         tr.append("<td>" + dept.deptUpStair + "</td>");
                         tr.append("<td>" + dept.deptName + "</td>");
-                        tbody.append(tr);  // 테이블 본문에 행 추가
+                        
+                        // 테이블 본문에 행 추가
+                        tbody.append(tr);  
+
+                        counter++;  // 번호 1씩 증가
                     });
                 } else {
                     alert("검색된 결과가 없습니다.");
@@ -303,14 +299,15 @@ $(document).ready(function() {
             }
         });
     }
+
 });
 
 $(function() {
-    // 수정 모드를 제어할 변수, 기본값은 false (수정 비활성화)
     var editMode = false;
-    var newDeptData = null;  // 새 부서 데이터를 저장할 변수
+    
+    
 
-    // 수정 버튼 클릭 시 수정 모드 활성화/비활성화
+    // 수정 모드 활성화/비활성화
     $("#editNodeBtn").click(function() {
         editMode = !editMode;  // 수정 모드 토글
         if (editMode) {
@@ -318,7 +315,12 @@ $(function() {
         } else {
             alert("수정 모드가 비활성화되었습니다.");
         }
+
+        // 수정 모드에 따라 dnd 플러그인 활성화/비활성화
+        $('#jstree').jstree("destroy").empty();  // 기존 트리 초기화
+        initializeTree(editMode);  // 수정 모드에 맞게 트리 다시 초기화
     });
+
 
     // 트리 데이터를 AJAX로 로드하는 부분
     function loadTreeData() {
@@ -327,8 +329,6 @@ $(function() {
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-      
-
                 var departmentTree = response.departmentTree || [];  // departmentTree가 없으면 빈 배열
 
                 // 데이터가 없으면 경고
@@ -364,103 +364,166 @@ $(function() {
         });
     }
 
-    // 초기 데이터 로드
-    loadTreeData();
-
-    // jsTree 초기화
-    $('#jstree').jstree({
-        core: {
-            data: [],  // 초기 데이터는 빈 배열로 설정, AJAX로 데이터 업데이트 예정
-            check_callback: true  // 트리 내에서 항목을 추가, 삭제 등의 작업을 가능하게 합니다.
-        },
-        plugins: ["contextmenu", "dnd"],  // 사용하려는 플러그인
-        contextmenu: {
-            items: function($node) {
-                var menuItems = {};
-
-                // 수정 모드 확인
-                if (!editMode) {
-                    return {};  // 수정 모드가 아니면 메뉴 항목을 반환하지 않음
+    // jsTree 초기화 (수정 모드에 따라 dnd 플러그인 활성화/비활성화)
+    function initializeTree(isEditMode) {
+        $('#jstree').jstree({
+            core: {
+                data: [],  // 초기 데이터는 빈 배열로 설정, AJAX로 데이터 업데이트 예정
+                check_callback: true,  // 트리 내에서 항목을 추가, 삭제 등의 작업을 가능하게 합니다.
+                themes: {
+                    dots: true,
+                    icons: true
                 }
+            },
+            plugins: isEditMode ? ["contextmenu", "dnd"] : ["contextmenu"], // 수정 모드일 경우 dnd 플러그인 활성화
+            		
+            contextmenu: {
+                items: function($node) {
+                    var menuItems = {};
 
-                // 루트 노드일 경우
-                if ($node.parent === "#") {
-                    menuItems["create"] = {
-                        "label": "부서추가",
-                        "action": function() {
-                            var tree = $('#jstree').jstree(true);
-                            var newNode = {
-                                "text": "새 부서",
-                                "parent": $node.id
-                            };
-                            tree.create_node($node, newNode, "last", function(newNode) {
-                                tree.edit(newNode);
-                                // 새 부서 데이터를 설정
-                                newDeptData = {
-                                    deptName: newNode.text,
-                                    deptUpStair: $node.id
+                    // 수정 모드 확인
+                    if (!editMode) {
+                        return {};  // 수정 모드가 아니면 메뉴 항목을 반환하지 않음
+                    }
+
+                    // 루트 노드일 경우
+                    if ($node.parent === "#") {
+                        menuItems["create"] = {
+                            "label": "부서추가",
+                            "action": function() {
+                                var tree = $('#jstree').jstree(true);
+                                var newNode = {
+                                    "text": "새 부서",
+                                    "parent": $node.id
                                 };
-                            });
-                        }
-                    };
-                }
-
-                // 루트 노드가 아닐 경우
-                if ($node.parent !== "#") {
-                    menuItems["rename"] = {
-                        "label": "이름 변경",
-                        "action": function() {
-                            var tree = $('#jstree').jstree(true);
-                            tree.edit($node);  // 해당 노드를 수정 가능하도록 편집 모드로 진입
-                        }
-                    };
-
-                    menuItems["remove"] = {
-                        "label": "삭제",
-                        "action": function() {
-                            var tree = $('#jstree').jstree(true);
-                            if (confirm("정말로 삭제하시겠습니까?")) {
-                                tree.delete_node($node);  // 해당 노드를 삭제
+                                tree.create_node($node, newNode, "last", function(newNode) {
+                                    tree.edit(newNode);
+                                    // 새 부서 데이터를 설정
+                                    newDeptData = {
+                                        deptName: newNode.text,
+                                        deptUpStair: $node.id
+                                    };
+                                });
                             }
-                        }
-                    };
+                        };
+                    }
+
+                    // 루트 노드가 아닐 경우
+                    if ($node.parent !== "#") {
+                        menuItems["rename"] = {
+                            "label": "이름 변경",
+                            "action": function() {
+                                var tree = $('#jstree').jstree(true);
+                                tree.edit($node);  // 해당 노드를 수정 가능하도록 편집 모드로 진입
+                            }
+                        };
+
+                        menuItems["remove"] = {
+                            "label": "삭제",
+                            "action": function() {
+                                var tree = $('#jstree').jstree(true);
+                                if (confirm("정말로 삭제하시겠습니까?")) {
+                                    tree.delete_node($node);  // 해당 노드를 삭제
+                                }
+                            }
+                        };
+                    }
+
+                    return menuItems;  // 메뉴 항목 반환
                 }
+            },
+            dnd: {
+                'start': function (event, data) {
+                    var node = data.node;
+                    // 드래그 시작 시 노드의 깊이를 기록
+                    originalDepth = node.parents.length;
+                },
+                'is_dropable': function(targetNode) {
+                    var targetNodeDepth = targetNode.parents.length;
 
-                return menuItems;  // 메뉴 항목 반환
+                    // 드래그한 노드의 원래 깊이와 같은 깊이로만 드롭 가능
+                    if (targetNodeDepth !== originalDepth) {
+                        return false;  // 원래 깊이와 다른 깊이에 드롭할 수 없음
+                    }
+
+                    return true;  // 원래 깊이로만 드롭 가능
+                }
             }
-        }
-    });
 
-    // 부서 등록 버튼 클릭 시 서버로 데이터 전송
+
+
+        });
+
+        // 트리 데이터 로드
+        loadTreeData();
+    }
+
+    // 초기 트리 데이터 로드 및 트리 초기화
+    initializeTree(editMode);
     $("#submitNodeBtn").click(function() {
-        if (newDeptData) {
+        const selectedNode = $('#jstree').jstree('get_selected');
+        const treeData = $('#jstree').jstree('get_json');  // 트리 구조 데이터 가져오기
+
+        if (selectedNode.length > 0) {
+            const nodeId = selectedNode[0];
+            const nodeName = $('#jstree').jstree('get_text', nodeId);
+            const originalNodeName = $('#jstree').jstree('get_text', nodeId); // 원래 부서명 가져오기
+            
+            let isNewDepartment = false;
+            let isNameChanged = false;
+            
+            // 부서가 새로 추가된 경우
+            if (originalNodeName === "새 부서" || originalNodeName === "") {
+                isNewDepartment = true; // 새 부서일 경우 추가
+            }
+
+            // 부서명이 변경된 경우
+            if (nodeName !== originalNodeName) {
+                isNameChanged = true; // 부서명이 변경된 경우
+            }
+
+            // 서버로 트리 상태와 부서명을 전송
             $.ajax({
-                url: '/mystore/department/departmentModify/data',  // 부서 추가 API URL
-                type: 'POST',  // POST 방식으로 요청
-                data: { deptName: newDeptData.deptName },  // 부서 이름만 전송
+                url: '/mystore/department/departmentModify/data',
+                type: 'POST',
+                data: {
+                    deptName: nodeName,  // 부서명
+                    originalDeptName: originalNodeName,  // 원래 부서명 (이름 변경 확인용)
+                    isNewDepartment: isNewDepartment,  // 부서 추가 여부
+                    isNameChanged: isNameChanged,  // 부서명 변경 여부
+                    treeData: JSON.stringify(treeData)  // 트리 데이터
+                },
                 success: function(response) {
                     if (response.success) {
-                        alert("부서 추가 완료");
-                        loadTreeData();  // 트리 새로 고침
+                        alert("부서 수정/추가 완료!");
+                        loadTreeData(); // 트리 새로 고침
                     } else {
-                        alert("부서 추가 실패: " + response.message);
+                        alert("부서 수정/추가 실패: " + response.message);
+                        loadTreeData(); // 트리 새로 고침
                     }
                 },
                 error: function(xhr, status, error) {
-                    alert("부서 추가 중 오류가 발생했습니다.");
-                    console.error(error);
+                    alert("서버와의 연결에 문제가 발생했습니다.");
+                    console.error(error);  // error 콘솔 출력
                 }
             });
         } else {
-            alert("새 부서를 먼저 추가해주세요.");
+            alert("수정 또는 추가할 부서를 선택하세요.");
         }
     });
+
+
+
 
     // 수정 모드 활성화/비활성화 토글 함수 (예시)
     $('#toggleEditMode').on('click', function() {
         editMode = !editMode;  // 수정 모드를 토글
         console.log("수정 모드:", editMode);
     });
+    
+    
+    
+    
 });
 
 

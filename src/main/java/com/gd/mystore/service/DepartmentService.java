@@ -17,7 +17,9 @@ public interface DepartmentService {
 
 	List<EmpMemberDto> DeptTree();
 
-	// 회원가입
 	int insertDepartment(String deptName);
+
+	int updateDepartmentName(DepartmentDto d);
 	
+	List<DepartmentDto> getDeptCodeByName(String deptName);
 }

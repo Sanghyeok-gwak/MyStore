@@ -45,6 +45,16 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return departmentDao.insertDepartment(deptName);
 	}
 
+	@Override
+	public int updateDepartmentName(DepartmentDto d) {
+		return departmentDao.updateDepartmentName(d);
+	}
+
+	@Override
+	public List<DepartmentDto> getDeptCodeByName(String deptName) {
+		return departmentDao.getDeptCodeByName(deptName);
+	}
+
 
 	
 	

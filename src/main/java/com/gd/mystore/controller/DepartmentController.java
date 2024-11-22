@@ -105,24 +105,47 @@ public class DepartmentController {
 
 	    return response;
 	}
-
+	
 	@PostMapping("/departmentModify/data")
 	@ResponseBody
-	public Map<String, Object> signup(String deptName) {
+	public Map<String, Object> signup(@RequestParam String deptName) {
 	    Map<String, Object> response = new HashMap<>();
-	    
-	    int result = departmentService.insertDepartment(deptName);
-	    
-	    if(result > 0) {
-	        response.put("success", true);
+
+	    // 1. 부서 코드 조회: 부서명이 존재하는지 확인
+	    List<DepartmentDto> deptCodeList = departmentService.getDeptCodeByName(deptName);
+
+	    // 부서 추가 시도 (부서명에 관계없이 언제든지 가능)
+	    int insertResult = departmentService.insertDepartment(deptName);  // 부서 추가
+	    if (insertResult > 0) {
+	        response.put("insertResult", true);
 	        response.put("message", "부서 추가 완료");
+	        return response; // 부서 추가 성공 시 바로 반환
 	    } else {
 	        response.put("success", false);
-	        response.put("message", "부서 추가 실패");
+	        response.put("message", "부서 추가에 실패했습니다.");
 	    }
-	    
+
+	    // 부서명이 이미 존재하면 부서명 변경 시도
+	    if (!deptCodeList.isEmpty()) {
+	        // 2. 부서명이 이미 존재하면 부서명 변경
+	        DepartmentDto deptDto = new DepartmentDto();
+	        deptDto.setDeptName(deptName);
+	        deptDto.setDeptCode(deptCodeList.get(0).getDeptCode());  // 부서 코드 설정
+
+	        // 3. 부서명 변경 시도
+	        int updateResult = departmentService.updateDepartmentName(deptDto);  // 부서명 변경
+	        if (updateResult > 0) {
+	            response.put("updateResult", true);
+	            response.put("message", "부서명이 변경되었습니다.");
+	        } else {
+	            response.put("updateResult", false);
+	            response.put("message", "부서명 변경에 실패했습니다.");
+	        }
+	    }
+
 	    return response;
 	}
+
 
 
 	

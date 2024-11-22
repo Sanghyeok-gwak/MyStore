@@ -30,4 +30,5 @@ public class DepartmentDto {
 	private String empName;
 	 
 	private List<DepartmentDto> children;
+
 }

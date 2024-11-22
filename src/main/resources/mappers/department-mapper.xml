@@ -183,8 +183,24 @@
 </insert>
 
 
+<update id="updateDepartmentName">
+		update
+					tbl_department
+			set DEPT_Name = #{deptName}
+	
+		where DEPT_UPSTAIR = 'D001'
+			and DEPT_CODE = #{deptCode}
+		
+</update>
+
+<select id="getDeptCodeByName" resultMap="departmentResultMap">
+	select
+				dept_code
+	 from tbl_department
+	where dept_name = #{deptName}
 
 
+</select>
 
 
 

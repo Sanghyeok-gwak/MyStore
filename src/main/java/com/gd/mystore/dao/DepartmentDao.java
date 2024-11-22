@@ -49,6 +49,15 @@ public class DepartmentDao {
 		public int insertDepartment(String deptName) {
 			return sqlSession.insert("departmentMapper.insertDepartment",deptName);
 		}
+
+
+		public int updateDepartmentName(DepartmentDto d) {
+			return sqlSession.update("departmentMapper.updateDepartmentName",d);
+		}
+		
+		public List<DepartmentDto> getDeptCodeByName(String deptName) {
+			return sqlSession.selectList("departmentMapper.getDeptCodeByName", deptName);
+		}
 		
 		
 		
