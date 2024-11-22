@@ -1,6 +1,7 @@
 package com.gd.mystore.dto;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,6 +43,8 @@ public class EmpMemberDto {
     private String nm;  // 부서에서 회원리스트 조회
     private String deptUpStair;
     private String deptName;
+    
+    private ArrayList<EmpMemberDto> lvList;
     
     
     

@@ -72,7 +72,7 @@ public class SystemController {
 	public String systemBoardsEdit(BoardTypeDto bt
 								 , RedirectAttributes rdAttributes) {
 		
-		log.debug("###### : {}", bt.getDeptCode());
+		log.debug("###### : {}", bt);
 		
 		//체크박스 변환처리
 		if(bt.getBoardtUse() != null) {
@@ -113,7 +113,7 @@ public class SystemController {
 	
 	@PostMapping("/lvUpdate.do")
 	public String lvUpdate(EmpMemberDto em, RedirectAttributes rdAttributes) {
-		log.debug("@@@@@@@@@@@@@@@@@@ {}", em);
+		log.debug("@@@@@@@@@@@@@@@@@@ {}", em.getLvList());
 		
 		
 		rdAttributes.addFlashAttribute("alertMsg", "수정되었습니다.");
