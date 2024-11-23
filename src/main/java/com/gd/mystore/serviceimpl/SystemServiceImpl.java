@@ -42,7 +42,7 @@ public class SystemServiceImpl implements SystemService {
 	}
 
 	/*
-	 * 시스템 레벨 설정 관련
+	 * 	 * ======================사원 레벨 페이지====================
 	 */
 	@Override
 	public int selectEmpMemberCount() {
@@ -54,22 +54,22 @@ public class SystemServiceImpl implements SystemService {
 		return systemDao.selectEmpMemberList(pi);
 	}
 	
-	//시스템 레벨 검색 갯수
-	@Override
-	public int selectSerchListCount(Map<String, String> search) {
-		return 0;
-	}
-	
-	//시스템 레벨 검색 리스트
-	@Override
-	public List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
-		return null;
-	}
-	
 	//시스템 사원 레벨 업데이트
 	@Override
 	public int updateEmpLv(EmpMemberDto em2) {
 		return systemDao.updateEmpLv(em2);
+	}
+	
+	//사원조회 카운트
+	@Override
+	public int selectSearchListCount(String scData) {
+		return systemDao.selectSearchListCount(scData);
+	}
+	
+	//사원 조회 리스트
+	@Override
+	public List<EmpMemberDto> selectSearchEmpMemberList(PageInfoDto pi, String scData) {
+		return systemDao.selectSearchEmpMemberList(pi, scData);
 	}
 
 }

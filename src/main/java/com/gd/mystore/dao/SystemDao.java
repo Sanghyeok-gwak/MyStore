@@ -33,7 +33,9 @@ public class SystemDao {
 	public int boardDelete(BoardTypeDto bt) {
 		return sqlSession.delete("systemMapper.boardsDelete", bt);
 	}
-
+	/*
+	 *  ======================사원 레벨 페이지====================
+	 */
 	public int selectEmpMemberCount() {
 		return sqlSession.selectOne("systemMapper.selectEmpMemberCount");
 	}
@@ -45,6 +47,16 @@ public class SystemDao {
 	
 	public int updateEmpLv(EmpMemberDto em2) {
 		return sqlSession.update("systemMapper.updateEmpLv", em2);
+	}
+
+	public int selectSearchListCount(String scData) {
+		return sqlSession.selectOne("systemMapper.selectSearchListCount", scData);
+	}
+
+	public List<EmpMemberDto> selectSearchEmpMemberList(PageInfoDto pi, String scData) {
+		System.out.println("@@@@@@@@@기능 구현중 Dao@@@@@@@@@" + scData);
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() -1) * pi.getBoardLimit(), pi.getBoardLimit());
+		return sqlSession.selectList("systemMapper.selectSearchList", scData, rowBounds);
 	}
 
 

@@ -107,22 +107,22 @@
 			<!-- 왼쪽 -->
 			<div class="left_body">
 				<span class="ffont1" style="font-weight: bold;">시스템 레벨 관리</span>
-
-				<div class="input_contoller">
-					<div class="search_box">
-						<div>
-							<input class="input_b" type="text" placeholder="검색">
-						</div>
-						<div>
-							<div class="icon">
-								<button>
-									<i class="bi bi-search"></i>
-								</button>
+				<form action="${ contextPath }/system/systemLvSearch.do">
+					<div class="input_contoller">
+						<div class="search_box">
+							<div>
+								<input class="input_b" name="search" type="text" placeholder="검색">
+							</div>
+							<div>
+								<div class="icon">
+									<button type="submit">
+										<i class="bi bi-search"></i>
+									</button>
+								</div>
 							</div>
 						</div>
-
 					</div>
-				</div>
+				</form>
 
 				<form action="${ contextPath }/system/lvUpdate.do" method="post">
 					<!-- Table with hoverable rows -->

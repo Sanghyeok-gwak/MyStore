@@ -69,89 +69,115 @@
 	
 	<!-- 게시판 추가 	-->
 	<insert id="insertBoard" >
-		insert 
-		  into TBL_BOARDTYPE
-		  (
-		    BOARD_TYPE_NO
-		  , BOARDT_NAME
-		  , BOARDT_TYPE
-		  , BOARDT_READ
-		  , BOARDT_WRITE
-		  , BOARDT_CONTENT
-		  , BOARDT_USE
-		  , OFFICE_USE
-		  , DEPT_CODE
-		  , EMP_NO
-		  , CREATE_DATE
-		  , MODIFIER
-		  , MODIFY_DATE
-		  , USE_YN
-		  )
-			VALUES 
-			(
-			  BOARD_TYPE_NO_SEQ.NEXTVAL
-			, '일반게시판'
-			, 'S'
-			, 5
-			, 5
-			, 5
-			, 'N'
-			, NULL
-			, #{userData}
-			, NULL
-			, SYSDATE
-			, #{userData}
-			, SYSDATE
-			, 'Y'
-			)
+	  insert 
+		  	  into TBL_BOARDTYPE
+		  	(
+				  BOARD_TYPE_NO
+				, BOARDT_NAME
+				, BOARDT_TYPE
+				, BOARDT_READ
+				, BOARDT_WRITE
+				, BOARDT_CONTENT
+				, BOARDT_USE
+				, OFFICE_USE
+				, DEPT_CODE
+				, EMP_NO
+				, CREATE_DATE
+				, MODIFIER
+				, MODIFY_DATE
+				, USE_YN
+		    )
+				  VALUES 
+			  (  
+				  BOARD_TYPE_NO_SEQ.NEXTVAL
+				, '일반게시판'
+				, 'S'
+				, 5
+			  , 5
+				, 5
+				, 'N'
+				, NULL
+				, #{userData}
+				, NULL
+				, SYSDATE
+					, #{userData}
+					, SYSDATE
+					, 'Y'
+				)
 	</insert>
 	
 	<!-- 게시판 수정	--> 
 	<update id="boardsUpdate">
 		update
-			   TBL_BOARDTYPE
-		   set BOARDT_NAME = #{boardtName}
-			 , BOARDT_TYPE = #{boardtType}
-			 , BOARDT_READ = #{boardtRead}
-			 , BOARDT_WRITE = #{boardtWrite}
-			 , BOARDT_CONTENT = #{boardtContent}
-			 , BOARDT_USE = #{boardtUse}
-			 , OFFICE_USE = #{officeUse}
-			 , DEPT_CODE = #{deptCode}
+				   TBL_BOARDTYPE
+			     set BOARDT_NAME = #{boardtName}
+				 , BOARDT_TYPE = #{boardtType}
+				 , BOARDT_READ = #{boardtRead}
+				 , BOARDT_WRITE = #{boardtWrite}
+				 , BOARDT_CONTENT = #{boardtContent}
+				 , BOARDT_USE = #{boardtUse}
+				 , OFFICE_USE = #{officeUse}
+				 , DEPT_CODE = #{deptCode}
 		 where BOARD_TYPE_NO = #{boardTypeNo}
 	</update>
 	
 	<!-- 게시판 삭제 -->
 	<delete id="boardsDelete">
-		update 
-			   TBL_BOARDTYPE
-		   set USE_YN = 'N'
-		 where BOARD_TYPE_NO = #{boardTypeNo}
+	 update 
+			    TBL_BOARDTYPE
+		  set USE_YN = 'N'
+		where BOARD_TYPE_NO = #{boardTypeNo}
 	</delete>
 
 	<select id="selectEmpMemberCount" resultType="_int">
-		select count(*)
-		  from tbl_employee
-		 where EMP_EMPLOYMENT = 'Y'
+	 select count(*)
+	   from tbl_employee
+	  where EMP_EMPLOYMENT = 'Y'
 	</select>
 	
 	<select id="selectEmpMemberList" resultMap="empMemberResultMap">
-     select
-            EMP_NO
-          , EMP_NAME
-          , EMP_AUTH
-          , (select dept_name from tbl_department where dept_code = e.dept_code) as DEPT_CODE
-          , CREATE_DATE
-          , MODIFY_DATE
-          , ROWNUM as rnum
-		   from tbl_employee e
-		  where EMP_EMPLOYMENT = 'Y'
+	 select
+	        EMP_NO
+	      , EMP_NAME
+	      , EMP_AUTH
+	      , (select dept_name from tbl_department where dept_code = e.dept_code) as DEPT_CODE
+	      , CREATE_DATE
+	      , MODIFY_DATE
+	      , ROWNUM as rnum
+		 from tbl_employee e
+		where EMP_EMPLOYMENT = 'Y'
 	</select>
 	
 	<update id="updateEmpLv">
-		update tbl_employee
-		   set EMP_AUTH = #{empAuth}
-		 where EMP_NO = #{empNo}
+	 update tbl_employee
+		  set EMP_AUTH = #{empAuth}
+		where EMP_NO = #{empNo}
 	</update>
+	
+	<!-- 검색 -->
+	<select id="selectSearchListCount" resultType="_int">
+	 select count(*)
+	   from tbl_employee
+	 	where EMP_EMPLOYMENT = 'Y'
+	 	  and EMP_NO LIKE '%' || #{scData} || '%'
+		   OR EMP_NAME LIKE '%' || #{scData} || '%'
+		   OR DEPT_CODE LIKE '%' || #{scData} || '%'
+	</select>
+	
+	<select id="selectSearchList" resultMap="empMemberResultMap">
+   select
+	        EMP_NO
+	      , EMP_NAME
+	      , EMP_AUTH
+	      , (select dept_name from tbl_department where dept_code = e.dept_code) as DEPT_CODE
+	      , CREATE_DATE
+	      , MODIFY_DATE
+	      , ROWNUM as rnum
+	   from tbl_employee e
+	  where e.use_yn = 'Y'
+		  and e.EMP_NO LIKE '%' || #{scData} || '%'
+		   OR e.EMP_NAME LIKE '%' || #{scData} || '%'
+		   OR e.DEPT_CODE LIKE '%' || #{scData} || '%'
+	</select>
 
 </mapper>

@@ -44,7 +44,6 @@ public class SystemController {
 	public void systemBoards(Model model) {
 		List<BoardTypeDto> list = systemService.selectBodrList();
 		model.addAttribute("list", list);
-		log.debug("@@@@@@ {} : ", list);
 	}
 	
 	//게시판 추가
@@ -72,9 +71,6 @@ public class SystemController {
 	@PostMapping("/boardUpdate.do")
 	public String systemBoardsEdit(BoardTypeDto bt
 								 , RedirectAttributes rdAttributes) {
-		
-		log.debug("###### : {}", bt);
-		
 		//체크박스 변환처리
 		if(bt.getBoardtUse() != null) {
 			bt.setBoardtUse("N");
@@ -89,7 +85,6 @@ public class SystemController {
 			rdAttributes.addFlashAttribute("alertMsg", "수정을 실패하였습니다.");
 		}
 		
-		// 추후 히스토리백 적용
 		return "redirect:/system/systemBoardsList.do";
 	}
 	
@@ -101,7 +96,6 @@ public class SystemController {
 	@GetMapping("/systemLv.do")
 	public void list(@RequestParam(value="page", defaultValue = "1") int currentPage
 					, Model model) {
-		
 		int listCount = systemService.selectEmpMemberCount();
 		
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
@@ -115,6 +109,7 @@ public class SystemController {
 	@PostMapping("/lvUpdate.do")
 	public String lvUpdate(EmpMemberDto em, RedirectAttributes rdAttributes) {
 		int result = 0;
+		
 		for(int i=0; i < em.getLvList().size(); i++) {
 			result = systemService.updateEmpLv(em.getLvList().get(i));
 		}
@@ -127,7 +122,23 @@ public class SystemController {
 		return "redirect:/system/systemLv.do";
 	}
 	
-	
+	//시스템 레벨 검색
+	@GetMapping("/systemLvSearch.do")
+	public String searchList(@RequestParam(value="page", defaultValue = "1") int currentPage
+						   , @RequestParam(value="search", defaultValue=" ") String scData
+						   , Model model) {
+		int listCount = systemService.selectSearchListCount(scData);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		
+		List<EmpMemberDto> list = systemService.selectSearchEmpMemberList(pi, scData);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		//아마 에이작스로 해야 될 것 같음
+		//해당 방식으로 진행하면 페이지를 한개 더 만들어야 하는 단점
+		return "redirect:/system/systemLv.do";
+	}
 	
 	
 	
