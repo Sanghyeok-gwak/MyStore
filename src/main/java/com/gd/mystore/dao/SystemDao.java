@@ -42,5 +42,10 @@ public class SystemDao {
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() -1) * pi.getBoardLimit(), pi.getBoardLimit());
 		return sqlSession.selectList("systemMapper.selectEmpMemberList", null, rowBounds);
 	}
+	
+	public int updateEmpLv(EmpMemberDto em2) {
+		return sqlSession.update("systemMapper.updateEmpLv", em2);
+	}
+
 
 }

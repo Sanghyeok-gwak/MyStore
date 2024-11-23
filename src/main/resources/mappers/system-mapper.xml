@@ -147,5 +147,11 @@
 		   from tbl_employee e
 		  where EMP_EMPLOYMENT = 'Y'
 	</select>
+	
+	<update id="updateEmpLv">
+		update tbl_employee
+		   set EMP_AUTH = #{empAuth}
+		 where EMP_NO = #{empNo}
+	</update>
 
 </mapper>

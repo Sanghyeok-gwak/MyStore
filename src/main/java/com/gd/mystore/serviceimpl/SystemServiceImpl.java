@@ -53,15 +53,23 @@ public class SystemServiceImpl implements SystemService {
 	public List<EmpMemberDto> selectEmpMemberList(PageInfoDto pi) {
 		return systemDao.selectEmpMemberList(pi);
 	}
-
+	
+	//시스템 레벨 검색 갯수
 	@Override
 	public int selectSerchListCount(Map<String, String> search) {
 		return 0;
 	}
-
+	
+	//시스템 레벨 검색 리스트
 	@Override
 	public List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
 		return null;
+	}
+	
+	//시스템 사원 레벨 업데이트
+	@Override
+	public int updateEmpLv(EmpMemberDto em2) {
+		return systemDao.updateEmpLv(em2);
 	}
 
 }

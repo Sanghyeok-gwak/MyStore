@@ -1,5 +1,6 @@
 package com.gd.mystore.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -113,10 +114,16 @@ public class SystemController {
 	
 	@PostMapping("/lvUpdate.do")
 	public String lvUpdate(EmpMemberDto em, RedirectAttributes rdAttributes) {
-		log.debug("@@@@@@@@@@@@@@@@@@ {}", em.getLvList());
+		int result = 0;
+		for(int i=0; i < em.getLvList().size(); i++) {
+			result = systemService.updateEmpLv(em.getLvList().get(i));
+		}
 		
-		
-		rdAttributes.addFlashAttribute("alertMsg", "수정되었습니다.");
+		if(result > 0) {
+			rdAttributes.addFlashAttribute("alertMsg", "수정되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "수정을 실패 하였습니다.");
+		}
 		return "redirect:/system/systemLv.do";
 	}
 	

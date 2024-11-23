@@ -29,6 +29,9 @@ public interface SystemService {
 	int selectSerchListCount(Map<String, String> search);
 	List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
 	
+	//사원 레벨 업데이트
+	int updateEmpLv(EmpMemberDto em);
+	
 	
 	
 	
