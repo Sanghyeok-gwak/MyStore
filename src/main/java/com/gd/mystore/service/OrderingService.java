@@ -1,6 +1,7 @@
 package com.gd.mystore.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.gd.mystore.dto.OrderingListDto;
 import com.gd.mystore.dto.OrderingProductDto;
@@ -25,5 +26,6 @@ public interface OrderingService {
 	// 발주 등록 
 	int insertOrderingList(OrderingListDto orderingDto,List<OrderingProductDto> orderingProList );
 	
-	
+	// 발주 반려 
+	int updateCompanion(OrderingListDto olDto);
 }

@@ -46,7 +46,7 @@
               padding-right: 30px; 
             }
             .search-text-box button {
-              position: absolute;
+              position: absolute; 
               right: 5px;
               top: 50%;
               transform: translateY(-50%);
@@ -108,12 +108,21 @@
 			                <td>${o.orderNo }</td>
 			                <td>${o.orderCheckDate }</td>
 			                <td>${o.empNo }</td>
-			                <td>${o.branchName }</td>
-			                <td>${o.orderStatus }</td>
+			                <td>${o.deptCode }</td>
 			                <td>
-			                  <button class="btn4"  data-bs-toggle="modal" data-bs-target="#basicModal">
-			                    조회
-			                  </button>
+			                	${o.orderStatus == 'N' ? '반려' : o.orderStatus == 'Y' ? '승인' : o.orderStatus == 'I' ? '대기중' : '상태 미정'}
+			                </td>
+			                <td>
+			                	<button class="btn4 view-order" 
+															        data-order-no="${o.orderNo}" 
+															        data-order-empNo="${o.empNo}"  
+															        data-order-deptCode="${o.deptCode}"  
+															        data-order-orderCheckDate="${o.orderCheckDate}" 
+															        data-order-dispatchNo="${o.dispatchNo}"
+															        data-bs-toggle="modal" 
+															        data-bs-target="#basicModal">
+												  조회
+												</button>
 			                  <button class="btn4" data-bs-toggle="modal" data-bs-target="#basicModal2">
 			                    배차
 			                  </button>
@@ -164,29 +173,79 @@
       </div>     
 	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-	
+	 <script>
+			 $(document).ready(function () {
+				  $(".view-order").on("click", function () {
+				    const orderNo = $(this).data("order-no");
+				    const empNo = $(this).data("order-empno");
+				    const deptCode = $(this).data("order-deptcode");
+				    const orderCheckDate = $(this).data("order-ordercheckdate");
+				    const dispatchNo = $(this).data("order-dispatchno");
+				    console.log(empNo);
+				    console.log(deptCode);
+				    console.log(orderCheckDate);
+				    
+				    
+				    $.ajax({
+				      url: '${contextPath}/ordering/orderingPro.or', 
+				      type: "post",
+				      data: { "orderNo": orderNo },
+				      dataType: "json",
+				      success: function (data) {
+				       
+				        
+				        
+				       
+				        const tbody = $("#body_main_table tbody");
+		                tbody.empty();  
+
+		               
+		                data.forEach(function (item, index) {
+		                	const row = "<tr>" +
+		                                  "<td>" + (index + 1) + "</td>" +
+		                                  "<td>" + item.productNo + "</td>" +  
+		                                  "<td>" + item.productName + "</td>" +
+		                                  "<td>" + item.inventory + "</td>" +
+		                              "</tr>";
+		                    tbody.append(row); 
+		                });
+		                $(".branch").text(deptCode);
+		                $("#orderCheckDate-date").text(orderCheckDate); 
+		                $("#empNo-name").text(empNo); 
+		                $("#hidden-order-No").val(orderNo);
+		                $("#empName-div").text(dispatchNo);
+				      },
+				      error: function () {
+				        alert("데이터를 불러오는 중 오류가 발생했습니다.");
+				      }
+				    });
+				  });
+				});	 
+	 </script>
 	
 	 <div class="modal fade" id="basicModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header"> 
                     <h5 class="modal-title">발주 영수증</h5>  
+                    
+                    <input type="hidden" id="hidden-order-No">
                 </div>
                 <div class="modal-body">
                     <!-- Branch and Date Information -->
-                    <div class="branch_and_date">
-                        <div class="branch">서울 ㅇㅇ 지점</div>
-                        <div class="ok_date">승인 날짜: 2024.11.05</div>
+                    <div class="branch_and_date" id="top_main_table">
+                        <div class="branch"></div>
+                        <div class="ok_date"></div>
                     </div>
-
+			
                     <!-- Order Details Table -->
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="middle_main_table">
                         <thead>
                             <tr>
                                 <th scope="col">발주일자</th>
-                                <td>2021.05.14</td>
+                                <td id="orderCheckDate-date"></td>
                                 <th scope="col">지점장</th>
-                                <td>김개똥</td>
+                                <td id="empNo-name"></td>
                             </tr>
                         </thead>
                     </table>
@@ -197,29 +256,25 @@
 	                        <thead>
 	                            <tr>
 	                                <th scope="col">번호</th>
-	                                <th scope="col">고유번호</th>
-	                                <th scope="col">분류</th>
+	                                <th scope="col">상품번호</th>
 	                                <th scope="col">상품명</th>
 	                                <th scope="col">수량</th>
 	                            </tr>
 	                        </thead>
 	                        <tbody>
-	                            <tr><th>1</th><td></td><td></td><td></td><td></td></tr>
-	                            <tr><th>2</th><td></td><td></td><td></td><td></td></tr>
-	                            <tr><th>3</th><td></td><td></td><td></td><td></td></tr>
-	                            <tr><th>4</th><td></td><td></td><td></td><td></td></tr>
-	                            <tr><th>5</th><td></td><td></td><td></td><td></td></tr>
-	                            <tr><th>5</th><td></td><td></td><td></td><td></td></tr>
-	                            <tr><th>5</th><td></td><td></td><td></td><td></td></tr>
-	                            <tr><th>5</th><td></td><td></td><td></td><td></td></tr>
-	                            <tr><th>5</th><td></td><td></td><td></td><td></td></tr>
+	                            <tr>
+	                            	<td></td>
+	                            	<td></td>
+	                            	<td></td>
+	                            	<td></td>
+	                            </tr>
 	                        </tbody>
 	                    </table>
 										</div>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger">반려</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">승인</button>
+                        <button type="button" class="btn btn-danger" onclick="fnCompanion();">반려</button>
+                        <button type="button" class="btn btn-primary" onclick="fnApproval();">승인</button>
                     </div>
 
                     <!-- Pick-Up Table -->
@@ -228,37 +283,67 @@
                             <thead>
                                 <tr>
                                     <th scope="col">배차 차량종류</th>
-                                    <td>트럭</td>
+                                    <td></td>
                                     <th scope="col">배차 운송기사</th>
-                                    <td>김개똥</td>
+                                    <td></td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <th scope="row">전화번호</th>
-                                    <td>010-1234-1235</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="3"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <!-- Approval Section -->
-                    <div style="display: flex; justify-content: end;">
+                    <div style="display: flex; justify-content: end;" id="approver-emp-box">
                         <div style="border: 1px solid rgb(185, 185, 185); width: 103px; height: 55px; display: flex; align-items: center; justify-content: center;">승인자</div>
-                        <div style="border: 1px solid rgb(185, 185, 185); width: 210px; height: 55px; display: flex; align-items: center; justify-content: center;">팀장 강개똥</div>
+                        <div style="border: 1px solid rgb(185, 185, 185); width: 210px; height: 55px; display: flex; align-items: center; justify-content: center;" id="empName-div"></div>
                     </div>
 
                     <!-- Footer Approval Button -->
-                    <div class="footer_btn" style="display:flex; justify-content: end;">
+                    <div class="footer_btn" style="display:flex; justify-content: end; margin-top:10px">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
-	
+		<script>
+		function fnCompanion(){
+		   	const confirmResult = confirm("반려하시겠습니까?");
+		    const orderNo = $("#hidden-order-No").val();
+		    
+		    if (confirmResult) {
+		        const empNo='${loginUser.empName}';
+		        console.log(empNo);
+		        $.ajax({
+		        	url:'${contextPath}/ordering/companion.or',
+		        	type:'post',
+		        	data:{empNo:empNo , orderNo:orderNo},
+	        	  success: function (data) {
+	        			 console.log(data);
+	        		   if(data>0){
+					        alert("반려 처리되었습니다.");
+					        document.getElementById("empName-div").innerText = '${loginUser.empName}';
+	        			 }else{
+					        alert("반려 처리가 실패되었습니다.");
+	        			 }
+	        	  }
+		        })
+		    } else {
+		        alert("반려가 취소되었습니다.");
+		    }
+		}
+		function fnApproval(){
+			alert('승인이다');
+			
+		}
+		
+		
+		</script>
 	<div class="modal fade" id="basicModal2" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">

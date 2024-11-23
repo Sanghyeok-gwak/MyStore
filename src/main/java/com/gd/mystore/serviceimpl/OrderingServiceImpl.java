@@ -1,6 +1,7 @@
 package com.gd.mystore.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,7 @@ public class OrderingServiceImpl implements OrderingService{
 	}
 	@Override
 	public List<OrderingProductDto> selectOrderProductList(int orderingNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return orderingDao.selectOrderProductList(orderingNo);
 	}
 	
 	@Override
@@ -53,6 +53,11 @@ public class OrderingServiceImpl implements OrderingService{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int updateCompanion(OrderingListDto olDto) {
+		return orderingDao.updateCompanion(olDto);
 	}
 
 
