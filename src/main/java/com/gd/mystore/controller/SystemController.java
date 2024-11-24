@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardTypeDto;
 import com.gd.mystore.dto.EmpMemberDto;
+import com.gd.mystore.dto.LogDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.BoardService;
 import com.gd.mystore.service.SystemService;
@@ -36,9 +37,6 @@ public class SystemController {
 	
 	private final SystemService systemService;
 	private final PagingUtil pagingUtil;
-	
-	@GetMapping("/log.do")
-	public void systemlog() {}
 	
 	//게시판 리스트 조회
 	@GetMapping("/systemBoardsList.do")
@@ -136,12 +134,43 @@ public class SystemController {
 		return "redirect:/system/systemLv.do";
 	}
 	
+	@GetMapping("/lvNameUpdate.do")
+	public String lvNameUpdate(RedirectAttributes rdAttributes) {
+		rdAttributes.addFlashAttribute("alertMsg", "기능 개발 중..");
+		
+		return "redirect:/system/systemLv.do";
+	}
 	
+	/*
+	 * =================================================================================
+	 * 시스템 로그 컨트롤러
+	 */
 	
+	/*
+	 * - insert 할 수 있는 모듈(Class) 제작
+	 * 
+	 * - 
+	 * 
+	 * 로그 조회
+	 * - 로그 타입은 CHAR 형식이라 조건문 처리 필요
+	 * 		ㄴ 1 : 부서이동 , 2: 조회, 3: 추가, 4: 수정, 5: 삭제
+	 * 
+	 * - 이전 데이터는 jsp에서 숨겨 컨트롤러에서 해당 데이터를 먼저 insert 진행
+	 *   이후 
+	 * 
+	 */
 	
-	
-	
-	
-	
-	
+	//데이터 테스트
+	@GetMapping("/log.do")
+	public void systemlog(@RequestParam(value="page", defaultValue = "1") int currentPage) {
+		int listCount = systemService.selectLogCount();
+		
+		log.debug("시스템 로그 갯수 : {}", listCount);
+		
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+		List<LogDto> list = systemService.selectLogList(pi);
+		
+		
+		
+	}
 }

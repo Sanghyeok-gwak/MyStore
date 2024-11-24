@@ -194,21 +194,22 @@
             </div>
             
             <br><br>
-            <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
+            <form action="${ contextPath }/login/signin.do" method="post" >
             	<button>1001 로그인</button>
             	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1001"/>
-            	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
+            	<input type="hidden" class="input-bar1" name="empPwd" placeholder="비밀번호 입력해주세요" value="1234"/>
             </form>
-            <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
+            <form action="${ contextPath }/login/signin.do" method="post">
             	<button>1002 로그인</button>
-            	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
-            	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
+            	<input type="hidden" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
+            	<input type="hidden" name="empPwd"placeholder="비밀번호 입력해주세요" value="1234"/>
             </form>
           </div>
         </div>
       </div>
     </div>
     
+    <!-- ##################### 간편 로그인을 위해 잠깐 주석처리 ######################
     <script>
     $(document).ready(function(){
         // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
@@ -264,6 +265,7 @@
         return unescape(cookieValue);
     }
 	</script>
+     -->
 		
     
 </body>

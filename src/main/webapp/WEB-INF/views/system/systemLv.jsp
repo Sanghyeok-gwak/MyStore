@@ -213,7 +213,7 @@
 
 			<!-- 오른쪽 -->
 			<div class="right_body">
-				<form action="">
+				<form action="${ contextPath }/system/lvNameUpdate.do">
 					<div
 						style="border: 1px solid rgb(167, 167, 167); border-radius: 5px;">
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gd.mystore.dao.SystemDao;
 import com.gd.mystore.dto.BoardTypeDto;
 import com.gd.mystore.dto.EmpMemberDto;
+import com.gd.mystore.dto.LogDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.SystemService;
 
@@ -71,5 +72,25 @@ public class SystemServiceImpl implements SystemService {
 	public List<EmpMemberDto> selectSearchEmpMemberList(PageInfoDto pi, String scData) {
 		return systemDao.selectSearchEmpMemberList(pi, scData);
 	}
-
+	
+	/*
+	 * ======================사원 레벨 페이지====================
+	 */
+	//로그 갯수
+	@Override
+	public int selectLogCount() {
+		return systemDao.selectLogCount();
+	}
+		
+	//로그 리스트 데이터
+	@Override
+	public List<LogDto> selectLogList(PageInfoDto pi) {
+		return systemDao.selectLogList(pi);
+	}
+	
+	//검색용
+	
+	//로그 저장
+	
+	
 }
