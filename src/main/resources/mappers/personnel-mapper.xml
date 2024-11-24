@@ -56,9 +56,9 @@
 <!-- 비밀번호 변경 -->
 <update id="passwordRecovery">
  UPDATE
- 		TBL_EMPLOYEE
- 	SET EMP_PASSWORD = #{empPwd}
- 		EMP_USE_YN = 'Y'
+ 		    TBL_EMPLOYEE
+ 	  SET EMP_PASSWORD = #{empPwd}
+ 		  , USE_YN = 'Y'
   WHERE EMP_NO = #{empNo}
 
 </update>

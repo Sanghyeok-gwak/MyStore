@@ -44,7 +44,22 @@
 		<result column="MODIFY_DATE" property="modifyDate"/>
 		<result column="rnum" property="listNo"/>
 	</resultMap>
-
+	
+	<resultMap id="empLogResultMap" type="LogDto">
+		<result column="LOG_NO" property="logNo"/>
+		<result column="EMP_NO" property="empNo"/>
+		<result column="LOG_TYPE" property="logType"/>
+		<result column="MENU_NAME" property="menuName"/>
+		<result column="BEFOR_DATA" property="beforData"/>
+		<result column="AFTER_DATA" property="afterData"/>
+		<result column="USE_YN" property="useYn"/>
+		<result column="DOCUMENT_NO" property="documentNo"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="rnum" property="listNo"/>
+	</resultMap>
+	
 	<select id="selectSystemBoardList" resultMap="boardTypeResultMap">
 		SELECT 
 		       BOARD_TYPE_NO,
@@ -180,5 +195,30 @@
 		   OR e.DEPT_CODE LIKE '%' || #{scData} || '%'
 		   OR (select dept_name from tbl_department where dept_code = e.dept_code) LIKE '%' || #{scData} || '%'
 	</select>
+	
+	<select id="selectLogCount" resultType="_int">
+		select count(*)
+		  from tbl_log
+		 where use_yn = 'Y'
+	</select>
+	
+	<select id="selectEmpLogList" resultMap="empLogResultMap">
+		select 
+					 LOG_NO
+				 , EMP_NO
+				 , LOG_TYPE
+				 , MENU_NAME
+				 , BEFOR_DATA
+				 , AFTER_DATA
+				 , CREATE_DATE
+				 , MODIFIER
+				 , MODIFY_DATE
+				 , USE_YN
+				 , DOCUMENT_NO
+ 	       , ROWNUM as rnum
+		  from tbl_log
+		 where use_yn = 'Y'
+	</select>
+	
 
 </mapper>
