@@ -1,8 +1,8 @@
 package com.gd.mystore.service;
 
 import java.util.List;
-import java.util.Map;
 
+import com.gd.mystore.dto.DispatchDto;
 import com.gd.mystore.dto.OrderingListDto;
 import com.gd.mystore.dto.OrderingProductDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -28,4 +28,10 @@ public interface OrderingService {
 	
 	// 발주 반려 
 	int updateCompanion(OrderingListDto olDto);
+	
+	// 발주 승인
+	int updateApproval(OrderingListDto olDto);
+	
+	// 배차 리스트 
+	List<DispatchDto> selectDispatchList();
 }

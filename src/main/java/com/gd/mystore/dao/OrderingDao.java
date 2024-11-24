@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.gd.mystore.dto.DispatchDto;
 import com.gd.mystore.dto.OrderingListDto;
 import com.gd.mystore.dto.OrderingProductDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -46,5 +47,11 @@ public class OrderingDao {
 	
 	public int updateCompanion(OrderingListDto olDto) {
 		return sqlSession.update("orderingMapper.updateCompanion",olDto);
+	}
+	public int updateApproval(OrderingListDto olDto) {
+		return sqlSession.update("orderingMapper.updateApproval",olDto);
+	}
+	public List<DispatchDto> selectDispatchList(){
+		return sqlSession.selectList("orderingMapper.selectDispatchList");
 	}
 }

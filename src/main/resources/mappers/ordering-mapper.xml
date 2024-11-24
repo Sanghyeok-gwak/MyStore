@@ -42,6 +42,18 @@
   	<result column="ORDER_NO" property="orderNo" />
   	<result column="PRODUCT_NAME" property="productName" />
   </resultMap>
+  <resultMap type="DispatchDto" id="DispatchResultMap">
+  	<result column="DISPATCH_NO" property="dispathchNo"/>
+  	<result column="VEHICLE_TYPE" property="vehicleType"/>
+  	<result column="LICENSE_PLATE" property="licensPlate"/>
+  	<result column="OPERATOR" property="opepator"/>
+  	<result column="EMP_NO" property="empNo"/>
+  	<result column="MODIFIER" property="modifier"/>
+  	<result column="CREATE_DATE" property="createDate"/>
+  	<result column="MODIF Y_DATE" property="modifyDate"/>
+  	<result column="USE_YN" property="useYn"/>
+  
+  </resultMap>
 	
 	<!-- 상품리스트  -->
 	<select id="selectProductList" resultMap="productResultMap">
@@ -109,7 +121,6 @@
 				    TBL_ORDERING_PRODUCT
 				WHERE 
 				    ORDER_NO = #{orderingNo}
-  
   </select>
 	<insert id="insertOrderingList">
     INSERT INTO TBL_ORDERING (
@@ -125,7 +136,7 @@
         ORDER_NO_SEQ.nextval,  
         #{empNo},  
         #{deptCode},            
-        'N',                 
+        'I',                 
         sysdate,            
         sysdate,            
         sysdate             
@@ -140,6 +151,7 @@
 		    PRODUCT_NAME
 		)
 		VALUES (
+		
 		    #{productNo}
 			, #{inventory}
 			, sysdate
@@ -151,9 +163,34 @@
 	 update
 		    	TBL_ORDERING
 		  set
-		      DISPATCH_NO = #{dispatchNo},
+		      APPROVAL_NO = #{approvalNo},
 		      ORDER_STATUS = 'N'
 		  where
 		       ORDER_NO = #{orderNo}
 	</update>
+	<update id="updateApproval">
+	 update
+		    	TBL_ORDERING
+		  set
+		      APPROVAL_NO = #{approvalNo},
+		      DISPATCH_NO = #{dispatchNo},
+		      ORDER_STATUS = 'Y'
+		  where
+		       ORDER_NO = #{orderNo}
+	</update>
+	<select id="selectDispatchList" resultMap="DispatchResultMap">
+	SELECT 
+		    DISPATCH_NO,
+		    VEHICLE_TYPE,
+		    LICENSE_PLATE,
+		    OPERATOR,
+		    EMP_NO,
+		    MODIFIER,
+		    CREATE_DATE,
+		    MODIFY_DATE,
+		    USE_YN
+		FROM 
+   		 	TBL_DISPATCH
+	</select>
+	
 </mapper>

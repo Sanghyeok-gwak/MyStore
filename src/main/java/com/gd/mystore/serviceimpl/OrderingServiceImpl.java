@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.OrderingDao;
+import com.gd.mystore.dto.DispatchDto;
 import com.gd.mystore.dto.OrderingListDto;
 import com.gd.mystore.dto.OrderingProductDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -58,6 +59,15 @@ public class OrderingServiceImpl implements OrderingService{
 	@Override
 	public int updateCompanion(OrderingListDto olDto) {
 		return orderingDao.updateCompanion(olDto);
+	}
+	@Override
+	public int updateApproval(OrderingListDto olDto) {
+		return orderingDao.updateApproval(olDto);
+	}
+
+	@Override
+	public List<DispatchDto> selectDispatchList() {
+		return orderingDao.selectDispatchList();
 	}
 
 

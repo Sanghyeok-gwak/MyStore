@@ -118,14 +118,11 @@
 															        data-order-empNo="${o.empNo}"  
 															        data-order-deptCode="${o.deptCode}"  
 															        data-order-orderCheckDate="${o.orderCheckDate}" 
-															        data-order-dispatchNo="${o.dispatchNo}"
+															        data-order-approvalNo="${o.approvalNo}"
 															        data-bs-toggle="modal" 
 															        data-bs-target="#basicModal">
 												  조회
 												</button>
-			                  <button class="btn4" data-bs-toggle="modal" data-bs-target="#basicModal2">
-			                    배차
-			                  </button>
 			                </td>
 			
 			              </tr>
@@ -180,7 +177,7 @@
 				    const empNo = $(this).data("order-empno");
 				    const deptCode = $(this).data("order-deptcode");
 				    const orderCheckDate = $(this).data("order-ordercheckdate");
-				    const dispatchNo = $(this).data("order-dispatchno");
+				    const approvalNo = $(this).data("order-approvalno");
 				    console.log(empNo);
 				    console.log(deptCode);
 				    console.log(orderCheckDate);
@@ -213,7 +210,7 @@
 		                $("#orderCheckDate-date").text(orderCheckDate); 
 		                $("#empNo-name").text(empNo); 
 		                $("#hidden-order-No").val(orderNo);
-		                $("#empName-div").text(dispatchNo);
+		                $("#empName-div").text(approvalNo);
 				      },
 				      error: function () {
 				        alert("데이터를 불러오는 중 오류가 발생했습니다.");
@@ -273,8 +270,8 @@
 										</div>
                     <!-- Modal Footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" onclick="fnCompanion();">반려</button>
-                        <button type="button" class="btn btn-primary" onclick="fnApproval();">승인</button>
+                        <button type="button" class="btn btn-danger" id="companion-btn" onclick="fnCompanion();" disabled>반려</button>
+                        <button type="button" class="btn btn-primary" id="approval-btn" onclick="fnApproval();" disabled>승인</button>
                     </div>
 
                     <!-- Pick-Up Table -->
@@ -283,15 +280,15 @@
                             <thead>
                                 <tr>
                                     <th scope="col">배차 차량종류</th>
-                                    <td></td>
+                                    <td id="car-type"></td>
                                     <th scope="col">배차 운송기사</th>
-                                    <td></td>
+                                    <td id="car-name"></td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="row">전화번호</th>
-                                    <td colspan="3"></td>
+                                    <th scope="row">차량번호</th>
+                                    <td colspan="3" id="car-number"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -302,7 +299,31 @@
                         <div style="border: 1px solid rgb(185, 185, 185); width: 103px; height: 55px; display: flex; align-items: center; justify-content: center;">승인자</div>
                         <div style="border: 1px solid rgb(185, 185, 185); width: 210px; height: 55px; display: flex; align-items: center; justify-content: center;" id="empName-div"></div>
                     </div>
-
+                    <!-- 버튼 비활성화 -->
+										<script>
+										    function updateButtonState() {
+										        const empNameDiv = document.getElementById("empName-div");
+										        const companionBtn = document.getElementById("companion-btn");
+										        const approvalBtn = document.getElementById("approval-btn");
+										
+										        if (empNameDiv.innerText.trim() === "") {
+										            companionBtn.disabled = false;
+										            approvalBtn.disabled = false;
+										        } else {
+										            companionBtn.disabled = true;
+										            approvalBtn.disabled = true;
+										        }
+										    }
+										
+										    document.addEventListener("DOMContentLoaded", () => {
+										        const empNameDiv = document.getElementById("empName-div");
+										        const observer = new MutationObserver(updateButtonState);
+										
+										        observer.observe(empNameDiv, { childList: true, characterData: true, subtree: true });
+										
+										        updateButtonState();
+										    });
+										</script>
                     <!-- Footer Approval Button -->
                     <div class="footer_btn" style="display:flex; justify-content: end; margin-top:10px">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
@@ -328,6 +349,7 @@
 	        		   if(data>0){
 					        alert("반려 처리되었습니다.");
 					        document.getElementById("empName-div").innerText = '${loginUser.empName}';
+					        location.reload();
 	        			 }else{
 					        alert("반려 처리가 실패되었습니다.");
 	        			 }
@@ -338,50 +360,34 @@
 		    }
 		}
 		function fnApproval(){
-			alert('승인이다');
-			
+			const confirmResult = confirm("승인하시겠습니까?");
+		  const orderNo = $("#hidden-order-No").val();
+	    if (confirmResult) {
+	        const empNo='${loginUser.empName}';
+	        console.log(empNo);
+	        $.ajax({
+	        	url:'${contextPath}/ordering/approval.or',
+	        	type:'post',
+	        	data:{empNo:empNo , orderNo:orderNo},
+        	  success: function (data) {
+        			 
+        		   if(data!=null){
+				        document.getElementById("empName-div").innerText = '${loginUser.empName}';
+				        document.getElementById("car-type").innerText = data.vehicleType;
+				        document.getElementById("car-name").innerText = data.opepator;
+				        document.getElementById("car-number").innerText = data.licensPlate;
+				        alert("승인 처리되었습니다.");
+        			 }else{
+				        alert("승인 처리가 실패되었습니다.");
+        			 }
+        	  }
+	        })
+	    } else {
+	        alert("승인이 취소되었습니다.");
+	    }
 		}
 		
 		
 		</script>
-	<div class="modal fade" id="basicModal2" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header"> 
-                    <h5 class="modal-title">배차 조회</h5>  
-                </div>
-                <div class="modal-body">
-  
-
-                    <!-- Pick-Up Table -->
-                    <div class="pickUp_table">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col">배차 차량종류</th>
-                                    <td>트럭</td>
-                                    <th scope="col">배차 운송기사</th>
-                                    <td>김개똥</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">전화번호</th>
-                                    <td>010-1234-1235</td>
-                                    <td>배차 일자</td>
-                                    <td>2024.11.11</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Footer Approval Button -->
-                    <div class="footer_btn">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>

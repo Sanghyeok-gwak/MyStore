@@ -25,8 +25,9 @@ public class OrderingListDto {
 	private String modifier;
 	private String modifyDate;
 	private String useYn;
-	private String dispatchNo;
+	private int dispatchNo;
 	private String approvalNo;
+	private DispatchDto disList;
 	private ArrayList<OrderingProductDto> productList;
 	
 }

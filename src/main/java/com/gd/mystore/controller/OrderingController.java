@@ -3,6 +3,7 @@ package com.gd.mystore.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gd.mystore.dto.DispatchDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.OrderingListDto;
 import com.gd.mystore.dto.OrderingProductDto;
@@ -98,7 +100,7 @@ public class OrderingController {
 	@PostMapping("companion.or")
 	public int companion(@RequestParam String empNo,@RequestParam int orderNo) {
 		OrderingListDto olDto = new OrderingListDto();
-		olDto.setDispatchNo(empNo);
+		olDto.setApprovalNo(empNo);
 		olDto.setOrderNo(orderNo);
 		
 		int result = orderingService.updateCompanion(olDto);
@@ -107,6 +109,31 @@ public class OrderingController {
 			 result=-1;
 		}
 		return result;
+	}
+	@ResponseBody
+	@PostMapping("approval.or")
+	public DispatchDto approval(@RequestParam String empNo,@RequestParam int orderNo,Model model) {
+		OrderingListDto olDto = new OrderingListDto();	
+		List<DispatchDto> disList = orderingService.selectDispatchList();
+		DispatchDto randomDispatch = disList.get(new Random().nextInt(disList.size()));
+		DispatchDto dispatchDto = randomDispatch;
+		olDto.setApprovalNo(empNo);
+		olDto.setOrderNo(orderNo);
+		olDto.setDispatchNo(dispatchDto.getDispathchNo());
+		olDto.setDisList(dispatchDto);
+		int result =0;
+		if(!disList.isEmpty()) {
+			 	
+			 
+			result = orderingService.updateApproval(olDto);
+			if(result <0) {
+				result=-1;
+				olDto = null;
+			}
+		}
+		model.addAttribute("dispatchList",disList);
+		
+		return olDto.getDisList();
 	}
 	
 	
