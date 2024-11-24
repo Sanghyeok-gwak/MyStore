@@ -7,270 +7,228 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
 
 	<style>
-.left {
-	display: flex;
-	justify-content: flex-end;
-}
+	.left {
+		display: flex;
+		justify-content: flex-end;
+	}
 
-.card {
-	margin-bottom: 30px;
-	border: none;
-	border-radius: 5px;
-	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-}
+	.card {
+		margin-bottom: 30px;
+		border: none;
+		border-radius: 5px;
+		box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+	}
 
-.card-body {
-	padding: 0 20px 20px 20px;
-}
+	.card-body {
+		padding: 0 20px 20px 20px;
+	}
 
-/* 넓이 높이만 수정해서 사용하세요 인풋 스타일*/
-input {
-	border: 1px solid gray;
-	border-radius: 2px;
-	height: 35px;
-	width: 480px;
-}
+	/* 넓이 높이만 수정해서 사용하세요 인풋 스타일*/
+	input {
+		border: 1px solid gray;
+		border-radius: 2px;
+		height: 35px;
+		width: 480px;
+	}
 
-.icon>button {
-	border: none;
-	background: none;
-	outline: none;
-}
+	.icon>button {
+		border: none;
+		background: none;
+		outline: none;
+	}
 
-.search_box {
-	display: flex;
-	width: 250px;
-	border: 1px solid rgb(112, 112, 112);
-	border-radius: 3px;
-	align-items: center;
-}
+	.search_box {
+		display: flex;
+		width: 250px;
+		border: 1px solid rgb(112, 112, 112);
+		border-radius: 3px;
+		align-items: center;
+	}
 
-.input_b {
-	border-style: none;
-	outline: none;
-	box-shadow: none;
-	margin-left: 10px;
-	margin-right: 10px;
-}
+	.input_b {
+		border-style: none;
+		outline: none;
+		box-shadow: none;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
 
-.icon {
-	margin-right: 10px;
-}
+	.icon {
+		margin-right: 10px;
+	}
 
-.pagination .page-link {
-	color: rgba(109, 105, 108, 1);
-	background-color: white;
-	border: none;
-}
+	.pagination .page-link {
+		color: rgba(109, 105, 108, 1);
+		background-color: white;
+		border: none;
+	}
 
-.pagination .page-item.active .page-link {
-	border: 1px solid red;
-	color: red;
-	background-color: white;
-}
-button.btn3-hover {
-    margin-right: 0px;
-}
-</style>
+	.pagination .page-item.active .page-link {
+		border: 1px solid red;
+		color: red;
+		background-color: white;
+	}
+
+	button.btn3-hover {
+		margin-right: 0px;
+	}
+	</style>
 
 	<div class="body-body">
 		<!-- 여기 채워서 작업하시면 됩니다 .-->
 
 		<div class="text-box">
 			<div class="text-box1">
-				<div class="d-flex"
-					style="flex-direction: column; width: 100%; padding: 20px;">
+				<div class="d-flex" style="flex-direction: column; width: 100%; padding: 20px;">
 					<!-- 공지사항 제목 -->
 					<div>
 						<b style="font-size: 25px; margin-left: 10px;">공지사항</b>
 					</div>
 
 					<!-- 글 작성 버튼 (공지사항 아래) -->
-					<div class="btn-box-hover"
-						style="display: flex; justify-content: flex-end; align-items: center;">
-						<button class="btn3-hover">글 작성</button>
+					<div class="btn-box-hover" style="display: flex; justify-content: flex-end; align-items: center;">
+						<button class="btn3-hover" onclick="window.location.href='${ contextPath }/board/boardRegist.do'">글 작성</button>
 					</div>
 
 					<!-- 드롭다운과 인풋박스를 아래쪽에 세로로 정렬 -->
 					<div style="margin-top: 20px;">
-						<div
-							style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
-							<select class="dropdown dropdown-toggle dropdown-toggle-split"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false" style="margin-top: 10px;">
-								<option selected>제목</option>
-								<option>제목+내용</option>
-							</select>
-							<div class="search_box" style="margin-top: 10px; width: 500px;">
-								<input class="input_b" type="text" placeholder="검색">
-								<div class="icon">
-									<button>
-										<i class="bi bi-search"></i>
-									</button>
+						<div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
+							<form action="${ contextPath }/board/search.do" method="get" id="search_form" class="d-flex">
+								<select class="datatable-selector" id="custom-select" name="condition"
+									style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height:37px; width:125px; margin-top:10px;">
+								 	<option value="board_dept">구분</option>
+								 	<option value="board_title">제목</option>
+								 	<option value="board_content">내용</option>
+								</select>
+								<input type="hidden" name="page" value="1">	
+								<div class="search_box" style="margin-top: 10px; width: 500px;">
+									<input class="input_b" type="text" placeholder="검색" name="keyword" value="${ search.keyword }">
+									<div class="icon">
+										<button type="submit">
+											<i class="bi bi-search"></i>
+										</button>
+									</div>
 								</div>
-							</div>
+							</form>
+								<c:if test="${ not empty search }">
+<script>
+    $(document).ready(function(){
+        $("#search_form select").val('${search.condition}');
+        
+        // 검색 후 페이징바 클릭시 검색 form을 강제로 submit (단, 페이지번호는 현재 클릭한 페이지번호로 바꿔서)
+        $("#paging_area a").on("click", function() {
+            let page = $(this).text(); // Previous | Next | 페이지번호
+            if(page == 'Previous'){
+                page = ${pi.currentPage - 1};
+            } else if(page == 'Next'){
+                page = ${pi.currentPage + 1};
+            }
+
+            // 페이지 번호를 강제로 search_form에 입력하고 form을 제출
+            $("#search_form input[name=page]").val(page);
+            $("#search_form").submit();
+
+            return false; // 기본 이벤트(href='/board/list.do' URL 요청) 동작 안 되도록
+        });
+    });
+</script>
+
+	</c:if>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
-
 
 			<div class="card" style="margin-top: 80px; box-shadow: none;">
 				<div class="card-body">
 
 					<!-- Table with hoverable rows -->
 					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th scope="col">번호</th>
-								<th scope="col">구분</th>
-								<th scope="col">제목</th>
-								<th scope="col">작성자</th>
-								<th scope="col">작성일</th>
-								<th scope="col">조회</th>
-								<th scope="col">첨부</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr style="background-color: #858484;">
-								<th scope="row" style="background-color: #bbb9b9;">1</th>
-								<td style="background-color: #bbb9b9;">전체</td>
-								<td style="background-color: #bbb9b9;">공지사항입니다</td>
-								<td style="background-color: #bbb9b9;">관리자</td>
-								<td style="background-color: #bbb9b9;">2024-11-02</td>
-								<td style="background-color: #bbb9b9;">389</td>
-								<td style="background-color: #bbb9b9;"></td>
-							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">3</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">4</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">5</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">6</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">7</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">8</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">9</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-							<tr>
-								<th scope="row">10</th>
-								<td>전체</td>
-								<td>공지사항입니다</td>
-								<td>관리자</td>
-								<td>2024-11-02</td>
-								<td>389</td>
-								<td></td>
-							</tr>
-						</tbody>
+						<c:choose>
+							<c:when test="${ empty list }">
+								<!-- 데이터가 없을 때 메시지 출력 -->
+								<tr>
+									<td colspan="7">조회된 게시글이 없습니다.</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<!-- 데이터가 있을 때 테이블 내용 출력 -->
+								<thead>
+									<tr>
+										<th scope="col">번호</th>
+										<th scope="col">구분</th>
+										<th scope="col">제목</th>
+										<th scope="col">작성자</th>
+										<th scope="col">작성일</th>
+										<th scope="col">조회</th>
+										<th scope="col">첨부</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="b" items="${ list }">
+										<tr onclick='location.href="${contextPath}/board/${ loginUser.userId eq b.empNo ? "detail.do" : "increase.do" }?no=${ b.boardNo }";'>
+											<td>${ b.boardNo }</td>
+											<td>${ b.boardDept }</td>
+											<td>${ b.boardTitle }</td>
+											<td>${ b.empName }</td>
+											<td>${ b.createDate }</td>
+											<td>${ b.boardCount }</td>
+											<td>${ b.attachCount > 0 ? '★' : '' }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</c:otherwise>
+						</c:choose>
 					</table>
 					<!-- End Table with hoverable rows -->
 
-					<div class="paging">
-						<ul class="pagination d-flex justify-content-center text-dark"
-							style="margin-top: 40px;">
-							<li class="page-item disabled"><a class="page-link" href="">
+					<div class="paging" id="paging_area">
+						<ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
+							<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : ''}">
+								<a class="page-link" href="${contextPath}/board/list.do?page=${pi.currentPage-1}">
 									<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-							</a></li>
-							<li class="page-item active"><a class="page-link" href="">1</a></li>
-							<li class="page-item"><a class="page-link" href="">2</a></li>
-							<li class="page-item"><a class="page-link" href="">3</a></li>
-							<li class="page-item"><a class="page-link" href="">4</a></li>
-							<li class="page-item"><a class="page-link" href="">5</a></li>
-							<li class="page-item"><a class="page-link" href=""> <span>다음</span>&nbsp;<i
-									class="bi bi-chevron-double-right"></i>
-							</a></li>
+								</a>
+							</li>
+
+							<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+								<li class="page-item ${pi.currentPage == p ? 'active' : ''}">
+									<a class="page-link" href="${contextPath}/board/list.do?page=${p}">${p}</a>
+								</li>
+							</c:forEach>
+
+							<li class="page-item ${pi.currentPage == pi.maxPage ? 'disabled' : ''}">
+								<a class="page-link" href="${contextPath}/board/list.do?page=${pi.currentPage+1}">
+									<span>다음</span>&nbsp;
+									<i class="bi bi-chevron-double-right"></i>
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 
-
-
 		</div>
 	</div>
 
-
-
 	<script>
-    function toggleSubmenu(element) {
-      const submenu = element.nextElementSibling;
-      if (submenu.style.maxHeight === "0px" || submenu.style.maxHeight === "") {
-        submenu.style.maxHeight = submenu.scrollHeight + "px";
-      } else {
-        submenu.style.maxHeight = "0";
-      }
-    }
-  </script>
+		function toggleSubmenu(element) {
+			const submenu = element.nextElementSibling;
+			if (submenu.style.maxHeight === "0px" || submenu.style.maxHeight === "") {
+				submenu.style.maxHeight = submenu.scrollHeight + "px";
+			} else {
+				submenu.style.maxHeight = "0";
+			}
+		}
+	</script>
+	
+	
+
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

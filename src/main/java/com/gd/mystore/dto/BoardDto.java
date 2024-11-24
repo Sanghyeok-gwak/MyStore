@@ -1,5 +1,7 @@
 package com.gd.mystore.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,12 +22,15 @@ public class BoardDto {
 	private String boardDept;
 	private String boardTitle;
 	private String boardContent;
-	private int count;
+	private int boardCount;
 	private int empNo;
 	private String createDate;
 	private int modifier;
 	private String modifyDate;
 	private String userYN;
 	
+	private String attachCount;
+	private String empName;
 	
+	private List<BoardFileDto> boardList; // has many 관계
 }

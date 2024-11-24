@@ -232,7 +232,7 @@ input {
 	</div>
 
 		<!-- AJAX로 데이터 검색 및 테이블에 반영 -->
-		<script>
+	<script>
 $(document).ready(function() {
     // Enter 키를 눌렀을 때 검색 실행
     $("#empNameInput").keypress(function(event) {
@@ -304,8 +304,6 @@ $(document).ready(function() {
 
 $(function() {
     var editMode = false;
-    
-    
 
     // 수정 모드 활성화/비활성화
     $("#editNodeBtn").click(function() {
@@ -320,7 +318,6 @@ $(function() {
         $('#jstree').jstree("destroy").empty();  // 기존 트리 초기화
         initializeTree(editMode);  // 수정 모드에 맞게 트리 다시 초기화
     });
-
 
     // 트리 데이터를 AJAX로 로드하는 부분
     function loadTreeData() {
@@ -376,7 +373,6 @@ $(function() {
                 }
             },
             plugins: isEditMode ? ["contextmenu", "dnd"] : ["contextmenu"], // 수정 모드일 경우 dnd 플러그인 활성화
-            		
             contextmenu: {
                 items: function($node) {
                     var menuItems = {};
@@ -449,9 +445,6 @@ $(function() {
                     return true;  // 원래 깊이로만 드롭 가능
                 }
             }
-
-
-
         });
 
         // 트리 데이터 로드
@@ -460,46 +453,59 @@ $(function() {
 
     // 초기 트리 데이터 로드 및 트리 초기화
     initializeTree(editMode);
+
     $("#submitNodeBtn").click(function() {
         const selectedNode = $('#jstree').jstree('get_selected');
         const treeData = $('#jstree').jstree('get_json');  // 트리 구조 데이터 가져오기
 
         if (selectedNode.length > 0) {
-            const nodeId = selectedNode[0];
-            const nodeName = $('#jstree').jstree('get_text', nodeId);
-            const originalNodeName = $('#jstree').jstree('get_text', nodeId); // 원래 부서명 가져오기
-            
+            let nodeId = selectedNode[0];
+            let nodeName = $('#jstree').jstree('get_text', nodeId);  // 현재 부서명
+
+            // 트리에서 노드의 원래 부서명 가져오기
+            let nodeData = $('#jstree').jstree('get_node', nodeId).data;
+            let originalNodeName = nodeData.originalDeptName || nodeName;  // 원래 부서명 가져오기
+
+            console.log("Original Node Name:", originalNodeName);  // 디버그 로그 추가
+
             let isNewDepartment = false;
             let isNameChanged = false;
-            
-            // 부서가 새로 추가된 경우
-            if (originalNodeName === "새 부서" || originalNodeName === "") {
-                isNewDepartment = true; // 새 부서일 경우 추가
+
+            // 새 부서 추가 또는 이름 변경 여부 확인
+            if (nodeName === "본사") {
+                isNewDepartment = true;
+            } else if (nodeName !== originalNodeName) {
+                isNameChanged = true;
             }
 
-            // 부서명이 변경된 경우
-            if (nodeName !== originalNodeName) {
-                isNameChanged = true; // 부서명이 변경된 경우
-            }
+            // 부서명 수정
+            nodeName = "새 부서";  // 사용자가 수정한 부서명
 
-            // 서버로 트리 상태와 부서명을 전송
+            console.log("Sending Data:", {
+                deptName: nodeName,
+                originalDeptName: originalNodeName,  // 원래 부서명
+                isNewDepartment: isNewDepartment,  // 부서 추가 여부
+                isNameChanged: isNameChanged,  // 부서명 변경 여부
+                treeData: treeData  // 트리 데이터
+            });
+
             $.ajax({
-                url: '/mystore/department/departmentModify/data',
+                url: '/mystore/department/departmentModify/data',  // 요청 URL
                 type: 'POST',
-                data: {
-                    deptName: nodeName,  // 부서명
-                    originalDeptName: originalNodeName,  // 원래 부서명 (이름 변경 확인용)
-                    isNewDepartment: isNewDepartment,  // 부서 추가 여부
-                    isNameChanged: isNameChanged,  // 부서명 변경 여부
-                    treeData: JSON.stringify(treeData)  // 트리 데이터
-                },
+                contentType: 'application/json',  // JSON 형식으로 요청
+                data: JSON.stringify({
+                    deptName: nodeName,
+                    originalDeptName: originalNodeName,
+                    isNewDepartment: isNewDepartment,
+                    isNameChanged: isNameChanged,
+                    treeData: treeData  // 이미 객체 형식으로 처리
+                }),
                 success: function(response) {
                     if (response.success) {
                         alert("부서 수정/추가 완료!");
                         loadTreeData(); // 트리 새로 고침
                     } else {
-                        alert("부서 수정/추가 실패: " + response.message);
-                        loadTreeData(); // 트리 새로 고침
+                        alert("부서 수정/추가 실패: " + (response.message || "알 수 없는 오류"));
                     }
                 },
                 error: function(xhr, status, error) {
@@ -507,6 +513,7 @@ $(function() {
                     console.error(error);  // error 콘솔 출력
                 }
             });
+
         } else {
             alert("수정 또는 추가할 부서를 선택하세요.");
         }
@@ -520,17 +527,9 @@ $(function() {
         editMode = !editMode;  // 수정 모드를 토글
         console.log("수정 모드:", editMode);
     });
-    
-    
-    
-    
 });
-
-
-
-
-
 </script>
+
 
 
 		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
