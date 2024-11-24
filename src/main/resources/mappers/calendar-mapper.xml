@@ -1,5 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper>
-  <cache-ref namespace=""/>
+<mapper namespace="calendarMapper">
+
+    <resultMap id="CalendarResultMap" type="CalendarDto">
+        <result column="CAL_NO" property="calNo" />
+        <result column="EMP_NO" property="empNo" />
+        <result column="CAL_START_DATE" property="calStartDate" />
+        <result column="CAL_END_DATE" property="calEndDate" />
+        <result column="CAL_SUBJECT" property="calSubject" />
+        <result column="CAL_COLOR" property="calColor" />
+    </resultMap>
+
+    <select id="selectCalendarEvents" resultMap="CalendarResultMap">
+        SELECT 
+            CAL_NO,
+            EMP_NO,
+            CAL_START_DATE,
+            CAL_END_DATE,
+            CAL_SUBJECT,
+            CAL_COLOR
+        FROM TBL_CALENDAR
+        WHERE (EMP_NO = #{empNo} AND CAL_COLOR = 'B') 
+           OR CAL_COLOR = 'R'
+    </select>
+
+    <insert id="insertCalendarEvent">
+        INSERT 
+               INTO 
+               TBL_CALENDAR 
+             (
+               CAL_NO
+             , EMP_NO
+             , CAL_START_DATE
+             , CAL_END_DATE
+             , CAL_SUBJECT
+             , CAL_COLOR
+             ) 
+             VALUES 
+             ( 
+             CAL_NO_SEQ.NEXTVAL
+            ,#{empNo}
+            ,#{calStartDate}
+            ,#{calEndDate}
+            ,#{calSubject}
+            ,#{calColor}
+             )
+    </insert>
+
+    <update id="updateCalendarEvent">
+        UPDATE TBL_CALENDAR
+        SET 
+            CAL_SUBJECT = #{calSubject},
+            CAL_START_DATE = #{calStartDate},
+            CAL_END_DATE = #{calEndDate},
+            CAL_COLOR = #{calColor}
+        WHERE CAL_NO = #{calNo}
+    </update>
+
+    <delete id="deleteCalendarEvent">
+        DELETE FROM TBL_CALENDAR
+        WHERE CAL_NO = #{calNo}
+    </delete>
 </mapper>
