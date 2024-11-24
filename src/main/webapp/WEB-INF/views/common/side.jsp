@@ -57,10 +57,10 @@
         <span>지점</span>
       </div>
       <div class="submenu">
-        <a href="${contextPath }/ordering/adminList.or">발주 관리</a>
-        <a href="${contextPath }/branchoffice/adminList.po">상품 관리</a>
-        <a href="${contextPath }/ordering/regist.or">test</a>
-        <a href="${contextPath }/branchoffice/list.po">test</a>
+        <a href="${contextPath }/ordering/adminList.or">발주 관리(본사)</a>
+        <a href="${contextPath }/branchoffice/adminList.po">상품 관리(본사)</a>
+        <a href="${contextPath }/ordering/regist.or">발주등록(지점)</a>
+        <a href="${contextPath }/branchoffice/list.po">상품조회(지점)</a>
         <a href="#">지점 이동</a>
       </div>
 

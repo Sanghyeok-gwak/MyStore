@@ -1,11 +1,13 @@
 package com.gd.mystore.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.gd.mystore.dto.DispatchDto;
 import com.gd.mystore.dto.OrderingListDto;
 import com.gd.mystore.dto.OrderingProductDto;
 import com.gd.mystore.dto.PageInfoDto;
@@ -29,19 +31,27 @@ public class OrderingDao {
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
 		return sqlSession.selectList("orderingMapper.selectOrderList",null,rowBounds);
 	}
-	public List<OrderingProductDto> selectOrderProductList(){
-		return sqlSession.selectList("orderingMapper.selectOrderProductList");
+	public List<OrderingProductDto> selectOrderProductList(int orderingNo){
+		return sqlSession.selectList("orderingMapper.selectOrderProductList",orderingNo);
 	}
 	
 	public List<ProductDto> selectProductList(){
 		return sqlSession.selectList("orderingMapper.selectProductList");
 	}
 	public int insertOrderingList(OrderingListDto orderingDto) {
-		log.debug("orderingDto : {}",orderingDto);
 		return sqlSession.insert("orderingMapper.insertOrderingList",orderingDto);
 	}
 	public int insertOrderingPro(OrderingProductDto productList) {
-		log.debug("productList : {}",productList);
 		return sqlSession.insert("orderingMapper.insertOrderingPro",productList);
+	}
+	
+	public int updateCompanion(OrderingListDto olDto) {
+		return sqlSession.update("orderingMapper.updateCompanion",olDto);
+	}
+	public int updateApproval(OrderingListDto olDto) {
+		return sqlSession.update("orderingMapper.updateApproval",olDto);
+	}
+	public List<DispatchDto> selectDispatchList(){
+		return sqlSession.selectList("orderingMapper.selectDispatchList");
 	}
 }

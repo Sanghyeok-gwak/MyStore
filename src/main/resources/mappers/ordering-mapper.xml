@@ -22,13 +22,15 @@
   <resultMap id="OrderingListResultMap" type="OrderingListDto">
   	<result column="ORDER_NO" property="orderNo" />
   	<result column="EMP_NO" property="empNo" />
-  	<result column="BRANCH_NAME" property="branchName" />
+  	<result column="BRANCH_NAME" property="deptCode" />
   	<result column="ORDER_STATUS" property="orderStatus" />
   	<result column="ORDER_CHECKDATE" property="orderCheckDate" />
   	<result column="CREATE_DATE" property="createDate" />
   	<result column="MODIFIER" property="modifier" />
   	<result column="MODIFY_DATE" property="modifyDate" />
   	<result column="USE_YN" property="useYn" />
+  	<result column="DISPATCH_NO" property="dispatchNo"/>
+  	<result column="APPROVAL_NO" property="approvalNo"/>
   </resultMap>
   <resultMap id="OrderingProductResultMap" type="OrderingProductDto">
   	<result column="PRODUCT_NO" property="productNo" />
@@ -39,6 +41,18 @@
   	<result column="USE_YN" property="useYn" />
   	<result column="ORDER_NO" property="orderNo" />
   	<result column="PRODUCT_NAME" property="productName" />
+  </resultMap>
+  <resultMap type="DispatchDto" id="DispatchResultMap">
+  	<result column="DISPATCH_NO" property="dispathchNo"/>
+  	<result column="VEHICLE_TYPE" property="vehicleType"/>
+  	<result column="LICENSE_PLATE" property="licensPlate"/>
+  	<result column="OPERATOR" property="opepator"/>
+  	<result column="EMP_NO" property="empNo"/>
+  	<result column="MODIFIER" property="modifier"/>
+  	<result column="CREATE_DATE" property="createDate"/>
+  	<result column="MODIF Y_DATE" property="modifyDate"/>
+  	<result column="USE_YN" property="useYn"/>
+  
   </resultMap>
 	
 	<!-- 상품리스트  -->
@@ -80,18 +94,34 @@
 			    e.EMP_NAME as "EMP_NO",
 			    BRANCH_NAME,
 			    ORDER_STATUS,
-			    ORDER_CHECKDATE,
+			    TO_CHAR(ORDER_CHECKDATE,'YYYY-MM-DD') as "ORDER_CHECKDATE",
 			    o.CREATE_DATE,
 			    o.MODIFIER,
 			    o.MODIFY_DATE,
-			    o.USE_YN
+			    o.USE_YN,
+			    o.DISPATCH_NO,
+          o.APPROVAL_NO
 			FROM 
 		    	TBL_ORDERING o
 		  join TBL_EMPLOYEE e on (o.EMP_NO = e.EMP_NO)
-		  order by ORDER_NO desc  	
+		  order by ORDER_NO desc
   </select>
   <!-- 발주 상품 -->
-  
+  <select id="selectOrderProductList" resultMap="OrderingProductResultMap">
+		  SELECT 
+				    PRODUCT_NO,
+				    ORDER_COUNT,
+				    CREATE_DATE,
+				    MODIFIER,
+				    MODIFY_DATE,
+				    USE_YN,
+				    ORDER_NO,
+				    PRODUCT_NAME
+				FROM 
+				    TBL_ORDERING_PRODUCT
+				WHERE 
+				    ORDER_NO = #{orderingNo}
+  </select>
 	<insert id="insertOrderingList">
     INSERT INTO TBL_ORDERING (
         ORDER_NO,
@@ -105,8 +135,8 @@
     VALUES (
         ORDER_NO_SEQ.nextval,  
         #{empNo},  
-        'branchName',            
-        'N',                 
+        #{deptCode},            
+        'I',                 
         sysdate,            
         sysdate,            
         sysdate             
@@ -121,6 +151,7 @@
 		    PRODUCT_NAME
 		)
 		VALUES (
+		
 		    #{productNo}
 			, #{inventory}
 			, sysdate
@@ -128,4 +159,38 @@
 		  , #{productName}
 		)
 	</insert>
+	<update id="updateCompanion">
+	 update
+		    	TBL_ORDERING
+		  set
+		      APPROVAL_NO = #{approvalNo},
+		      ORDER_STATUS = 'N'
+		  where
+		       ORDER_NO = #{orderNo}
+	</update>
+	<update id="updateApproval">
+	 update
+		    	TBL_ORDERING
+		  set
+		      APPROVAL_NO = #{approvalNo},
+		      DISPATCH_NO = #{dispatchNo},
+		      ORDER_STATUS = 'Y'
+		  where
+		       ORDER_NO = #{orderNo}
+	</update>
+	<select id="selectDispatchList" resultMap="DispatchResultMap">
+	SELECT 
+		    DISPATCH_NO,
+		    VEHICLE_TYPE,
+		    LICENSE_PLATE,
+		    OPERATOR,
+		    EMP_NO,
+		    MODIFIER,
+		    CREATE_DATE,
+		    MODIFY_DATE,
+		    USE_YN
+		FROM 
+   		 	TBL_DISPATCH
+	</select>
+	
 </mapper>

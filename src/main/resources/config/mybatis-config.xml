@@ -24,6 +24,7 @@
 		<typeAlias type="com.gd.mystore.dto.CommonCodeDto" alias="CommonCodeDto"/>						<!-- 공통코드 -->
 		<typeAlias type="com.gd.mystore.dto.OrderingListDto" alias="OrderingListDto"/>				<!-- 발주상품 -->
 		<typeAlias type="com.gd.mystore.dto.OrderingProductDto" alias="OrderingProductDto"/>	<!-- 발주리스트 -->
+		<typeAlias type="com.gd.mystore.dto.DispatchDto" alias="DispatchDto"/>	<!-- 배차리스트 -->
 		
 	</typeAliases>
 	
