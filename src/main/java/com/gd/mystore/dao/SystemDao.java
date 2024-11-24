@@ -54,7 +54,6 @@ public class SystemDao {
 	}
 
 	public List<EmpMemberDto> selectSearchEmpMemberList(PageInfoDto pi, String scData) {
-		System.out.println("@@@@@@@@@기능 구현중 Dao@@@@@@@@@" + scData);
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() -1) * pi.getBoardLimit(), pi.getBoardLimit());
 		return sqlSession.selectList("systemMapper.selectSearchList", scData, rowBounds);
 	}

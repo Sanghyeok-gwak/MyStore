@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -95,14 +96,27 @@ public class SystemController {
 	
 	@GetMapping("/systemLv.do")
 	public void list(@RequestParam(value="page", defaultValue = "1") int currentPage
+					, @RequestParam(value="search", defaultValue="") String scData
 					, Model model) {
-		int listCount = systemService.selectEmpMemberCount();
 		
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
-		List<EmpMemberDto> list = systemService.selectEmpMemberList(pi);
+		if(scData == "") {
+			int listCount = systemService.selectEmpMemberCount();
+			
+			PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+			List<EmpMemberDto> list = systemService.selectEmpMemberList(pi);
+			
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+		}else {
+			int listCount = systemService.selectSearchListCount(scData);
+			PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+			
+			List<EmpMemberDto> list = systemService.selectSearchEmpMemberList(pi, scData);
+			
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+		}
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
 		
 	}
 	
@@ -122,23 +136,7 @@ public class SystemController {
 		return "redirect:/system/systemLv.do";
 	}
 	
-	//시스템 레벨 검색
-	@GetMapping("/systemLvSearch.do")
-	public String searchList(@RequestParam(value="page", defaultValue = "1") int currentPage
-						   , @RequestParam(value="search", defaultValue=" ") String scData
-						   , Model model) {
-		int listCount = systemService.selectSearchListCount(scData);
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
-		
-		List<EmpMemberDto> list = systemService.selectSearchEmpMemberList(pi, scData);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		
-		//아마 에이작스로 해야 될 것 같음
-		//해당 방식으로 진행하면 페이지를 한개 더 만들어야 하는 단점
-		return "redirect:/system/systemLv.do";
-	}
+	
 	
 	
 	

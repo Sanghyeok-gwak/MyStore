@@ -107,7 +107,8 @@
 			<!-- 왼쪽 -->
 			<div class="left_body">
 				<span class="ffont1" style="font-weight: bold;">시스템 레벨 관리</span>
-				<form action="${ contextPath }/system/systemLvSearch.do">
+				<!-- <form action="${ contextPath }/system/systemLvSearch.do"> -->
+				<form action="${ contextPath }/system/systemLv.do" method="get">
 					<div class="input_contoller">
 						<div class="search_box">
 							<div>
@@ -125,7 +126,6 @@
 				</form>
 
 				<form action="${ contextPath }/system/lvUpdate.do" method="post">
-					<!-- Table with hoverable rows -->
 					<table class="table table-hover">
 						<thead>
 							<tr class="table_head_color">
@@ -138,6 +138,7 @@
 								<th scope="col">수정일</th>
 							</tr>
 						</thead>
+						
 						<tbody>
 							<c:choose>
 								<c:when test="${ empty list }">
@@ -242,11 +243,8 @@
 				</form>
 			</div>
 			<!-- 오른쪽 끝 -->
-
 		</div>
-
 	</div>
-
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 </body>

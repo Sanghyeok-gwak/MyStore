@@ -174,10 +174,11 @@
 	      , MODIFY_DATE
 	      , ROWNUM as rnum
 	   from tbl_employee e
-	  where e.use_yn = 'Y'
+	  where e.USE_YN = 'Y'
 		  and e.EMP_NO LIKE '%' || #{scData} || '%'
 		   OR e.EMP_NAME LIKE '%' || #{scData} || '%'
 		   OR e.DEPT_CODE LIKE '%' || #{scData} || '%'
+		   OR (select dept_name from tbl_department where dept_code = e.dept_code) LIKE '%' || #{scData} || '%'
 	</select>
 
 </mapper>
