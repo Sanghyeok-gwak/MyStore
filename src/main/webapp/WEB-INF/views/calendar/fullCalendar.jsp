@@ -50,9 +50,10 @@
             width: 100%; /* 초기 너비 */
             height: 90%; /* 초기 높이 */
             border: 1px solid #ddd;
-            background-color: #fafafa;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+}
+
     </style>
 </head>
 <body>
@@ -68,25 +69,30 @@
 </script>
 
 <div class="body-body">
+	 
+	<!-- 
     <!-- 좌측 메뉴 -->
     <div class="div">
-        <h3>내 캘린더</h3>
-        <div class="menu-item">
-            <label>
-                <input type="checkbox" checked> ${loginUser.empName}
-            </label>
-        </div>
-        <div class="menu-item">
-            <label>
-                <input type="checkbox" id="allSchedulesCheckbox" checked> 전사일정
-            </label>
-        </div>
-        <div class="menu-item">
-            <label>
-                <input type="checkbox" id="hrAdminCheckbox"> 인사 관리자
-            </label>
-        </div>
+    <h3>내 캘린더</h3>
+    <div class="menu-item">
+        <label>
+            <input type="checkbox" id="personalSchedulesCheckbox" checked> ${loginUser.empName} 일정
+        </label>
     </div>
+    <div class="menu-item">
+        <label>
+            <input type="checkbox" id="allSchedulesCheckbox" checked> 전사 일정
+        </label>
+    </div>
+    <c:if test="${ loginUser.empNo == '1003'}">
+    <div class="menu-item">
+        <label>
+            <input type="checkbox" id="hrAdminCheckbox"> 인사 관리자
+        </label>
+    </div>
+    </c:if>
+</div>
+
 
     <!-- 캘린더 영역 -->
     <div id="calendar-container">
@@ -95,11 +101,8 @@
 </div>
 
 <script>
-    var loginUser = {
-        empNo: "${loginUser.empNo}",
-        empName: "${loginUser.empName}"
-    };
 
+	
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
 
@@ -113,16 +116,27 @@
             selectable: true,
             editable: true,
             events: function(fetchInfo, successCallback, failureCallback) {
+                let filters = {
+                    personal: $('#personalSchedulesCheckbox').is(':checked'),
+                    all: $('#allSchedulesCheckbox').is(':checked')
+                };
+
                 $.ajax({
                     url: `${contextPath}/calendar/selectEvents.do`,
                     type: 'GET',
+                    data: filters, // 필터 조건 전송
                     dataType: 'json',
-                    success: function(response) {
-                        successCallback(response);
+                    success: function(response) { 
+                    	console.log('서버 응답 데이터:', response);
+                        successCallback(response.map(event => {
+                            return {
+                                ...event,
+                                backgroundColor: event.color === 'B' ? 'SteelBlue' : 'SeaGreen', // 배경색
+                              
+                            };
+                        }));
                     },
                     error: function(err) {
-                        console.error('이벤트 로드 실패:', err);
-                        failureCallback(err);
                     }
                 });
             },
@@ -138,10 +152,13 @@
                             calSubject: title,
                             calStartDate: info.dateStr,
                             calEndDate: info.dateStr,
-                            calColor: 'B'
+                            calContent: '',
+                            calColor: 'B', // 개인 일정 기본값
+                            calStatus: 'N' // 기본 상태
                         }),
                         success: function(res) {
-                            alert(res);
+                            alert('성공적으로 등록되었습니다.');
+                            calendar.refetchEvents();
                         },
                         error: function(err) {
                             console.error('이벤트 추가 실패:', err);
@@ -150,7 +167,7 @@
                 }
             },
             eventClick: function(info) {
-                let action = prompt(`"${info.event.title}" 이벤트 작업 선택\n1: 수정\n2: 삭제`);
+                let action = prompt(`"${info.event.title}" 이벤트 작업 선택(숫자로 입력해주세요)\n1: 수정\n2: 삭제`);
                 if (action === '1') {
                     let newTitle = prompt('새로운 제목을 입력하세요:', info.event.title);
                     if (newTitle) {
@@ -162,10 +179,11 @@
                                 calNo: info.event.id,
                                 calSubject: newTitle,
                                 calStartDate: info.event.start.toISOString(),
-                                calEndDate: info.event.end ? info.event.end.toISOString() : null
+                                calEndDate: info.event.end ? info.event.end.toISOString() : null,
+                                modifier: loginUser.empNo
                             }),
                             success: function(res) {
-                                alert(res);
+                                alert('성공적으로 수정 되었습니다.');
                                 info.event.setProp('title', newTitle);
                             },
                             error: function(err) {
@@ -181,7 +199,7 @@
                             contentType: 'application/json',
                             data: JSON.stringify({ calNo: info.event.id }),
                             success: function(res) {
-                                alert(res);
+                                alert('성공적으로 삭제되었습니다.');
                                 info.event.remove();
                             },
                             error: function(err) {
@@ -193,9 +211,16 @@
             }
         });
 
+        // 체크박스 변경 이벤트
+		$('#personalSchedulesCheckbox, #allSchedulesCheckbox, #hrAdminCheckbox').on('change', function () {
+		    calendar.refetchEvents(); // 체크박스 상태 변경 시 이벤트 다시 로드
+		});
+
+
         calendar.render();
     });
 </script>
+
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>

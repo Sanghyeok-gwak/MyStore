@@ -58,7 +58,8 @@
     </update>
 
     <delete id="deleteCalendarEvent">
-        DELETE FROM TBL_CALENDAR
-        WHERE CAL_NO = #{calNo}
+        DELETE 
+          FROM TBL_CALENDAR
+         WHERE CAL_NO = #{calNo}
     </delete>
 </mapper>
