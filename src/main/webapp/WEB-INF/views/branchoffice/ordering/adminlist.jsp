@@ -7,6 +7,74 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+.search-text {
+	display: flex;
+	justify-content: end;
+}
+
+.search-text-text {
+	width: 100px;
+	border: 1px solid lightgray;
+	text-align: center;
+	border-radius: 5px;
+	height: 30px;
+	margin-right: 5px;
+}
+
+.search-text-box {
+	position: relative;
+	height: 30px;
+	width: 300px;
+}
+
+.search-text-box input {
+	width: 100%;
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	height: 100%;
+	padding-right: 30px;
+}
+
+.search-text-box button {
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: white;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+}
+
+.add-edit-box {
+	margin-top: 80px;
+	margin-bottom: 20px;
+	display: flex;
+	justify-content: end;
+}
+
+div#ordering-pro-box {
+	height: 300px;
+	overflow-y: scroll;
+}
+
+#ordering-pro-box {
+	border: 1px solid lightgray;
+}
+
+.pagination .page-link {
+	color: rgba(109, 105, 108, 1);
+	background-color: white;
+	border: none;
+}
+
+.pagination .page-item.active .page-link {
+	border: 1px solid red;
+	color: red;
+	background-color: white;
+}
+</style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -20,66 +88,40 @@
 						<b style="font-size: 25px; margin-left: 10px;">발주 관리 리스트</b>
 					</div>
 					<hr>
-          <style>
-            .search-text {
-              display: flex;
-              justify-content: end;
-            }
-            .search-text-text {
-              width: 100px;
-              border: 1px solid lightgray;
-              text-align: center;
-              border-radius: 5px;
-              height: 30px;
-              margin-right: 5px;
-            }
-            .search-text-box {
-              position: relative;
-              height: 30px;
-              width: 300px; 
-            }
-            .search-text-box input {
-              width: 100%;
-              border: 1px solid lightgray;
-              border-radius: 5px;
-              height: 100%;
-              padding-right: 30px; 
-            }
-            .search-text-box button {
-              position: absolute; 
-              right: 5px;
-              top: 50%;
-              transform: translateY(-50%);
-              background-color: white;
-              border: none;
-              padding: 0;
-              cursor: pointer;
-            }
-            .add-edit-box{
-              margin-top: 80px;
-              margin-bottom: 20px;
-              display: flex;
-              justify-content: end;
-            }
-            div#ordering-pro-box {
-						    height: 300px;
-						    overflow-y: scroll;
-						}
-						#ordering-pro-box{
-							border: 1px solid lightgray;
-						}
-						
-          </style>
           
           <div class="search-text">
             <div class="search-text-text">
               <span class="ffont3">요청자</span>
             </div>
-            <div class="search-text-box">
-              <input type="text">
-              <button><i class="bi bi-search"></i></button>
-            </div>
+            <form id="search_form" action="${contextPath}/ordering/search.or" method="get">
+	            <div class="search-text-box">
+	            	<input type="hidden" name="page" value="1">
+	              <input type="text" id="searchValue" name="keyword" style="padding-left:10px;" value="${ search }">
+	           
+	              <button type="submit"><i class="bi bi-search"></i></button>
+	            </div>
+            </form>
+            <c:if test="${ not empty search }">
+	            <script>
+	            	$(document).ready(function(){
+										$("#paging_area a").on("click", function(){
+	            			
+	            			let page = $(this).text(); // Previous | Next | 페이지번호
+	            			if(page == 'Previous'){
+	            				page = ${pi.currentPage - 1};
+	            			}else if(page == 'Next'){
+	            				page = ${pi.currentPage + 1};
+	            			}
+	            			
+	            			$("#search_form input[name=page]").val(page);
+	            			$("#search_form").submit();
+	            			
+	            			return false;
+	            	})
+	            </script>
+	          </c:if>  
           </div>
+          
         </div>
         <div class="table-box">
           <table class="table" style="text-align: center;">
@@ -98,7 +140,7 @@
              <c:choose>
             		<c:when test="${empty list }">
 	                <tr>
-	                  <td colspan="7" style="text-align: center;">존재하는 상품이 없습니다.</td>
+	                  <td colspan="7" style="text-align: center;">존재하는 발주리스트가 없습니다.</td>
 	                </tr>
             		</c:when>
               	<c:otherwise>
@@ -132,19 +174,7 @@
 							</c:choose>
             </tbody>
           </table>
-           <style>
-            .pagination .page-link {
-              color: rgba(109, 105, 108, 1);
-              background-color: white;
-              border: none;
-            }
-
-            .pagination .page-item.active .page-link {
-              border: 1px solid red;
-              color: red;
-              background-color: white;
-            }
-          </style>
+          
           <div class="paging"> 
             <ul id="paging_area" class="pagination d-flex justify-content-center">
             
@@ -197,7 +227,7 @@
 		                tbody.empty();  
 
 		               
-		                data.forEach(function (item, index) {
+		                data.list.forEach(function (item, index) {
 		                	const row = "<tr>" +
 		                                  "<td>" + (index + 1) + "</td>" +
 		                                  "<td>" + item.productNo + "</td>" +  
@@ -211,6 +241,9 @@
 		                $("#empNo-name").text(empNo); 
 		                $("#hidden-order-No").val(orderNo);
 		                $("#empName-div").text(approvalNo);
+		                document.getElementById("car-type").innerText = data.dis.vehicleType;
+						        document.getElementById("car-name").innerText = data.dis.opepator;
+						        document.getElementById("car-number").innerText = data.dis.licensPlate;
 				      },
 				      error: function () {
 				        alert("데이터를 불러오는 중 오류가 발생했습니다.");
@@ -349,7 +382,6 @@
 	        		   if(data>0){
 					        alert("반려 처리되었습니다.");
 					        document.getElementById("empName-div").innerText = '${loginUser.empName}';
-					        location.reload();
 	        			 }else{
 					        alert("반려 처리가 실패되었습니다.");
 	        			 }
@@ -386,7 +418,12 @@
 	        alert("승인이 취소되었습니다.");
 	    }
 		}
-		
+    $(document).ready(function () {
+        $(".btn-primary[data-bs-dismiss='modal']").on("click", function () {
+            // 페이지 새로고침
+            location.reload();
+        });
+    });
 		
 		</script>
 </body>

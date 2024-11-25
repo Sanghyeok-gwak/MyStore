@@ -54,4 +54,14 @@ public class OrderingDao {
 	public List<DispatchDto> selectDispatchList(){
 		return sqlSession.selectList("orderingMapper.selectDispatchList");
 	}
+	public DispatchDto selectRandomDispatch(int orderingNo) {
+		return sqlSession.selectOne("orderingMapper.selectRandomDispatch",orderingNo);
+	}
+	public int searchCount(String search) {
+		return sqlSession.selectOne("orderingMapper.searchCount",search);
+	}
+	public List<OrderingListDto> selectSearchList(PageInfoDto pi, String search){
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
+		return sqlSession.selectList("orderingMapper.selectSearchList",search,rowBounds);
+	}
 }

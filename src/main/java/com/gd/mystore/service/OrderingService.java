@@ -22,6 +22,8 @@ public interface OrderingService {
 	// 발주 상품 리스트
 	List<OrderingProductDto> selectOrderProductList(int orderingNo);
 	
+	// 승인 배차 
+	DispatchDto selectRandomDispatch(int orderingNo);
 	
 	// 발주 등록 
 	int insertOrderingList(OrderingListDto orderingDto,List<OrderingProductDto> orderingProList );
@@ -34,4 +36,10 @@ public interface OrderingService {
 	
 	// 배차 리스트 
 	List<DispatchDto> selectDispatchList();
+	
+	// 상품 검색 카운트
+	int selectCount(String search);
+	
+	// 상품 검색 
+	List<OrderingListDto> selectSearchList(PageInfoDto pi,String search);
 }

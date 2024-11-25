@@ -192,5 +192,48 @@
 		FROM 
    		 	TBL_DISPATCH
 	</select>
+	<select id="selectRandomDispatch" resultMap="DispatchResultMap">
+		select  d.DISPATCH_NO,
+		        VEHICLE_TYPE,
+		        LICENSE_PLATE,
+		        OPERATOR,
+		        d.EMP_NO,
+		        d.MODIFIER,
+		        d.CREATE_DATE,
+		        d.MODIFY_DATE,
+		        d.USE_YN
+		  
+		  from TBL_DISPATCH d
+		  left join TBL_ORDERING o on (o.DISPATCH_NO =d.DISPATCH_NO )
+		  where ORDER_NO = #{orderNo}
 	
+	</select>
+	<!-- 발주 검색 리스트 카운트 -->
+  <select id="searchCount" resultType="_int">
+		select 
+					 count(*)
+		  from TBL_ORDERING o
+          join TBL_EMPLOYEE e on (o.EMP_NO = e.EMP_NO)
+		 where e.EMP_NAME = #{search}
+	</select>
+	<!-- 발주 검색 리스트 -->
+  <select id="selectSearchList" resultMap="OrderingListResultMap">
+  	SELECT 
+			    ORDER_NO,
+			    e.EMP_NAME as "EMP_NO",
+			    BRANCH_NAME,
+			    ORDER_STATUS,
+			    TO_CHAR(ORDER_CHECKDATE,'YYYY-MM-DD') as "ORDER_CHECKDATE",
+			    o.CREATE_DATE,
+			    o.MODIFIER,
+			    o.MODIFY_DATE,
+			    o.USE_YN,
+			    o.DISPATCH_NO,
+          o.APPROVAL_NO
+			FROM 
+		    	 TBL_ORDERING o
+		  join TBL_EMPLOYEE e on (o.EMP_NO = e.EMP_NO)
+		  where e.EMP_NAME = #{search}
+		  order by ORDER_NO desc
+  </select>
 </mapper>
