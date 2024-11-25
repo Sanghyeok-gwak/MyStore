@@ -152,7 +152,7 @@
 		            const seconds = String(date.getSeconds()).padStart(2, "0");
 		
 		            // 시간 갱신
-		            clock.innerText = `${hours}:${minutes}:${seconds}`;
+		            clock.innerText = hours + ":" + minutes + ":" + seconds;
 		        }
 		
 		        getClock();
