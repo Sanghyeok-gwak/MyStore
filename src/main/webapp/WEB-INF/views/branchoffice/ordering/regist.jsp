@@ -186,7 +186,7 @@
             	    tableBody.innerHTML = ''; 
 
             	    data.forEach(function(item) {
-            	      const row = document.createElement('tr');
+            	    const row = document.createElement('tr');
 
             	      row.innerHTML =
             	        '<td>' + item.productDivision + '</td>' +

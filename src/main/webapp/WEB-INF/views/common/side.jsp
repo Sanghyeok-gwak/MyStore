@@ -40,6 +40,7 @@
         <a href="${ contextPath }/edoc/draftrejectList.do">기안 반려 문서함</a>
         <a href="${ contextPath }/edoc/draftrecoveryList.do">기안 회수 문서함</a>
         <a href="${ contextPath }/edoc/formlist.do">문서 양식 관리</a>
+        <a href="${ contextPath }/note/test.do">문서 양식 관리</a>
       </div>
 			
       <div class="side-icon" onclick="toggleSubmenu(this)">										
@@ -53,6 +54,11 @@
         <a href="${ contextPath }/mypage/workStatus">근태조회</a>								<!-- lv5 -->
       </div>
 			
+			<div class="side-icon" onclick='location.href="${contextPath }/note/test.do"'>
+        <img src="https://i.ibb.co/bK3vZM2/message-ww.png">
+        <span>쪽지</span>																		<!-- lv5 -->
+      </div>
+      
 			<div class="side-icon" onclick='location.href="여기 작성해주시면됩니다."'>
         <img src="https://i.ibb.co/fQtpVbV/wall-calendar-2.png">
         <span>일정</span>																		<!-- lv5 -->
