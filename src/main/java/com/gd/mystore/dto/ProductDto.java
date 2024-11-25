@@ -32,5 +32,7 @@ public class ProductDto {
 	public String useYn;
 	public int inventory;
 	public String event;
+	//등록 조회할때만 사용
+	public int count;
 	
 }

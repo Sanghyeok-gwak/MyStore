@@ -18,6 +18,7 @@
 		<result column="USE_YN" property="useYn" />
 		<result column="INVENTORY" property="inventory" />
 		<result column="EVENT" property="event" />
+		<result column="join_count" property="count" />
   </resultMap>	
   <resultMap id="OrderingListResultMap" type="OrderingListDto">
   	<result column="ORDER_NO" property="orderNo" />
@@ -57,28 +58,29 @@
 	
 	<!-- 상품리스트  -->
 	<select id="selectProductList" resultMap="productResultMap">
-  	select
-		       PRODUCT_NO
-		     , C.NM as "CLASSIFICATION_NO"
-		     , PRODUCT_NAME
-		     , COST
-		     , SAIL_PRICE
-         , PROFIT_MARGIN
+  	select     p.PRODUCT_NO
+         , C.NM as "CLASSIFICATION_NO"
+         , p.PRODUCT_NAME
+         , p.COST
+         , p.SAIL_PRICE
+         , p.PROFIT_MARGIN
          , TO_CHAR(EXPIRATION_PERIOD,'YY-MM-DD') as "EXPIRATION_PERIOD"
-         , PRODUCT_IMG
+         , p.PRODUCT_IMG
          , e.EMP_NAME as "create"
          , p.CREATE_DATE
          , e.EMP_NAME as "MODIFIER"
          , p.MODIFY_DATE
          , p.DELIVERY_DATE
          , p.USE_YN
-         , INVENTORY
-         , EVENT
-		  from TBL_PRODUCT p 
-		  join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
-      join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
-		 where c.CD LIKE 'PC00%'
-		 order by PRODUCT_NO desc
+         , p.INVENTORY
+         , p.EVENT
+         , op.ORDER_COUNT as "join_count"
+   from tbl_product p
+        join TBL_EMPLOYEE e on (p.CREATER = e.EMP_NO)
+        join TBL_COMMON_CODE c on(SUBSTR(c.CD, -1) = CLASSIFICATION_NO)
+   left join tbl_ordering_product op on(to_char(op.create_date, 'YYYY-MM-DD') = #{dateTime} and p.product_no = op.product_no)
+   where c.CD LIKE 'PC00%' 
+   order by PRODUCT_NO desc
   </select>
   
   <!-- 발주 리스트 카운트 -->

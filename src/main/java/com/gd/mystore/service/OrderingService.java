@@ -11,7 +11,7 @@ import com.gd.mystore.dto.ProductDto;
 public interface OrderingService {
 	
 	// 상품 리스트
-	List<ProductDto> selectProductList();
+	List<ProductDto> selectProductList(String dateTime);
 	
 	// 발주 카운트
 	int selectOrderListCount();
