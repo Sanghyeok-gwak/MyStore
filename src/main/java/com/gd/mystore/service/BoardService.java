@@ -3,7 +3,10 @@ package com.gd.mystore.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.ui.Model;
+
 import com.gd.mystore.dto.BoardDto;
+import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
 
 public interface BoardService {
@@ -19,4 +22,12 @@ public interface BoardService {
 		
 		
 		int insertBoard(BoardDto b);
+		
+	
+		List<BoardDto> selectDeptList();
+		
+		List<BoardDto> selectBoardNameList();
+	
+		
+		
 }

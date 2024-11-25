@@ -29,8 +29,11 @@ public class BoardDto {
 	private String modifyDate;
 	private String userYN;
 	
+	
 	private String attachCount;
 	private String empName;
+	private String deptName;
+	private String boardtName;
 	
 	private List<BoardFileDto> boardList; // has many 관계
 }
