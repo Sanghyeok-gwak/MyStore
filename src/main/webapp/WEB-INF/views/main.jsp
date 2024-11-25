@@ -33,7 +33,7 @@
       .main-home-top-mypage,.main-home-bottom-weather,.main-home-top-edsm,.main-home-bottom-message,.main-home-top-calender,.main-home-bottom-board{
         border-radius: 20px;
         background-color: white;
-        padding:30px;
+        padding: 20px;
       }
       .main-home,.main-home-top,.main-home-bottom{
         display: flex;
@@ -61,6 +61,55 @@
       .main-home-top-calender,.main-home-bottom-board{
         width: 40%;
       }
+      .info_top{
+        display: flex;
+        justify-content: space-between;
+        height: 40%;
+      }
+      .emp_img{
+        display: flex;
+        width: 50%;
+        margin-right: 25px;
+      }
+      .top_empInfo{
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .top_empInfo{
+        width: 50%;
+        display: inline-grid;
+        justify-content: center;
+        align-items: center;
+        background: rgb(252, 168, 168);
+        border-radius: 5px;
+      }
+      .info_img{
+        width: 100%;
+        border-radius: 5px;
+      }
+      .info_body_width{
+        padding: 0 20%;
+      }
+      .info_body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 5% 0;
+      }
+      .emp_time{
+        margin: 5% 0 10% 0;
+      }
+      .date_time{
+        font-size: x-large;
+      }
+      .btn{
+        display: flex;
+        justify-content: space-between;
+      }
+
     </style>
 	
     <div class="body-body">
@@ -68,9 +117,49 @@
         <div class="main-home-top">
           <div class="main-home-top-mypage" style="margin-right: 20px;">
             
+            <div class="info_top">
+              <div class="emp_img">
+				<img src="<c:out value='${ loginUser.empProfile }' default='${ contextPath }/resources/images/defaultImg.png' />" class="info_img">
+              </div>
+              <div class="top_empInfo">
+                <div class="emp_dept">인사 1팀</div>
+                <div class="emp_name"><b>배수지 사원</b></div>
+                <div class="emp_phone">010.1234.1234</div>
+              </div>
+            </div>            
+            
+            <div class="info_body_width">
+              <div class="info_body">
+                <div class="date_time">00:00:00</div>
+              </div>
+              <div class="emp_time">
+                <div>출근시간:</div>
+                <div>퇴근시간:</div>
+              </div>
+              <div class="btn">
+                <button type="button" class="btn btn-outline-primary">출근하기</button>
+                <button type="button" class="btn btn-outline-danger">퇴근하기</button>
+              </div>
+            </div>
           </div>
+          <script>
+		        const clock = document.querySelector(".date_time");
+		
+		        function getClock() {
+		            const date = new Date();
+		            const hours = String(date.getHours()).padStart(2, "0");
+		            const minutes = String(date.getMinutes()).padStart(2, "0");
+		            const seconds = String(date.getSeconds()).padStart(2, "0");
+		
+		            // 시간 갱신
+		            clock.innerText = `${hours}:${minutes}:${seconds}`;
+		        }
+		
+		        getClock();
+		        setInterval(getClock, 1000);
+		    </script>
           <div class="main-home-top-edsm" style="margin-right: 20px;">
-
+            전자결재
           </div>
           <div class="main-home-top-calender">
           	<c:choose>
@@ -124,5 +213,6 @@
     </div>
 	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	
 </body>
 </html>
