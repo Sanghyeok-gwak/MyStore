@@ -48,7 +48,8 @@
 		 -->
 	</interceptors>
 	
-	
+	<!-- Scheduler 관련 등록 구문 -->
+	<task:annotation-driven />
 	
 	
 	
