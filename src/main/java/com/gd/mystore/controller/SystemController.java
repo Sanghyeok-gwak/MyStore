@@ -100,14 +100,14 @@ public class SystemController {
 		if(scData == "") {
 			int listCount = systemService.selectEmpMemberCount();
 			
-			PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+			PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 			List<EmpMemberDto> list = systemService.selectEmpMemberList(pi);
 			
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 		}else {
 			int listCount = systemService.selectSearchListCount(scData);
-			PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 5);
+			PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 			
 			List<EmpMemberDto> list = systemService.selectSearchEmpMemberList(pi, scData);
 			
