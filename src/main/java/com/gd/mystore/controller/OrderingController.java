@@ -48,8 +48,6 @@ public class OrderingController {
 		List<OrderingListDto> list = orderingService.selectOrderList(pi);
 		
 		
-		log.debug("list : {} ",list);
-		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
@@ -62,14 +60,22 @@ public class OrderingController {
 		return "branchoffice/ordering/list";
 	}
 	
-	@GetMapping("regist.or")
-	public String list(Model model) {
-		
-		List<ProductDto> list = orderingService.selectProductList();
-		
-		model.addAttribute("pro",list);
-		
+	//이건그냥 넘어가는 걸로 변경
+	@GetMapping("insertPage.or")
+	public String listPage() {
 		return "branchoffice/ordering/regist";
+	}
+
+	
+	//이벤트줘서 하나로만 보이게 설정
+	@ResponseBody
+	@GetMapping("regist.or")
+	public List<ProductDto> list(String dateTime,Model model) {
+		log.debug("test : "+dateTime);
+		List<ProductDto> list = orderingService.selectProductList(dateTime);
+		
+		log.debug("list : {}",list);
+		return list;
 	}
 	@PostMapping("insert.or")
 	public String insertOrdering(@ModelAttribute OrderingListDto orderingListDto,HttpSession session,RedirectAttributes rdAttributes) {

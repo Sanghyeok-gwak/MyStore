@@ -25,7 +25,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			RequestContextUtils.getFlashMapManager(request).saveOutputFlashMap(flashMap, request, response);
 			
 //			response.sendRedirect(request.getContextPath());
-			response.sendRedirect("http://localhost:8888/mystore/login/loginPage.do");
+			response.sendRedirect(request.getContextPath() + "/login/loginPage.do");
 			
 			return false;
 		}
