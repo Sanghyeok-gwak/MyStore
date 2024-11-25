@@ -1,11 +1,18 @@
 package com.gd.mystore.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.mystore.dto.CalendarDto;
 import com.gd.mystore.dto.EmpMemberDto;
@@ -27,7 +34,7 @@ public class CalendarController {
 
     @ResponseBody
     @GetMapping("/selectEvents.do")
-    public List<CalendarDto> selectEvents(HttpSession session) {
+    public List<Map<String, Object>> selectEvents(HttpSession session) {
         EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
         if (loginUser == null) {
             throw new IllegalArgumentException("로그인된 사용자 정보가 없습니다.");
@@ -36,8 +43,22 @@ public class CalendarController {
         String empNo = loginUser.getEmpNo();
         List<CalendarDto> events = calendarService.selectEvents(empNo);
 
-        return events;
+        List<Map<String, Object>> eventList = new ArrayList<>();
+        for (CalendarDto event : events) {
+            System.out.println("calColor: " + event.getCalColor()); // 디버깅용 로그
+            Map<String, Object> eventMap = new HashMap<>();
+            eventMap.put("id", event.getCalNo());
+            eventMap.put("title", event.getCalSubject());
+            eventMap.put("start", event.getCalStartDate().toString());
+            eventMap.put("end", event.getCalEndDate().toString());
+            eventMap.put("color", event.getCalColor() != null ? event.getCalColor() : "gray"); // 기본값 처리
+            eventList.add(eventMap);
+        }
+        
+        return eventList;
     }
+
+
 
     @ResponseBody
     @PostMapping("/addEvent.do")
@@ -49,20 +70,31 @@ public class CalendarController {
 
         calendarDto.setEmpNo(loginUser.getEmpNo());
         int result = calendarService.addEvent(calendarDto);
-        return result > 0 ? "이벤트가 추가되었습니다." : "이벤트 추가 실패.";
+        if (result > 0) {
+            return "이벤트가 추가되었습니다.";
+        } else {
+            return "이벤트 추가 실패.";
+        }
     }
 
     @ResponseBody
     @PostMapping("/updateEvent.do")
     public String updateEvent(@RequestBody CalendarDto calendarDto) {
         int result = calendarService.updateEvent(calendarDto);
-        return result > 0 ? "이벤트가 수정되었습니다." : "이벤트 수정 실패.";
+        if (result > 0) {
+            return "이벤트가 수정되었습니다.";
+        } else {
+            return "이벤트 수정 실패.";
+        }
     }
 
-    @ResponseBody
     @PostMapping("/deleteEvent.do")
-    public String deleteEvent(@RequestBody int calNo) {
+    @ResponseBody
+    public String deleteEvent(@RequestBody CalendarDto calendarDto) {
+        System.out.println("삭제 요청 calNo: " + calendarDto.getCalNo());
+        int calNo = calendarDto.getCalNo();
         int result = calendarService.deleteEvent(calNo);
         return result > 0 ? "이벤트가 삭제되었습니다." : "이벤트 삭제 실패.";
     }
+
 }

@@ -99,8 +99,15 @@
            <form id="ordering-form" action="${contextPath}/ordering/insert.or" method="post">
             <div class="btn-edit-add-box">
             	<div class="calendar-box">
-            		<input type="date">
+            		<input id="order-date" type="date">
             	</div>
+            	<script>
+							  // 페이지 로드 시 오늘 날짜를 기본값으로 설정
+							  window.onload = function() {
+							    var today = new Date().toISOString().split('T')[0];  // 오늘 날짜를 yyyy-mm-dd 형식으로 가져옴
+							    document.getElementById("order-date").value = today;
+							  };
+							</script>
             	<div class="btn4-box">
 	              <button type="submit" class="btn4">등록 하기</button>
             	</div>

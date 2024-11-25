@@ -398,13 +398,18 @@
     <div class="head_right_logo">
       <div class="header_right_list"> 
       	<form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
-           	<button>1001 로그인</button>
+           	<button>1001 사원 로그인</button>
            	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1001"/>
            	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
         </form>
         <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
-           	<button>1002 로그인</button>
-           	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
+           	<button>1003 관리자 로그인</button>
+           	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1003"/>
+           	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="3333"/>
+        </form>  
+        <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
+           	<button>1010 지점 로그인</button>
+           	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1010"/>
            	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
         </form>  
           <nav class="header-nav ms-auto">

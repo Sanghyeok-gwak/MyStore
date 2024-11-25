@@ -64,11 +64,26 @@ public class OrderingServiceImpl implements OrderingService{
 	public int updateApproval(OrderingListDto olDto) {
 		return orderingDao.updateApproval(olDto);
 	}
-
 	@Override
 	public List<DispatchDto> selectDispatchList() {
 		return orderingDao.selectDispatchList();
 	}
+
+	@Override
+	public DispatchDto selectRandomDispatch(int orderingNo) {
+		return orderingDao.selectRandomDispatch(orderingNo);
+	}
+
+	@Override
+	public int selectCount(String search) {
+		return orderingDao.searchCount(search);
+	}
+	
+	@Override
+	public List<OrderingListDto> selectSearchList(PageInfoDto pi, String search) {
+		return orderingDao.selectSearchList(pi, search);
+	}
+
 
 
 

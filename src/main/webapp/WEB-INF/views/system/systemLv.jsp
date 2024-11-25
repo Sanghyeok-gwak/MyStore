@@ -55,7 +55,7 @@
         color: #ffffff !important;
     }
     .left_body{
-        width: 50%;
+        width: 100%;
     }
 
     /* 오른쪽 css */
@@ -210,39 +210,6 @@
 				</div>
 			</div>
 			<!-- 왼쪽끝 -->
-
-			<!-- 오른쪽 -->
-			<div class="right_body">
-				<form action="${ contextPath }/system/lvNameUpdate.do">
-					<div
-						style="border: 1px solid rgb(167, 167, 167); border-radius: 5px;">
-
-						<div class="right_Lv_title">레벨명</div>
-						<div class="lv_list">
-							<div>
-								1LV <input type="text" name="" id="" value="서버 관리자">
-							</div>
-							<div>
-								2LV <input type="text" name="" id="" value="대표">
-							</div>
-							<div>
-								3LV <input type="text" name="" id="" value="이사">
-							</div>
-							<div>
-								4LV <input type="text" name="" id="" value="사원">
-							</div>
-							<div>
-								5LV <input type="text" name="" id="" value="지점">
-							</div>
-						</div>
-					</div>
-
-					<div class="btn-box-hover" id="right_btn">
-						<button class="btn3-hover">확인</button>
-					</div>
-				</form>
-			</div>
-			<!-- 오른쪽 끝 -->
 		</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

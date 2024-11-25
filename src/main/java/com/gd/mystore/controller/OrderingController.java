@@ -39,7 +39,7 @@ public class OrderingController {
 	private final PagingUtil pagingUtil;
 	private final OrderingService orderingService;
 	
-	
+	// 본사 발주 리스트 
 	@GetMapping("adminList.or")
 	public String adminList(@RequestParam(value="page", defaultValue="1") int currentPage , Model model) {
 		int listCount = orderingService.selectOrderListCount();
@@ -56,7 +56,11 @@ public class OrderingController {
 		return "branchoffice/ordering/adminlist";
 	}
 	
-	
+	// 지점 발주 리스트
+	@GetMapping("list.or")
+	public String list() {
+		return "branchoffice/ordering/list";
+	}
 	
 	@GetMapping("regist.or")
 	public String list(Model model) {
@@ -88,11 +92,19 @@ public class OrderingController {
 	}
 	@ResponseBody
 	@PostMapping("orderingPro.or")
-	public List<OrderingProductDto> selectOrderingProList(@RequestParam int orderNo) {
+	public Map<String,Object> selectOrderingProList(@RequestParam int orderNo) {
 		
 		List<OrderingProductDto> list = orderingService.selectOrderProductList(orderNo);
+		DispatchDto dispatchDto = orderingService.selectRandomDispatch(orderNo);
+		log.debug("dis : "+dispatchDto);
+		// DispatchDto 로 배차정보 조회 
+		// Map에 담아서 반환
+		Map<String,Object> map = new HashMap<>(); 
 		
-		return list;
+		map.put("list", list);
+		map.put("dis", dispatchDto);
+		
+		return map;
 		
 	}
 	
@@ -136,5 +148,19 @@ public class OrderingController {
 		return olDto.getDisList();
 	}
 	
-	
+	@GetMapping("search.or")
+	public String searchProduct(@RequestParam(value="page", defaultValue="1") int currentPage,
+								@RequestParam(value="keyword", required=false) String keyword,Model model) {
+		
+		log.debug("keyword  : {} ",keyword);
+		int listCount = orderingService.selectCount(keyword);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
+		List<OrderingListDto> list = orderingService.selectSearchList(pi,keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("search", keyword);
+		
+		return "branchoffice/ordering/adminlist";
+	}
 }
