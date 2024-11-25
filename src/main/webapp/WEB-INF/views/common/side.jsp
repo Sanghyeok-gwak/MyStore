@@ -52,7 +52,12 @@
         <a href="${ contextPath }/salary/payCheck">급여 조회</a>
         <a href="${ contextPath }/mypage/workStatus">근태조회</a>
       </div>
-
+			
+			<div class="side-icon" onclick='location.href="여기 작성해주시면됩니다."'>
+        <img src="https://i.ibb.co/fQtpVbV/wall-calendar-2.png">
+        <span>일정</span>
+      </div>
+			
       <div class="side-icon" onclick="toggleSubmenu(this)">
         <img src="https://i.ibb.co/ryTmFqw/store.png">
         <span>지점</span>
