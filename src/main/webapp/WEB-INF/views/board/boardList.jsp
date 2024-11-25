@@ -117,29 +117,39 @@
 								</div>
 							</form>
 								<c:if test="${ not empty search }">
-<script>
-    $(document).ready(function(){
-        $("#search_form select").val('${search.condition}');
-        
-        // 검색 후 페이징바 클릭시 검색 form을 강제로 submit (단, 페이지번호는 현재 클릭한 페이지번호로 바꿔서)
-        $("#paging_area a").on("click", function() {
-            let page = $(this).text(); // Previous | Next | 페이지번호
-            if(page == 'Previous'){
-                page = ${pi.currentPage - 1};
-            } else if(page == 'Next'){
-                page = ${pi.currentPage + 1};
-            }
+									<script>
+									$(document).ready(function(){
+									    $("#search_form select").val('${search.condition}');
+									    
+									    // 페이징 항목을 클릭했을 때
+									    $("#paging_area a").on("click", function() {
+									        let pageText = $(this).find('span').text(); // <a> 태그 내의 <span> 텍스트 가져오기
+									        let page;
+									        
+									        // "이전" 버튼 클릭 시
+									        if(pageText == '이전') {
+									            page = ${pi.currentPage - 1}; // 현재 페이지에서 1 감소
+									        } 
+									        // "다음" 버튼 클릭 시
+									        else if(pageText == '다음') {
+									            page = ${pi.currentPage + 1}; // 현재 페이지에서 1 증가
+									        } 
+									        // 숫자 페이지 클릭 시
+									        else {
+									            page = $(this).text(); // <a> 태그의 텍스트 그대로 페이지 번호로 사용
+									        }
 
-            // 페이지 번호를 강제로 search_form에 입력하고 form을 제출
-            $("#search_form input[name=page]").val(page);
-            $("#search_form").submit();
+									        // 페이지 번호를 숨겨진 input에 설정하고, 폼을 제출
+									        $("#search_form input[name=page]").val(page);
+									        $("#search_form").submit();
 
-            return false; // 기본 이벤트(href='/board/list.do' URL 요청) 동작 안 되도록
-        });
-    });
-</script>
+									        return false; // 기본 동작을 막고, form 제출만 수행
+									    });
+									});
 
-	</c:if>
+									</script>
+									
+								</c:if>
 						</div>
 					</div>
 				</div>
@@ -147,6 +157,7 @@
 
 			<div class="card" style="margin-top: 80px; box-shadow: none;">
 				<div class="card-body">
+				<div style="text-align: center; vertical-align: middle;">
 
 					<!-- Table with hoverable rows -->
 					<table class="table table-hover">
@@ -172,7 +183,7 @@
 								</thead>
 								<tbody>
 									<c:forEach var="b" items="${ list }">
-										<tr onclick='location.href="${contextPath}/board/${ loginUser.userId eq b.empNo ? "detail.do" : "increase.do" }?no=${ b.boardNo }";'>
+										<tr onclick='location.href="${contextPath}/board/${ loginUser.empNo eq b.empNo ? "detail.do" : "increase.do" }?no=${ b.boardNo }";'>
 											<td>${ b.boardNo }</td>
 											<td>${ b.boardDept }</td>
 											<td>${ b.boardTitle }</td>
@@ -186,6 +197,7 @@
 							</c:otherwise>
 						</c:choose>
 					</table>
+					</div>
 					<!-- End Table with hoverable rows -->
 
 					<div class="paging" id="paging_area">

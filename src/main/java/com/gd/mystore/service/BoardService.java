@@ -16,4 +16,7 @@ public interface BoardService {
 		// 게시글 검색 조회 (페이징 처리)
 		int selectSearchListCount(Map<String, String> search);
 		List<BoardDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
+		
+		
+		int insertBoard(BoardDto b);
 }

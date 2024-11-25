@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.BoardDao;
 import com.gd.mystore.dto.BoardDto;
+import com.gd.mystore.dto.BoardFileDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.BoardService;
 
@@ -40,4 +41,22 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
 		return boardDao.selectSearchList(search, pi);
 	}
+	
+	@Override
+	public int insertBoard(BoardDto b) {
+		
+		int result = boardDao.insertBoard(b);
+		
+		List<BoardFileDto> list = b.getBoardList();
+		if( result > 0  && !list.isEmpty()) {
+			result = 0;
+			for(BoardFileDto attach : list) {
+			  result += boardDao.insertAttach(attach);
+			}
+			
+		}
+		return result;
+	}
+	
+	
 }

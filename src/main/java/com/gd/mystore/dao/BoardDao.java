@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.gd.mystore.dto.BoardDto;
+import com.gd.mystore.dto.BoardFileDto;
 import com.gd.mystore.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,15 @@ public class BoardDao {
 		return sqlSession.selectList("boardMapper.selectSearchList", search, rowBounds);
 	}
 
+	public int insertBoard(BoardDto b) {
+		
+		return sqlSession.insert("boardMapper.insertBoard", b);
+	}
+
+	public int insertAttach(BoardFileDto attach) {
+		return sqlSession.insert("boardMapper.insertAttach", attach);
+	}
+	
 	
 	
 }

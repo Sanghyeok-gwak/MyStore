@@ -1,15 +1,23 @@
 package com.gd.mystore.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.BoardDto;
+import com.gd.mystore.dto.BoardFileDto;
+import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.BoardService;
 import com.gd.mystore.util.FileUtil;
@@ -43,7 +51,7 @@ public class BoardController {
 	    model.addAttribute("pi", pi);
 	    model.addAttribute("list", list);
 	    
-	    return "board/boardList";  // 반환값을 "board/boardList"로 수정
+	    return "board/boardList"; 
 	}
 
 	
@@ -63,11 +71,67 @@ public class BoardController {
 		model.addAttribute("search", search);
 		
 		return "board/boardList";
+		
+		
+		
 	}
 	
 	
 	@GetMapping("/boardRegist.do")
 	public void registPage() {}
+	
+	
+	@PostMapping("/insert.do")
+	public String regist(BoardDto board
+			, List<MultipartFile> uploadFiles
+			, HttpSession session
+			, RedirectAttributes rdAttributes){
+		
+		// board테이블에 insert할 데이터 
+		board.setEmpName(String.valueOf( ((EmpMemberDto)session.getAttribute("loginUser")).getEmpName() ));
+		
+		// 첨부파일 업로드 후에
+		// attachment테이블에 insert할 데이터
+		List<BoardFileDto> attachList = new ArrayList<>();
+		for( MultipartFile file : uploadFiles) {
+			if(file != null && !file.isEmpty()) {
+				Map<String, String>map = fileUtil.fileupload(file, "board");
+				attachList.add(BoardFileDto.builder()
+						.filePath(map.get("filePath"))
+						.originalName(map.get("originalName"))
+						.fileSystemName(map.get("filesystemName"))
+						.refType("A")
+						.creater(map.get("empName"))
+						.useYN("Y")
+						.build());
+			}
+		}
+		
+		board.setBoardList(attachList); // 제목,내용,작성자회원번호,첨부파일들정보
+		
+		int result = boardService.insertBoard(board);
+		
+		if(attachList.isEmpty() && result == 1 
+				|| !attachList.isEmpty() && result == attachList.size()) {
+			rdAttributes.addFlashAttribute("alertMsg", "게시글 등록 성공");
+			
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "게시글 등록 실패");
+			
+			
+			
+		}
+		
+		return "redirect:/board/boardRegist.do";
+	}
+	
+	
+	@GetMapping("/boardDetail.do")
+	public void boardDetail() {}
+	
+	
+	
+	
 	
 	
 }
