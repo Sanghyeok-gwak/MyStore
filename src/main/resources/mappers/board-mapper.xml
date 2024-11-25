@@ -16,6 +16,9 @@
     <result column="modify_date" property="modifyDate" />	
     <result column="user_yn" property="userYN" />	
     <result column="emp_name" property="empName" />	
+    <result column="dept_name" property="deptName" />	
+    <result column="boardt_name" property="boardtName"/>
+    
     <collection resultMap="boardFileResultMap" property="boardList" />
   </resultMap>
 
@@ -98,33 +101,50 @@
   
   <insert id="insertBoard">
 		insert
-			into board
+			into tbl_board
 			(
 				board_no
 			,	board_type_no
 			, board_dept
 			,	board_title
 			,	board_content
-			, board_count
-			,
-			,	(SELECT emp_name
-         FROM tbl_employee e
-         WHERE e.emp_no = b.emp_no) AS emp_name   
+			,	emp_no
+			, create_Date
+			, use_YN  
 			
 			)
 			
 			values
 			(
 				seq_bno.nextval
+			, #{ board_type_no }
+			, #{ boardDept }
 			, #{ boardTitle }
-			, #{ boardWriter }
 			, #{ boardContent }
-			
-			
+			, #{ emp_no }
+			, SYSDATE
+			, 'Y'
+	
 			)
 			
 			
 	</insert>
+	
+	<select id="deptName" resultMap="boardResultMap">
+
+		SELECT dept_name
+			FROM tbl_department
+			WHERE dept_name LIKE '%부' OR dept_name LIKE '지점'
+	
+	</select>
+	
+	<select id="boardtName" resultMap="boardResultMap">
+		select boardt_name
+        from tbl_boardtype
+         where USE_YN = 'Y'
+	</select>
+	
+	
 	
 	<insert id ="insertAttach">
 		insert
@@ -170,6 +190,8 @@
 			
 			)
 	</insert>
+	
+	
   
   
   

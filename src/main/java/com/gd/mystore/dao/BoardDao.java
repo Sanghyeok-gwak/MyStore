@@ -1,5 +1,6 @@
 package com.gd.mystore.dao;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +13,9 @@ import com.gd.mystore.dto.BoardFileDto;
 import com.gd.mystore.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class BoardDao {
@@ -43,7 +45,7 @@ public class BoardDao {
 	}
 
 	public int insertBoard(BoardDto b) {
-		
+			
 		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
 
@@ -51,6 +53,17 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertAttach", attach);
 	}
 	
-	
+
+    public List<BoardDto> selectDeptList() {
+    	
+        return sqlSession.selectList("boardMapper.deptName");
+    }
+
+
+    public List<BoardDto> selectBoardNameList() {
+        return sqlSession.selectList("boardMapper.boardtName");
+    }
+
+
 	
 }

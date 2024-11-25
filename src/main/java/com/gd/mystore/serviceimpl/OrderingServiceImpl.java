@@ -1,7 +1,6 @@
 package com.gd.mystore.serviceimpl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -23,8 +22,8 @@ public class OrderingServiceImpl implements OrderingService{
 	private final OrderingDao orderingDao;
 	
 	@Override
-	public List<ProductDto> selectProductList() {
-		return orderingDao.selectProductList();
+	public List<ProductDto> selectProductList(String dateTime) {
+		return orderingDao.selectProductList(dateTime);
 	}
 
 	@Override

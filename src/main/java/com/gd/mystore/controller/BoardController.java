@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
+import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.BoardService;
@@ -78,9 +79,19 @@ public class BoardController {
 	
 	
 	@GetMapping("/boardRegist.do")
-	public void registPage() {}
-	
-	
+	public String registPage(Model model) {
+		// 부서명 리스트와 게시판 유형 리스트를 가져온다
+	    List<BoardDto> deptList = boardService.selectDeptList();
+	    List<BoardDto> boardTypeList = boardService.selectBoardNameList();
+
+	    // 모델에 데이터 추가
+	    model.addAttribute("deptList", deptList);
+	    model.addAttribute("boardTypeList", boardTypeList);
+
+	    return "board/boardRegist"; // JSP 페이지 이름
+	}
+
+
 	@PostMapping("/insert.do")
 	public String regist(BoardDto board
 			, List<MultipartFile> uploadFiles
@@ -124,6 +135,11 @@ public class BoardController {
 		
 		return "redirect:/board/boardRegist.do";
 	}
+	
+	
+	
+	
+	
 	
 	
 	@GetMapping("/boardDetail.do")

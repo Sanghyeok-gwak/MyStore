@@ -1,7 +1,6 @@
 package com.gd.mystore.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,9 +13,7 @@ import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ProductDto;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class OrderingDao {
@@ -35,8 +32,8 @@ public class OrderingDao {
 		return sqlSession.selectList("orderingMapper.selectOrderProductList",orderingNo);
 	}
 	
-	public List<ProductDto> selectProductList(){
-		return sqlSession.selectList("orderingMapper.selectProductList");
+	public List<ProductDto> selectProductList(String dateTime){
+		return sqlSession.selectList("orderingMapper.selectProductList",dateTime);
 	}
 	public int insertOrderingList(OrderingListDto orderingDto) {
 		return sqlSession.insert("orderingMapper.insertOrderingList",orderingDto);

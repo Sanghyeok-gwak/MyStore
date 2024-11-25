@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.gd.mystore.dao.BoardDao;
 import com.gd.mystore.dto.BoardDto;
@@ -57,6 +58,21 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return result;
 	}
+
+    @Override
+    public List<BoardDto> selectDeptList() {
+        // DAO에서 부서명 리스트 가져오기
+        return boardDao.selectDeptList();
+    }
+
+    @Override
+    public List<BoardDto> selectBoardNameList() {
+        // DAO에서 게시판 유형 리스트 가져오기
+        return boardDao.selectBoardNameList();
+    }
+	
+
+	
 	
 	
 }
