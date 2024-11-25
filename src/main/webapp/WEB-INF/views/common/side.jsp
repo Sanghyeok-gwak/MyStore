@@ -9,7 +9,8 @@
         <span>인사 관리</span>
       </div>
       <div class="submenu">
-        <a href="${ contextPath }/department/departmentModify">부서관리</a>
+        <a href="${ contextPath }/department/departmentModify.do">부서관리</a>
+        <a href="${ contextPath }/department/departmentChangeHistory.do">부서 이동 이력</a>
         <a href="${ contextPath }/personnel/employeeManager">사원관리</a>
         <a href="${ contextPath }/salary/salaryMaster">급여관리</a>
       </div>
@@ -19,7 +20,7 @@
         <span>게시판</span>
       </div>
       <div class="submenu">
-        <a href="${ contextPath }/board/boardList">공지사항</a>
+        <a href="${ contextPath }/board/list.do">공지사항</a>
         <a href="#">자유게시판</a>
         <a href="#">익명게시판</a>
       </div>

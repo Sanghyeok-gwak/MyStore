@@ -33,7 +33,7 @@ public class DepartmentController {
 	
 	
 	
-	@GetMapping("/departmentModify")
+	@GetMapping("/departmentModify.do")
 	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName,
 	                           
 	                               Model model) {
@@ -172,7 +172,7 @@ public class DepartmentController {
 
 
 	
-    @GetMapping("/departmentChangeHistory")
+    @GetMapping("/departmentChangeHistory.do")
     public String search(
             @RequestParam Map<String, String> search,  // 검색 조건을 담을 Map 객체
             Model model) {
