@@ -22,4 +22,9 @@ public class EDocApprovalDto {
 	private String aprvlComment;	// 결재의견
 	private String aprvlDt;			// 결재일
 	private String empNo;			// 결재자(사원번호)
+	
+	private String empName;			// 기안자(생성자)
+	
+	private String nm;				// 직급
+	private String deptName;		// 부서
 }

@@ -419,7 +419,7 @@ input[type=file]::file-selector-button {
 					</table>
 
 					<div class="containe11">
-						<!-- 1차 and 2차 Approval Tables here -->
+						<!-- 1차 2차 결재자 -->
 					</div>
 
 				</div>

@@ -147,7 +147,11 @@ public class EDocDao {
 	
 	// 결재 목록 상세페이지
 	public EDocDto aprvlWait(int no) {
-		return sqlSession.selectOne("edoMapper.aprvlWait", no);
+		return sqlSession.selectOne("edocMapper.aprvlWait", no);
+	}
+
+	public List<EDocApprovalDto> aprvlList(int no) {
+		return sqlSession.selectList("edocMapper.aprvlList", no);
 	}
 	
 	

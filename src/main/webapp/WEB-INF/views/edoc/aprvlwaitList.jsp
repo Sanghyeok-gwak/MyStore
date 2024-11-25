@@ -418,8 +418,8 @@ input[type=file]::file-selector-button {
 
 							<c:otherwise>
 								<c:forEach var="cl" items="${ list }">
-									<tr onclick='location.href = "${contextPath}/edoc/aprvlwait?no=${ cl.edocNo }";'>
-										<td>${ cl.aprvlNo }</td>
+									<tr onclick='location.href = "${contextPath}/edoc/aprvlwait.do?no=${ cl.edocNo }";'>
+										<td>${ cl.aprvlEdocNo }</td>
 										<td>${ cl.sampleNo }</td>
 										<td>${ cl.edocTitle }</td>
 										<td>${ cl.empName }</td>

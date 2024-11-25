@@ -173,4 +173,9 @@ public class EDocServiceImpl implements EDocService {
 		return edocDao.aprvlWait(no);
 	}
 
+	@Override
+	public List<EDocApprovalDto> aprvlList(int no) {
+		return edocDao.aprvlList(no);
+	}
+
 }

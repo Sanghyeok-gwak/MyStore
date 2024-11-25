@@ -292,7 +292,7 @@ input {
 		<div class="text-box">
 			<form action="">
 				<div id="topdiv">
-					<span class="ffont1" style="width:20%; font-weight: bold;">기안 대기 문서</span>
+					<span class="ffont1" style="width:20%; font-weight: bold;">기안 반려 문서</span>
 					<div id="lang" style="width:60%;">양식유형</div>
 					<div id="enddiv">
 						<div class="btn-box-hover">
