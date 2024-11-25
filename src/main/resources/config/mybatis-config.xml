@@ -26,7 +26,8 @@
 		<typeAlias type="com.gd.mystore.dto.OrderingProductDto" alias="OrderingProductDto"/>		<!-- 발주리스트 -->
 		<typeAlias type="com.gd.mystore.dto.DispatchDto" alias="DispatchDto"/>									<!-- 배차리스트 -->
 		<typeAlias type="com.gd.mystore.dto.CalendarDto" alias="CalendarDto"/>									<!-- 풀캘린더 -->
-		<typeAlias type="com.gd.mystore.dto.LogDto" alias="LogDto"/>									<!-- 로그 -->
+		<typeAlias type="com.gd.mystore.dto.LogDto" alias="LogDto"/>														<!-- 로그 -->
+		<typeAlias type="com.gd.mystore.dto.WorkDto" alias="WorkDto"/>													<!-- 근태 -->
 		
 	</typeAliases>
 	
@@ -43,6 +44,7 @@
 		<mapper resource="mappers/ordering-mapper.xml"/>								<!-- 발주 매퍼 -->
 		<mapper resource="mappers/calendar-mapper.xml"/>								<!-- 달력 매퍼 -->
 		<mapper resource="mappers/board-mapper.xml"/>										<!-- 게시판 매퍼 -->
+		<mapper resource="mappers/work-mapper.xml"/>										<!-- 근태 매퍼 -->
 		
 		
 		<!-- 지점 mapper -->

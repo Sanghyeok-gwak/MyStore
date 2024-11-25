@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="workMapper">
+	
+	<insert id="empAllWorkInser">
+		INSERT INTO tbl_work 
+		(
+		  WORK_NO, EMP_NO, WORK_TYPE_CODE, WORK_DAY, WORK_START_TIME, WORK_END_TIME, 
+		  WORK_PERMIT, CREATE_DATE, MODIFIER, MODIFIER_DATE, USE_YN, WORK_ATTENDANCE
+		)
+		SELECT 
+					  work_no_seq.NEXTVAL,   
+					  e.EMP_NO,              
+					  'Y',
+					  SYSDATE,
+					  null,
+					  null,
+					  'Y',
+					  SYSDATE,
+					  '0000',   --시스템 번호
+					  SYSDATE,
+					  'Y',
+					  'N'
+			FROM  tbl_employee e
+	</insert>
+	
+</mapper>
