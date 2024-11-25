@@ -39,7 +39,7 @@ public class OrderingController {
 	private final PagingUtil pagingUtil;
 	private final OrderingService orderingService;
 	
-	
+	// 본사 발주 리스트 
 	@GetMapping("adminList.or")
 	public String adminList(@RequestParam(value="page", defaultValue="1") int currentPage , Model model) {
 		int listCount = orderingService.selectOrderListCount();
@@ -56,7 +56,11 @@ public class OrderingController {
 		return "branchoffice/ordering/adminlist";
 	}
 	
-	
+	// 지점 발주 리스트
+	@GetMapping("list.or")
+	public String list() {
+		return "branchoffice/ordering/list";
+	}
 	
 	@GetMapping("regist.or")
 	public String list(Model model) {

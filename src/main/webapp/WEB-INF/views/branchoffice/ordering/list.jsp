@@ -14,6 +14,10 @@
 <div class="body-body">
       <!-- 여기 채워서 작업하시면 됩니다 .-->
        <div class="text-box">
+       	<div>
+						<b style="font-size: 25px; margin-left: 10px;">발주 관리 리스트</b>
+				</div>
+				<hr>
         <div class="search-box" style="margin-bottom: 70px;">
           <style>
             .search-text {
