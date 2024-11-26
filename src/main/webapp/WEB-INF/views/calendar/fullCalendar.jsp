@@ -74,25 +74,26 @@
     <!-- 좌측 메뉴 -->
     <div class="div">
     <h3>내 캘린더</h3>
-    <div class="menu-item">
-        <label>
-            <input type="checkbox" id="personalSchedulesCheckbox" checked> ${loginUser.empName} 일정
-        </label>
-    </div>
-    <div class="menu-item">
-        <label>
-            <input type="checkbox" id="allSchedulesCheckbox" checked> 전사 일정
-        </label>
-    </div>
-    <c:if test="${ loginUser.empNo == '1003'}">
-    <div class="menu-item">
-        <label>
-            <input type="checkbox" id="hrAdminCheckbox"> 인사 관리자
-        </label>
-    </div>
+    <c:if test="${loginUser.empNo == '1005'}">
+        <div class="menu-item">
+            <label>
+                 ${loginUser.empName}
+            </label>
+        </div>
     </c:if>
-</div>
-
+    <c:if test="${loginUser.empNo != '1005'}">
+        <div class="menu-item">
+            <label>
+                <input type="checkbox" id="personalSchedulesCheckbox" checked> ${loginUser.empName} 일정
+            </label>
+        </div>
+        <div class="menu-item">
+            <label>
+                <input type="checkbox" id="allSchedulesCheckbox" checked> 전사 일정
+            </label>
+        </div>
+    </c:if>
+	</div>
 
     <!-- 캘린더 영역 -->
     <div id="calendar-container">
@@ -143,6 +144,8 @@
             dateClick: function(info) {
                 let title = prompt('새로운 이벤트 제목을 입력하세요:');
                 if (title) {
+                    let color = (loginUser.empNo === '1005') ? 'R' : 'B';
+                    
                     $.ajax({
                         url: `${contextPath}/calendar/addEvent.do`,
                         type: 'POST',
@@ -153,7 +156,7 @@
                             calStartDate: info.dateStr,
                             calEndDate: info.dateStr,
                             calContent: '',
-                            calColor: 'B', // 개인 일정 기본값
+                            calColor: color,
                             calStatus: 'N' // 기본 상태
                         }),
                         success: function(res) {

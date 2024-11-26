@@ -50,7 +50,6 @@ public class CalendarController {
             eventMap.put("id", event.getCalNo());
             eventMap.put("title", event.getCalSubject());
             eventMap.put("start", event.getCalStartDate().toString());
-            eventMap.put("end", event.getCalEndDate().toString());
             eventMap.put("color", event.getCalColor() != null ? event.getCalColor() : "gray"); // 기본값 처리
             eventList.add(eventMap);
         }
@@ -64,9 +63,6 @@ public class CalendarController {
     @PostMapping("/addEvent.do")
     public String addEvent(@RequestBody CalendarDto calendarDto, HttpSession session) {
         EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
-        if (loginUser == null) {
-            throw new IllegalArgumentException("로그인된 사용자 정보가 없습니다.");
-        }
 
         calendarDto.setEmpNo(loginUser.getEmpNo());
         int result = calendarService.addEvent(calendarDto);
