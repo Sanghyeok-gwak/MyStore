@@ -10,6 +10,7 @@ import com.gd.mystore.dto.BoardTypeDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.LogDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.WorkDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +22,11 @@ public class WorkDao {
 
 	public void empAllWorkInser() {
 		sqlSession.insert("workMapper.empAllWorkInser");
+	}
+
+	public List<WorkDto> selectWorkCheck() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

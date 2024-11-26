@@ -55,9 +55,9 @@
            EMP.USE_YN,
            EMP.AC_NO,
            EMP.AC_BANK,
-           w.work_day as workDay, 
-           w.work_start_time as workStartTime, 
-           w.work_end_time as workEndTime
+           w.work_day AS WORK_DAY, 
+           w.work_start_time as WORK_START_TIME, 
+           w.work_end_time as WORK_END_TIME
       FROM
            TBL_EMPLOYEE EMP
       LEFT JOIN
