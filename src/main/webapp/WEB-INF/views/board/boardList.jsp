@@ -92,10 +92,11 @@
 					</div>
 
 					<!-- 글 작성 버튼 (공지사항 아래) -->
+					<c:if test="${ loginUser.empNo eq '1003'}">
 					<div class="btn-box-hover" style="display: flex; justify-content: flex-end; align-items: center;">
 						<button class="btn3-hover" onclick="window.location.href='${ contextPath }/board/boardRegist.do'">글 작성</button>
 					</div>
-
+					</c:if>
 					<!-- 드롭다운과 인풋박스를 아래쪽에 세로로 정렬 -->
 					<div style="margin-top: 20px;">
 						<div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px;">
@@ -183,7 +184,7 @@
 								</thead>
 								<tbody>
 									<c:forEach var="b" items="${ list }">
-										<tr onclick='location.href="${contextPath}/board/${ loginUser.empNo eq b.empNo ? "detail.do" : "increase.do" }?no=${ b.boardNo }";'>
+										<tr onclick='location.href="${contextPath}/board/${ loginUser.empNo eq b.empNo ? "boardDetail.do" : "increase.do" }?no=${ b.boardNo }";'>
 											<td>${ b.boardNo }</td>
 											<td>${ b.boardDept }</td>
 											<td>${ b.boardTitle }</td>

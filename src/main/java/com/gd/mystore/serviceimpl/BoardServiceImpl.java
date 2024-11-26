@@ -71,7 +71,16 @@ public class BoardServiceImpl implements BoardService {
         return boardDao.selectBoardNameList();
     }
 	
+	@Override
+	public int updateIncreaseCount(int boardNo) {
+		return boardDao.updateIncreaseCount(boardNo);
+	}
 
+	@Override
+	public BoardDto selectBoard(int boardNo) {
+		return boardDao.selectBoard(boardNo);
+	}
+	
 	
 	
 	

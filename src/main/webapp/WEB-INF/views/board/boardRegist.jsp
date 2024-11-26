@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" />
 <!DOCTYPE html>
@@ -55,19 +54,19 @@
 
 						<script>
 							// 첫 번째 드롭다운의 값이 변경될 때
-							document.getElementById('custom-select').addEventListener('change', function() {
-								var secondSelect = document.getElementById('custom-select1');
-								var importantSection = document.getElementById('important-section');
-								var importantCheckbox = document.getElementById('important');
-								var importantLabel = document.querySelector('label[for="important"]');
-
+							document.getElementById('boardTypeNo').addEventListener('change', function() {
+								var secondSelect = document.getElementById('boardDept');
+								var importantSection = document.getElementById('important-section');  // 'important-section'으로 수정
+								var importantCheckbox = document.getElementById('boardCheck');
+								var importantLabel = document.querySelector('label[for="boardCheck"]');
+					
 								// 첫 번째 드롭다운에서 값이 선택되면 두 번째 드롭다운을 활성화
 								if (this.value) {
 									secondSelect.disabled = false; // 두 번째 드롭다운 활성화
 								} else {
 									secondSelect.disabled = true; // 두 번째 드롭다운 비활성화
 								}
-
+					
 								// "공지사항" 게시판을 선택하면 중요공지 체크박스와 라벨을 보이게
 								if (this.value === "공지사항") { // 공지사항을 선택했을 때
 									importantSection.style.display = 'block'; // 중요공지 체크박스와 라벨 보이기
@@ -75,7 +74,16 @@
 									importantSection.style.display = 'none'; // 공지사항이 아닐 경우 숨기기
 								}
 							});
+
+							// 중요공지 체크박스 상태 변경 시 값 설정
+						    document.getElementById('boardCheck').addEventListener('change', function() {
+						        // 체크된 상태이면 'Y'로 설정, 체크 해제 상태이면 'N'으로 설정
+						        document.getElementById('importantCheckValue').value = this.checked ? 'Y' : 'N';
+						    });
 						</script>
+
+						<!-- 중요공지 체크박스를 위한 숨겨진 input 필드 -->
+						<input type="hidden" id="importantCheckValue" name="boardCheck" value="N" />
 
 						<div class="input-bar"
 							style="display: flex; align-items: center; margin-right: 10px; margin-top: 20px;">
@@ -93,11 +101,11 @@
 						<!-- 중요공지 체크박스와 라벨 (기본적으로 숨김) -->
 
 							<div class="btn-box-hover"
-								style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-						<div id="important-section" style="display: none; margin-top: 10px; text-align: center; vertical-align: middle; ">
-							<label for="important" style="font-size: 14px; text-align: center; vertical-align: middle; margin-bottom:10px; margin-right:10px;">중요공지</label>
-							<input type="checkbox" id="boardCheck" name="boardCheck" style="width: 20px; height: 20px; margin-right: 20px;">
-						</div>
+										style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+												<div id="important-section" style="display: none; margin-top: 10px; text-align: center;">
+							    <label for="boardCheck" style="font-size: 14px;">중요공지</label>
+							    <input type="checkbox" id="boardCheck" name="boardCheck" style="width: 20px; height: 20px; margin-right: 20px;">
+							</div>
 								<button type="submit" class="btn3-hover"
 									style="height: 40px; padding: 5px 15px;">글 등록</button>
 							</div>
@@ -128,10 +136,55 @@
 			});
 		}
 
+		// 스마트에디터 내용 반영
 		$(document).ready(function() {
-			//스마트에디터 적용
-			smartEditor();
+		    // 폼 제출 전에 입력값 검증
+	        $('#insertform').submit(function(event) {
+	            // 폼 필드 값 가져오기
+	            var boardTypeNo = $('#boardTypeNo').val();
+	            var boardDept = $('#boardDept').val();
+	            var boardTitle = $('#boardTitle').val();
+
+	            // 스마트에디터 내용 가져오기
+	            var boardContent = oEditors.getById["boardContent"].getIR(); // 스마트에디터의 내용
+
+	            // 본문 내용을 textarea에 반영
+	            $('#boardContent').val(boardContent); // textarea에 스마트에디터 내용 설정
+
+	            // 게시판 유형, 부서명, 제목, 본문 내용 체크
+	            if (!boardTypeNo) {
+	                alert("게시판을 선택해주세요.");
+	                return false;  // 폼 제출 방지
+	            }
+
+	            if (!boardDept) {
+	                alert("부서를 선택해주세요.");
+	                return false;  // 폼 제출 방지
+	            }
+
+	            if (!boardTitle) {
+	                alert("제목을 입력해주세요.");
+	                return false;  // 폼 제출 방지
+	            }
+
+	            if (!boardContent || !boardContent.trim()) {
+	                alert("본문 내용을 입력해주세요.");
+	                return false;  // 폼 제출 방지
+	            }
+
+	            return true;  // 모든 조건을 만족하면 폼 제출
+	        });
+		    
+		    
+		    smartEditor();
+		    
+		    // 폼 제출 전에 smartEditor 내용이 textarea에 반영되도록 설정
+		    $('#insertform').submit(function() {
+		        var content = oEditors.getById["boardContent"].getIR(); // 스마트에디터의 내용 가져오기
+		        $('#boardContent').val(content); // textarea에 내용 설정
+		    });
 		});
+
 	</script>
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />

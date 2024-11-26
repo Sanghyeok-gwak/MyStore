@@ -18,7 +18,7 @@ import lombok.ToString;
 public class BoardDto {
 
 	private int boardNo;
-	private int boardTypeNo;
+	private String boardTypeNo;
 	private String boardDept;
 	private String boardTitle;
 	private String boardContent;
@@ -30,7 +30,7 @@ public class BoardDto {
 	private String userYN;
 	
 	
-	private String attachCount;
+	private int attachCount;
 	private String empName;
 	private String deptName;
 	private String boardtName;

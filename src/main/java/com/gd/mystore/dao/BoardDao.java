@@ -64,6 +64,14 @@ public class BoardDao {
         return sqlSession.selectList("boardMapper.boardtName");
     }
 
+	public BoardDto selectBoard(int boardNo) {
+		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
+	}
 
+	public int updateIncreaseCount(int boardNo) {
+		return sqlSession.update("boardMapper.updateIncreaseCount", boardNo);
+	}
+	
+	
 	
 }

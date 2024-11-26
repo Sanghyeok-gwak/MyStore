@@ -19,6 +19,7 @@
     <result column="dept_name" property="deptName" />	
     <result column="boardt_name" property="boardtName"/>
     <result column="boardt_check" property="boardCheck"/>
+    <result column="attach_count" property="attachCount" />	
     
     <collection resultMap="boardFileResultMap" property="boardList" />
   </resultMap>
@@ -59,8 +60,8 @@
       b.board_Count, 
       ( 
         SELECT COUNT(*) 
-        FROM tbl_boardFile s
-        WHERE s.ref_type = 'B' 
+        FROM tbl_boardfile s
+        WHERE s.ref_type = 'A' 
         AND s.ref_no = b.board_no
       ) AS "attach_count" 
     FROM tbl_board b 
@@ -169,7 +170,7 @@
 			(
 				boardfile_no_seq.nextval
 			, #{filePath}
-			, #{filesystemName}
+			, #{fileSystemName}
 			, #{originalName}
 			, SYSDATE			
 			, #{refType}
@@ -183,19 +184,47 @@
 				</otherwise>
 			</choose>
 			
-			, #{empName}
+			, NULL
 			, SYSDATE
 			, NULL
 			, NULL
-			, #{useYN}
+			, 'Y'
 			
 			)
 	</insert>
 	
 	
+  <update id="updateIncreaseCount">
+	update
+				tbl_board
+		set board_count = COALESCE(board_count, 0) + 1
+	where board_no = #{boardNo}
+		and use_YN = 'Y'
+	
+	</update>
   
   
-  
+  	<select id="selectBoard" resultMap="boardResultMap">
+
+			SELECT 
+		    b.board_no,
+		    b.board_title,
+		    b.board_content,
+		    b.emp_no,
+		    b.board_count,
+		    e.emp_name, 
+		    TO_CHAR(b.create_date, 'YYYY-MM-DD') AS create_date,
+		    c.BOARDFILE_NO,
+		    c.file_path,
+		    c.filesystem_name,
+		    c.original_name
+		FROM tbl_board b
+		JOIN tbl_employee e ON b.emp_no = e.emp_no
+		LEFT JOIN tbl_boardfile c ON c.ref_type = 'A' AND c.ref_no = b.board_no
+		WHERE b.use_YN = 'Y'
+		  AND b.board_no = #{boardNo}
+			
+	</select>
   
   
   

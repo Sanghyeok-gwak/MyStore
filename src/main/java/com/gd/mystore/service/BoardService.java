@@ -28,6 +28,10 @@ public interface BoardService {
 		
 		List<BoardDto> selectBoardNameList();
 	
+		int updateIncreaseCount(int boardNo);
 		
+		
+		BoardDto selectBoard(int boardNo);
+				
 		
 }

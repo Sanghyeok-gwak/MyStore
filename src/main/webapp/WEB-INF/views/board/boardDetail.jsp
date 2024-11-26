@@ -22,14 +22,14 @@
 		<div class="board-detail-box">
 			<div class="board-detail-box-text">
 				<div class="d-flex" style="flex-direction: column;">
-					<span class="ffont1">공지사항</span><br>
+					<span class="ffont1">${ b.boardTitle }</span><br>
 					<div class="box-box" style="font-size: 18px;">
-						<div class="d-flex justify-content-between" style="display: flex; justify-content: space-between; width: 100%;">
-							<div>관리자</div>
+						<div class="d-flex justify-content-between" style="display: flex; justify-content: space-between; width: 100%; margin-top:10px;">
+							<div>${ b.empName }</div>
 							<div style="display: flex; justify-content: space-between; gap: 10px;">
-								<div style="margin-right: 50px;">2024-11-02</div>
-								<div style="margin-right: 50px;">댓글 수 1</div>
-								<div>조회 수 380</div>
+								<div style="margin-right: 50px;">${ b.createDate }</div>
+								<div style="margin-right: 50px;">댓글 수 ${ b.boardCount }</div>
+								<div>조회 수 ${ b.boardCount }</div>
 							</div>
 						</div>
 					</div>
@@ -37,7 +37,7 @@
 			</div>
 			
 		</div>
-		<div style="margin-top: 40px; border-top: #000000 1px solid; border-bottom: #000000 1px solid;">
+		<div style="margin-top: 20px; border-top: #000000 1px solid; border-bottom: #000000 1px solid;">
 			<table>
 				<td style="padding-top: 5px; padding-bottom: 5px; padding-left: 0; padding-right: 0;">
 					<div style="display: flex; justify-content: space-between; width: 100%; font-size: 18px;">
@@ -47,15 +47,22 @@
 				</td>
 			</table>
 		</div>
-		<div class="board-content">
-			<p style="height:400px;">ddd</p>
+		<div class="board-content" style="height:400px; padding: 10px;">
+			${ b.boardContent }
 		</div>
+
+	 <c:if test="${loginUser.empNo eq b.empNo}">
+			<form id="frm" action="" method="post">
 		<div class="btn-box-hover">
 			<div style="display: flex; justify-content: center; width: 100%;">
-				<button class="btn3-hover">글 작성</button>
-				<button class="btn1-hover">글 수정</button>
+			<input  type="hidden" name="no" value="${b.boardNo}">
+				<button type="submit" class="btn3-hover" onclick="$('#frm').attr('action','${contextPath}/board/modify.do');">글 수정</button>
+				<button type="submit" class="btn1-hover" onclick="$('#frm').attr('action','${contextPath}/board/delete.do');">글 삭제</button>
 			</div>
 		</div>
+			</form>
+		</c:if>
+		
 		<div style="margin-top: 25px; border-top: #000000 1px solid; border-bottom: #000000 1px solid;">
 			<table>
 				<td style="padding-top: 5px; padding-bottom: 5px; padding-left: 0; padding-right: 0;">
@@ -69,15 +76,15 @@
 		</div>
 		<style>
 			.reply-box{
-				margin-left:150px;
+				margin-left:5px;
 				margin-right:150px;
 			}
 		</style>
 		<div class="reply-box">		
 			<div class="d-flex" style="flex-direction: column; font-size: 18px; margin-top: 10px;">
 				<!-- 작성자 및 댓글 텍스트 부분 -->
-				<div style="display: flex; justify-content: space-between; align-items: center;">
-					<span>김개똥</span> <i class="bi bi-three-dots" style="margin-right: 15px;"></i>
+				<div style="display: flex;  align-items: center;">
+					<span>김개똥</span> <i class="bi bi-three-dots" style="margin-left: 230px;"></i>
 				</div>
 	
 	

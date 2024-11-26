@@ -112,8 +112,6 @@ public class BoardController {
 						.fileSystemName(map.get("filesystemName"))
 						.originalName(map.get("originalName"))
 						.refType("A")
-						.creater(map.get("empName"))
-						.useYN("Y")
 						.build());
 			}
 		}
@@ -133,20 +131,32 @@ public class BoardController {
 			
 		}
 		
-		return "redirect:/board/boardRegist.do";
+		return "redirect:/board/list.do";
+	}
+	
+	
+	@GetMapping("/increase.do")
+	public String increaseCount(int no) { // 조회수 증가용 (타인의 글일 경우 호출) => board/
+		
+		boardService.updateIncreaseCount(no);
+		
+		return "redirect:/board/boardDetail.do?no=" + no;
+				
 	}
 	
 	
 	
-	
-	
-	
-	
 	@GetMapping("/boardDetail.do")
-	public void boardDetail() {}
+	public void detail(int no, Model model) {
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명, 저장경로, 실제파일명)들 데이터
+		BoardDto b = boardService.selectBoard(no);
+		// boardNo, boardTitle, boardContent, boardWriter, registDt, attachList
+		
+		model.addAttribute("b", b);		
+					
 	
-	
-	
+	}
 	
 	
 	
