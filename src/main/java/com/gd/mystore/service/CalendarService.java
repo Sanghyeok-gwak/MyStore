@@ -9,6 +9,10 @@ public interface CalendarService {
 	// 이벤트 조회
 	List<CalendarDto> selectEvents(String empNo);
 
+	List<CalendarDto> selectPersonalEvents(String empNo);
+	
+	List<CalendarDto> selectAllCompanyEvents(String empNo);
+
     // 새로운 이벤트 추가
     int addEvent(CalendarDto calendarDto);
 

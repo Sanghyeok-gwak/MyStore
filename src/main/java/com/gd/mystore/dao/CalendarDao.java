@@ -20,6 +20,14 @@ public class CalendarDao {
 		return sqlsession.selectList("calendarMapper.selectCalendarEvents", empNo);
 	}
 	
+	public List<CalendarDto> selectPersonalEvents(String empNo){
+		return sqlsession.selectList("calendarMapper.selectPersonalEvents", empNo);
+	}
+	
+	public List<CalendarDto> selectAllCompanyEvents(String empNo){
+		return sqlsession.selectList("calendarMapper.selectAllCompanyEvents", empNo);
+	}
+	
 	// 이벤트 등록
 	public int addEvent(CalendarDto c) {
 		return sqlsession.insert("calendarMapper.insertCalendarEvent", c);

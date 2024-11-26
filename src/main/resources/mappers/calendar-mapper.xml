@@ -23,6 +23,30 @@
         WHERE (EMP_NO = #{empNo} AND CAL_COLOR = 'B') 
            OR CAL_COLOR = 'R'
     </select>
+    
+    <select id="selectPersonalEvents" resultMap="CalendarResultMap">
+        SELECT 
+            CAL_NO,
+            EMP_NO,
+            CAL_START_DATE,
+            CAL_END_DATE,
+            CAL_SUBJECT,
+            CAL_COLOR
+        FROM TBL_CALENDAR
+        WHERE (EMP_NO = #{empNo} AND CAL_COLOR = 'B') 
+    </select>
+    
+    <select id="selectAllCompanyEvents" resultMap="CalendarResultMap">
+        SELECT 
+            CAL_NO,
+            EMP_NO,
+            CAL_START_DATE,
+            CAL_END_DATE,
+            CAL_SUBJECT,
+            CAL_COLOR
+        FROM TBL_CALENDAR
+        WHERE (EMP_NO = #{empNo} AND CAL_COLOR = 'R') 
+    </select>
 
     <insert id="insertCalendarEvent">
         INSERT 
