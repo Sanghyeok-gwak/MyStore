@@ -72,6 +72,18 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.updateIncreaseCount", boardNo);
 	}
 	
+
+	public List<BoardFileDto> selectDelAttach(String[] delFileNo) {
+		return sqlSession.selectList("boardMapper.selectDelAttach", delFileNo);
+	}
 	
+	public int updateBoard(BoardDto b) {
+		return sqlSession.update("boardMapper.updateBoard" ,b);
+		
+	}
+	
+	public int deleteAttach(String[] delFileNo) {
+		return sqlSession.delete("boardMapper.deleteAttach" , delFileNo);
+	}
 	
 }
