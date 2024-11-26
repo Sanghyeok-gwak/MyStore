@@ -54,7 +54,7 @@
         <a href="${ contextPath }/mypage/workStatus">근태조회</a>								<!-- lv5 -->
       </div>
 			
-			<div class="side-icon" onclick='location.href="${contextPath }/note/test.do"'>
+			<div class="side-icon" onclick='location.href="${contextPath }/note/list.no"'>
         <img src="https://i.ibb.co/bK3vZM2/message-ww.png">
         <span>쪽지</span>																		<!-- lv5 -->
       </div>
