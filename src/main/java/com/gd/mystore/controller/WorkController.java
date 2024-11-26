@@ -35,20 +35,27 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class WorkController {
 	
-	private final SystemService systemService;
-	private final PagingUtil pagingUtil;
+//	private final PagingUtil pagingUtil;
 	
 	//출근 버튼
 	/*
 	 * 출근 버튼 클릭 시 update 진행 -> work_start_time 현재 시간으로 변경
 	 * 09시 넘으면 WORK_ATTENDANCE 'A'(지각)으로 변경
 	 */
+	@GetMapping("clockIn")
+	public void colockIn() {
+		
+	}
 	
 	//퇴근 버튼
 	/*
 	 * 퇴근 버튼 클릭 시 update 진행 -> wor_end_time 현재 시간으로 변경
 	 * 50% 미만 출근 시 결근 처리 초로 계산하면 될듯? 다른 방법 있으면 그렇게 진행
 	 */
+	@GetMapping("clockOut")
+	public void colockOut() {
+		
+	}
 	
 	
 }

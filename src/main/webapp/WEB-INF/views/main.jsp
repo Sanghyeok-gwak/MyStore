@@ -133,10 +133,10 @@
                 <div class="date_time">00:00:00</div>
               </div>
               <div class="emp_time">
-                <div>출근시간:</div>
-                <div>퇴근시간:</div>
+                <div>출근시간:<span>00:00</span></div>
+                <div>퇴근시간:<span>00:00</span></div>
               </div>
-              <div class="btn">
+              <div class="btn" style="">
                 <button type="button" class="btn btn-outline-primary">출근하기</button>
                 <button type="button" class="btn btn-outline-danger">퇴근하기</button>
               </div>

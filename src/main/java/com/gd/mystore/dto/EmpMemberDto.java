@@ -46,6 +46,11 @@ public class EmpMemberDto {
     
     private ArrayList<EmpMemberDto> lvList;
     
+    private String 
+    			   workDay	 
+    			 , workStartTime
+    			 , workEndTime;
+    
     
     
     
