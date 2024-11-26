@@ -212,19 +212,60 @@
 		    b.board_content,
 		    b.emp_no,
 		    b.board_count,
+            b.board_dept,
 		    e.emp_name, 
 		    TO_CHAR(b.create_date, 'YYYY-MM-DD') AS create_date,
 		    c.BOARDFILE_NO,
 		    c.file_path,
 		    c.filesystem_name,
-		    c.original_name
+		    c.original_name,
+            d.boardt_name
 		FROM tbl_board b
 		JOIN tbl_employee e ON b.emp_no = e.emp_no
 		LEFT JOIN tbl_boardfile c ON c.ref_type = 'A' AND c.ref_no = b.board_no
+		  left join tbl_boardtype d on d.boardt_name =  b.board_type_no
 		WHERE b.use_YN = 'Y'
 		  AND b.board_no = #{boardNo}
 			
+			
 	</select>
+  
+  <select id="selectDelAttach" resultMap="boardFileResultMap">
+		
+		select
+				 	file_path
+				, filesystem_name
+			from tbl_boardfile
+		 <where>
+		 	<foreach item="no" collection="array"
+				open="file_no in (" separator=","	close=")">
+		 		#{no}
+		 	</foreach>
+		 </where>
+	
+	</select>
+	
+	<update id="updateBoard">
+		update
+					 tbl_board
+				set board_title   = #{boardTitle}
+		  		, board_content = #{boardContent}
+		 where board_no = #{boardNo}
+	
+	</update>
+	
+	<delete id="deleteAttach">
+	
+	delete
+		from tbl_boardfile
+	 <where>
+		 	<foreach item="no" collection="array"
+				open="file_no in (" separator=","	close=")">
+		 		#{no}
+		 	</foreach>
+		 </where>
+	
+	</delete>
   
   
   

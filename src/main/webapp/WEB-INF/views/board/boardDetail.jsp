@@ -40,11 +40,20 @@
 		<div style="margin-top: 20px; border-top: #000000 1px solid; border-bottom: #000000 1px solid;">
 			<table>
 				<td style="padding-top: 5px; padding-bottom: 5px; padding-left: 0; padding-right: 0;">
-					<div style="display: flex; justify-content: space-between; width: 100%; font-size: 18px;">
-						<div>첨부파일</div>
-						<div style="text-align: right; margin-left: 30px; color: #afacac">첨부파일인데요.jpg</div>
-					</div>
-				</td>
+		    <div style="display: flex; justify-content: space-between; width: 100%; font-size: 18px;">
+		        <div>첨부파일</div>
+		        <div style="text-align: right; margin-left: 30px; color: #afacac;">
+		            <c:forEach var="at" items="${ b.boardList }">
+		                <!-- 첨부파일 목록을 세로로 나열 -->
+		                <div style="margin-bottom: 5px;">
+		                    <a href="${contextPath}${at.filePath}/${at.fileSystemName}" download="${ at.originalName }">${ at.originalName }</a>
+		                    <span class="origin_attach_del" data-fileno="${ at.boardFileNo }"></span>
+		                </div>
+		            </c:forEach>
+		        </div>
+		    </div>
+		</td>
+
 			</table>
 		</div>
 		<div class="board-content" style="height:400px; padding: 10px;">
@@ -56,7 +65,7 @@
 		<div class="btn-box-hover">
 			<div style="display: flex; justify-content: center; width: 100%;">
 			<input  type="hidden" name="no" value="${b.boardNo}">
-				<button type="submit" class="btn3-hover" onclick="$('#frm').attr('action','${contextPath}/board/modify.do');">글 수정</button>
+				<button type="submit" class="btn3-hover" onclick="$('#frm').attr('action','${contextPath}/board/boardModify.do');">글 수정</button>
 				<button type="submit" class="btn1-hover" onclick="$('#frm').attr('action','${contextPath}/board/delete.do');">글 삭제</button>
 			</div>
 		</div>

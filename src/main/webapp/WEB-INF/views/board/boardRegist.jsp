@@ -37,7 +37,7 @@
 						    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 218px; margin-top: 30px;">
 						    <option value="" disabled selected style="display: none;" >게시판을 선택해주세요</option>
 						    <c:forEach var="boardName" items="${boardTypeList}" >
-						        <option value="${boardName.boardtName}">${boardName.boardtName}</option>
+						        <option value="${boardName.boardtName}">${b.boardName}</option>
 						    </c:forEach>
 						</select>
 						
@@ -47,7 +47,7 @@
 						    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 217px; margin-top: 30px;" disabled>
 						    <option value="" disabled selected style="display: none;">구분을 선택해주세요</option>
 						    <c:forEach var="dept" items="${deptList}">
-						        <option id="deptName"value="${dept.deptName}">${dept.deptName}</option>
+						        <option id="deptName"value="${dept.deptName}">${b.deptName}</option>
 						    </c:forEach>
 						</select>
 						
@@ -88,7 +88,7 @@
 						<div class="input-bar"
 							style="display: flex; align-items: center; margin-right: 10px; margin-top: 20px;">
 							<input type="text" class="input-bar1" placeholder="제목을 입력하세요"
-								style="height: 38px; padding: 5px; width: 444px;" id="boardTitle" name="boardTitle"/>
+								style="height: 38px; padding: 5px; width: 444px;" id="boardTitle" name="boardTitle"  value="${ b.boardTitle }"/>
 						</div>
 
 						<div class="d-flex"
@@ -113,7 +113,7 @@
 
 						<div id="smarteditor" style="margin-top: 30px;">
 							<textarea name="boardContent" id="boardContent" rows="20" cols="10"
-								style="margin-top: 30px; width: 100%; height: 420px;"></textarea>
+								style="margin-top: 30px; width: 100%; height: 420px;" >${ b.boardContent }</textarea>
 						</div>
 					</form>
 

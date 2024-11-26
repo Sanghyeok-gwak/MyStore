@@ -158,6 +158,16 @@ public class BoardController {
 	
 	}
 	
-	
+	@PostMapping("/boardModify.do")
+	public void modifyPage(int no, Model model) {
+		 List<BoardDto> deptList = boardService.selectDeptList();
+		    List<BoardDto> boardTypeList = boardService.selectBoardNameList();
+
+		    // 모델에 데이터 추가
+		    model.addAttribute("deptList", deptList);
+		    model.addAttribute("boardTypeList", boardTypeList);
+
+		model.addAttribute("b", boardService.selectBoard(no));
+	}
 	
 }
