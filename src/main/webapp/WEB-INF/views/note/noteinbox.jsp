@@ -93,7 +93,7 @@
 	  <div class="note-side-a-box">
 	      <ul style="padding-left:0px!important;">
 	          <li>
-	              <a href="" style="color: red;">받은쪽지함</a><br>
+	              <a href="${contextPath}/note/list.no" style="color: red;">받은쪽지함</a><br>
 	          </li>
 	          <li>
 	              <a href="">보낸쪽지함</a><br>

@@ -22,8 +22,10 @@ import com.gd.mystore.dto.BoardTypeDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.LogDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.WorkDto;
 import com.gd.mystore.service.BoardService;
 import com.gd.mystore.service.SystemService;
+import com.gd.mystore.service.WorkService;
 import com.gd.mystore.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class WorkController {
 	
+	private final WorkService workService;
 //	private final PagingUtil pagingUtil;
 	
 	//출근 버튼
@@ -42,9 +45,15 @@ public class WorkController {
 	 * 출근 버튼 클릭 시 update 진행 -> work_start_time 현재 시간으로 변경
 	 * 09시 넘으면 WORK_ATTENDANCE 'A'(지각)으로 변경
 	 */
+	@ResponseBody
+	@GetMapping("clockCheck")
+	public List<WorkDto> workCheck(String empData) {
+		return workService.selectWorkCheck();
+	}
+	
 	@GetMapping("clockIn")
-	public void colockIn() {
-		
+	public String colockIn() {
+		return "test";
 	}
 	
 	//퇴근 버튼

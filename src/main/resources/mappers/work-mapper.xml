@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="workMapper">
+
+	<resultMap id="empWorkResultMap" type="WorkDto">
+		<result column="WORK_NO" property="workNo"/>
+		<result column="EMP_NO" property="empNo"/>
+		<result column="WORK_TYPE_CODE" property="workTypeCode"/>
+		<result column="WORK_DAY" property="workDay"/>
+		<result column="WORK_START_TIME" property="workStartTime"/>
+		<result column="WORK_END_TIME" property="workEndTime"/>
+		<result column="WORK_PERMIT" property="workPermit"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="MODIFIER_DATE" property="modifyDate"/>
+		<result column="USE_YN" property="useYn"/>
+		<result column="WORK_ATTENDANCE" property="workAttendance"/>
+	</resultMap>
 	
 	<insert id="empAllWorkInser">
 		INSERT INTO tbl_work 
@@ -24,7 +39,27 @@
 			FROM  tbl_employee e
 	</insert>
 	
-	<update id="">
+	<select id="workCheck" resultMap="empWorkResultMap">
+		select *
+  		  from tbl_work
+		 where emp_no = #{}
+	</select>
 	
+	<!-- 출근 -->
+	<update id="empWorkStartTime">
+		update tbl_work
+	       set 
+	           work_start_time = TO_CHAR(SYSDATE, 'HH24:MI:SS')
+	     where emp_no = #{empNo}
 	</update>
+	
+	<!-- 퇴근 -->
+	<update id="empWorkEndTime">
+		update tbl_work
+	       set 
+	           WORK_END_TIME = TO_CHAR(SYSDATE, 'HH24:MI:SS')
+	     where emp_no = #{empNo}
+	</update>
+
+
 </mapper>

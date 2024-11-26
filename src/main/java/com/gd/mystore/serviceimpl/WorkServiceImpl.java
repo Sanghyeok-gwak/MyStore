@@ -12,6 +12,7 @@ import com.gd.mystore.dto.BoardTypeDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.LogDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.WorkDto;
 import com.gd.mystore.service.SystemService;
 import com.gd.mystore.service.WorkService;
 
@@ -26,6 +27,11 @@ public class WorkServiceImpl implements WorkService {
 	@Override
 	public void insertEmpWork() {
 		workDao.empAllWorkInser();
+	}
+
+	@Override
+	public List<WorkDto> selectWorkCheck() {
+		return workDao.selectWorkCheck();
 	}
 	
 	

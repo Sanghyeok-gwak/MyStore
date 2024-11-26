@@ -34,18 +34,29 @@ public class CalendarController {
 
     @ResponseBody
     @GetMapping("/selectEvents.do")
-    public List<Map<String, Object>> selectEvents(HttpSession session) {
+    public List<Map<String, Object>> selectEvents(HttpSession session,  boolean personal,  boolean all) {
         EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
         if (loginUser == null) {
             throw new IllegalArgumentException("로그인된 사용자 정보가 없습니다.");
         }
 
         String empNo = loginUser.getEmpNo();
-        List<CalendarDto> events = calendarService.selectEvents(empNo);
+        List<CalendarDto> events = new ArrayList<>();
+
+        // personal과 all 필터에 따라 다른 쿼리 실행
+        if (personal && all) {
+            // 개인과 전사 일정 모두 조회
+            events = calendarService.selectEvents(empNo);
+        } else if (personal) {
+            // 개인 일정만 조회
+            events = calendarService.selectPersonalEvents(empNo);
+        } else if (all) {
+            // 전사 일정만 조회
+            events = calendarService.selectAllCompanyEvents(empNo);
+        }
 
         List<Map<String, Object>> eventList = new ArrayList<>();
         for (CalendarDto event : events) {
-            System.out.println("calColor: " + event.getCalColor()); // 디버깅용 로그
             Map<String, Object> eventMap = new HashMap<>();
             eventMap.put("id", event.getCalNo());
             eventMap.put("title", event.getCalSubject());
@@ -53,9 +64,10 @@ public class CalendarController {
             eventMap.put("color", event.getCalColor() != null ? event.getCalColor() : "gray"); // 기본값 처리
             eventList.add(eventMap);
         }
-        
+
         return eventList;
     }
+
 
 
 

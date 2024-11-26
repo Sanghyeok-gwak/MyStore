@@ -20,6 +20,15 @@ public class CalendarServiceImpl implements CalendarService {
 	public List<CalendarDto> selectEvents(String empNo) {
 		return calendarDao.selectEvents(empNo);
 	}
+	@Override
+	public List<CalendarDto> selectPersonalEvents(String empNo) {
+		return calendarDao.selectPersonalEvents(empNo);
+	}
+	
+	@Override
+	public List<CalendarDto> selectAllCompanyEvents(String empNo) {
+		return calendarDao.selectAllCompanyEvents(empNo);
+	}
 
 	@Override
 	public int addEvent(CalendarDto c) {
@@ -35,5 +44,6 @@ public class CalendarServiceImpl implements CalendarService {
 	public int deleteEvent(int calNo) {
 		return calendarDao.deleteEvent(calNo);
 	}
+
 
 }

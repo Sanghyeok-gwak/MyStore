@@ -75,18 +75,14 @@
         margin-right: 25px;
       }
       .top_empInfo{
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      .top_empInfo{
-        width: 50%;
-        display: inline-grid;
-        justify-content: center;
-        align-items: center;
-        background: rgb(252, 168, 168);
-        border-radius: 5px;
+	    width: 50%;
+	    color: white;
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: space-evenly;
+	    align-items: center;
+	    background: rgb(252, 168, 168);
+	    border-radius: 5px;
       }
       .info_img{
         width: 100%;
@@ -103,21 +99,32 @@
         padding: 5% 0;
       }
       .emp_time{
+        display: flex;
+	    flex-direction: column;
+	    justify-content: center;
         margin: 5% 0 10% 0;
       }
       .date_time{
         font-size: x-large;
       }
-      .btn{
-        display: flex;
-        justify-content: space-between;
-      }
       #calendar {
-            width: 100%; /* 초기 너비 */
-            height: 100%; /* 초기 높이 */
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%; /* 초기 너비 */
+        height: 100%; /* 초기 높이 */
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+      .emp_dept{
+      	font-weight: bold;
+    	font-size: larger;
+      }
+      .emp_name{
+      	margin-bottom: -19px;
+      }
+      #btn_info{
+      	width: 100%;
+	    display: flex;
+	    justify-content: center;
+      }
 
     </style>
 	
@@ -131,9 +138,10 @@
 				<img src="<c:out value='${ loginUser.empProfile }' default='${ contextPath }/resources/images/defaultImg.png' />" class="info_img">
               </div>
               <div class="top_empInfo">
-                <div class="emp_dept">인사 1팀</div>
-                <div class="emp_name"><b>배수지 사원</b></div>
-                <div class="emp_phone">010.1234.1234</div>
+                <div class="emp_dept">${ loginUser.deptCode }</div>
+                <div class="emp_name"><b>${ loginUser.empName }</b></div>
+                <div class="emp_name"><b>${ loginUser.empRank }</b></div>
+                <div class="emp_phone">${ loginUser.empPhone }</div>
               </div>
             </div>            
             
@@ -142,15 +150,81 @@
                 <div class="date_time">00:00:00</div>
               </div>
               <div class="emp_time">
-                <div>출근시간:<span>00:00</span></div>
-                <div>퇴근시간:<span>00:00</span></div>
+
+                <div>출근시간:&nbsp&nbsp
+                	<c:choose>
+                		<c:when test="${ empty loginUser.getWorkStartTime() }">
+                			<span></span>
+                		</c:when>
+                		<c:otherwise>
+                			<span>${ loginUser.getWorkStartTime() }</span>
+                		</c:otherwise>
+                	</c:choose>
+                	
+               	</div>
+               	
+                <div>퇴근시간:&nbsp&nbsp
+                	<c:choose>
+                		<c:when test="${ empty loginUser.getWorkStartTime() }">
+                			<span></span>
+                		</c:when>
+                		<c:otherwise>
+                			<span>${ loginUser.getWorkEndTime() }</span>
+                		</c:otherwise>
+                	</c:choose>
+                </div>
+
               </div>
-              <div class="btn" style="">
-                <button type="button" class="btn btn-outline-primary">출근하기</button>
-                <button type="button" class="btn btn-outline-danger">퇴근하기</button>
-              </div>
+                <button type="button" id="btn_info" class="btn btn-outline-primary" onclick="toggleButton()">출근하기</button>
             </div>
           </div>
+          
+          <script>
+          	window.onload = workCheck;
+          	
+          	function workCheck(){
+	          	$.ajax({
+					url: '${contextPath}/work/clockCheck',
+					type: 'get',
+					data: {
+						empData: ${loginUser.getEmpNo()}
+					},
+					success: function(resData){
+						console.log(resData)
+						workData = resData;
+					},
+					error: function(){
+						console.log('근태 버튼에 대한 ajax 통신 실패')
+					}
+				})
+          	}
+          
+     		function toggleButton() {
+			   var btn = document.getElementById("btn_info");
+			   
+			   if (btn.innerHTML === "출근하기") {
+				    btn.innerHTML = "퇴근하기";
+				    btn.classList.remove("btn-outline-primary");
+				    btn.classList.add("btn-outline-danger");
+			   } else {
+			   	var confirmAction = confirm("퇴근하시겠습니까?");
+			   	
+			   	if (confirmAction) {
+			           btn.innerHTML = "업무 종료";
+			           btn.classList.remove("btn-outline-danger");
+			           btn.classList.add("btn-outline-primary");
+			           btn.disabled = true; 
+			           endMessage.style.display = "block"; 
+			         } else {
+			           btn.innerHTML = "퇴근하기";
+			           btn.classList.remove("btn-outline-primary");
+			           btn.classList.add("btn-outline-danger");
+			           endMessage.style.display = "none"; 
+			         }
+			   }
+			 }
+			</script>
+          
           <script>
 		        const clock = document.querySelector(".date_time");
 		
@@ -200,7 +274,6 @@
         	                data: filters, // 필터 조건 전송
         	                dataType: 'json',
         	                success: function(response) {
-        	                    console.log('서버 응답 데이터:', response);
         	                    // 성공적으로 가져온 이벤트 데이터를 캘린더에 렌더링
         	                    successCallback(response.map(event => {
         	                        return {
