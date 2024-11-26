@@ -59,7 +59,7 @@
         <span>쪽지</span>																		<!-- lv5 -->
       </div>
       
-			<div class="side-icon" onclick='location.href="여기 작성해주시면됩니다."'>
+			<div class="side-icon" onclick='location.href="${ contextPath }/calendar/fullCalendar.do"'>
         <img src="https://i.ibb.co/fQtpVbV/wall-calendar-2.png">
         <span>일정</span>																		<!-- lv5 -->
       </div>

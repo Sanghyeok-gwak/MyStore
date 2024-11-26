@@ -25,6 +25,9 @@
 		<result column="MODIFIER" property="modifier"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="WORK_DAY" property="workDay"/>
+		<result column="WORK_START_TIME" property="workStartTime"/>
+		<result column="WORK_END_TIME" property="workEndTime"/>
 	</resultMap>
   
   <!-- 로그인 -->
@@ -51,24 +54,30 @@
            EMP.MODIFIER,
            EMP.USE_YN,
            EMP.AC_NO,
-           EMP.AC_BANK
+           EMP.AC_BANK,
+           w.work_day as workDay, 
+           w.work_start_time as workStartTime, 
+           w.work_end_time as workEndTime
       FROM
            TBL_EMPLOYEE EMP
       LEFT JOIN
            TBL_COMMON_CODE POS ON EMP.EMP_AUTH = POS.CD
       LEFT JOIN
            tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE
+      LEFT JOIN
+           tbl_work w on emp.emp_no =w.emp_no
      WHERE EMP.EMP_EMPLOYMENT = 'Y' 
        AND EMP.EMP_EMPLOYMENT = 'Y'
        AND EMP.EMP_NO = #{empNo}
+       AND TO_DATE(W.WORK_DAY, 'YY/MM/DD') = TO_DATE(SYSDATE, 'YY/MM/DD')
   </select>
   
   <!--  비밀번호 변경 -->
   <update id="updateEmpMember">
   	UPDATE
-  				 TBL_EMPLOYEE
-  		 SET 
-  		 		 EMP_PASSWORD = #{empPwd}
+		   TBL_EMPLOYEE
+	   SET 
+ 		   EMP_PASSWORD = #{empPwd}
   	 WHERE EMP_NO = #{empNo}
   </update>
   

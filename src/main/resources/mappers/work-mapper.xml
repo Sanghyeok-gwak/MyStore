@@ -24,4 +24,7 @@
 			FROM  tbl_employee e
 	</insert>
 	
+	<update id="">
+	
+	</update>
 </mapper>

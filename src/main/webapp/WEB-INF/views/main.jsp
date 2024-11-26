@@ -9,6 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 	
@@ -109,6 +112,12 @@
         display: flex;
         justify-content: space-between;
       }
+      #calendar {
+            width: 100%; /* 초기 너비 */
+            height: 100%; /* 초기 높이 */
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
     </style>
 	
@@ -133,10 +142,10 @@
                 <div class="date_time">00:00:00</div>
               </div>
               <div class="emp_time">
-                <div>출근시간:</div>
-                <div>퇴근시간:</div>
+                <div>출근시간:<span>00:00</span></div>
+                <div>퇴근시간:<span>00:00</span></div>
               </div>
-              <div class="btn">
+              <div class="btn" style="">
                 <button type="button" class="btn btn-outline-primary">출근하기</button>
                 <button type="button" class="btn btn-outline-danger">퇴근하기</button>
               </div>
@@ -162,17 +171,59 @@
             전자결재
           </div>
           <div class="main-home-top-calender">
-          	<c:choose>
-          		<c:when test="${ empty loginUser.getEmpNo() }">
-          			세션정보 없음
-          		</c:when>
-          		
-          		<c:otherwise>
-          			현재 로그인 세션 정보
-          			<br>
-          			${ loginUser.toString() }
-          		</c:otherwise>
-          	</c:choose>
+          	
+          	<!-- 캘린더 부분 -->
+           	<div id="calendar" ></div>
+          
+          <script>
+          document.addEventListener('DOMContentLoaded', function () {
+        	    var calendarEl = document.getElementById('calendar');
+
+        	    var calendar = new FullCalendar.Calendar(calendarEl, {
+        	        headerToolbar: {
+        	            left: 'prev,next today',
+        	            center: 'title',
+        	            right: 'listWeek,dayGridMonth,timeGridWeek,timeGridDay'
+        	        },
+        	        initialView: 'listWeek',
+        	        events: function(fetchInfo, successCallback, failureCallback) {
+        	            // 필터 조건 (필요에 따라 수정 가능)
+        	            let filters = {
+        	                personal: $('#personalSchedulesCheckbox').is(':checked'),
+        	                all: $('#allSchedulesCheckbox').is(':checked')
+        	            };
+
+        	            // Ajax 요청으로 서버에서 이벤트 데이터 조회
+        	            $.ajax({
+        	                url: `${contextPath}/calendar/selectEvents.do`, // 서버 엔드포인트
+        	                type: 'GET',
+        	                data: filters, // 필터 조건 전송
+        	                dataType: 'json',
+        	                success: function(response) {
+        	                    console.log('서버 응답 데이터:', response);
+        	                    // 성공적으로 가져온 이벤트 데이터를 캘린더에 렌더링
+        	                    successCallback(response.map(event => {
+        	                        return {
+        	                            ...event,
+        	                            backgroundColor: event.color === 'B' ? 'SteelBlue' : 'SeaGreen', // 배경색
+        	                        };
+        	                    }));
+        	                },
+        	                error: function(err) {
+        	                    console.error('이벤트 조회 실패:', err);
+        	                    failureCallback(err); // 실패 시 FullCalendar에 오류 전달
+        	                }
+        	            });
+        	        }
+        	    });
+
+        	    // 캘린더 렌더링
+        	    calendar.render();
+        	});
+
+
+          </script>
+          	
           </div>
         </div>
         <div class="main-home-bottom">
@@ -204,6 +255,17 @@
 				    </div>
 				</form>
 				<div>
+					<c:choose>
+          		<c:when test="${ empty loginUser.getEmpNo() }">
+          			세션정보 없음
+          		</c:when>
+          		
+          		<c:otherwise>
+          			현재 로그인 세션 정보
+          			<br>
+          			${ loginUser.toString() }
+          		</c:otherwise>
+          	</c:choose>
 				    <h1>Weather Data</h1>
 				    <p>${weatherData}</p>
 				</div>

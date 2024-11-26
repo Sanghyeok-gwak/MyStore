@@ -52,8 +52,8 @@
         SET 
             CAL_SUBJECT = #{calSubject},
             CAL_START_DATE = #{calStartDate},
-            CAL_END_DATE = #{calEndDate},
-            CAL_COLOR = #{calColor}
+            CAL_END_DATE = #{calEndDate}
+        
         WHERE CAL_NO = #{calNo}
     </update>
 
