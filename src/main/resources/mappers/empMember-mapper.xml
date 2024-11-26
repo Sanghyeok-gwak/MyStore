@@ -69,7 +69,9 @@
      WHERE 
        		 EMP.EMP_EMPLOYMENT = 'Y'
        AND EMP.EMP_NO = #{empNo}
+       
   </select>
+  <!-- AND TRUNC(W.WORK_DAY) = TRUNC(SYSDATE) 넣으면 null 반환 -->
   
   <!--  비밀번호 변경 -->
   <update id="updateEmpMember">

@@ -17,6 +17,7 @@ public class EmpMemberServiceImpl implements EmpMemberService {
 	
 	@Override
 	public EmpMemberDto selectEmpMember(EmpMemberDto em) {
+		System.out.println("서비스 진입");
 		return empMemberDao.selectEmpMember(em);
 	}
 

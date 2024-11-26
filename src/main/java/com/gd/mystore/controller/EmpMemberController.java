@@ -60,7 +60,9 @@ public class EmpMemberController {
 		response.setContentType("text/html; charset=utf-8");
 		
 		EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
-
+		
+		log.debug("@@@@@@@@@@@@@@@{}", loginUser.getEmpPwd());
+		
 //		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpNo(), loginUser.getEmpPwd())) { // 로그인 성공
 		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
 			session.setAttribute("loginUser", loginUser);

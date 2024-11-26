@@ -175,55 +175,47 @@
                 </div>
 
               </div>
-                <button type="button" id="btn_info" class="btn btn-outline-primary" onclick="toggleButton()">출근하기</button>
+              	<c:choose>
+              		<c:when test="${ empty loginUser.getWorkStartTime() }">
+		                <button type="button" id="btn_info" class="btn btn-outline-primary" onclick="workCheck()">출근하기</button>
+              		</c:when>
+              		<c:when test="${ not empty loginUser.getWorkStartTime() }">
+		                <button type="button" id="btn_info" class="btn btn-outline-danger" onclick="workCheck()">퇴근하기</button>
+              		</c:when>
+              		<c:otherwise>
+		                <button disabled type="button" id="btn_info" class="btn btn-outline-primary" onclick="workCheck()">업무종료</button>
+              		</c:otherwise>
+              	</c:choose>
             </div>
           </div>
           
           <script>
           	window.onload = workCheck;
           	
+            const contextPath = '${contextPath}';
+            const empNo = '${loginUser.empNo}';
+            const workStartTime = '${loginUser.workStartTime}';
+            const workEndTime = '${loginUser.workEndTime}';
+          	
           	function workCheck(){
 	          	$.ajax({
-					url: '${contextPath}/work/clockCheck',
-					type: 'get',
-					data: {
-						empData: ${loginUser.getEmpNo()}
-					},
-					success: function(resData){
-						console.log(resData)
-						workData = resData;
-					},
-					error: function(){
-						console.log('근태 버튼에 대한 ajax 통신 실패')
-					}
-				})
+								url: '${contextPath}/work/clockCheck',
+								type: 'get',
+								data: {
+										empNo: empNo,
+		                workStartTime: workStartTime,
+		                workEndTime: workEndTime
+								},
+								success: function(resData){
+									
+									console.log(resData);
+								},
+								error: function(){
+									console.log('근태 버튼에 대한 ajax 통신 실패')
+								}
+							})
           	}
-          
-     		function toggleButton() {
-			   var btn = document.getElementById("btn_info");
-			   
-			   if (btn.innerHTML === "출근하기") {
-				    btn.innerHTML = "퇴근하기";
-				    btn.classList.remove("btn-outline-primary");
-				    btn.classList.add("btn-outline-danger");
-			   } else {
-			   	var confirmAction = confirm("퇴근하시겠습니까?");
-			   	
-			   	if (confirmAction) {
-			           btn.innerHTML = "업무 종료";
-			           btn.classList.remove("btn-outline-danger");
-			           btn.classList.add("btn-outline-primary");
-			           btn.disabled = true; 
-			           endMessage.style.display = "block"; 
-			         } else {
-			           btn.innerHTML = "퇴근하기";
-			           btn.classList.remove("btn-outline-primary");
-			           btn.classList.add("btn-outline-danger");
-			           endMessage.style.display = "none"; 
-			         }
-			   }
-			 }
-			</script>
+					</script>
           
           <script>
 		        const clock = document.querySelector(".date_time");
@@ -240,7 +232,7 @@
 		
 		        getClock();
 		        setInterval(getClock, 1000);
-		    </script>
+		    	</script>
           <div class="main-home-top-edsm" style="margin-right: 20px;">
             전자결재
           </div>

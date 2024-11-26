@@ -13,5 +13,8 @@ public interface WorkService {
 	void insertEmpWork();
 	
 	//출퇴근 확인
-	List<WorkDto> selectWorkCheck();
+	List<WorkDto> selectWorkCheck(EmpMemberDto em);
+	
+	//출근 업데이트
+	int updateStTime(EmpMemberDto em);
 }

@@ -16,15 +16,19 @@ import lombok.ToString;
 @ToString
 @Builder
 public class WorkDto {
-    private int modifier;
-    private String 
-    			   workNo
-    			 , empNo
-    			 , workTypeCode
-			     , useYn
-			     , workAttendance
-			     , workStartTime
-			     , workEndTime;
-    private Date workDay, workPermit, createDate, modifyDate;
+
+    
+	   private int workNo
+    			 , empNo;
+    private String workTypeCode;
+	  private Date workDay;
+    private String workStartTime
+			     , workEndTime
+			     , workPermit;
+	  private Date createDate;
+       private int modifier;      		     
+      private Date modifyDate;
+	private String useYn;
+    private String workAttendance;
     
 }

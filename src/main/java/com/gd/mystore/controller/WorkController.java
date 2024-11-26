@@ -24,6 +24,7 @@ import com.gd.mystore.dto.LogDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.WorkDto;
 import com.gd.mystore.service.BoardService;
+import com.gd.mystore.service.EmpMemberService;
 import com.gd.mystore.service.SystemService;
 import com.gd.mystore.service.WorkService;
 import com.gd.mystore.util.PagingUtil;
@@ -38,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WorkController {
 	
 	private final WorkService workService;
+	private final EmpMemberService empMemberService;
 //	private final PagingUtil pagingUtil;
 	
 	//출근 버튼
@@ -47,8 +49,29 @@ public class WorkController {
 	 */
 	@ResponseBody
 	@GetMapping("clockCheck")
-	public List<WorkDto> workCheck(String empData) {
-		return workService.selectWorkCheck();
+	public int workCheck(EmpMemberDto em
+						, HttpSession session) {
+		/*
+		 * 마이바티스에서 날짜는 안 되는 것 같아, 아마 컨트롤러 아니면 서비스에서 Date 객체 생성후
+		 * 24/00/00 이런식으로 해서 넣어야 할듯
+		 */
+
+		if(em.getWorkStartTime() == null) {	//출근 기록
+			//세션 업데이트
+			int result = workService.updateStTime(em);
+			if(result > 0) {
+				EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
+				session.setAttribute("loginUser", loginUser);
+			}
+			return result;
+		} else if(em.getWorkEndTime() == null) {
+			//퇴근 기록
+			return 2;
+		} else {
+//			return workService.selectWorkCheck(em);
+			return 3;
+		}
+		
 	}
 	
 	@GetMapping("clockIn")

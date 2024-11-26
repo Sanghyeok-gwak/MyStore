@@ -37,21 +37,25 @@
 					  'Y',
 					  'N'
 			FROM  tbl_employee e
+		 where  e.use_yn = 'Y'
 	</insert>
-	<!-- 
+
 	<select id="workCheck" resultMap="empWorkResultMap">
 		select *
-  		  from tbl_work
-		 where emp_no = #{}
+ 		  from tbl_work
+		 where emp_no = #{empNo}
 	</select>
+	<!-- 
+		   and WORK_DAY = #{workDay}
 	 -->
+
 	
 	<!-- 출근 -->
 	<update id="empWorkStartTime">
 		update tbl_work
-	       set 
-	           work_start_time = TO_CHAR(SYSDATE, 'HH24:MI:SS')
-	     where emp_no = #{empNo}
+       set 
+           work_start_time = TO_CHAR(SYSDATE, 'HH24:MI:SS')
+     where emp_no = #{empNo}
 	</update>
 	
 	<!-- 퇴근 -->

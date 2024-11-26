@@ -17,8 +17,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class EmpMemberDto {
-    private int creater
-    		  , modifier;
+
     private String empNo
     			 , empName
     			 , empGender
@@ -33,12 +32,19 @@ public class EmpMemberDto {
     			 , empAuth
     			 , empRank
     			 , empProfile
-    			 , deptCode
-    			 , useYn
+    			 , deptCode;
+      private Date createDate
+      			 , modifyDate;
+       private int creater
+       			 , modifier;
+    private String useYn
     			 , acNo
     			 , acBank
     			 , listNo;
-    private Date createDate, modifyDate;
+    
+    private String workDay	 
+				 , workStartTime
+				 , workEndTime;
     
     private String nm;  // 부서에서 회원리스트 조회
     private String deptUpStair;
@@ -46,10 +52,7 @@ public class EmpMemberDto {
     
     private ArrayList<EmpMemberDto> lvList;
     
-    private String 
-    			   workDay	 
-    			 , workStartTime
-    			 , workEndTime;
+
     
     
     

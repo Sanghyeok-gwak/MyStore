@@ -1,6 +1,9 @@
 package com.gd.mystore.dao;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,12 +27,13 @@ public class WorkDao {
 		sqlSession.insert("workMapper.empAllWorkInser");
 	}
 
-	public List<WorkDto> selectWorkCheck() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<WorkDto> selectWorkCheck(EmpMemberDto em) {
+		return sqlSession.selectList("workMapper.workCheck", em);
 	}
-	
-	
+
+	public int updateStTime(EmpMemberDto em) {
+		return sqlSession.update("workMapper.empWorkStartTime", em);
+	}
 	
 	
 }
