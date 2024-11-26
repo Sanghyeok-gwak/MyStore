@@ -150,6 +150,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
         border-bottom: 1px solid lightgray;
         padding: 20px;
     }
+    
 </style>
 </head>
 <body>
@@ -183,53 +184,67 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
             </div>
           </div>
           <div class="note-body">
-            <div>
-                <b style="font-size: 25px; margin-left: 10px;">쪽지쓰기</b>
-            </div>
-            <hr>
-            <div class="note-write">
-                <div class="note-write-box1">
-                    <div class="note-write-box1-text" style="width: 10%; height: 30px;">
-                        <label>제목</label>
-                    </div>
-                    <div class="note-write-box1-input" style="width: 90%; height: 30px;">
-                        <input type="text" style="width: 100%; height: 100%; padding-left: 10px;">
-                    </div>
-                </div>
-                <div class="note-write-box2">
-                    <div class="note-write-box2-text" style="width: 10%; height: 30px;">
-                        <label>수신자</label>
-                    </div>
-                    <div class="note-write-box2-input" style="width: 90%; height: 30px;">
-                        <input type="text" style="width: 100%; height: 100%; padding-left: 10px;">
-                    </div>
-                </div>
-                <div id="smarteditor" style="margin-top: 30px;">
-									<textarea name="editorTxt" id="editorTxt0" rows="20" cols="10"
-										style="margin-top: 30px; width: 100%; height: 420px;">dd</textarea>
-								</div>
-								
-								<script>
-										let oEditors = [];
-										smartEditor = function() {
-											nhn.husky.EZCreator.createInIFrame({
-												oAppRef : oEditors,
-												elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-												sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
-												htParams : {
-													bUseVerticalResizer : false, // 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
-												},
-												fCreator : "createSEditor2"
+          	<form action="${contextPath }/note/send.do" method="post">
+	            <div>
+	                <b style="font-size: 25px; margin-left: 10px;">쪽지쓰기</b>
+	            </div>
+	            <hr>
+	            <div class="note-write" >
+	            	<div class="note-write-box">
+	                <div class="note-write-box1">
+	                    <div class="note-write-box1-text" style="width: 10%; height: 30px;">
+	                        <label>제목</label>
+	                    </div>
+	                    <div class="note-write-box1-input"  style="width: 90%; height: 30px;">
+	                        <input type="text" name="title" style="width: 100%; height: 100%; padding-left: 10px;">
+	                    </div>
+	                </div>
+	                <div class="note-write-box2">
+	                    <div class="note-write-box2-text" style="width: 10%; height: 30px;">
+	                        <label>수신자</label>
+	                    </div>
+	                    <div class="note-write-box2-input" style="width: 90%; height: 30px;">
+	                        <input type="text" name="deliverId" style="width: 100%; height: 100%; padding-left: 10px;">
+	                    </div>
+	                    <input type="hidden" name="sentId" value="${loginUser.empNo }">
+	                </div>
+	              </div>  
+	                <div id="smarteditor" style="margin-top: 30px;">
+										<textarea name="content" id="editorTxt0" rows="20" cols="10"
+											style="margin-top: 30px; width: 100%; height: 420px;"></textarea>
+									</div>
+									<div class="note-write-btn-box">
+										<button type="button" class="btn4">임시저장</button>
+										<button type="submit" class="btn4">보내기</button>
+									</div>
+									
+									<script> 
+											let oEditors = [];
+											smartEditor = function() {
+												nhn.husky.EZCreator.createInIFrame({
+													oAppRef : oEditors,
+													elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
+													sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
+													htParams : {
+														bUseVerticalResizer : false, // 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
+													},
+													fCreator : "createSEditor2"
+												});
+											}
+									
+											$(document).ready(function() {
+												//스마트에디터 적용
+												smartEditor();
+												 // 폼 제출 시 스마트에디터 내용 textarea에 반영
+										        $("form").submit(function() {
+										            // 스마트에디터에서 textarea로 내용을 반영
+										            oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
+										        });
 											});
-										}
-								
-										$(document).ready(function() {
-											//스마트에디터 적용
-											smartEditor();
-										});
-									</script>
-            </div>
-            
+										</script>
+	            </div>
+	            
+		        </form> 
           </div>
         </div>
       </div> 
