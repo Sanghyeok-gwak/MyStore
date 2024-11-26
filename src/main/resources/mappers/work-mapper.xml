@@ -38,12 +38,13 @@
 					  'N'
 			FROM  tbl_employee e
 	</insert>
-	
+	<!-- 
 	<select id="workCheck" resultMap="empWorkResultMap">
 		select *
   		  from tbl_work
 		 where emp_no = #{}
 	</select>
+	 -->
 	
 	<!-- 출근 -->
 	<update id="empWorkStartTime">
