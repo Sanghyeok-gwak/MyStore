@@ -106,65 +106,30 @@ input {
 					<!-- 아래쪽 영역 (오른쪽 영역) -->
 					<div
 						style="width: 100%; height: 240px; border: #868686 solid; margin-top: 10px;">
-						<div
+						<div class="d-flex"
 							style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
 							<b>구성원</b>
+							 <div class="btn-box-hover">
+							   <button id="MoveDept" class="btn3-hover" style="width: 50px;">이동</button>
+							   </div>
 						</div>
 						<div style="height: calc(100% - 60px); overflow-y: auto;">
-							<table class="table table-hover"
-								style="margin-top: 0px; width: 100%; text-align: center; vertical-align: middle;">
-								<thead>
-									<tr>
-										<th scope="col"></th>
-										<th scope="col">이름</th>
-										<th scope="col">사번</th>
-										<th scope="col">직책</th>
-										<th scope="col">부서</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="1"
-											style="width: 15px; height: 15px;"></td>
-										<td>강개똥</td>
-										<td>A12345</td>
-										<td>사원</td>
-										<td>총무본부</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="2"
-											style="width: 15px; height: 15px;"></td>
-										<td>김철수</td>
-										<td>A67890</td>
-										<td>대리</td>
-										<td>총무본부</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="3"
-											style="width: 15px; height: 15px;"></td>
-										<td>이영희</td>
-										<td>A11223</td>
-										<td>과장</td>
-										<td>인사팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="3"
-											style="width: 15px; height: 15px;"></td>
-										<td>이영희</td>
-										<td>A11223</td>
-										<td>과장</td>
-										<td>인사팀</td>
-									</tr>
-									<tr>
-										<td><input type="checkbox" name="checkbox" value="3"
-											style="width: 15px; height: 15px;"></td>
-										<td>이영희</td>
-										<td>A11223</td>
-										<td>과장</td>
-										<td>인사팀</td>
-									</tr>
-								</tbody>
-							</table>
+							<table id="TeamList" class="table table-hover"
+								    style="margin-top: 0px; width: 100%; text-align: center; vertical-align: middle;">
+								    <thead>
+								        <tr>
+								            <th scope="col"></th>
+								            <th scope="col">이름</th>
+								            <th scope="col">사번</th>
+								            <th scope="col">직책</th>
+								            <th scope="col">부서</th>
+								        </tr>
+								    </thead>
+								    <tbody>
+								        <!-- 여기에 AJAX로 받은 데이터가 들어감 -->
+								    </tbody>
+								</table>
+
 						</div>
 					</div>
 				</div>
@@ -372,7 +337,7 @@ $(function() {
                     icons: true
                 }
             },
-            plugins: isEditMode ? ["contextmenu", "dnd"] : ["contextmenu"], // 수정 모드일 경우 dnd 플러그인 활성화
+            plugins: ["contextmenu"] , // 수정 모드일 경우 dnd 플러그인 활성화
             contextmenu: {
                 items: function($node) {
                     var menuItems = {};
@@ -426,23 +391,6 @@ $(function() {
                     }
 
                     return menuItems;  // 메뉴 항목 반환
-                }
-            },
-            dnd: {
-                'start': function (event, data) {
-                    var node = data.node;
-                    // 드래그 시작 시 노드의 깊이를 기록
-                    originalDepth = node.parents.length;
-                },
-                'is_dropable': function(targetNode) {
-                    var targetNodeDepth = targetNode.parents.length;
-
-                    // 드래그한 노드의 원래 깊이와 같은 깊이로만 드롭 가능
-                    if (targetNodeDepth !== originalDepth) {
-                        return false;  // 원래 깊이와 다른 깊이에 드롭할 수 없음
-                    }
-
-                    return true;  // 원래 깊이로만 드롭 가능
                 }
             }
         });
@@ -518,7 +466,6 @@ $(function() {
             alert("수정 또는 추가할 부서를 선택하세요.");
         }
     });
-
 
 
 

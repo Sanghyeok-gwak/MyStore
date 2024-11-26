@@ -24,31 +24,31 @@
 	<div class="body-body">
 		<div class="text-box">
 			<div class="text-box1">
-				<div>
+				<div>	
 					<div style="font-size: 18px;">
 						<b>게시글 등록</b>
 					</div>
 
-					<form action="boardinsertform" method="post">
+					<form id="insertform" action="insert.do" method="post" enctype="multipart/form-data">
 						
 
 							<!-- 게시판 유형 선택 (동적으로 데이터 사용) -->
-						<select class="datatable-selector" id="custom-select"
-						    name="condition"
+						<select class="datatable-selector" id="boardTypeNo"
+						    name="boardTypeNo"
 						    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 218px; margin-top: 30px;">
-						    <option value="" disabled selected style="display: none;">게시판을 선택해주세요</option>
-						    <c:forEach var="boardName" items="${boardTypeList}">
+						    <option value="" disabled selected style="display: none;" >게시판을 선택해주세요</option>
+						    <c:forEach var="boardName" items="${boardTypeList}" >
 						        <option value="${boardName.boardtName}">${boardName.boardtName}</option>
 						    </c:forEach>
 						</select>
 						
 						<!-- 부서명 선택 (동적으로 데이터 사용) -->
-						<select class="datatable-selector" id="custom-select1"
-						    name="condition1"
+						<select class="datatable-selector" id="boardDept"
+						    name="boardDept"
 						    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 217px; margin-top: 30px;" disabled>
 						    <option value="" disabled selected style="display: none;">구분을 선택해주세요</option>
 						    <c:forEach var="dept" items="${deptList}">
-						        <option value="${dept.deptName}">${dept.deptName}</option>
+						        <option id="deptName"value="${dept.deptName}">${dept.deptName}</option>
 						    </c:forEach>
 						</select>
 						
@@ -80,7 +80,7 @@
 						<div class="input-bar"
 							style="display: flex; align-items: center; margin-right: 10px; margin-top: 20px;">
 							<input type="text" class="input-bar1" placeholder="제목을 입력하세요"
-								style="height: 38px; padding: 5px; width: 444px;" />
+								style="height: 38px; padding: 5px; width: 444px;" id="boardTitle" name="boardTitle"/>
 						</div>
 
 						<div class="d-flex"
@@ -96,15 +96,15 @@
 								style="display: flex; align-items: center; justify-content: center; gap: 10px;">
 						<div id="important-section" style="display: none; margin-top: 10px; text-align: center; vertical-align: middle; ">
 							<label for="important" style="font-size: 14px; text-align: center; vertical-align: middle; margin-bottom:10px; margin-right:10px;">중요공지</label>
-							<input type="checkbox" id="important" name="important" style="width: 20px; height: 20px; margin-right: 20px;">
+							<input type="checkbox" id="boardCheck" name="boardCheck" style="width: 20px; height: 20px; margin-right: 20px;">
 						</div>
-								<button class="btn3-hover"
+								<button type="submit" class="btn3-hover"
 									style="height: 40px; padding: 5px 15px;">글 등록</button>
 							</div>
 						</div>
 
 						<div id="smarteditor" style="margin-top: 30px;">
-							<textarea name="editorTxt" id="editorTxt0" rows="20" cols="10"
+							<textarea name="boardContent" id="boardContent" rows="20" cols="10"
 								style="margin-top: 30px; width: 100%; height: 420px;"></textarea>
 						</div>
 					</form>
@@ -119,7 +119,7 @@
 		smartEditor = function() {
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef : oEditors,
-				elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
+				elPlaceHolder : "boardContent", //textarea에 부여한 아이디와 동일해야한다.
 				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
 				htParams : {
 					bUseVerticalResizer : false, // 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)

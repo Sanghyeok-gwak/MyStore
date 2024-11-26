@@ -22,4 +22,6 @@ public interface DepartmentService {
 	int updateDepartmentName(DepartmentDto d);
 	
 	List<DepartmentDto> getDeptCodeByName(String deptName);
+
+	List<DepartmentDto> TeamList(String deptName);
 }

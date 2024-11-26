@@ -203,6 +203,25 @@
 </select>
 
 
+<select id="TeamList" resultMap="empMemberResultMap">
+	select
+			e.emp_name,
+			e.emp_no,
+			c.nm,
+			d.dept_name
+		from 
+			tbl_employee e
+		join tbl_common_code c on e.emp_auth = c.cd
+		join tbl_department d on e.dept_code = d.dept_code
+		where 
+			e.emp_no > 1001
+        and dept_name = #{dept_name}
+		order by e.emp_name
+		
+		
+
+</select>
+
 
 
 

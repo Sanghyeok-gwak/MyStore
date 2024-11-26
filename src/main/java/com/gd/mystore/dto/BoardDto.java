@@ -23,7 +23,7 @@ public class BoardDto {
 	private String boardTitle;
 	private String boardContent;
 	private int boardCount;
-	private int empNo;
+	private String empNo;
 	private String createDate;
 	private int modifier;
 	private String modifyDate;
@@ -34,6 +34,7 @@ public class BoardDto {
 	private String empName;
 	private String deptName;
 	private String boardtName;
+	private String boardCheck;
 	
 	private List<BoardFileDto> boardList; // has many 관계
 }

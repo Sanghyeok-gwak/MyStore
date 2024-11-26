@@ -35,20 +35,22 @@ public class DepartmentController {
 	
 	@GetMapping("/departmentModify.do")
 	public String searchDepartment(@RequestParam(value = "empName", required = false) String empName,
-	                           
+	                               @RequestParam(value = "deptName", required = false) String deptName,  // deptName을 추가
 	                               Model model) {
 	    List<DepartmentDto> searchResult = new ArrayList<>();
 	    List<EmpMemberDto> departmentTree = new ArrayList<>();
-
+	    List<DepartmentDto> teamList = new ArrayList<>();
+	   
+	    // TeamList 호출 시 deptName을 전달
+	    teamList = departmentService.TeamList(deptName);
+	    
 	    // 부서 트리 조회
 	    departmentTree = departmentService.DeptTree();
 	    
 	    // empName 파라미터가 제공되면 이름으로 직원 검색
 	    if (empName != null && !empName.trim().isEmpty()) {
-	        // 이름이 있을 경우 검색된 직원 리스트
 	        searchResult = departmentService.selectSearchEmployeeByName(empName);
 	    } else {
-	        // empName이 없으면 전체 직원 리스트
 	        searchResult = departmentService.selectMemberList();
 	    }
 
@@ -59,9 +61,12 @@ public class DepartmentController {
 	    if (!departmentTree.isEmpty()) {
 	        model.addAttribute("departmentTree", departmentTree);  // 부서 트리 결과
 	    }
+	    if (!teamList.isEmpty()) {
+	        model.addAttribute("teamList", teamList);  // 팀 리스트 결과 추가
+	    }
 
 	    // 결과가 없을 때 메시지 처리
-	    if (searchResult.isEmpty() ) {
+	    if (searchResult.isEmpty()) {
 	        model.addAttribute("noEmployeesFound", "해당하는 직원이 없습니다.");
 	    }
 
@@ -75,17 +80,23 @@ public class DepartmentController {
 
 
 
+
 	// 직원 또는 부서 트리 데이터를 반환하는 API
 	@GetMapping("/departmentModify/data")
 	public @ResponseBody Map<String, Object> searchDepartmentData(
-	        @RequestParam(value = "empName", required = false) String empName
-	     ){
-		
+	        @RequestParam(value = "empName", required = false) String empName,
+	        @RequestParam(value = "deptName", required = false) String deptName  // deptName을 추가
+	) {
 	    List<EmpMemberDto> departmentTree = new ArrayList<>();
 	    List<DepartmentDto> searchResult = new ArrayList<>();
+	    List<DepartmentDto> teamList = new ArrayList<>();
 	    
+	    // TeamList 호출 시 deptName을 전달
+	    teamList = departmentService.TeamList(deptName);
+	    
+	    // 부서 트리 조회
 	    departmentTree = departmentService.DeptTree();
-
+	    
 	    // 직원 검색
 	    if (empName != null && !empName.trim().isEmpty()) {
 	        searchResult = departmentService.selectSearchEmployeeByName(empName);
@@ -93,8 +104,7 @@ public class DepartmentController {
 	        searchResult = departmentService.selectMemberList();
 	    }
 
-	    // 부서 트리 조회
-
+	    // 결과를 담을 Map 생성
 	    Map<String, Object> response = new HashMap<>();
 	    if (!searchResult.isEmpty()) {
 	        response.put("searchResult", searchResult);
@@ -102,9 +112,13 @@ public class DepartmentController {
 	    if (!departmentTree.isEmpty()) {
 	        response.put("departmentTree", departmentTree);
 	    }
+	    if (!teamList.isEmpty()) {
+	        response.put("teamList", teamList);  // 팀 리스트 결과 추가
+	    }
 
 	    return response;
 	}
+
 	
 	
 	@PostMapping("/departmentModify/data")

@@ -18,6 +18,7 @@
     <result column="emp_name" property="empName" />	
     <result column="dept_name" property="deptName" />	
     <result column="boardt_name" property="boardtName"/>
+    <result column="boardt_check" property="boardCheck"/>
     
     <collection resultMap="boardFileResultMap" property="boardList" />
   </resultMap>
@@ -111,20 +112,20 @@
 			,	emp_no
 			, create_Date
 			, use_YN  
-			
+			, board_check
 			)
 			
 			values
 			(
-				seq_bno.nextval
-			, #{ board_type_no }
+				board_no_seq.nextval
+			, #{ boardTypeNo }
 			, #{ boardDept }
 			, #{ boardTitle }
 			, #{ boardContent }
-			, #{ emp_no }
+			, #{ empNo }
 			, SYSDATE
 			, 'Y'
-	
+			, #{ boardCheck }
 			)
 			
 			
@@ -182,8 +183,8 @@
 				</otherwise>
 			</choose>
 			
-			, #{creater}
-			, #{createDate}
+			, #{empName}
+			, SYSDATE
 			, NULL
 			, NULL
 			, #{useYN}

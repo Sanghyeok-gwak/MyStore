@@ -99,7 +99,7 @@ public class BoardController {
 			, RedirectAttributes rdAttributes){
 		
 		// board테이블에 insert할 데이터 
-		board.setEmpName(String.valueOf( ((EmpMemberDto)session.getAttribute("loginUser")).getEmpName() ));
+		board.setEmpNo(String.valueOf( ((EmpMemberDto)session.getAttribute("loginUser")).getEmpNo() ));
 		
 		// 첨부파일 업로드 후에
 		// attachment테이블에 insert할 데이터
@@ -109,8 +109,8 @@ public class BoardController {
 				Map<String, String>map = fileUtil.fileupload(file, "board");
 				attachList.add(BoardFileDto.builder()
 						.filePath(map.get("filePath"))
-						.originalName(map.get("originalName"))
 						.fileSystemName(map.get("filesystemName"))
+						.originalName(map.get("originalName"))
 						.refType("A")
 						.creater(map.get("empName"))
 						.useYN("Y")

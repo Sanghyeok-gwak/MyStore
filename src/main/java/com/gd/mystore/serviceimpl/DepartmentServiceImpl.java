@@ -55,7 +55,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return departmentDao.getDeptCodeByName(deptName);
 	}
 
-
+	@Override
+	public List<DepartmentDto> TeamList(String deptName) {
+		
+		return departmentDao.TeamList(deptName);
+	}
 	
 	
 }

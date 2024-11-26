@@ -59,7 +59,9 @@ public class DepartmentDao {
 			return sqlSession.selectList("departmentMapper.getDeptCodeByName", deptName);
 		}
 		
-		
+		public List<DepartmentDto> TeamList(String deptName) {
+			return sqlSession.selectList("departmentMapper.TeamList", deptName);
+		}
 		
 		
 }
