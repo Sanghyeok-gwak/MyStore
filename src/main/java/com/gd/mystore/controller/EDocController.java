@@ -54,8 +54,6 @@ public class EDocController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		log.debug("list: {}", list);
-		
 		return "edoc/edocmodelist";
 	}
 	
@@ -200,8 +198,6 @@ public class EDocController {
 	         approvalList.add(approval);
 	    }
 	    
-	    log.debug("approvalList : {}", approvalList);
-	    
 	    int result = edocService.edocInsert(edoc, approvalList);
 	    int totalSize = attachList.size() + approvalList.size();
 	    
@@ -236,8 +232,6 @@ public class EDocController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		log.debug("list: {}", list);
-		
 		return "edoc/aprvlwaitList";
 	}
 	
@@ -258,8 +252,6 @@ public class EDocController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		log.debug("list: {}", list);
-		
 		return "edoc/aprvlscheduledList";
 	}
 	
@@ -279,8 +271,6 @@ public class EDocController {
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		
-		log.debug("list: {}", list);
 		
 		return "edoc/aprvlcompleteList";
 	}
@@ -303,9 +293,7 @@ public class EDocController {
 		List<EDocDto> list = edocService.draftWaitList(no, pi);
 		
 		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		
-		log.debug("list: {}", list);
+		model.addAttribute("list", list);		
 		
 		return "edoc/draftwaitList";
 	}
@@ -327,8 +315,6 @@ public class EDocController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		log.debug("list: {}", list);
-		
 		return "edoc/draftprogressList";
 	}
 	
@@ -348,8 +334,6 @@ public class EDocController {
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		
-		log.debug("list: {}", list);
 		
 		return "edoc/draftcompleteList";
 	}
@@ -371,8 +355,6 @@ public class EDocController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		log.debug("list: {}", list);
-		
 		return "edoc/draftrejectList";
 	}
 	
@@ -392,8 +374,6 @@ public class EDocController {
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		
-		log.debug("list: {}", list);
 		
 		return "edoc/draftrecoveryList";
 	}
@@ -421,10 +401,92 @@ public class EDocController {
 		model.addAttribute("list", aprvlList);
 		model.addAttribute("edocContent", escapedContent);
 		
-		return "edoc/aprvlwait";
-		
+		return "edoc/aprvlwait";		
 	}
-    
+	
+	// 결재하기
+	@PostMapping("/aprvlcpl.do")
+	public String aprvlcpl(@RequestParam("aprvlNo") List<Integer> aprvlNo,
+						   @RequestParam("empNo") List<String> empNo,
+	                       @RequestParam("aprvlEdocNo") List<Integer> aprvlEdocNo,
+	                       @RequestParam("aprvlRank") List<Integer> aprvlRank,
+	                       @RequestParam("edocNo") int edocNo,
+	                       HttpSession session,
+	                       RedirectAttributes rdAttributes) {
+
+	    EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+	    String no = loginUser.getEmpNo(); // 로그인한 사용자 번호
+
+	    // 결재 정보 전달 객체 생성
+	    EDocApprovalDto approval1 = new EDocApprovalDto();
+	    EDocApprovalDto approval2 = new EDocApprovalDto();
+	    
+	    approval1.setAprvlNo(aprvlNo.get(0));
+	    approval1.setAprvlEdocNo(aprvlEdocNo.get(0));
+	    approval1.setAprvlRank(aprvlRank.get(0));
+	    approval1.setEmpNo(empNo.get(0));
+
+	    approval2.setAprvlNo(aprvlNo.get(1));
+	    approval2.setAprvlEdocNo(aprvlEdocNo.get(1));
+	    approval2.setAprvlRank(aprvlRank.get(1));
+	    approval2.setEmpNo(empNo.get(1));
+
+	    EDocDto edocDto = new EDocDto();
+	    edocDto.setEdocNo(edocNo);
+
+	    // Service 호출
+	    int result = edocService.aprvlcpl(approval1, approval2, edocDto, no);
+	    
+		if(result ==  1) {
+			rdAttributes.addFlashAttribute("alertMsg", "결재가 완료되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "결재 실패");			
+		}
+
+	    return "redirect:/edoc/aprvlwaitList.do";
+	}
+	
+	// 반려하기
+	@PostMapping("/aprvlrjt.do")
+	public String aprvlrjt(@RequestParam("aprvlNo") List<Integer> aprvlNo,
+						   @RequestParam("empNo") List<String> empNo,
+				           @RequestParam("aprvlEdocNo") List<Integer> aprvlEdocNo,
+				           @RequestParam("aprvlRank") List<Integer> aprvlRank,
+				           @RequestParam("edocNo") int edocNo,
+				           HttpSession session,
+				           RedirectAttributes rdAttributes) {
+
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo(); // 로그인한 사용자 번호
+		
+		// 결재 정보 전달 객체 생성
+		EDocApprovalDto approval1 = new EDocApprovalDto();
+		EDocApprovalDto approval2 = new EDocApprovalDto();
+		
+		approval1.setAprvlNo(aprvlNo.get(0));
+		approval1.setAprvlEdocNo(aprvlEdocNo.get(0));
+		approval1.setAprvlRank(aprvlRank.get(0));
+		approval1.setEmpNo(empNo.get(0));
+		
+		approval2.setAprvlNo(aprvlNo.get(1));
+		approval2.setAprvlEdocNo(aprvlEdocNo.get(1));
+		approval2.setAprvlRank(aprvlRank.get(1));
+		approval2.setEmpNo(empNo.get(1));
+		
+		EDocDto edocDto = new EDocDto();
+		edocDto.setEdocNo(edocNo);
+		
+		// Service 호출
+		int result = edocService.aprvlrjt(approval1, approval2, edocDto, no);
+		
+		if(result ==  1) {
+			rdAttributes.addFlashAttribute("alertMsg", "반려가 완료되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "반려 실패");			
+		}
+		
+		return "redirect:/edoc/aprvlwaitList.do";
+	}
 
 	
 

@@ -78,5 +78,10 @@ public interface EDocService {
 	EDocDto aprvlWait(int no);
 	List<EDocApprovalDto>aprvlList(int no);
 	
+	// 결재하기
+	int aprvlcpl(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no);
+	
+	// 반려하기
+	int aprvlrjt(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no);
 	
 }

@@ -347,6 +347,7 @@
 		 where
 		    	approval.emp_no = #{no}
 		    	and approval.aprvl_status = 'N'
+		    	and edoc.use_yn = 'Y'
 	</select>
 	<!-- 결재 대기 목록 -->
 	<select id="aprvlWaitList" resultMap="EdocDtoMap">
@@ -373,6 +374,7 @@
 		 WHERE 
 			    approval.emp_no = #{no}
 			    AND approval.aprvl_status = 'N'
+			    and edoc.use_yn = 'Y'
 		ORDER BY 
 		    	edoc.edoc_startdate DESC				
 	</select>
@@ -388,6 +390,7 @@
 		 where
 		    	approval.emp_no = #{no}
 		    	and approval.aprvl_status = 'W'
+		    	and edoc.use_yn = 'Y'
 	</select>
 	<!-- 결재 예정 목록 -->
 	<select id="aprvlScheduledList" resultMap="EdocDtoMap">
@@ -414,6 +417,7 @@
 		 WHERE 
 			    approval.emp_no = #{no}
 			    AND approval.aprvl_status = 'W'
+			    and edoc.use_yn = 'Y'
 		ORDER BY 
 		    	edoc.edoc_startdate DESC		
 	</select>
@@ -429,6 +433,7 @@
 		 where
 		    	approval.emp_no = #{no}
 		    	and approval.aprvl_status = 'Y'
+		    	and edoc.use_yn = 'Y'
 	</select>
 	<!-- 결재 완료 목록 -->
 	<select id="aprvlCompleteList" resultMap="EdocDtoMap">
@@ -455,6 +460,7 @@
 		 WHERE 
 			    approval.emp_no = #{no}
 			    AND approval.aprvl_status = 'Y'
+			    and edoc.use_yn = 'Y'
 		ORDER BY 
 		    	edoc.edoc_startdate DESC		
 	</select>
@@ -472,6 +478,7 @@
 		 where
 		    	emp_no = #{no}
 		    	and edoc_status = 'S'
+		    	and edoc.use_yn = 'Y'
 	</select>
 	<!-- 기안 대기 목록 -->
 	<select id="draftWaitList" resultMap="EdocDtoMap">
@@ -495,6 +502,7 @@
 		 where 
 		    	edoc.emp_no = #{no}
 		    	and edoc_status = 'S'
+		    	and edoc.use_yn = 'Y'
 		order by 
 		    	edoc.edoc_startdate desc		
 	</select>
@@ -508,6 +516,7 @@
 		 where
 		    	emp_no = #{no}
 		    	and edoc_status = 'O'
+		    	and edoc.use_yn = 'Y'
 	</select>
 	<!-- 기안 진행 목록 -->
 	<select id="draftProgressList" resultMap="EdocDtoMap">
@@ -531,6 +540,7 @@
 		 where 
 		    	edoc.emp_no = #{no}
 		    	and edoc_status = 'O'
+		    	and edoc.use_yn = 'Y'
 		order by 
 		    	edoc.edoc_startdate desc		
 	</select>
@@ -544,6 +554,7 @@
 		 where
 		    	emp_no = #{no}
 		    	and edoc_status = 'F'
+		    	and edoc.use_yn = 'Y'
 	</select>
 	<!-- 기안 승인 목록 -->
 	<select id="draftCompleteList" resultMap="EdocDtoMap">
@@ -567,6 +578,7 @@
 		 where 
 		    	edoc.emp_no = #{no}
 		    	and edoc_status = 'F'
+		    	and edoc.use_yn = 'Y'
 		order by 
 		    	edoc.edoc_startdate desc		
 	</select>
@@ -580,6 +592,7 @@
 		 where
 		    	emp_no = #{no}
 		    	and edoc_status = 'R'
+		    	and edoc.use_yn = 'Y'
 	</select>
 	<!-- 기안 반려 목록 -->
 	<select id="draftRejectList" resultMap="EdocDtoMap">
@@ -603,6 +616,7 @@
 		 where 
 		    	edoc.emp_no = #{no}
 		    	and edoc_status = 'R'
+		    	and edoc.use_yn = 'Y'
 		order by 
 		    	edoc.edoc_startdate desc		
 	</select>
@@ -616,6 +630,7 @@
 		 where
 		    	emp_no = #{no}
 		    	and edoc_status = 'T'
+		    	and edoc.use_yn = 'Y'
 	</select>
 	<!-- 기안 회수 목록 -->
 	<select id="draftRecoveryList" resultMap="EdocDtoMap">
@@ -639,6 +654,7 @@
 		 where 
 		    	edoc.emp_no = #{no}
 		    	and edoc_status = 'T'
+		    	and edoc.use_yn = 'Y'
 		order by 
 		    	edoc.edoc_startdate desc		
 	</select>
@@ -732,6 +748,43 @@
 	</select>
 	
 	
+	
+	<!-- 결재하기 -->
+	<!-- 현재 사용자의 상태를 'Y'로 업데이트 -->
+  <!-- 결재 상태 업데이트 -->
+  <update id="updateApprovalStatusOF">
+      UPDATE TBL_EDOC_APPROVAL
+      SET APRVL_STATUS = CASE
+          WHEN APRVL_NO = #{approval1.aprvlNo} THEN #{approval1.aprvlStatus}
+          WHEN APRVL_NO = #{approval2.aprvlNo} THEN #{approval2.aprvlStatus}
+      END
+      WHERE APRVL_NO IN (#{approval1.aprvlNo}, #{approval2.aprvlNo})
+  </update>
+
+  <!-- 전자문서 상태 업데이트 -->
+  <update id="updateEdocStatusOF">
+      UPDATE TBL_EDOC
+      SET EDOC_STATUS = #{edocStatus}
+      WHERE EDOC_NO = #{edocNo}
+  </update>
+	
+	
+   <!-- 결재 상태 업데이트 -->
+   <update id="updateApprovalStatusR">
+      UPDATE TBL_EDOC_APPROVAL
+      SET APRVL_STATUS = CASE
+          WHEN APRVL_NO = #{approval1.aprvlNo} THEN #{approval1.aprvlStatus}
+          WHEN APRVL_NO = #{approval2.aprvlNo} THEN #{approval2.aprvlStatus}
+      END
+      WHERE APRVL_NO IN (#{approval1.aprvlNo}, #{approval2.aprvlNo})
+   </update>
+
+   <!-- 전자문서 상태 업데이트 -->
+   <update id="updateEdocStatusR">
+      UPDATE TBL_EDOC
+      SET EDOC_STATUS = #{edocStatus}
+      WHERE EDOC_NO = #{edocNo}
+   </update>
 
 
 </mapper>

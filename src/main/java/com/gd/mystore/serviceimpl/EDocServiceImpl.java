@@ -177,5 +177,61 @@ public class EDocServiceImpl implements EDocService {
 	public List<EDocApprovalDto> aprvlList(int no) {
 		return edocDao.aprvlList(no);
 	}
+	
+	
+	// 결재하기
+	@Override
+	public int aprvlcpl(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no) {
+		
+		// 로그인한 사용자가 1번 결재자일 경우
+        if (approval1.getEmpNo().equals(no)) {
+            // 1번 결재자 승인 처리
+            approval1.setAprvlStatus("Y");
+            approval2.setAprvlStatus("N"); // 2번 결재자의 상태를 'N'으로 설정
+            edocDto.setEdocStatus("O"); // 전자문서 상태를 'O'로 설정
+        } else if (approval2.getEmpNo().equals(no)) {
+            // 2번 결재자 승인 처리
+            approval1.setAprvlStatus("Y");
+            approval2.setAprvlStatus("Y"); // 2번 결재자도 승인 처리
+            edocDto.setEdocStatus("F"); // 전자문서 상태를 'F'로 설정
+        }
+
+        // 결재 정보 및 전자문서 상태 업데이트
+        int updateApprovalResult = edocDao.updateApprovalStatusOF(approval1, approval2);
+        int updateEdocResult = edocDao.updateEdocStatusOF(edocDto);
+
+        // 두 업데이트가 모두 성공적으로 처리되었는지 확인
+        if (updateApprovalResult > 0 && updateEdocResult > 0) {
+            return 1; // 성공
+        } else {
+            return 0; // 실패
+        }
+    }
+	
+	
+	// 반려하기
+	@Override
+	public int aprvlrjt(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no) {
+		
+		// 1번 결재자일 경우
+        if (approval1.getEmpNo().equals(no)) {
+            approval1.setAprvlStatus("Y"); // 1번 결재자 상태를 'Y'로 변경
+            approval2.setAprvlStatus("Y"); // 2번 결재자 상태도 'Y'로 변경
+            edocDto.setEdocStatus("R");   // 전자문서 상태를 'R'로 변경
+        }
+        // 2번 결재자일 경우
+        else if (approval2.getEmpNo().equals(no)) {
+            approval1.setAprvlStatus("Y"); // 1번 결재자 상태를 'Y'로 변경 (기본적으로 승인된 상태여야 함)
+            approval2.setAprvlStatus("Y"); // 2번 결재자 상태를 'Y'로 변경
+            edocDto.setEdocStatus("R");   // 전자문서 상태를 'R'로 변경
+        }
+
+        // 반려 상태 업데이트
+        int updateApprovalResult = edocDao.updateApprovalStatusR(approval1, approval2);
+        int updateEdocResult = edocDao.updateEdocStatusR(edocDto);
+
+        // 결과 반환
+        return (updateApprovalResult > 0 && updateEdocResult > 0) ? 1 : 0;
+    }
 
 }

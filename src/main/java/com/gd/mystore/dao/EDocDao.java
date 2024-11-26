@@ -1,12 +1,13 @@
 package com.gd.mystore.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.gd.mystore.dto.DepartmentDto;
 import com.gd.mystore.dto.EDocApprovalDto;
 import com.gd.mystore.dto.EDocAttachDto;
 import com.gd.mystore.dto.EDocDto;
@@ -153,6 +154,47 @@ public class EDocDao {
 	public List<EDocApprovalDto> aprvlList(int no) {
 		return sqlSession.selectList("edocMapper.aprvlList", no);
 	}
+
+	public int aprvlcpl(EDocApprovalDto approval) {
+		return sqlSession.update("edocMapper.aprvlcpl", approval);
+	}
+	
+	public int aprvlcplEdoc(EDocDto edocDto) {
+		return sqlSession.update("edocMapper.aprvlcplEdoc", edocDto);
+	}
+
+	
+	// 결재하기
+    // 결재 상태 업데이트
+    public int updateApprovalStatusOF(EDocApprovalDto approval1, EDocApprovalDto approval2) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("approval1", approval1);
+        params.put("approval2", approval2);
+
+        return sqlSession.update("edocMapper.updateApprovalStatusOF", params);
+    }
+
+    // 전자문서 상태 업데이트
+    public int updateEdocStatusOF(EDocDto edocDto) {
+        return sqlSession.update("edocMapper.updateEdocStatusOF", edocDto);
+    }
+    
+    // 반려하기
+    // 결재 상태 업데이트
+    public int updateApprovalStatusR(EDocApprovalDto approval1, EDocApprovalDto approval2) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("approval1", approval1);
+        params.put("approval2", approval2);
+
+        return sqlSession.update("edocMapper.updateApprovalStatusR", params);
+    }
+
+    // 전자문서 상태 업데이트
+    public int updateEdocStatusR(EDocDto edocDto) {
+        return sqlSession.update("edocMapper.updateEdocStatusR", edocDto);
+    }
+
+
 	
 	
 	

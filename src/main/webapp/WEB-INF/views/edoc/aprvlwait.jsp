@@ -333,6 +333,7 @@ input {
 		border-radius: 5px;
 		border-right: 1px solid lightgray;
 	}
+	
 </style>
 </head>
 <body>
@@ -347,17 +348,17 @@ input {
 					<span class="ffont1" style="width:20%; font-weight: bold;">결재 대기 문서</span>
 
 					<div id="enddiv">
-						<div class="btn-box-hover">
-							<button class="btn3-hover" style="width: 120px; font-size: 18px;" type="submit">결제하기</button>
-						</div>
-						<div class="btn-box-hover">
-							<button class="btn1-hover"
-								style="width: 120px; margin-left: 20px; font-size: 18px;" type="submit">반려하기</button>
-						</div>
-						<div class="btn-box-hover">
-							<button class="btn2-hover"
-								style="width: 120px; margin-left: 20px; font-size: 18px;"
-								onclick="history.go(-1);">뒤로가기</button>
+						<div class="btn-box-hover"> 
+							<button class="btn3-hover" style="width: 120px; font-size: 18px;" type="button" 
+							onclick="openApprovalModal()">결제하기</button> 
+						</div> 
+						<div class="btn-box-hover"> 
+							<button class="btn1-hover" style="width: 120px; margin-left: 20px; font-size: 18px;" type="button" 
+							onclick="openRejectionModal()">반려하기</button> 
+						</div> 
+						<div class="btn-box-hover"> 
+							<button class="btn2-hover" style="width: 120px; margin-left: 20px; font-size: 18px;" type="button" 
+							onclick="goBack()">뒤로가기</button>
 						</div>
 					</div>
 				</div>
@@ -439,60 +440,186 @@ input {
 		</div>      
 	</div>
 
+<!-- 결제 모달 -->
+<div class="modal-overlay" id="approvalModalOverlay">
+    <div class="modal" id="approvalModal">
+        <form action="${contextPath}/edoc/aprvlcpl.do" method="post">
+            <label for="approvalReason">결제사유</label>
+            <textarea id="approvalReason" name="aprvlComment"></textarea>
+            <c:forEach var="dto" items="${list}">
+					    <input type="hidden" name="aprvlNo" value="${dto.aprvlNo}" />
+					    <input type="hidden" name="empNo" value="${dto.empNo}" />
+					    <input type="hidden" name="aprvlEdocNo" value="${dto.aprvlEdocNo}" />
+					    <input type="hidden" name="aprvlRank" value="${dto.aprvlRank}" />
+						</c:forEach>
+            <input type="hidden" name="edocNo" value="${edoc.edocNo}">
+            <div style="margin-left: 387px">
+	            <button type="submit">확인</button>
+	            <button type="button" onclick="closeApprovalModal()">취소</button>
+        		</div>
+        </form>
+    </div>
+</div>
+
+<!-- 반려 모달 -->
+<div class="modal-overlay" id="rejectionModalOverlay">
+    <div class="modal" id="rejectionModal">
+        <form action="${contextPath}/edoc/aprvlrjt.do" method="post">
+            <label for="rejectionReason">반려사유</label>
+            <textarea id="rejectionReason" name="aprvlComment"></textarea>
+            <c:forEach var="dto" items="${list}">
+					    <input type="hidden" name="aprvlNo" value="${dto.aprvlNo}" />
+					    <input type="hidden" name="empNo" value="${dto.empNo}" />
+					    <input type="hidden" name="aprvlEdocNo" value="${dto.aprvlEdocNo}" />
+					    <input type="hidden" name="aprvlRank" value="${dto.aprvlRank}" />
+						</c:forEach>
+            <input type="hidden" name="edocNo" value="${edoc.edocNo}">
+            <div style="margin-left: 387px">
+	            <button type="submit">확인</button>
+	            <button type="button" onclick="closeRejectionModal()">취소</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+	<script>
+		let oEditors = []; // 스마트에디터 초기화 
+
+		$(document).ready(function() {
+			// DOM이 완전히 로드된 후에 스마트 에디터 초기화
+			if ($("#editorTxt0").length > 0) {
+				smartEditor(); // 스마트 에디터 초기화
+			}
+		});
+
+		function smartEditor() {
+			nhn.husky.EZCreator.createInIFrame({
+				oAppRef : oEditors, // 스마트 에디터 인스턴스를 oEditors 배열에 할당
+				elPlaceHolder : "editorTxt0", // 스마트에디터를 띄울 textarea의 id
+				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", // 스마트에디터 skin 경로
+				htParams : {
+					bUseToolbar : false, // 툴바 사용여부 (true: 사용, false: 미사용)
+					bUseVerticalResizer : false,
+					// 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
+					bUseModeChanger : false
+					// 모드 탭(Editor | HTML | TEXT) 사용여부 (true: 사용, false: 미사용)
+				},
+				fCreator : "createSEditor2"
+			});
+		}
+
+		$(document).ready(
+				function() {
+					// 서버에서 전달된 edoc.content 값을 스마트에디터에 삽입
+					var initialContent = "${edocContent}";
+
+					if (initialContent) {
+						// 스마트에디터가 정상적으로 초기화되었을 때
+						setTimeout(function() {
+							oEditors.getById["editorTxt0"].exec("SET_CONTENTS",
+									[ initialContent ]);
+
+							// 읽기 전용 설정
+							oEditors.getById["editorTxt0"]
+									.exec("DISABLE_WYSIWYG");
+
+						}, 500); // 조금 지연시켜서 스마트에디터가 완전히 로드된 후에 내용 삽입
+					}
+				});
+
+		function preview() {
+			// 에디터의 내용을 textarea에 적용
+			if (oEditors.length > 0) {
+				oEditors[0].exec("UPDATE_CONTENTS_FIELD", []); // 첫 번째 스마트에디터 인스턴스 접근
+				// textarea 값 불러오기
+				var content = document.getElementById("editorTxt0").value;
+				alert(content);
+			}
+		}
+	</script>
 	
 <script>
-    let oEditors = []; // 스마트에디터 초기화 
-
-    $(document).ready(function() {
-        // DOM이 완전히 로드된 후에 스마트 에디터 초기화
-        if ($("#editorTxt0").length > 0) {
-            smartEditor();  // 스마트 에디터 초기화
-        }
-    });
-
-    function smartEditor() {
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors, // 스마트 에디터 인스턴스를 oEditors 배열에 할당
-            elPlaceHolder: "editorTxt0", // 스마트에디터를 띄울 textarea의 id
-            sSkinURI: "${contextPath}/smarteditor/SmartEditor2Skin.html", // 스마트에디터 skin 경로
-            htParams: {
-                bUseToolbar: false, // 툴바 사용여부 (true: 사용, false: 미사용)
-                bUseVerticalResizer: false // 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
-            },
-            fCreator: "createSEditor2"
-        });
+    function openApprovalModal() {
+        document.getElementById('approvalModalOverlay').style.display = 'block';
+        document.getElementById('approvalModal').style.display = 'block';
     }
 
-    $(document).ready(function() {
-        // 서버에서 전달된 edoc.content 값을 스마트에디터에 삽입
-				var initialContent = "${edocContent}";
-        
-				if (initialContent) {
-            // 스마트에디터가 정상적으로 초기화되었을 때
-            setTimeout(function() {
-                oEditors.getById["editorTxt0"].exec("SET_CONTENTS", [initialContent]);
-                
-                // 읽기 전용 설정
-                oEditors.getById["editorTxt0"].exec("DISABLE_WYSIWYG");
+    function closeApprovalModal() {
+        document.getElementById('approvalModalOverlay').style.display = 'none';
+        document.getElementById('approvalModal').style.display = 'none';
+    }
 
-            }, 500);  // 조금 지연시켜서 스마트에디터가 완전히 로드된 후에 내용 삽입
-        }
-    });
+    function openRejectionModal() {
+        document.getElementById('rejectionModalOverlay').style.display = 'block';
+        document.getElementById('rejectionModal').style.display = 'block';
+    }
 
-    function preview() {
-        // 에디터의 내용을 textarea에 적용
-        if (oEditors.length > 0) {
-            oEditors[0].exec("UPDATE_CONTENTS_FIELD", []); // 첫 번째 스마트에디터 인스턴스 접근
-            // textarea 값 불러오기
-            var content = document.getElementById("editorTxt0").value;
-            alert(content);
-        }
+    function closeRejectionModal() {
+        document.getElementById('rejectionModalOverlay').style.display = 'none';
+        document.getElementById('rejectionModal').style.display = 'none';
+    }
+
+    function goBack() {
+        window.history.back();
     }
 </script>
 
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
-	
-	
 </body>
+
+<style>
+	/* 모달 기본 스타일 */
+       .modal {
+           display: none; /* 기본적으로 숨김 */
+           position: fixed; /* 화면 고정 */
+           z-index: 1000; /* 다른 요소보다 위에 표시 */
+           left: 50%;
+           top: 50%;
+           transform: translate(-50%, -50%);
+           width: 500px; /* 원하는 너비 조정 */
+           height: 250px;
+           background-color: white;
+           box-shadow: 0 5px 15px rgba(0,0,0,.5);
+           padding: 20px;
+           border-radius: 8px;
+       }
+
+       /* 모달을 화면 전체에 반투명 배경으로 감싸기 */
+       .modal-overlay {
+           display: none; /* 기본적으로 숨김 */
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background: rgba(0, 0, 0, 0.5);
+           z-index: 999; /* 모달 창보다 낮게 설정 */
+       }
+       
+         .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .modal textarea {
+            width: 100%;
+            height: 100px;
+            resize: none; /* 크기 조절 비활성화 */
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .modal-footer button {
+            padding: 0.5rem 1rem;
+        }
+</style>
 </html>
