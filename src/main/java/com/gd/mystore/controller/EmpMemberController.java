@@ -56,25 +56,30 @@ public class EmpMemberController {
 					  , HttpServletResponse response
 					  , HttpSession session
 					  , RedirectAttributes rdAttributes) throws IOException {
-
 		response.setContentType("text/html; charset=utf-8");
+		
 		
 		EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
 		
+		
+		session.setAttribute("loginUser", loginUser);
+		return "main";
+		
 //		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpNo(), loginUser.getEmpPwd())) { // 로그인 성공
-		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
-			session.setAttribute("loginUser", loginUser);
-			
-			if(loginUser.getUseYn().equals("N")) {
-				rdAttributes.addFlashAttribute("alertMsg", "최초 로그인, 비밀번호를 변경해주세요☺️");
-				return "redirect:/mypage/passwordRecovery";
-			}else {
-				return "main";
-			}
-		} else { // 로그인 실패
-			rdAttributes.addFlashAttribute("alertMsg", "로그인에 실패하였습니다. 사번 및 비밀번호를 다시 확인해주세요.");
-			return "redirect:/login/loginPage.do";
-		}
+		
+//		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
+//			session.setAttribute("loginUser", loginUser);
+//			
+//			if(loginUser.getUseYn().equals("N")) {
+//				rdAttributes.addFlashAttribute("alertMsg", "최초 로그인, 비밀번호를 변경해주세요☺️");
+//				return "redirect:/mypage/passwordRecovery";
+//			}else {
+//				return "main";
+//			}
+//		} else { // 로그인 실패
+//			rdAttributes.addFlashAttribute("alertMsg", "로그인에 실패하였습니다. 사번 및 비밀번호를 다시 확인해주세요.");
+//			return "redirect:/login/loginPage.do";
+//		}
 	}
 	
 	@RequestMapping("/pwdRecovery.do")
