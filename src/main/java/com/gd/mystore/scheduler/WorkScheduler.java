@@ -15,12 +15,12 @@ public class WorkScheduler {
 	
 	private final WorkService workService;
 	
-//	@Scheduled(cron="0 1 * * * MON-FRI") //평일 12시
-//	@Scheduled(cron="0 10 22 * * MON-FRI") //평일 12시
-//	public void workDataInsert() {
-//		log.debug("@@@@@@@@근태 스케줄러 실행됨@@@@@@");
-//		workService.insertEmpWork();
-//	}
+//	@Scheduled(cron="0 10 22 * * MON-FRI")
+//	@Scheduled(cron="0 0 0 * * *") //평일 12시
+	public void workDataInsert() {
+		log.debug("@@@@@@@@근태 스케줄러 실행됨@@@@@@");
+		workService.insertEmpWork();
+	}
 	
 	
 	
