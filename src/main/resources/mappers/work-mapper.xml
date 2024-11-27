@@ -42,20 +42,19 @@
 
 	<select id="workCheck" resultMap="empWorkResultMap">
 		select *
- 		  from tbl_work
-		 where emp_no = #{empNo}
+		  from tbl_work
+	 	 where emp_no = #{empNo}
+		   and TRUNC(WORK_DAY) = TRUNC(SYSDATE)
 	</select>
-	<!-- 
-		   and WORK_DAY = #{workDay}
-	 -->
 
 	
 	<!-- 출근 -->
 	<update id="empWorkStartTime">
 		update tbl_work
-       set 
-           work_start_time = TO_CHAR(SYSDATE, 'HH24:MI:SS')
-     where emp_no = #{empNo}
+       	   set 
+          	   work_start_time = TO_CHAR(SYSDATE, 'HH24:MI:SS')
+     	 where emp_no = #{empNo}
+     	   and TRUNC(WORK_DAY) = TRUNC(SYSDATE)
 	</update>
 	
 	<!-- 퇴근 -->
@@ -64,6 +63,7 @@
 	       set 
 	           WORK_END_TIME = TO_CHAR(SYSDATE, 'HH24:MI:SS')
 	     where emp_no = #{empNo}
+	       and TRUNC(WORK_DAY) = TRUNC(SYSDATE)
 	</update>
 
 

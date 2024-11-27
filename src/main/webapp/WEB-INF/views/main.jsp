@@ -198,10 +198,10 @@
               </div>
               	<c:choose>
               		<c:when test="${ empty loginUser.getWorkStartTime() }">
-		                <button type="button" id="btn_info" class="btn btn-outline-primary" onclick="workCheck()">출근하기</button>
+		                <button type="button" id="btn_info" class="btn btn-outline-primary" onclick="workColockIn()">출근하기</button>
               		</c:when>
-              		<c:when test="${ not empty loginUser.getWorkStartTime() }">
-		                <button type="button" id="btn_info" class="btn btn-outline-danger" onclick="workCheck()">퇴근하기</button>
+              		<c:when test="${not empty loginUser.workStartTime && empty loginUser.workEndTime}">
+			                <button type="button" id="btn_info" class="btn btn-outline-danger" onclick="workColockOut()">퇴근하기</button>
               		</c:when>
               		<c:otherwise>
 		                <button disabled type="button" id="btn_info" class="btn btn-outline-primary" onclick="workCheck()">업무종료</button>
@@ -220,23 +220,60 @@
           	
           	function workCheck(){
 	          	$.ajax({
-								url: '${contextPath}/work/clockCheck',
-								type: 'get',
-								data: {
-										empNo: empNo,
+					url: '${contextPath}/work/clockCheck',
+					type: 'get',
+					data: {
+						empNo: empNo,
 		                workStartTime: workStartTime,
 		                workEndTime: workEndTime
-								},
-								success: function(resData){
-									
-									console.log(resData);
-								},
-								error: function(){
-									console.log('근태 버튼에 대한 ajax 통신 실패')
-								}
-							})
+					},
+					success: function(resData){
+						console.log(resData);
+					},
+					error: function(){
+						console.log('근태 버튼에 대한 ajax 통신 실패')
+					}
+				})
           	}
-					</script>
+          	
+          	function workColockIn(){
+          		$.ajax({
+          			url: '${contextPath}/work/clockIn',
+          			type: 'get',
+          			data: {
+						empNo: empNo,
+		                workStartTime: workStartTime,
+		                workEndTime: workEndTime
+          			},
+          			success: function(resData){
+          				console.log("정상")
+          				console.log(resData)
+          			},
+          			error: function(){
+						console.log('근태 버튼에 대한 ajax 통신 실패')
+					}
+          		})
+          	}
+          	
+          	function workColockOut(){
+          		$.ajax({
+          			url: '${contextPath}/work/clockOut',
+          			type: 'get',
+          			data: {
+						empNo: empNo,
+		                workStartTime: workStartTime,
+		                workEndTime: workEndTime
+          			},
+          			success: function(resData){
+          				console.log("정상")
+          				console.log(resData)
+          			},
+          			error: function(){
+						console.log('근태 버튼에 대한 ajax 통신 실패')
+					}
+          		})
+          	}
+		  </script>
           
           <script>
 		        const clock = document.querySelector(".date_time");

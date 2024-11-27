@@ -59,6 +59,7 @@ public class WorkController {
 		if(em.getWorkStartTime() == null) {	//출근 기록
 			//세션 업데이트
 			int result = workService.updateStTime(em);
+			
 			if(result > 0) {
 				EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
 				session.setAttribute("loginUser", loginUser);
@@ -74,9 +75,12 @@ public class WorkController {
 		
 	}
 	
+	@ResponseBody
 	@GetMapping("clockIn")
-	public String colockIn() {
-		return "test";
+	public int colockIn(EmpMemberDto em
+					  , HttpSession session) {
+		
+		return workService.updateStTime(em);
 	}
 	
 	//퇴근 버튼
@@ -84,9 +88,12 @@ public class WorkController {
 	 * 퇴근 버튼 클릭 시 update 진행 -> wor_end_time 현재 시간으로 변경
 	 * 50% 미만 출근 시 결근 처리 초로 계산하면 될듯? 다른 방법 있으면 그렇게 진행
 	 */
+	@ResponseBody
 	@GetMapping("clockOut")
-	public void colockOut() {
-		
+	public int colockOut(EmpMemberDto em
+						, Model model) {
+		model.addAttribute("popupMessage", "퇴근 처리");
+		return workService.updateEndTime(em);
 	}
 	
 	
