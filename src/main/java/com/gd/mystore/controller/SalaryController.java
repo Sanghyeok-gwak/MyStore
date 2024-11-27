@@ -1,11 +1,16 @@
 package com.gd.mystore.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.SalaryDto;
@@ -15,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 @RequestMapping("/salary")
 @Controller
@@ -38,12 +44,9 @@ public class SalaryController {
         model.addAttribute("salary", salary);
     }
     
-	
 	return "salary/payCheck";
 	
 	}
-
-	// 급여출력
 	
 	
 	

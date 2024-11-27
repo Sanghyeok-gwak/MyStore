@@ -13,15 +13,13 @@ import lombok.RequiredArgsConstructor;
 public class SalaryServiceImpl implements SalaryService {
 	
 	private final SalaryDao salarydao;
-
+	
 	//급여조회
 	@Override
 	public SalaryDto selectSalary(String empNo) {
 		return salarydao.selectsalary(empNo);
 	}
 
-
-	
 	
 	
 	
