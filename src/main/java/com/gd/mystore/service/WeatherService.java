@@ -12,15 +12,13 @@ public class WeatherService {
     public String getWeatherData(double latitude, double longitude) {
         RestTemplate restTemplate = new RestTemplate();
 
-        // URL 구성
         String uri = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("lat", latitude)
                 .queryParam("lon", longitude)
                 .queryParam("appid", apiKey)
-                .queryParam("units", "metric")  // 섭씨 온도 단위
+                .queryParam("units", "metric")
                 .toUriString();
 
-        // API 호출 및 JSON 데이터 수신
         return restTemplate.getForObject(uri, String.class);
     }
 }

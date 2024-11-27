@@ -339,32 +339,52 @@
         <div class="main-home-bottom">
           <div class="main-home-bottom-weather" style="margin-right: 20px;">
 						<br><br>
-            <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
-            	<button>1001 로그인</button>
-            	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1001"/>
-            	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
-            </form>
-            <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
-            	<button>1002 로그인</button>
-            	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
-            	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
-            </form>
-            <form action="${ contextPath }/login/logOut.do" method="post" id="signup_form">
-            	<button>로그인페이지 이동 (세션 만료)</button>
-            </form>
+							
+							
+						<form action="${contextPath}/weather/coord" method="get">
+						    <input type="hidden" name="lat" value="37.4765509">
+						    <input type="hidden" name="lon" value="126.8801713">
+						    <div>날씨는 1시간 마다 업데이트</div>
+						    <div class="btn-box-hover">
+						        <button style="overflow-z: auto;"class="btn3-hover" type="submit">날씨 확인</button>
+						    </div>
+						</form>
+						<div id="weatherInfo"></div>
+				    
           </div>
+          
+          <script>
+		          var weatherObject = ${weatherData};
+		          
+		          console.log(weatherObject)
+		
+		          // 필요한 데이터만 추출
+		          var coord1 = weatherObject.coord.lat; // 좌표
+		          var coord2 = weatherObject.coord.lon; // 좌표
+		          var temperature = weatherObject.main.temp; // 기온
+		          var temp_max = weatherObject.main.temp_max; // 최고기온
+		          var temp_min = weatherObject.main.temp_min; // 최저기온
+		          var weatherDescription = weatherObject.weather[0].description; // 날씨 설명
+		          var humidity = weatherObject.main.humidity; // 습도
+		          var windSpeed = weatherObject.wind.speed; // 바람 속도
+		          var cityName = weatherObject.name; // 도시 이름
+		
+		          // 원하는 데이터를 화면에 출력
+		          document.getElementById("weatherInfo").innerHTML = 
+		              "위치: " + cityName + "<br>" +
+		              "좌표: " + coord1 + ", " + coord2 + "<br>" + 
+		              "기온: " + temperature + "°C<br>" +
+		              "최고: " + temp_max + "°C<br>" +
+		              "최저: " + temp_min + "°C<br>" +
+		              "날씨: " + weatherDescription + "<br>" +
+		              "습도: " + humidity + "%<br>" +
+		              "바람: " + windSpeed + " m/s";
+          </script>
+          
           <div class="main-home-bottom-message" style="margin-right: 20px;">
-
+							공간#
           </div>
           <div class="main-home-bottom-board">
-				<form action="${contextPath}/weather/coord" method="get">
-				    <input type="hidden" name="lat" value="37.4765509">
-				    <input type="hidden" name="lon" value="126.8801713">
-				    <div class="btn-box-hover">
-				        <button style="overflow-z: auto;"class="btn3-hover" type="submit">날씨 확인</button>
-				    </div>
-				</form>
-				<div>
 					<c:choose>
           		<c:when test="${ empty loginUser.getEmpNo() }">
           			세션정보 없음
@@ -376,8 +396,6 @@
           			${ loginUser.toString() }
           		</c:otherwise>
           	</c:choose>
-				    <h1>Weather Data</h1>
-				    <p>${weatherData}</p>
 				</div>
           </div>
         </div>

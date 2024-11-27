@@ -23,7 +23,7 @@ public class WeatherController {
             Model model) {
     	
         String weatherData = weatherService.getWeatherData(latitude, longitude);
-        System.out.println(weatherData);
+        
         model.addAttribute("weatherData", weatherData);
         
         return "main";
