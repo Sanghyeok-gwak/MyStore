@@ -95,7 +95,17 @@ public class NoteController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("empNo", empNo);
 		map.put("status", 'N');
-		return "";
+		
+		int listCount = noteService.selectSendCount(map);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
+		
+		List<NoteDto> list = noteService.selectTrashNote(pi,empNo);
+		log.debug("list확인 : {}",list);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pi",pi);
+		
+		return "note/trashnote";
 	}
 	
 	

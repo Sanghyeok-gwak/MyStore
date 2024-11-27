@@ -11,7 +11,7 @@ public interface NoteService {
 	// 쪽지 수신 카운트
 	int selectRecepCount(Map<String,Object> map);
 	
-	// 쪽지 발신 카운트
+	// 쪽지 발신 카운트 
 	int selectSendCount(Map<String,Object> map);
 	
 	// 받은 쪽지함 리스트
@@ -24,7 +24,7 @@ public interface NoteService {
 	List<NoteDto> selectTemporayList(PageInfoDto pi,String empNo);
 	
 	// 휴지통 리스트
-	
+	List<NoteDto> selectTrashNote(PageInfoDto pi,String empNo);
 	
 	// 쪽지 보내기 
 	//int sendNote(SendNoteDto noteDto);

@@ -14,6 +14,8 @@
 	<result column="RECEP_ID" property="recepId"/>
 	<result column="REC_CHECK" property="recCheck"/>
 	<result column="REC_DATE" property="recDate"/>
+	<result column="DELETE_DATE" property="deleteDate"/>
+	<result column="SOURCE" property="source"/>
 </resultMap>
 
 
@@ -89,13 +91,48 @@
 					TEMP_STORAGE,
 					RECEPTION_ID
 	    FROM 
-	   			TBL_SEND_NOTE
+	   			TBL_SEND_NOTE	
 	   WHERE 
 			    SEND_ID = #{empNo}
 			    and
 				  STATUS = 'Y'  			
 			    and
 				  TEMP_STORAGE = 'Y'  			
+	</select>
+	<select id="selectTrashNote" resultMap="noteResultMap">
+	SELECT 
+		    SEND_NO, 
+		    TITLE, 
+		    CONTENT, 
+		    SEND_ID, 
+		    STATUS, 
+		    NULL AS RECEPTION_NO, 
+		    NULL AS RECEP_ID,
+		    'R' AS SOURCE,
+		    DELETE_DATE
+		FROM 
+		    TBL_SEND_NOTE 
+		WHERE 
+		    STATUS = 'N'
+		    AND SEND_ID = #{empNo}
+		UNION ALL
+		SELECT 
+		    SEND_NO, 
+		    TITLE, 
+		    CONTENT, 
+		    NULL AS SEND_ID, 
+		    STATUS, 
+		    RECEPTION_NO, 
+		    RECEP_ID,
+		    'S' AS SOURCE,
+		    DELETE_DATE 
+		FROM 
+		    TBL_RECEPTION_NOTE 
+		WHERE 
+		    STATUS = 'N'
+		    AND RECEP_ID = #{empNo}
+	
+	
 	</select>
 	
 	

@@ -38,6 +38,12 @@ public class NoteDao {
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
 		return sqlSession.selectList("noteMapper.selectTemporayList",empNo,rowBounds);
 	}
+	public List<NoteDto> selectTrashNote(PageInfoDto pi, String empNo){
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
+		return sqlSession.selectList("noteMapper.selectTrashNote",empNo,rowBounds);
+	}
+	
+	
 	//public int sendNote(ReceptionNoteDto recepDto) {
 	//	return sqlSession.insert("noteMapper.sendNote",recepDto);
 	//}

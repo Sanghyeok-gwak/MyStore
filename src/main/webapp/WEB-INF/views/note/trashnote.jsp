@@ -109,7 +109,7 @@
 		</div>
 		<div class="note-body">
 		  <div>
-		      <b style="font-size: 25px; margin-left: 10px;">임시보관함</b>
+		      <b style="font-size: 25px; margin-left: 10px;">휴지통</b>
 		</div>
 		<hr>
 			<div class="table-box">
@@ -136,8 +136,8 @@
 				                <td><input type="checkBox" value="${t.sendNo }"></td>
 				                <td>${list.size() - status.index}</td>
 				                <td>${t.title }</td>
-				                <td>${t.sentId }</td>
-				                <td>${t.sentDate}</td>
+				                <td>${t.source eq 'S' ? '발신' : '수신'}</td>
+				                <td>${t.deleteDate}</td>
 					            </tr>
 					           </c:forEach> 
 			        		</c:otherwise>

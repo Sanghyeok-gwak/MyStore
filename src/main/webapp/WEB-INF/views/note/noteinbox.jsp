@@ -102,7 +102,7 @@
 		              <a href="${contextPath }/note/temporay.no">임시보관함</a><br>
 		          </li>
 		          <li>
-		              <a href="">휴지통</a><br>
+		              <a href="${contextPath }/note/trashnote.no">휴지통</a><br>
 		          </li>
 		      </ul>
 		  </div>

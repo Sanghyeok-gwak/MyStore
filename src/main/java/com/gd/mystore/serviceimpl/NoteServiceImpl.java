@@ -43,6 +43,11 @@ public class NoteServiceImpl implements NoteService {
 		return noteDao.selectTemporayList(pi,empNo);
 	}
 
+	@Override
+	public List<NoteDto> selectTrashNote(PageInfoDto pi, String empNo) {
+		return noteDao.selectTrashNote(pi,empNo);
+	}
+
 
 
 //	@Override

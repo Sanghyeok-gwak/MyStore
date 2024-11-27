@@ -30,6 +30,9 @@ public class NoteDto {
 	private String recCheck;
 	private String recDate;
 	
+	private String source;
+	
+	private String deleteDate;
 	
 	
 	
