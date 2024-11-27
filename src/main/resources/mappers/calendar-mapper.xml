@@ -45,7 +45,7 @@
             CAL_SUBJECT,
             CAL_COLOR
         FROM TBL_CALENDAR
-        WHERE (EMP_NO = #{empNo} AND CAL_COLOR = 'R') 
+        WHERE (EMP_NO = #{empNo} and emp_no =1005 or CAL_COLOR = 'R')  
     </select>
 
     <insert id="insertCalendarEvent">

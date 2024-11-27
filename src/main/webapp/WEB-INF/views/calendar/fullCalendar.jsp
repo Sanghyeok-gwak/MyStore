@@ -69,30 +69,26 @@
 </script>
 
 <div class="body-body">
-	 
+    
     <!-- 좌측 메뉴 -->
     <div class="div">
     <h3>내 캘린더</h3>
-    <c:if test="${loginUser.empNo == '1005'}">
+    
+    <c:if test="${loginUser.empNo != '1005'}">
         <div class="menu-item">
             <label>
-                 ${loginUser.empName}
+                <input type="checkbox" id="personalSchedulesCheckbox" onclick="reloadCalendar()" checked>  ${loginUser.empName} 일정 
             </label>
         </div>
     </c:if>
-        <div class="menu-item">
-            <label>
-                <input type="checkbox" id="personalSchedulesCheckbox" onclick="reloadCalendar()" checked> ${loginUser.empName} 일정
-            </label>
-        </div>
-    <c:if test="${loginUser.empNo != '1005'}">
+        
         <div class="menu-item">
             <label>
                 <input type="checkbox" id="allSchedulesCheckbox"  onclick="reloadCalendar()"> 전사 일정
             </label>
         </div>
-    </c:if>
-	</div>
+    
+   </div>
 
     <!-- 캘린더 영역 -->
     <div id="calendar-container">
