@@ -93,13 +93,13 @@
 		  <div class="note-side-a-box">
 		      <ul style="padding-left:0px!important;">
 		          <li>
-		              <a href="${contextPath}/note/list.no" style="color: red;">받은쪽지함</a><br>
+		              <a href="${contextPath}/note/reception.no" style="color: red;">받은쪽지함</a><br>
 		          </li>
 		          <li>
-		              <a href="">보낸쪽지함</a><br>
+		              <a href="${contextPath}/note/send.no">보낸쪽지함</a><br>
 		          </li>
 		          <li>
-		              <a href="">임시보관함</a><br>
+		              <a href="${contextPath }/note/temporay.no">임시보관함</a><br>
 		          </li>
 		          <li>
 		              <a href="">휴지통</a><br>
@@ -120,24 +120,24 @@
 				             <th style="width: 100px;">번호</th>
 				             <th style="width: 300px;">제목</th>
 				             <th style="width: 150px;">보낸사람</th>
-				             <th style="width: 200px;">일시</th>
+				             <th style="width: 200px;">확인 일시</th>
 			            </tr>    
 			        </thead>
 			        <tbody>
 			        	<c:choose>
 			        		<c:when test="${empty list }">
 			        			<tr>
-			                  <td colspan="5" style="text-align: center;">존재하는 메시지가 없습니다.</td>
+			                  <td colspan="5" style="text-align: center;">존재하는 쪽지가 없습니다.</td>
 			                </tr>
 			        		</c:when>
 			        		<c:otherwise>
-			        			<c:forEach var="n" items="${list }" varStatus="status">
+			        			<c:forEach var="r" items="${list }" varStatus="status">
 					            <tr>
-				                <td><input type="checkBox" value="${n.noteId }"></td>
+				                <td><input type="checkBox" value="${r.receptionNo }"></td>
 				                <td>${list.size() - status.index}</td>
-				                <td>${n.title }</td>
-				                <td>${n.sentId }</td>
-				                <td>${n.receivedTime}</td>
+				                <td>${r.title }</td>
+				                <td>${r.recepId }</td>
+				                <td>${r.recCheck eq 'Y' ? 'r.recDate' : '' }</td>
 					            </tr>
 					           </c:forEach> 
 			        		</c:otherwise>
@@ -148,17 +148,17 @@
             <ul id="paging_area" class="pagination d-flex justify-content-center">
             
               <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
-              	<a class="page-link" href="${contextPath }/note/list.no?page=${pi.currentPage-1}"><i class="bi bi-chevron-double-left"></i><span>이전</span></a>
+              	<a class="page-link" href="${contextPath }/note/reception.no?page=${pi.currentPage-1}"><i class="bi bi-chevron-double-left"></i><span>이전</span></a>
               </li>
               
               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
               	<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
-              		<a class="page-link" href="${contextPath }/note/list.no?page=${p}">${ p }</a>
+              		<a class="page-link" href="${contextPath }/note/reception.no?page=${p}">${ p }</a>
               	</li>
               </c:forEach>
               
               <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
-              	<a class="page-link" href="${contextPath }/note/list.no?page=${pi.currentPage+1}"><span>다음</span>&nbsp;<i
+              	<a class="page-link" href="${contextPath }/note/reception.no?page=${pi.currentPage+1}"><span>다음</span>&nbsp;<i
 									class="bi bi-chevron-double-right"></i></a>
               </li>
               
