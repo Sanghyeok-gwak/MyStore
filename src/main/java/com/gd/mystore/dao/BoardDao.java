@@ -22,15 +22,15 @@ public class BoardDao {
 	
 	private final SqlSessionTemplate sqlSession;
 
-	public int selectBoardListCount() {
-		return sqlSession.selectOne("boardMapper.selectBoardListCount");
+	public int selectBoardListCount(String type) {
+		return sqlSession.selectOne("boardMapper.selectBoardListCount", type);
 	}
 	
-	public List<BoardDto> selectBoardList(PageInfoDto pi) {
+	public List<BoardDto> selectBoardList(PageInfoDto pi, String type) {
 		
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1 ) * pi.getBoardLimit() ,  pi.getBoardLimit());
 		
-		return sqlSession.selectList("boardMapper.selectBoardList", null, rowBounds);
+		return sqlSession.selectList("boardMapper.selectBoardList", type, rowBounds);
 	}
 	
 	public int selectSearchListCount(Map<String, String> search) {

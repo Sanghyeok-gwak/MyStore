@@ -55,7 +55,7 @@ select[disabled] {
 						    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 218px; margin-top: 30px;">
 						    <option value="" disabled selected style="display: none;" >게시판을 선택해주세요</option>
 						    <c:forEach var="boardName" items="${boardTypeList}" >
-						        <option value="${boardName.boardtName}">${boardName.boardtName}</option>
+						        <option value="${boardName.boardTypeNo}">${boardName.boardtName}</option>
 						    </c:forEach>
 						</select>
 						

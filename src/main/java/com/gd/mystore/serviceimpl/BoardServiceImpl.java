@@ -22,15 +22,15 @@ public class BoardServiceImpl implements BoardService {
 	private final BoardDao boardDao;
 	   
 	@Override
-	public int selectBoardListCount() {
+	public int selectBoardListCount(String type) {
 		
-		return boardDao.selectBoardListCount();
+		return boardDao.selectBoardListCount(type);
 	}
 	
 	@Override
-	public List<BoardDto> selectBoardList(PageInfoDto pi) {
+	public List<BoardDto> selectBoardList(PageInfoDto pi, String type) {
 		
-		return boardDao.selectBoardList(pi);
+		return boardDao.selectBoardList(pi, type);
 	}
 	
 	@Override

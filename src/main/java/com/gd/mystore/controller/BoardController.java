@@ -42,12 +42,13 @@ public class BoardController {
 	
 	@GetMapping("/list.do")
 	public String list(@RequestParam(value="page", defaultValue="1") int currentPage
+					   , @RequestParam(value="boardTypeNo", defaultValue="1001") String boardTypeNo
 	                   , Model model) {
 	    
-	    int listCount = boardService.selectBoardListCount();
+	    int listCount = boardService.selectBoardListCount(boardTypeNo);
 	    
 	    PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
-	    List<BoardDto> list = boardService.selectBoardList(pi);
+	    List<BoardDto> list = boardService.selectBoardList(pi, boardTypeNo);
 	    
 	    model.addAttribute("pi", pi);
 	    model.addAttribute("list", list);
