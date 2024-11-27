@@ -228,10 +228,12 @@
 	          			success: function(resData){
 	          				console.log("정상")
 	          				console.log(resData)
-	          				
-	          				alert("출근처리가 완료되었습니다!");
-	
-	          	            location.reload();
+	          				if(resData > 0){
+		          				alert("출근처리가 완료되었습니다!");
+		          	            location.reload();
+	          				} else{
+	          					alert("오류 발생! Error Code : cyc1");
+	          				}
 	          			},
 	          			error: function(){
 							console.log('근태 버튼에 대한 ajax 통신 실패')
@@ -253,9 +255,12 @@
 	          				console.log("정상")
 	          				console.log(resData)
 	          				
-	          				alert("퇴근 처리가 완료되었습니다!");
-	
-	          	            location.reload();
+	          				if(resData > 0){
+		          				alert("퇴근 처리가 완료되었습니다!");
+		          	            location.reload();
+	          				}else{
+	          					alert("오류 발생! Error Code : cyc1");
+	          				}
 	          			},
 	          			error: function(){
 							console.log('근태 버튼에 대한 ajax 통신 실패')

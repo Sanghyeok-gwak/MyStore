@@ -37,64 +37,65 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/work")
 @Controller
 public class WorkController {
-	
+
 	private final WorkService workService;
 	private final EmpMemberService empMemberService;
 //	private final PagingUtil pagingUtil;
-	
-	//출근 버튼
+
+	// 출근 버튼
 	/*
-	 * 출근 버튼 클릭 시 update 진행 -> work_start_time 현재 시간으로 변경
-	 * 09시 넘으면 WORK_ATTENDANCE 'A'(지각)으로 변경
+	 * 출근 버튼 클릭 시 update 진행 -> work_start_time 현재 시간으로 변경 09시 넘으면 WORK_ATTENDANCE
+	 * 'A'(지각)으로 변경
 	 */
 	@ResponseBody
 	@GetMapping("clockCheck")
-	public int workCheck(EmpMemberDto em
-						, HttpSession session) {
-		/*
-		 * 마이바티스에서 날짜는 안 되는 것 같아, 아마 컨트롤러 아니면 서비스에서 Date 객체 생성후
-		 * 24/00/00 이런식으로 해서 넣어야 할듯
-		 */
+	public int workCheck(EmpMemberDto em, HttpSession session) {
 
-		if(em.getWorkStartTime() == null) {	//출근 기록
-			//세션 업데이트
+		if (em.getWorkStartTime() == null) { // 출근 기록
+			// 세션 업데이트
 			int result = workService.updateStTime(em);
-			
-			if(result > 0) {
+
+			if (result > 0) {
 				EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
 				session.setAttribute("loginUser", loginUser);
 			}
 			return result;
-		} else if(em.getWorkEndTime() == null) {
-			//퇴근 기록
+		} else if (em.getWorkEndTime() == null) {
+			// 퇴근 기록
 			return 2;
 		} else {
 //			return workService.selectWorkCheck(em);
 			return 3;
 		}
-		
+
 	}
-	
+
 	@ResponseBody
 	@GetMapping("clockIn")
-	public int colockIn(EmpMemberDto em
-					  , HttpSession session) {
-		
-		return workService.updateStTime(em);
+	public int colockIn(EmpMemberDto em, HttpSession session) {
+
+		int result = workService.updateStTime(em);
+
+		if (result > 0) {
+			List<WorkDto> list = workService.selectWorkCheck(em);
+			System.out.println("@@@@@@@@@@@@@@@@@" + list);
+			String a = list.get(0).getWorkStartTime();
+			System.out.println("################## : " + a);
+		}
+
+		return result;
 	}
-	
-	//퇴근 버튼
+
+	// 퇴근 버튼
 	/*
-	 * 퇴근 버튼 클릭 시 update 진행 -> wor_end_time 현재 시간으로 변경
-	 * 50% 미만 출근 시 결근 처리 초로 계산하면 될듯? 다른 방법 있으면 그렇게 진행
+	 * 퇴근 버튼 클릭 시 update 진행 -> wor_end_time 현재 시간으로 변경 50% 미만 출근 시 결근 처리 초로 계산하면 될듯?
+	 * 다른 방법 있으면 그렇게 진행
 	 */
 	@ResponseBody
 	@GetMapping("clockOut")
-	public int colockOut(EmpMemberDto em
-						, Model model) {
+	public int colockOut(EmpMemberDto em, Model model) {
 		model.addAttribute("popupMessage", "퇴근 처리");
 		return workService.updateEndTime(em);
 	}
-	
-	
+
 }
