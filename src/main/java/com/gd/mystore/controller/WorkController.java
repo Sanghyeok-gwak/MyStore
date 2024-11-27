@@ -43,11 +43,7 @@ public class WorkController {
 	private final EmpMemberService empMemberService;
 //	private final PagingUtil pagingUtil;
 
-	// 출근 버튼
-	/*
-	 * 출근 버튼 클릭 시 update 진행 -> work_start_time 현재 시간으로 변경 09시 넘으면 WORK_ATTENDANCE
-	 * 'A'(지각)으로 변경
-	 */
+
 	@ResponseBody
 	@GetMapping("clockCheck")
 	public int workCheck(EmpMemberDto em, HttpSession session) {
@@ -70,26 +66,28 @@ public class WorkController {
 		}
 	}
 
+	
+	// 출근 버튼
+	/*
+	 * 출근 버튼 클릭 시 update 진행 -> work_start_time 현재 시간으로 변경 09시 넘으면 WORK_ATTENDANCE
+	 * 'A'(지각)으로 변경
+	 */
 	@ResponseBody
 	@GetMapping("clockIn")
 	public int colockIn(EmpMemberDto em, HttpSession session) {
-
-		int result = workService.updateStTime(em);
-
-		if (result > 0) {
-			List<WorkDto> list = workService.selectWorkCheck(em);
-			System.out.println("@@@@@@@@@@@@@@@@@" + list);
-			String a = list.get(0).getWorkStartTime();
-			System.out.println("################## : " + a);
-		}
-
-		return result;
+		return workService.updateStTime(em);
 	}
 
+	
 	// 퇴근 버튼
 	/*
-	 * 4시간 이상 8시간 미만 조퇴
-	 * 9시간 이상 출근
+	 * 퇴근 버튼 미 클릭 체크는 스케줄러 돌면서 퇴근데이터가 null 인지 확인후 상태를 N으로 변경 해야 할듯
+	 * 출근 지각은 처리 완료
+	 * 
+	 * 내가 해야할 거
+	 * ㄴ조퇴 -> 작성중인 쿼리문 활용
+	 * ㄴ결근 -> 출석을 안찍으면 자동 결근 처리
+	 * ㄴ출근 시간은 있는데 퇴근 데이터 NULL 결근 처리 -> 스케줄러로 퇴근 데이터 NULL이면 결근으로 업데이트?
 	 */
 	@ResponseBody
 	@GetMapping("clockOut")
