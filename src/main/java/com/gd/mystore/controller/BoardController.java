@@ -1,5 +1,6 @@
 package com.gd.mystore.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
-import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.BoardService;
@@ -169,5 +169,51 @@ public class BoardController {
 
 		model.addAttribute("b", boardService.selectBoard(no));
 	}
+	
+	@PostMapping("/update.do")
+	public String modify(BoardDto board 		// 번호,제목,내용
+					   , String[] delFileNo   // null | 삭제할첨부파일번호들
+					   , List<MultipartFile> uploadFiles // 새로넘어온첨부파일들
+					   , RedirectAttributes rdAttributes ) {
+		
+		// 후에 db에 반영 성공시 삭제할 파일들 삭제 위해 미리 조회
+		List<BoardFileDto> delAttachList = boardService.selectDelAttach(delFileNo);
+		
+		List<BoardFileDto> attachList = new ArrayList<>();
+		for(MultipartFile file : uploadFiles) {
+			if(file != null && !file.isEmpty()) {
+				Map<String, String> map = fileUtil.fileupload(file, "board");
+				attachList.add(BoardFileDto.builder()
+										.filePath(map.get("filePath"))
+										.originalName(map.get("originalName"))
+										.fileSystemName(map.get("filesystemName"))
+										.refType("A")
+										.refNo(board.getBoardNo())
+										.build());	
+			}
+		}
+		board.setBoardList(attachList);
+		
+		int result = boardService.updateBoard(board, delFileNo);
+		
+		if(result > 0) { // 성공
+			rdAttributes.addFlashAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			for(BoardFileDto at : delAttachList) {
+				new File(at.getFilePath() + "/" + at.getFileSystemName()).delete();
+			}
+		}else { // 실패
+			rdAttributes.addFlashAttribute("alertMsg", "게시글 수정에 실패했습니다.");
+		}
+		
+		return "redirect:/board/boardDetail.do?no=" + board.getBoardNo();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

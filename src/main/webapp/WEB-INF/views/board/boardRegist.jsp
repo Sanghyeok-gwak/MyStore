@@ -16,6 +16,24 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<style>
+select {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 14px;
+}
+
+select[disabled] {
+    background-color: #f0f0f0;
+    color: gray;
+}
+
+
+
+</style>
+
 <body>
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp" />
@@ -37,7 +55,7 @@
 						    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 218px; margin-top: 30px;">
 						    <option value="" disabled selected style="display: none;" >게시판을 선택해주세요</option>
 						    <c:forEach var="boardName" items="${boardTypeList}" >
-						        <option value="${boardName.boardtName}">${b.boardName}</option>
+						        <option value="${boardName.boardtName}">${boardName.boardtName}</option>
 						    </c:forEach>
 						</select>
 						
@@ -47,40 +65,49 @@
 						    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 217px; margin-top: 30px;" disabled>
 						    <option value="" disabled selected style="display: none;">구분을 선택해주세요</option>
 						    <c:forEach var="dept" items="${deptList}">
-						        <option id="deptName"value="${dept.deptName}">${b.deptName}</option>
+						        <option id="deptName"value="${dept.deptName}" style="font-color:black;">${dept.deptName}</option>
 						    </c:forEach>
 						</select>
+	
 						
 
-						<script>
-							// 첫 번째 드롭다운의 값이 변경될 때
-							document.getElementById('boardTypeNo').addEventListener('change', function() {
-								var secondSelect = document.getElementById('boardDept');
-								var importantSection = document.getElementById('important-section');  // 'important-section'으로 수정
-								var importantCheckbox = document.getElementById('boardCheck');
-								var importantLabel = document.querySelector('label[for="boardCheck"]');
-					
-								// 첫 번째 드롭다운에서 값이 선택되면 두 번째 드롭다운을 활성화
-								if (this.value) {
-									secondSelect.disabled = false; // 두 번째 드롭다운 활성화
-								} else {
-									secondSelect.disabled = true; // 두 번째 드롭다운 비활성화
-								}
-					
-								// "공지사항" 게시판을 선택하면 중요공지 체크박스와 라벨을 보이게
-								if (this.value === "공지사항") { // 공지사항을 선택했을 때
-									importantSection.style.display = 'block'; // 중요공지 체크박스와 라벨 보이기
-								} else {
-									importantSection.style.display = 'none'; // 공지사항이 아닐 경우 숨기기
-								}
-							});
+			<script>
+    // 첫 번째 드롭다운의 값이 변경될 때
+    document.getElementById('boardTypeNo').addEventListener('change', function() {
+        var secondSelect = document.getElementById('boardDept');
+        var importantSection = document.getElementById('important-section');  // 'important-section'으로 수정
+        var importantCheckbox = document.getElementById('boardCheck');
 
-							// 중요공지 체크박스 상태 변경 시 값 설정
-						    document.getElementById('boardCheck').addEventListener('change', function() {
-						        // 체크된 상태이면 'Y'로 설정, 체크 해제 상태이면 'N'으로 설정
-						        document.getElementById('importantCheckValue').value = this.checked ? 'Y' : 'N';
-						    });
-						</script>
+        // 첫 번째 드롭다운에서 값이 선택되면 두 번째 드롭다운을 활성화
+        if (this.value) {
+            if (this.value === "공지사항") {
+                // "공지사항"이 선택된 경우 두 번째 드롭다운 활성화
+                secondSelect.disabled = false;
+                importantSection.style.display = 'block'; // 중요공지 체크박스 보이기
+
+                // 두 번째 드롭다운 옵션을 다시 추가
+                secondSelect.innerHTML = "<option value='' disabled selected>구분을 선택해주세요</option>";
+                <c:forEach var="dept" items="${deptList}">
+                    secondSelect.innerHTML += "<option value='${dept.deptName}'>${dept.deptName}</option>";
+                </c:forEach>
+
+            } else {
+                // "공지사항"이 아닌 경우 두 번째 드롭다운 비활성화하고 옵션 초기화
+                secondSelect.disabled = true;
+                importantSection.style.display = 'none'; // 중요공지 체크박스 숨기기
+                secondSelect.innerHTML = "<option value='' disabled selected>구분을 선택해주세요</option>"; // 옵션 초기화
+            }
+        }
+    });
+
+    // 중요공지 체크박스 상태 변경 시 값 설정
+    document.getElementById('boardCheck').addEventListener('change', function() {
+        // 체크된 상태이면 'Y'로 설정, 체크 해제 상태이면 'N'으로 설정
+        document.getElementById('importantCheckValue').value = this.checked ? 'Y' : 'N';
+    });
+</script>
+
+
 
 						<!-- 중요공지 체크박스를 위한 숨겨진 input 필드 -->
 						<input type="hidden" id="importantCheckValue" name="boardCheck" value="N" />
@@ -131,59 +158,68 @@
 				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
 				htParams : {
 					bUseVerticalResizer : false, // 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
+					bUseModeChanger: true, // 모드 변경기능
+		            fOnBeforeUnload: function() {
+		                return null;  // 페이지 이탈 시 경고창을 띄우지 않음
+		            }
 				},
 				fCreator : "createSEditor2"
+				
 			});
 		}
 
 		// 스마트에디터 내용 반영
-		$(document).ready(function() {
-		    // 폼 제출 전에 입력값 검증
-	        $('#insertform').submit(function(event) {
-	            // 폼 필드 값 가져오기
-	            var boardTypeNo = $('#boardTypeNo').val();
-	            var boardDept = $('#boardDept').val();
-	            var boardTitle = $('#boardTitle').val();
+$(document).ready(function() {
+    // 스마트에디터 초기화
+    smartEditor();
 
-	            // 스마트에디터 내용 가져오기
-	            var boardContent = oEditors.getById["boardContent"].getIR(); // 스마트에디터의 내용
+    // 페이지 이동 시 발생하는 'beforeunload' 이벤트를 막음
+    window.onbeforeunload = null; // 기본적으로 경고를 띄우지 않게 설정
 
-	            // 본문 내용을 textarea에 반영
-	            $('#boardContent').val(boardContent); // textarea에 스마트에디터 내용 설정
+    // 폼 제출 전에 입력값 검증
+    $('#insertform').submit(function(event) {
+        // 폼 필드 값 가져오기
+        var boardTypeNo = $('#boardTypeNo').val();
+        var boardDept = $('#boardDept').val();
+        var boardTitle = $('#boardTitle').val();
 
-	            // 게시판 유형, 부서명, 제목, 본문 내용 체크
-	            if (!boardTypeNo) {
-	                alert("게시판을 선택해주세요.");
-	                return false;  // 폼 제출 방지
-	            }
+        // 스마트에디터 내용 가져오기
+        var boardContent = oEditors.getById["boardContent"].getIR(); // 스마트에디터의 내용
 
-	            if (!boardDept) {
-	                alert("부서를 선택해주세요.");
-	                return false;  // 폼 제출 방지
-	            }
+        // 본문 내용을 textarea에 반영
+        $('#boardContent').val(boardContent); // textarea에 스마트에디터 내용 설정
 
-	            if (!boardTitle) {
-	                alert("제목을 입력해주세요.");
-	                return false;  // 폼 제출 방지
-	            }
+        // 게시판 유형, 부서명, 제목, 본문 내용 체크
+        if (!boardTypeNo) {
+            alert("게시판을 선택해주세요.");
+            return false;  // 폼 제출 방지
+        }
 
-	            if (!boardContent || !boardContent.trim()) {
-	                alert("본문 내용을 입력해주세요.");
-	                return false;  // 폼 제출 방지
-	            }
+        if (boardTypeNo === "공지사항" && !boardDept) {
+            alert("부서를 선택해주세요.");
+            return false;  // 폼 제출 방지
+        }
 
-	            return true;  // 모든 조건을 만족하면 폼 제출
-	        });
-		    
-		    
-		    smartEditor();
-		    
-		    // 폼 제출 전에 smartEditor 내용이 textarea에 반영되도록 설정
-		    $('#insertform').submit(function() {
-		        var content = oEditors.getById["boardContent"].getIR(); // 스마트에디터의 내용 가져오기
-		        $('#boardContent').val(content); // textarea에 내용 설정
-		    });
-		});
+        if (!boardTitle) {
+            alert("제목을 입력해주세요.");
+            return false;  // 폼 제출 방지
+        }
+
+        if (!boardContent || !boardContent.trim()) {
+            alert("본문 내용을 입력해주세요.");
+            return false;  // 폼 제출 방지
+        }
+
+        return true;  // 모든 조건을 만족하면 폼 제출
+    });
+
+    // 스마트에디터 내용 반영
+    $('#insertform').submit(function() {
+        var content = oEditors.getById["boardContent"].getIR(); // 스마트에디터의 내용 가져오기
+        $('#boardContent').val(content); // textarea에 내용 설정
+    });
+});
+
 
 	</script>
 

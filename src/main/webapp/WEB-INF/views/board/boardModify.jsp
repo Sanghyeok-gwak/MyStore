@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
@@ -118,17 +119,24 @@
 										style="display: flex; align-items: center; justify-content: center; gap: 10px;">
 												<div id="important-section" style="display: none; margin-top: 10px; text-align: center;">
 							    <label for="boardCheck" style="font-size: 14px;">중요공지</label>
-							    <input type="checkbox" id="boardCheck" name="boardCheck" style="width: 20px; height: 20px; margin-right: 20px;">
+							     <input type="checkbox" id="boardCheck" name="boardCheck"
+					            style="width: 20px; height: 20px; margin-right: 20px;"
+					            <c:if test="${b.boardCheck == 'N,on'}">checked</c:if>
+					        />
 							</div>
 								<button type="submit" class="btn3-hover"
 									style="height: 40px; padding: 5px 15px;">글 등록</button>
 							</div>
 						</div>
 
-						<div id="smarteditor" style="margin-top: 30px;">
-							<textarea name="boardContent" id="boardContent" rows="20" cols="10"
-								style="margin-top: 30px; width: 100%; height: 420px;"></textarea>
-						</div>
+
+<div id="smarteditor" style="margin-top: 30px;">
+    <textarea name="boardContent" id="boardContent" rows="20" cols="10"
+        style="margin-top: 30px; width: 100%; height: 420px;">
+        <c:out value="${fn:replace(b.boardContent, '<[^>]*>', '')}" />
+    </textarea>
+</div>
+
 					</form>
 
 				</div>
@@ -136,98 +144,105 @@
 		</div>
 	</div>
 
-	<script>
-	
-	$(document).ready(function(){
-	    // .origin_attach_del 요소에 클릭 이벤트
-	    $(".origin_attach_del").on("click", function(){
-	        // 삭제할 첨부파일의 번호를 submit 시 넘기기 위한 작업
-	        let hiddenEl = "<input type='hidden' name='delFileNo' value='" + $(this).data("fileno") +"'>";
+<script>
+$(document).ready(function () {
+    let oEditors = [];
 
-	        // form에 hidden input 추가
-	        $("#modify-form").append(hiddenEl);
+    // 스마트에디터 초기화 함수
+    function smartEditor() {
+        // 기존에 존재하는 에디터 객체가 있다면 초기화 해제
+        if (oEditors.length > 0) {
+            oEditors[0].destroy();  // 기존 에디터 객체 파괴
+            oEditors = [];  // oEditors 배열 비움
+        }
 
-	        // 화면에서 삭제된 것처럼 처리
-	        $(this).parent().remove();
-	    });
+        // 스마트 에디터 초기화
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: oEditors,
+            elPlaceHolder: "boardContent", // textarea의 ID와 동일해야 함
+            sSkinURI: "/mystore/smarteditor/SmartEditor2Skin.html", // 프로젝트에 맞게 경로 수정
+            htParams: {
+                bUseVerticalResizer: false, // 크기 조절 바 사용 여부
+            },
+            fCreator: "createSEditor2",
+            fOnAppLoad: function () {
+                // 스마트 에디터 로드 후 본문 내용 설정
+                // setEditorContent 호출을 fOnAppLoad 내부에서 안전하게 실행
+                if (oEditors.length > 0 && oEditors[0].getById) {
+                    setEditorContent();  // 에디터가 초기화된 후 내용 설정
+                } else {
+                    console.error("스마트 에디터가 초기화되지 않았습니다.");
+                }
+            }
+        });
+    }
 
-	    // .origin_attach_del 요소에 마우스를 올렸을 때 포인터 스타일 변경
-	    $(".origin_attach_del").on("mouseenter", function(){
-	        $(this).css("cursor", "pointer");  // 포인터 모양으로 변경
-	    });
+    // 에디터 본문 내용을 설정하는 함수
+    function setEditorContent() {
+        var boardContent = "${b.boardContent}";  // 서버에서 가져온 내용
 
-	    // .origin_attach_del 요소에서 마우스를 떼었을 때 기본 스타일로 되돌리기
-	    $(".origin_attach_del").on("mouseleave", function(){
-	        $(this).css("cursor", "default");  // 기본 커서로 변경
-	    });
-	});
-    
-		let oEditors = [];
-		smartEditor = function() {
-			nhn.husky.EZCreator.createInIFrame({
-				oAppRef : oEditors,
-				elPlaceHolder : "boardContent", //textarea에 부여한 아이디와 동일해야한다.
-				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
-				htParams : {
-					bUseVerticalResizer : false, // 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
-				},
-				fCreator : "createSEditor2"
-			});
-			
-			
-			 var boardContent = "${b.boardContent}"; // 서버에서 넘어온 기존 본문 내용
-		        if (boardContent) {
-		            oEditors.getById["boardContent"].setIR(boardContent); // 스마트에디터에 기존 내용 세팅
-		        }
-		}
+        // oEditors 객체가 제대로 초기화되었는지 확인
+        if (oEditors.length > 0 && oEditors[0].getById) {
+            // 에디터의 본문 설정
+            oEditors[0].getById("boardContent").setIR(boardContent); // 에디터에 본문 내용 설정
+        } else {
+            console.error("스마트 에디터가 초기화되지 않았습니다.");
+        }
+    }
 
-		// 스마트에디터 내용 반영
-		$(document).ready(function() {
+    // 폼 제출 시 스마트 에디터의 내용을 textarea에 반영
+    $('#modifyform').submit(function (event) {
+        var boardContent = oEditors[0].getById("boardContent").getIR(); // 스마트에디터의 내용 가져오기
+        $('#boardContent').val(boardContent); // textarea에 내용 설정
 
-	        // 폼 제출 전에 입력값 검증 및 스마트에디터의 내용 가져오기
-	        $('#modifyform').submit(function(event) {
-	            var boardContent = oEditors.getById["boardContent"].getIR(); // 스마트에디터의 내용 가져오기
-	            $('#boardContent').val(boardContent); // textarea에 스마트에디터 내용 설정
+        // 필수 입력 값 검증
+        var boardTypeNo = $('#boardTypeNo').val();
+        var boardDept = $('#boardDept').val();
+        var boardTitle = $('#boardTitle').val();
 
-	            // 게시판 유형, 부서명, 제목, 본문 내용 체크
-	            var boardTypeNo = $('#boardTypeNo').val();
-	            var boardDept = $('#boardDept').val();
-	            var boardTitle = $('#boardTitle').val();
+        if (!boardTypeNo) {
+            alert("게시판을 선택해주세요.");
+            return false; // 폼 제출 방지
+        }
 
-	            if (!boardTypeNo) {
-	                alert("게시판을 선택해주세요.");
-	                return false; // 폼 제출 방지
-	            }
+        if (!boardDept) {
+            alert("부서를 선택해주세요.");
+            return false; // 폼 제출 방지
+        }
 
-	            if (!boardDept) {
-	                alert("부서를 선택해주세요.");
-	                return false; // 폼 제출 방지
-	            }
+        if (!boardTitle) {
+            alert("제목을 입력해주세요.");
+            return false; // 폼 제출 방지
+        }
 
-	            if (!boardTitle) {
-	                alert("제목을 입력해주세요.");
-	                return false; // 폼 제출 방지
-	            }
+        if (!boardContent || !boardContent.trim()) {
+            alert("본문 내용을 입력해주세요.");
+            return false; // 폼 제출 방지
+        }
 
-	            if (!boardContent || !boardContent.trim()) {
-	                alert("본문 내용을 입력해주세요.");
-	                return false; // 폼 제출 방지
-	            }
+        return true; // 모든 검증 통과 시 폼 제출
+    });
 
-	            return true; // 모든 조
-	        });
-		    
-		    
-		    smartEditor();
-		    
-		    // 폼 제출 전에 smartEditor 내용이 textarea에 반영되도록 설정
-		    $('#insertform').submit(function() {
-		        var content = oEditors.getById["boardContent"].getIR(); // 스마트에디터의 내용 가져오기
-		        $('#boardContent').val(content); // textarea에 내용 설정
-		    });
-		});
+    // 페이지가 로드될 때마다 스마트 에디터 초기화
+    smartEditor();
 
-	</script>
+    // .origin_attach_del 요소에 클릭 이벤트
+    $(".origin_attach_del").on("click", function () {
+        let hiddenEl = "<input type='hidden' name='delFileNo' value='" + $(this).data("fileno") + "'>";
+        $("#modifyform").append(hiddenEl);
+        $(this).parent().remove();
+    });
+
+    $(".origin_attach_del").on("mouseenter", function () {
+        $(this).css("cursor", "pointer");
+    });
+
+    $(".origin_attach_del").on("mouseleave", function () {
+        $(this).css("cursor", "default");
+    });
+});
+</script>
+
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>

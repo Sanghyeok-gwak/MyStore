@@ -165,9 +165,22 @@
 						<c:choose>
 							<c:when test="${ empty list }">
 								<!-- 데이터가 없을 때 메시지 출력 -->
+									<thead>
+									<tr>
+										<th scope="col">번호</th>
+										<th scope="col">구분</th>
+										<th scope="col">제목</th>
+										<th scope="col">작성자</th>
+										<th scope="col">작성일</th>
+										<th scope="col">조회</th>
+										<th scope="col">첨부</th>
+									</tr>
+								</thead>
+								<tbody>
 								<tr>
 									<td colspan="7">조회된 게시글이 없습니다.</td>
 								</tr>
+								</tbody>
 							</c:when>
 							<c:otherwise>
 								<!-- 데이터가 있을 때 테이블 내용 출력 -->
@@ -183,17 +196,43 @@
 									</tr>
 								</thead>
 								<tbody>
+								<c:forEach var="b" items="${ list }">
+    <!-- 중요공지인 경우 스타일 변경 (boardCheck가 'N,on'일 때) -->
+    <c:if test="${ b.boardCheck != null && b.boardCheck.trim() == 'N,on' }">
+        <script>
+            // boardCheck 값을 콘솔에 출력
+            console.log('boardCheck: ${b.boardCheck}');
+        </script>
+      <tr onclick='location.href="${contextPath}/board/${ loginUser.empNo eq b.empNo ? "boardDetail.do" : "increase.do" }?no=${ b.boardNo }"; '>
+    <td style="background-color: #e1e1e5">${ b.boardNo }</td>
+    <td style="background-color: #e1e1e5">${ b.boardDept }</td>
+    <td style="background-color: #e1e1e5">${ b.boardTitle }</td>
+    <td style="background-color: #e1e1e5">${ b.empName }</td>
+    <td style="background-color: #e1e1e5">${ b.createDate }</td>
+    <td style="background-color: #e1e1e5">${ b.boardCount }</td>
+    <td style="background-color: #e1e1e5">${ b.attachCount > 0 ? '★' : '' }</td>
+</tr>
+
+    </c:if>
+</c:forEach>
+	
+
+									
 									<c:forEach var="b" items="${ list }">
-										<tr onclick='location.href="${contextPath}/board/${ loginUser.empNo eq b.empNo ? "boardDetail.do" : "increase.do" }?no=${ b.boardNo }";'>
-											<td>${ b.boardNo }</td>
-											<td>${ b.boardDept }</td>
-											<td>${ b.boardTitle }</td>
-											<td>${ b.empName }</td>
-											<td>${ b.createDate }</td>
-											<td>${ b.boardCount }</td>
-											<td>${ b.attachCount > 0 ? '★' : '' }</td>
-										</tr>
+									    <!-- 일반 게시글 -->
+									    <c:if test="${ b.boardCheck != 'N,on' }">
+									        <tr onclick='location.href="${contextPath}/board/${ loginUser.empNo eq b.empNo ? "boardDetail.do" : "increase.do" }?no=${ b.boardNo }"; '>
+									            <td>${ b.boardNo }</td>
+									            <td>${ b.boardDept }</td>
+									            <td>${ b.boardTitle }</td>
+									            <td>${ b.empName }</td>
+									            <td>${ b.createDate }</td>
+									            <td>${ b.boardCount }</td>
+									            <td>${ b.attachCount > 0 ? '★' : '' }</td>
+									        </tr>
+									    </c:if>
 									</c:forEach>
+
 								</tbody>
 							</c:otherwise>
 						</c:choose>
@@ -201,28 +240,33 @@
 					</div>
 					<!-- End Table with hoverable rows -->
 
-					<div class="paging" id="paging_area">
-						<ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
-							<li class="page-item ${ pi.currentPage == 1 ? 'disabled' : ''}">
-								<a class="page-link" href="${contextPath}/board/list.do?page=${pi.currentPage-1}">
-									<i class="bi bi-chevron-double-left"></i> <span>이전</span>
-								</a>
-							</li>
+		<div class="paging" id="paging_area">
+    <ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
+        <!-- 이전 페이지 버튼 -->
+        <li class="page-item ${pi.currentPage == 1 ? 'disabled' : ''}">
+            <a class="page-link" href="${contextPath}/board/list.do?page=${pi.currentPage - 1}">
+                <i class="bi bi-chevron-double-left"></i> <span>이전</span>
+            </a>
+        </li>
 
-							<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-								<li class="page-item ${pi.currentPage == p ? 'active' : ''}">
-									<a class="page-link" href="${contextPath}/board/list.do?page=${p}">${p}</a>
-								</li>
-							</c:forEach>
+        <!-- 페이지 번호 -->
+        <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+            <li class="page-item ${pi.currentPage == p ? 'active' : ''}">
+                <a class="page-link" href="${contextPath}/board/list.do?page=${p}">${p}</a>
+            </li>
+        </c:forEach>
 
-							<li class="page-item ${pi.currentPage == pi.maxPage ? 'disabled' : ''}">
-								<a class="page-link" href="${contextPath}/board/list.do?page=${pi.currentPage+1}">
-									<span>다음</span>&nbsp;
-									<i class="bi bi-chevron-double-right"></i>
-								</a>
-							</li>
-						</ul>
-					</div>
+        <!-- 다음 페이지 버튼 -->
+        <li class="page-item ${pi.currentPage == pi.maxPage ? 'disabled' : ''}">
+            <a class="page-link" href="${contextPath}/board/list.do?page=${pi.currentPage + 1}">
+                <span>다음</span>&nbsp;
+                <i class="bi bi-chevron-double-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
 				</div>
 			</div>
 

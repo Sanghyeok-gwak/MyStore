@@ -18,7 +18,8 @@ public interface BoardService {
 		int selectSearchListCount(Map<String, String> search);
 		List<BoardDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
 		
-		
+
+		// 게시글 등록
 		int insertBoard(BoardDto b);
 		
 	
@@ -26,9 +27,10 @@ public interface BoardService {
 		
 		List<BoardDto> selectBoardNameList();
 	
+		// 게시글 상세 - 조회수 증가
 		int updateIncreaseCount(int boardNo);
 		
-		
+		// 게시글 상세 - 게시글 조회 
 		BoardDto selectBoard(int boardNo);
 				
 		// 게시글 수정

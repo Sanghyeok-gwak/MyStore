@@ -25,7 +25,7 @@
 					<span class="ffont1">${ b.boardTitle }</span><br>
 					<div class="box-box" style="font-size: 18px;">
 						<div class="d-flex justify-content-between" style="display: flex; justify-content: space-between; width: 100%; margin-top:10px;">
-							<div>${ b.empName }</div>
+							<div >${ b.empName }</div>
 							<div style="display: flex; justify-content: space-between; gap: 10px;">
 								<div style="margin-right: 50px;">${ b.createDate }</div>
 								<div style="margin-right: 50px;">댓글 수 ${ b.boardCount }</div>
@@ -45,7 +45,7 @@
 		        <div style="text-align: right; margin-left: 30px; color: #afacac;">
 		            <c:forEach var="at" items="${ b.boardList }">
 		                <!-- 첨부파일 목록을 세로로 나열 -->
-		                <div style="margin-bottom: 5px;">
+		                <div style="margin-bottom: 5px;  text-align: left;">
 		                    <a href="${contextPath}${at.filePath}/${at.fileSystemName}" download="${ at.originalName }">${ at.originalName }</a>
 		                    <span class="origin_attach_del" data-fileno="${ at.boardFileNo }"></span>
 		                </div>
@@ -56,7 +56,7 @@
 
 			</table>
 		</div>
-		<div class="board-content" style="height:400px; padding: 10px;">
+		<div class="board-content" style="height:400px; margin-top: 20px;">
 			${ b.boardContent }
 		</div>
 
@@ -92,8 +92,9 @@
 		<div class="reply-box">		
 			<div class="d-flex" style="flex-direction: column; font-size: 18px; margin-top: 10px;">
 				<!-- 작성자 및 댓글 텍스트 부분 -->
-				<div style="display: flex;  align-items: center;">
-					<span>김개똥</span> <i class="bi bi-three-dots" style="margin-left: 230px;"></i>
+				<div class="d-flex" style="display: flex;  align-items: center; width: 20%;">
+					<div style="width:100%;"><span>김개똥</span></div> 
+					<div><i class="bi bi-three-dots"></i></div>
 				</div>
 	
 	
@@ -107,40 +108,7 @@
 					<i class="bi bi-heart" style="margin-left: 20px;"></i>
 				</div>
 			</div>
-			<div class="d-flex" style="flex-direction: column; font-size: 18px; margin-top: 10px;">
-				<!-- 작성자 및 댓글 텍스트 부분 -->
-				<div style="display: flex; justify-content: space-between; align-items: center;">
-					<span>김개똥</span> <i class="bi bi-three-dots" style="margin-right: 15px;"></i>
-				</div>
 	
-	
-				<!-- 댓글 텍스트 -->
-				<div style="padding-bottom: 5px; margin-top: 5px;">댓글</div>
-	
-				<!-- 댓글 관련 정보 (날짜, 답글쓰기, 하트이모티콘) -->
-				<div class="d-flex" style="margin-top: 5px; gap: 3px; width: 20%; color: #afacac;">
-					<div>2024-11-02</div>
-					<div style="margin-left: 20px; margin-top: -1px;">답글쓰기</div>
-					<i class="bi bi-heart" style="margin-left: 20px;"></i>
-				</div>
-			</div>
-			<div class="d-flex" style="flex-direction: column; font-size: 18px; margin-top: 10px;">
-				<!-- 작성자 및 댓글 텍스트 부분 -->
-				<div style="display: flex; justify-content: space-between; align-items: center;">
-					<span>김개똥</span> <i class="bi bi-three-dots" style="margin-right: 15px;"></i>
-				</div>
-	
-	
-				<!-- 댓글 텍스트 -->
-				<div style="padding-bottom: 5px; margin-top: 5px;">댓글</div>
-	
-				<!-- 댓글 관련 정보 (날짜, 답글쓰기, 하트이모티콘) -->
-				<div class="d-flex" style="margin-top: 5px; gap: 3px; width: 20%; color: #afacac;">
-					<div>2024-11-02</div>
-					<div style="margin-left: 20px; margin-top: -1px;">답글쓰기</div>
-					<i class="bi bi-heart" style="margin-left: 20px;"></i>
-				</div>
-			</div>
 		</div>
 		<hr style="opacity:1;">
 		<div style="margin-top: 10px; color: #afacac; display: flex; align-items: center;">
