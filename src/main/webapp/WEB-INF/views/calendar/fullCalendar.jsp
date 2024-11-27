@@ -48,10 +48,31 @@
         }
         #calendar {
             width: 100%; /* 초기 너비 */
-            height: 90%; /* 초기 높이 */
+            height: 100%; /* 초기 높이 */
             border: 1px solid #ddd;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+        .fc-day-sun a {
+		    color: red;
+		}
+		.fc-day-sat a {
+		    color: blue;
+		}
+		.fc-day-mon a {
+		    color: black;
+		}
+		.fc-day-tue a{
+		    color: black;
+		}
+		.fc-day-wed a {
+		    color: black;
+		}
+		.fc-day-thu a {
+		    color: black;
+		}
+		.fc-day-fri a {
+		    color: black;
+		}
 }
 
     </style>
@@ -108,13 +129,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // FullCalendar 초기화
     calendar = new FullCalendar.Calendar(calendarEl, {
         headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            left: 'title',
+            center: '',
+            right: 'today,prev,next'
         },
         initialView: 'dayGridMonth',
         selectable: true,
         editable: true,
+        buttonText: {   today : "오늘" },
+        
         events: function(fetchInfo, successCallback, failureCallback) {
             let filters = {
                 personal: $('#personalSchedulesCheckbox').is(':checked'),
@@ -209,7 +232,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }
             }
+        
+            
         }
+        
     });
 
     // 캘린더 렌더링
@@ -236,6 +262,7 @@ function reloadCalendar() {
 $('.schedule-type-filter').on('change', function() {
     $('#calendar').fullCalendar('rerenderEvents');
 });
+
 </script>
 
 

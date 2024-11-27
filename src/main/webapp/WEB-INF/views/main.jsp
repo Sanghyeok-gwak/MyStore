@@ -125,6 +125,27 @@
 	    display: flex;
 	    justify-content: center;
       }
+		.fc-day-sun a {
+		    color: red;
+		}
+		.fc-day-sat a {
+		    color: blue;
+		}
+		.fc-day-mon a {
+		    color: black;
+		}
+		.fc-day-tue a{
+		    color: black;
+		}
+		.fc-day-wed a {
+		    color: black;
+		}
+		.fc-day-thu a {
+		    color: black;
+		}
+		.fc-day-fri a {
+		    color: black;
+		}
 
     </style>
 	
@@ -247,11 +268,11 @@
 
         	    var calendar = new FullCalendar.Calendar(calendarEl, {
         	        headerToolbar: {
-        	            left: 'prev,next today',
+        	            left: '',
         	            center: 'title',
-        	            right: 'listWeek,dayGridMonth,timeGridWeek,timeGridDay'
+        	            right: ''
         	        },
-        	        initialView: 'listWeek',
+        	        initialView: 'dayGridMonth',
         	        events: function(fetchInfo, successCallback, failureCallback) {
         	            // 필터 조건 (필요에 따라 수정 가능)
         	            let filters = {
