@@ -167,7 +167,7 @@ public class EDocDao {
 	}
 
 
-	
+	// 결재 반려
 	// 결재하기
     // 결재 상태 업데이트
     public int updateApprovalStatusOF(EDocApprovalDto approval1, EDocApprovalDto approval2) {
@@ -197,6 +197,33 @@ public class EDocDao {
     public int updateEdocStatusR(EDocDto edocDto) {
         return sqlSession.update("edocMapper.updateEdocStatusR", edocDto);
     }
+
+    
+    // 기안 상세페이지
+ 	// 기안 대기 상세페이지
+	public EDocDto draftwait(int no) {
+		return sqlSession.selectOne("edocMapper.draftwait", no);
+	}
+	
+	// 기안 진행 상세페이지
+	public EDocDto draftprogress(int no) {
+		return sqlSession.selectOne("edocMapper.draftprogress", no);
+	}
+
+	// 기안 완료 상세페이지
+	public EDocDto draftcomplete(int no) {
+		return sqlSession.selectOne("edocMapper.draftcomplete", no);
+	}
+
+	// 기안 반려 상세페이지
+	public EDocDto draftreject(int no) {
+		return sqlSession.selectOne("edocMapper.draftreject", no);
+	}
+
+	// 기안 회수 상세페이지
+	public EDocDto draftrecovery(int no) {
+		return sqlSession.selectOne("edocMapper.draftrecovery", no);
+	}
 
     
     

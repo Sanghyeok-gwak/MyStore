@@ -87,11 +87,29 @@ public interface EDocService {
 	List<EDocApprovalDto>aprvlList(int no);
 	
 	
+	// 결재 반려
 	// 결재하기
 	int aprvlcpl(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no);
 	
 	// 반려하기
 	int aprvlrjt(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no);
+	
+	
+	// 기안 상세페이지
+	// 기안 대기 상세페이지
+	EDocDto draftwait(int no);
+	
+	// 기안 진행 상세페이지
+	EDocDto draftprogress(int no);
+	
+	// 기안 완료 상세페이지
+	EDocDto draftcomplete(int no);
+	
+	// 기안 반려 상세페이지
+	EDocDto draftreject(int no);
+	
+	// 기안 회수 상세페이지
+	EDocDto draftrecovery(int no);
 	
 
 	

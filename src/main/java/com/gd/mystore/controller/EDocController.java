@@ -404,6 +404,55 @@ public class EDocController {
 		return "edoc/aprvlwait";		
 	}
 	
+	// 결재 예정 상세페이지
+	@GetMapping("/aprvlscheduled.do")
+	public String aprvlscheduled(int no, Model model) {
+		
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
+		EDocDto edoc = edocService.aprvlscheduled(no);
+		
+		// 상세페이지에 필요한 결재자 정보
+		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
+		
+		String escapedContent = edoc.getEdocContent()
+                .replace("\"", "\\\"")  // 큰따옴표만 이스케이프
+                .replace("\r", "")      // 줄바꿈 제거
+                .replace("\n", "");     // 줄바꿈 제거
+		
+		model.addAttribute("edoc", edoc);
+		model.addAttribute("list", aprvlList);
+		model.addAttribute("edocContent", escapedContent);
+		
+		return "edoc/aprvlscheduled";		
+	}
+	
+	// 결재 완료 상세페이지	
+	@GetMapping("/aprvlcomplete.do")
+	public String aprvlcomplete(int no, Model model) {
+		
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
+		EDocDto edoc = edocService.aprvlcomplete(no);
+		
+		// 상세페이지에 필요한 결재자 정보
+		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
+		
+		String escapedContent = edoc.getEdocContent()
+                .replace("\"", "\\\"")  // 큰따옴표만 이스케이프
+                .replace("\r", "")      // 줄바꿈 제거
+                .replace("\n", "");     // 줄바꿈 제거
+		
+		model.addAttribute("edoc", edoc);
+		model.addAttribute("list", aprvlList);
+		model.addAttribute("edocContent", escapedContent);
+		
+		return "edoc/aprvlcomplete";		
+	}
+	
+	
+	
+	// 결재 반려
 	// 결재하기
 	@PostMapping("/aprvlcpl.do")
 	public String aprvlcpl(@RequestParam("aprvlNo") List<Integer> aprvlNo,
@@ -489,13 +538,15 @@ public class EDocController {
 	}
 	
 	
-	// 결재 예정 상세페이지
-	@GetMapping("/aprvlscheduled.do")
-	public String aprvlscheduled(int no, Model model) {
+	
+	// 기안 문서 상세페이지
+	// 기안 대기 상세페이지
+	@GetMapping("/draftwait.do")
+	public String draftwait(int no, Model model) {
 		
 		// 상세페이지에 필요한 데이터
 		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
-		EDocDto edoc = edocService.aprvlscheduled(no);
+		EDocDto edoc = edocService.draftwait(no);
 		
 		// 상세페이지에 필요한 결재자 정보
 		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
@@ -509,16 +560,16 @@ public class EDocController {
 		model.addAttribute("list", aprvlList);
 		model.addAttribute("edocContent", escapedContent);
 		
-		return "edoc/aprvlscheduled";		
+		return "edoc/draftwait";		
 	}
 	
-	// 결재 완료 상세페이지	
-	@GetMapping("/aprvlcomplete.do")
-	public String aprvlcomplete(int no, Model model) {
+	// 기안 진행 상세페이지
+	@GetMapping("/draftprogress.do")
+	public String draftprogress(int no, Model model) {
 		
 		// 상세페이지에 필요한 데이터
 		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
-		EDocDto edoc = edocService.aprvlcomplete(no);
+		EDocDto edoc = edocService.draftprogress(no);
 		
 		// 상세페이지에 필요한 결재자 정보
 		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
@@ -532,8 +583,78 @@ public class EDocController {
 		model.addAttribute("list", aprvlList);
 		model.addAttribute("edocContent", escapedContent);
 		
-		return "edoc/aprvlcomplete";		
+		return "edoc/draftprogress";		
 	}
+	
+	// 기안 완료 상세페이지
+	@GetMapping("/draftcomplete.do")
+	public String draftcomplete(int no, Model model) {
+		
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
+		EDocDto edoc = edocService.draftcomplete(no);
+		
+		// 상세페이지에 필요한 결재자 정보
+		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
+		
+		String escapedContent = edoc.getEdocContent()
+                .replace("\"", "\\\"")  // 큰따옴표만 이스케이프
+                .replace("\r", "")      // 줄바꿈 제거
+                .replace("\n", "");     // 줄바꿈 제거
+		
+		model.addAttribute("edoc", edoc);
+		model.addAttribute("list", aprvlList);
+		model.addAttribute("edocContent", escapedContent);
+		
+		return "edoc/draftcomplete";		
+	}
+	
+	// 기안 반려 상세페이지
+	@GetMapping("/draftreject.do")
+	public String draftreject(int no, Model model) {
+		
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
+		EDocDto edoc = edocService.draftreject(no);
+		
+		// 상세페이지에 필요한 결재자 정보
+		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
+		
+		String escapedContent = edoc.getEdocContent()
+                .replace("\"", "\\\"")  // 큰따옴표만 이스케이프
+                .replace("\r", "")      // 줄바꿈 제거
+                .replace("\n", "");     // 줄바꿈 제거
+		
+		model.addAttribute("edoc", edoc);
+		model.addAttribute("list", aprvlList);
+		model.addAttribute("edocContent", escapedContent);
+		
+		return "edoc/draftreject";		
+	}
+	
+	// 기안 회수 상세페이지
+	@GetMapping("/draftrecovery.do")
+	public String draftrecovery(int no, Model model) {
+		
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
+		EDocDto edoc = edocService.draftrecovery(no);
+		
+		// 상세페이지에 필요한 결재자 정보
+		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
+		
+		String escapedContent = edoc.getEdocContent()
+                .replace("\"", "\\\"")  // 큰따옴표만 이스케이프
+                .replace("\r", "")      // 줄바꿈 제거
+                .replace("\n", "");     // 줄바꿈 제거
+		
+		model.addAttribute("edoc", edoc);
+		model.addAttribute("list", aprvlList);
+		model.addAttribute("edocContent", escapedContent);
+		
+		return "edoc/draftrecovery";		
+	}
+	
 
 	
 

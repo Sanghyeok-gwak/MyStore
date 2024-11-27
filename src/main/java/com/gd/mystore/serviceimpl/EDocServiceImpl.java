@@ -14,7 +14,9 @@ import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.EDocService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class EDocServiceImpl implements EDocService {
@@ -192,6 +194,7 @@ public class EDocServiceImpl implements EDocService {
 	}
 	
 	
+	// 결재 반려
 	// 결재하기
 	@Override
 	public int aprvlcpl(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no) {
@@ -246,6 +249,38 @@ public class EDocServiceImpl implements EDocService {
         // 결과 반환
         return (updateApprovalResult > 0 && updateEdocResult > 0) ? 1 : 0;
     }
+
+	
+	// 기안 상세페이지
+	// 기안 대기 상세페이지
+	@Override
+	public EDocDto draftwait(int no) {
+		return edocDao.draftwait(no);
+	}
+
+	// 기안 진행 상세페이지
+	@Override
+	public EDocDto draftprogress(int no) {
+		return edocDao.draftprogress(no);
+	}
+
+	// 기안 완료 상세페이지
+	@Override
+	public EDocDto draftcomplete(int no) {
+		return edocDao.draftcomplete(no);
+	}
+
+	// 기안 반려 상세페이지
+	@Override
+	public EDocDto draftreject(int no) {
+		return edocDao.draftreject(no);
+	}
+
+	// 기안 회수 상세페이지
+	@Override
+	public EDocDto draftrecovery(int no) {
+		return edocDao.draftrecovery(no);
+	}
 
 	
 }

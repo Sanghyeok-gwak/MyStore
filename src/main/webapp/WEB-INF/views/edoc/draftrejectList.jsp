@@ -352,7 +352,7 @@ input[type=file]::file-selector-button {
 
 							<c:otherwise>
 								<c:forEach var="fl" items="${ list }">
-									<tr>
+									<tr onclick='location.href = "${contextPath}/edoc/draftreject.do?no=${ fl.edocNo }";'>
 										<td>${ fl.edocNo }</td>
 										<td>${ fl.sampleNo }</td>
 										<td>${ fl.edocTitle }</td>

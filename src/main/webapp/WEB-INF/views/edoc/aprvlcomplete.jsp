@@ -391,7 +391,7 @@ input {
 										        </c:when>
 										        <c:when test="${aprvl.aprvlStatus eq 'R'}">
 										            <img src="${contextPath}/resources/images/반려.png"
-										                 style="position: absolute; top: -25px; left: 10px; width: 130px;">
+										                 style="position: absolute; top: -37px; left: 0px; width: 150px;">
 										        </c:when>
 										    </c:choose>
 										</td>
@@ -511,6 +511,6 @@ input {
 
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	
 </body>
-
 </html>
