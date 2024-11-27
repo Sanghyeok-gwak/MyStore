@@ -47,5 +47,16 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>	
+	
+	<!-- GeneratePdfServlet 서블릿 추가 -->
+	<servlet>
+		<servlet-name>generatePdfServlet</servlet-name>
+		<servlet-class>com.gd.mystore.GeneratePdfServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>generatePdfServlet</servlet-name>
+		<url-pattern>/generatePdf</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>
