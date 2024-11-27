@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,6 +121,7 @@ input {
 /* topdiv 스타일 start */
 #topdiv {
 	display: flex;
+	justify-content: space-between;
 }
 
 #topdiv>#menu_name {
@@ -163,6 +165,7 @@ input {
 	line-height: 30px;
 	font-weight: 400;
 	display: flex;
+	justify-content: space-between;
 }
 
 #writer {
@@ -200,7 +203,7 @@ input {
 	border-radius: 5px;
 }
 
-#aprr1_content2  {
+#aprr1_content2 {
 	background-color: #ffffff;
 	color: rgb(0, 0, 0);
 	height: 80px;
@@ -209,11 +212,11 @@ input {
 	border-radius: 5px;
 }
 
-.container {
+.containe11 {
 	display: flex;
 	gap: 30px; /* 요소 간 간격 */
 	justify-content: flex-end;
-	align-items: flex-end
+	align-items: flex-end;
 }
 
 .spacer {
@@ -281,230 +284,311 @@ input {
 	justify-content: end;
 }
 /* enddiv 스타일 end */
-input[type=file]::file-selector-button {
-	background-color: #99A1EF;
-	color: white;
-	border: none;
-	width: 113.5px;
-	height: 47.5px;
-	font-size: 18px;
-	line-height: 30px;
-	font-weight: 400;
+
+.middiv-box,.middiv-box-left,.middiv-box-right{
+	display:flex;
 }
-/* middiv2 스타일 end */
-#smarteditor {
-	margin-top: 10px;
+.middiv-box{
+	margin-top:20px;
+	margin-bottom:20px;
+	justify-content: space-between;
+	width:100%;
 }
+.middiv-box-right-writer-left table{
+	height:100%;
+}
+.middiv-box-right-writer-right table{
+	height:100%;
+}
+.middiv-box-right-writer-left{
+	margin-right:15px;
+}
+.middiv-box-right-writer-right{
+	margin-left:15px;
+}
+#writer_content{
+	border: 1px solid lightgray;
+}
+#aprr1_content {
+		background-color: #ffffff;
+		color: rgb(0, 0, 0);
+		height: 20px;
+		width: 150px;
+		text-align: center;
+		border-top: 1px solid lightgray;
+		border-bottom: 1px solid lightgray;
+		border-left: 1px solid lightgray;
+		border-right: 1px solid lightgray;
+		border-radius: 5px;
+		border-right: 1px solid lightgray;
+	}
+	#aprr1_content2 {
+		background-color: #ffffff;
+		color: rgb(0, 0, 0);
+		height: 80px;
+		width: 150px;
+		border-left: 1px solid lightgray;
+		border-right: 1px solid lightgray;
+		text-align: center;
+		border-radius: 5px;
+		border-right: 1px solid lightgray;
+	}
+	
 </style>
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp" />
+
+	<jsp:include page="/WEB-INF/views/common/header.jsp" />
 	<jsp:include page="/WEB-INF/views/common/side.jsp" />
+	
 	<div class="body-body">
 	<!-- 여기 채워서 작업하시면 됩니다 .-->
 		<div class="text-box">
-			<form action="">
-				<div id="topdiv">
-					<div class="bbox-box" style="width:50%;">
-						<span class="ffont1" style="font-weight: bold;">기안 대기 문서</span> 
-						<select name="languages" id="lang">
-							<option value="select">결제양식 선택</option>
-							<option value="vac">휴가</option>
-							<option value="dept">부서</option>
-							<option value="java">일반</option>
-						</select>
-						<button type="button" id="modal_appr" data-bs-toggle="modal"
-								data-bs-target="#basicModal">결제선 선택</button>
-					</div>		
-					<div id="enddiv" style="width:50%;">
-						<div class="btn-box-hover">
-							<button class="btn3-hover" style="width: 120px; font-size: 18px;">수정하기</button>
-						</div>
-						<div class="btn-box-hover">
-							<button class="btn1-hover"
-								style="width: 120px; margin-left: 20px; font-size: 18px;">삭제하기</button>
-						</div>
-						<div class="btn-box-hover">
-							<button class="btn2-hover"
-								style="width: 120px; margin-left: 20px; font-size: 18px;">뒤로가기</button>
+				<div id="topdiv" >
+					<span class="ffont1" style="width:20%; font-weight: bold;">기안 대기 문서</span>
+
+					<div id="enddiv">
+						<div class="btn-box-hover"> 
+							<button class="btn3-hover" style="width: 120px; font-size: 18px;" type="button" 
+							onclick="openApprovalModal()">회수하기</button> 
+						</div>  
+						<div class="btn-box-hover"> 
+							<button class="btn2-hover" style="width: 120px; margin-left: 20px; font-size: 18px;" type="button" 
+							onclick="goBack()">뒤로가기</button>
 						</div>
 					</div>
 				</div>
 				<hr>
-				<div id="middiv">
-				<style>
-					.middiv-box,.middiv-box-left,.middiv-box-right{
-						display:flex;
-					}
-					.middiv-box{
-						margin-top:20px;
-						margin-bottom:20px;
-						justify-content: space-between;
-						width:100%;
-					}
-					.middiv-box-right-writer-left table{
-						height:100%;
-					}
-					.middiv-box-right-writer-right table{
-						height:100%;
-					}
-					.middiv-box-right-writer-left{
-						margin-right:15px;
-					}
-					.middiv-box-right-writer-right{
-						margin-left:15px;
-					}
-					#writer_content{
-						border: 1px solid lightgray;
-					}
-				</style>
-					<div class="middiv-box">
-						<div class="middiv-box-left">
-							<div class="middiv-box-left-writer-left">
-								<div id="writer" style="margin-bottom:10px;">기안자</div>
-								<div id="writer" style="margin-bottom:10px;">부서</div>
-								<div id="writer" style="margin-bottom:10px;">기안일</div>
-							</div>
-							<div class="middiv-box-left-writer-right">
-								<div id="writer_content" style="margin-bottom:10px;">기안자이름</div>
-								<div id="writer_content" style="margin-bottom:10px;">부서명</div>
-								<div id="writer_content" style="margin-bottom:10px;">YYYY-MM-DD</div>
-							</div>
-						</div>
-						<div class="middiv-box-right">
-							<div class="middiv-box-right-writer-left">
-								<table>
-										<tr>
-											<td id="aprr1" rowspan="5"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex;">1차</div></td>
-											<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">직급</div></td>
-										</tr>
-										<tr>
-											<td id="aprr1_content2" rowspan="3"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">결재자</div></td>
-										</tr>
-										<tr>
-											<td></td>
-										</tr>
-										<tr>
-											<td></td>
-										</tr>
-										<tr>
-											<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">부서명</div></td>
-										</tr>
-									</table>
-							</div>
-							<div class="middiv-box-right-writer-right">
-								<table>
-									<tr>
-										<td id="aprr1" rowspan="5"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; ">2차</div></td>
-										<td id="aprr1_content"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;" >직급</div></td>
-									</tr>
-									<tr>
-										<td id="aprr1_content2" rowspan="3"><div style="width:100%; height:100%;align-items: center; justify-content: center; display: flex; border:1px solid lightgray;">결재자</div></td>
-									</tr>
-									<tr>
-										<td></td>
-									</tr>
-									<tr>
-										<td></td>
-									</tr>
-									<tr>
-										<td id="aprr1_content"><div style="width:100%; height:100%; border:1px solid lightgray;">부서명</div></td>
-									</tr>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
+				
+					<!-- 중간1 start-->
+          <div id="middiv"> 
+
+            <table>
+              <tr>
+                <td id="writer">기안자</td>
+                <td id="writer_content">${edoc.empName}</td>
+              </tr>
+              <tr>
+                <td id="writer">부서</td>
+                <td id="writer_content">${edoc.deptName}</td>
+              </tr>
+              <tr>
+                <td id="writer">기안일</td>
+                <td id="writer_content">${edoc.startDt}</td>
+              </tr>
+            </table>
+
+            <div class="containe11">
+            	<c:forEach var="aprvl" items="${list}">
+	              <table>
+	                <tr>
+	                  <td id="aprr1" rowspan="5">${aprvl.aprvlRank}차</td>
+	                  <td id="aprr1_content">${aprvl.nm}</td>
+	                </tr>
+	                <tr>
+	                  <td id="aprr1_content2" rowspan="3">${aprvl.empName}</td>
+	                </tr>
+	                <tr>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td id="aprr1_content">${aprvl.deptName}</td>
+	                </tr>
+	              </table>
+							</c:forEach>
+            </div>
+  
+          </div> 
+				
 				<hr>
-			</form>
+			
 			<!-- 중간2 start -->
 			<div id="middiv2">
 				<div id="form_title">제목</div>
 
-				<div class="input-bar" style="width: 100%; padding-left: 10px;">
-					<input type="text" class="input-bar1" readonly>
+				<div class="input-bar" style="width: 100%;">
+					<input type="text" class="input-bar1" value="${edoc.edocTitle}" readonly style="padding: 5px;">
 				</div>
 			</div>
 			<!-- 중간2 end -->
 
 			<!-- smarteditor start-->
-			<div id="smarteditor">
-				<textarea name="editorTxt" id="editorTxt0" rows="15"
-					style="width: 100%;"></textarea>
+			<div id="smarteditor" style="margin-top: 10px;">
+				<textarea name="editorTxt" id="editorTxt0" rows="15" style="width: 100%"></textarea>
 			</div>
 			<!-- smarteditor end-->
 
-			<!-- 파일업로드 start-->
-					<div id="middiv3">
-						<input type="file" id="fileupload" name="uploadFile" multiple>
-						<br>
-					</div>
-			<!--파일업로드 end-->
+			<!-- 파일다운로드 start-->
+			<div id="filedownload">
+				<div id="file">첨부파일</div>
+				<div id="download">
+					<c:forEach var="at" items="${ edoc.attachList }">
+						<a href="${ contextPath }${ at.filePath }/${ at.attachRenameFileName }"
+							download="${ at.attachOriginalName }">${ at.attachOriginalName }</a>
+					</c:forEach>
+				</div>
+			</div>
 			<!--파일다운로드 end-->
 
-			<!-- 끝 start-->
-		
-			<!-- 끝 end-->
 		</div>      
 	</div>
 
-	<script>
-		let oEditors = [];
+<!-- 결제 모달 -->
+<div class="modal-overlay" id="approvalModalOverlay">
+    <div class="modal" id="approvalModal">
+        <form action="${contextPath}/edoc/aprvlrjt.do" method="post">
+            <span class="ffont1" style="width:20%; font-weight: bold;">기안서를 회수 하시겠습니까?</span>
+            <c:forEach var="dto" items="${list}">
+					    <input type="hidden" name="aprvlNo" value="${dto.aprvlNo}" />
+					    <input type="hidden" name="empNo" value="${dto.empNo}" />
+					    <input type="hidden" name="aprvlEdocNo" value="${dto.aprvlEdocNo}" />
+					    <input type="hidden" name="aprvlRank" value="${dto.aprvlRank}" />
+						</c:forEach>
+            <input type="hidden" name="edocNo" value="${edoc.edocNo}">
+            <div style="display:flex; justify-content: center; margin-top:30px;">
+		          <div class="btn-box-hover"> 
+								<button class="btn3-hover" style="width: 120px; font-size: 18px;" type="submit">확인</button> 
+							</div> 
+							<div class="btn-box-hover"> 
+								<button class="btn1-hover" style="width: 120px; margin-left: 20px; font-size: 18px;" type="button"
+								onclick="closeApprovalModal()">취소</button> 
+							</div> 
+        		</div>
+        </form>
+    </div>
+</div>
 
-		smartEditor = function() {
+	<script>
+		let oEditors = []; // 스마트에디터 초기화 
+
+		$(document).ready(function() {
+			// DOM이 완전히 로드된 후에 스마트 에디터 초기화
+			if ($("#editorTxt0").length > 0) {
+				smartEditor(); // 스마트 에디터 초기화
+			}
+
+		});
+
+		function smartEditor() {
 			nhn.husky.EZCreator.createInIFrame({
-				oAppRef : oEditors,
-				elPlaceHolder : "editorTxt0", //textarea에 부여한 아이디와 동일해야한다.
-				sSkinURI : "/smarteditor/SmartEditor2Skin.html", //자신의 프로젝트에 맞게 경로 수정
+				oAppRef : oEditors, // 스마트 에디터 인스턴스를 oEditors 배열에 할당
+				elPlaceHolder : "editorTxt0", // 스마트에디터를 띄울 textarea의 id
+				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", // 스마트에디터 skin 경로
 				htParams : {
-					// 입력창 크키 조절바 사용여부 (true: 사용, false: 미사용)
+					bUseToolbar : false, // 툴바 사용여부 (true: 사용, false: 미사용)
 					bUseVerticalResizer : false,
+					// 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
+					bUseModeChanger : false
+					// 모드 탭(Editor | HTML | TEXT) 사용여부 (true: 사용, false: 미사용)
 				},
 				fCreator : "createSEditor2"
-			})
+			});
 		}
 
-		$(document)
-				.ready(
-						function() {
-							//스마트에디터 적용
-							smartEditor();
-							//값 불러오기
-							function preview() {
-								// 에디터의 내용을 textarea에 적용
-								oEditors.getById["editorTxt0"].exec(
-										"UPDATE_CONTENTS_FIELD", []);
-								// textarea 값 불러오기 
-								var content = document
-										.getElementById("editorTxt0").value;
-								alert(content);
-								return;
-							}
+		$(document).ready(
+				function() {
+					// 서버에서 전달된 edoc.content 값을 스마트에디터에 삽입
+					var initialContent = "${edocContent}";
 
-						})
+					if (initialContent) {
+						// 스마트에디터가 정상적으로 초기화되었을 때
+						setTimeout(function() {
+							oEditors.getById["editorTxt0"].exec("SET_CONTENTS",
+									[ initialContent ]);
+
+							// 읽기 전용 설정
+							oEditors.getById["editorTxt0"]
+									.exec("DISABLE_WYSIWYG");
+
+						}, 500); // 조금 지연시켜서 스마트에디터가 완전히 로드된 후에 내용 삽입
+					}
+				});
+
+		function preview() {
+			// 에디터의 내용을 textarea에 적용
+			if (oEditors.length > 0) {
+				oEditors[0].exec("UPDATE_CONTENTS_FIELD", []); // 첫 번째 스마트에디터 인스턴스 접근
+				// textarea 값 불러오기
+				var content = document.getElementById("editorTxt0").value;
+				alert(content);
+			}
+		}
 	</script>
-	<!-- 모달 start -->
-					<div class="modal fade" id="basicModal" tabindex="-1"
-						aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title">Basic Modal</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body"></div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">Save
-										changes</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 모달 end -->
-	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	
+<script>
+    function openApprovalModal() {
+        document.getElementById('approvalModalOverlay').style.display = 'block';
+        document.getElementById('approvalModal').style.display = 'block';
+    }
 
+    function closeApprovalModal() {
+        document.getElementById('approvalModalOverlay').style.display = 'none';
+        document.getElementById('approvalModal').style.display = 'none';
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
+
+<style>
+	/* 모달 기본 스타일 */
+       .modal {
+           display: none; /* 기본적으로 숨김 */
+           position: fixed; /* 화면 고정 */
+           z-index: 1000; /* 다른 요소보다 위에 표시 */
+           left: 50%;
+           top: 50%;
+           transform: translate(-50%, -50%);
+           width: 500px; /* 원하는 너비 조정 */
+           height: 150px;
+           background-color: white;
+           box-shadow: 0 5px 15px rgba(0,0,0,.5);
+           padding: 20px;
+           border-radius: 8px;
+       }
+
+       /* 모달을 화면 전체에 반투명 배경으로 감싸기 */
+       .modal-overlay {
+           display: none; /* 기본적으로 숨김 */
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background: rgba(0, 0, 0, 0.5);
+           z-index: 999; /* 모달 창보다 낮게 설정 */
+       }
+       
+         .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .modal textarea {
+            width: 100%;
+            height: 100px;
+            resize: none; /* 크기 조절 비활성화 */
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .modal-footer button {
+            padding: 0.5rem 1rem;
+        }
+</style>
 </html>

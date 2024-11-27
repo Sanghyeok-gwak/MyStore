@@ -392,7 +392,7 @@ input[type=file]::file-selector-button {
 						</div>
 						<div class="btn-box-hover">
 							<button class="btn1-hover"
-								style="width: 120px; margin-left: 20px; font-size: 18px;"
+								style="width: 120px; margin-left: 20px; font-size: 18px;" type="button"
 								onclick="goBack();">뒤로가기</button>
 						</div>
 					</div>
@@ -617,6 +617,8 @@ input[type=file]::file-selector-button {
 	                    // 첫 번째 결재자는 1차 결재자라는 표시를 추가
 	                    if (index === 0) {
 	                        listItem = '<li class="list-group-item list-group-item-primary">1차 결재자: ' + node.text + '</li>';
+	                    } else{
+	                    		listItem = '<li class="list-group-item list-group-item-primary">2차 결재자: ' + node.text + '</li>';
 	                    }
 
 	                    $('#selectedList').append(listItem);
