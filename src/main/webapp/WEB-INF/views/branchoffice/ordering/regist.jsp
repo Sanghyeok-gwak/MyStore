@@ -131,6 +131,7 @@
             	    const tableBody = document.querySelector('table tbody');
             	    tableBody.innerHTML = '';  // 기존 테이블 내용 삭제
 
+                    var index = 0;
             	    data.forEach(function(item) {
             	        const row = document.createElement('tr');
 
@@ -139,7 +140,7 @@
             	            '<td>' + item.productName + '</td>' +
             	            '<td>' + (item.event || '행사없음') + '</td>' +
             	            '<td>' + item.inventory + '</td>' +
-            	            '<td><input style="padding-left:10px;" type="number" name="productList[' + item.productNo + '].inventory" value="'+item.count+'"></td>' +
+            	            '<td><input style="padding-left:10px;" type="number" name="productList[' + (index++) + '].count" value="'+item.count+'"></td>' +
             	            '<td>' + (item.useYn === 'Y' ? '발주가능' : '발주불가능') + '</td>';
 
             	        row.classList.add('product-row');
@@ -185,6 +186,7 @@
             	    const tableBody = document.querySelector('table tbody');
             	    tableBody.innerHTML = ''; 
 
+                    var index = 0;
             	    data.forEach(function(item) {
             	    const row = document.createElement('tr');
 
@@ -193,7 +195,7 @@
             	        '<td>' + item.productName + '</td>' +
             	        '<td>' + (item.event || '행사없음') + '</td>' +
             	        '<td>' + item.inventory + '</td>' +
-            	        '<td><input style="padding-left:10px;" type="number" name="productList[' + item.productNo + '].inventory" value="'+item.count+'"></td>' +
+            	        '<td><input style="padding-left:10px;" type="number" name="productList[' + (index++) + '].count" value="'+item.count+'"></td>' +
             	        '<td>' + (item.useYn === 'Y' ? '발주가능' : '발주불가능') + '</td>';
 
             	      row.classList.add('product-row');
