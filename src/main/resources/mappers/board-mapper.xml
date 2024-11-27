@@ -113,6 +113,9 @@
         SELECT 
             b.board_check,
             b.board_no, 
+            (select board_type_no
+            from tbl_boardtype
+            where board_type_no = #{board_type_no}),
             b.board_type_no,
             b.board_dept, 
             b.board_title, 
@@ -130,8 +133,7 @@
             ROW_NUMBER() OVER (PARTITION BY b.board_check ORDER BY b.create_date DESC, b.board_no DESC) AS row_num
         FROM tbl_board b
         WHERE b.USE_YN = 'Y'
-          AND b.board_type_no = #{board_type_no}
-            AND ${condition} LIKE '%' || #{keyword} || '%'
+        AND ${condition} LIKE '%' || #{keyword} || '%'
   
     )
     SELECT 

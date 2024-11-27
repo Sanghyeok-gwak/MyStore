@@ -78,9 +78,10 @@ select[disabled] {
         var importantSection = document.getElementById('important-section');  // 'important-section'으로 수정
         var importantCheckbox = document.getElementById('boardCheck');
 
+        
         // 첫 번째 드롭다운에서 값이 선택되면 두 번째 드롭다운을 활성화
         if (this.value) {
-            if (this.value === "공지사항") {
+            if (this.value === "1001") {
                 // "공지사항"이 선택된 경우 두 번째 드롭다운 활성화
                 secondSelect.disabled = false;
                 importantSection.style.display = 'block'; // 중요공지 체크박스 보이기
@@ -99,12 +100,12 @@ select[disabled] {
             }
         }
     });
-
+		
     // 중요공지 체크박스 상태 변경 시 값 설정
-    document.getElementById('boardCheck').addEventListener('change', function() {
+    //document.getElementById('boardCheck').addEventListener('change', function() {
         // 체크된 상태이면 'Y'로 설정, 체크 해제 상태이면 'N'으로 설정
-        document.getElementById('importantCheckValue').value = this.checked ? 'Y' : 'N';
-    });
+    //    document.getElementById('importantCheckValue').value = this.checked ? 'Y' : 'N';
+    //});
 </script>
 
 
@@ -195,7 +196,7 @@ $(document).ready(function() {
             return false;  // 폼 제출 방지
         }
 
-        if (boardTypeNo === "공지사항" && !boardDept) {
+        if (boardTypeNo === "1001" && !boardDept) {
             alert("부서를 선택해주세요.");
             return false;  // 폼 제출 방지
         }
@@ -209,6 +210,7 @@ $(document).ready(function() {
             alert("본문 내용을 입력해주세요.");
             return false;  // 폼 제출 방지
         }
+        
 
         return true;  // 모든 조건을 만족하면 폼 제출
     });
