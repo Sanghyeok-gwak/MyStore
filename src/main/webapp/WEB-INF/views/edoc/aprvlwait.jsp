@@ -444,8 +444,7 @@ input {
 <div class="modal-overlay" id="approvalModalOverlay">
     <div class="modal" id="approvalModal">
         <form action="${contextPath}/edoc/aprvlcpl.do" method="post">
-            <label for="approvalReason">결제사유</label>
-            <textarea id="approvalReason" name="aprvlComment"></textarea>
+            <span class="ffont1" style="width:20%; font-weight: bold;">결재 하시겠습니까?</span>
             <c:forEach var="dto" items="${list}">
 					    <input type="hidden" name="aprvlNo" value="${dto.aprvlNo}" />
 					    <input type="hidden" name="empNo" value="${dto.empNo}" />
@@ -453,9 +452,14 @@ input {
 					    <input type="hidden" name="aprvlRank" value="${dto.aprvlRank}" />
 						</c:forEach>
             <input type="hidden" name="edocNo" value="${edoc.edocNo}">
-            <div style="margin-left: 387px">
-	            <button type="submit">확인</button>
-	            <button type="button" onclick="closeApprovalModal()">취소</button>
+            <div style="display:flex; justify-content: center; margin-top:30px;">
+		          <div class="btn-box-hover"> 
+								<button class="btn3-hover" style="width: 120px; font-size: 18px;" type="submit">확인</button> 
+							</div> 
+							<div class="btn-box-hover"> 
+								<button class="btn1-hover" style="width: 120px; margin-left: 20px; font-size: 18px;" type="button"
+								onclick="closeApprovalModal()">취소</button> 
+							</div> 
         		</div>
         </form>
     </div>
@@ -465,8 +469,7 @@ input {
 <div class="modal-overlay" id="rejectionModalOverlay">
     <div class="modal" id="rejectionModal">
         <form action="${contextPath}/edoc/aprvlrjt.do" method="post">
-            <label for="rejectionReason">반려사유</label>
-            <textarea id="rejectionReason" name="aprvlComment"></textarea>
+            <span class="ffont1" style="width:20%; font-weight: bold;">반려 하시겠습니까?</span>
             <c:forEach var="dto" items="${list}">
 					    <input type="hidden" name="aprvlNo" value="${dto.aprvlNo}" />
 					    <input type="hidden" name="empNo" value="${dto.empNo}" />
@@ -474,10 +477,15 @@ input {
 					    <input type="hidden" name="aprvlRank" value="${dto.aprvlRank}" />
 						</c:forEach>
             <input type="hidden" name="edocNo" value="${edoc.edocNo}">
-            <div style="margin-left: 387px">
-	            <button type="submit">확인</button>
-	            <button type="button" onclick="closeRejectionModal()">취소</button>
-            </div>
+            <div style="display:flex; justify-content: center; margin-top:30px;">
+		          <div class="btn-box-hover"> 
+								<button class="btn3-hover" style="width: 120px; font-size: 18px;" type="submit">확인</button> 
+							</div> 
+							<div class="btn-box-hover"> 
+								<button class="btn1-hover" style="width: 120px; margin-left: 20px; font-size: 18px;" type="button"
+								onclick="closeRejectionModal()">취소</button> 
+							</div> 
+        		</div>
         </form>
     </div>
 </div>
@@ -491,6 +499,7 @@ input {
 			if ($("#editorTxt0").length > 0) {
 				smartEditor(); // 스마트 에디터 초기화
 			}
+
 		});
 
 		function smartEditor() {
@@ -579,7 +588,7 @@ input {
            top: 50%;
            transform: translate(-50%, -50%);
            width: 500px; /* 원하는 너비 조정 */
-           height: 250px;
+           height: 150px;
            background-color: white;
            box-shadow: 0 5px 15px rgba(0,0,0,.5);
            padding: 20px;

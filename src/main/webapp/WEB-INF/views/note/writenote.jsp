@@ -168,18 +168,18 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
             </div>
             <div class="note-side-a-box">
                 <ul style="padding-left:0px!important;">
-                    <li>
-                        <a href="">받은쪽지함</a><br>
-                    </li>
-                    <li>
-                        <a href="">보낸쪽지함</a><br>
-                    </li>
-                    <li>
-                        <a href="">임시보관함</a><br>
-                    </li>
-                    <li>
-                        <a href="">휴지통</a><br>
-                    </li>
+                     <li>
+					              <a href="${contextPath}/note/reception.no">받은쪽지함</a><br>
+					           </li>
+					           <li>
+					              <a href="${contextPath}/note/send.no" >보낸쪽지함</a><br>
+					           </li>
+					           <li>
+					              <a href="${contextPath }/note/temporay.no">임시보관함</a>
+					           </li>
+					           <li>
+					              <a href="${contextPath }/note/trashnote.no">휴지통</a><br>
+					           </li>
                 </ul>
             </div>
           </div>

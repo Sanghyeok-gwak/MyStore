@@ -65,6 +65,6 @@
 	     where emp_no = #{empNo}
 	       and TRUNC(WORK_DAY) = TRUNC(SYSDATE)
 	</update>
-
+	
 
 </mapper>

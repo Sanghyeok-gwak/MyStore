@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -350,7 +351,7 @@ input[type=file]::file-selector-button {
 
 							<c:otherwise>
 								<c:forEach var="fl" items="${ list }">
-									<tr>
+									<tr onclick='location.href = "${contextPath}/edoc/draftwait.do?no=${ fl.edocNo }";'>
 										<td>${ fl.edocNo }</td>
 										<td>${ fl.sampleNo }</td>
 										<td>${ fl.edocTitle }</td>

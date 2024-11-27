@@ -15,9 +15,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class WorkServiceImpl implements WorkService {
-	
+
 	private final WorkDao workDao;
-	
+
 	@Override
 	public void insertEmpWork() {
 		workDao.empAllWorkInser();
@@ -25,8 +25,6 @@ public class WorkServiceImpl implements WorkService {
 
 	@Override
 	public List<WorkDto> selectWorkCheck(EmpMemberDto em) {
-		Date workDay = new Date();
-		
 		return workDao.selectWorkCheck(em);
 	}
 
@@ -37,10 +35,12 @@ public class WorkServiceImpl implements WorkService {
 
 	@Override
 	public int updateEndTime(EmpMemberDto em) {
-		return workDao.upydateStTime(em);
+		return workDao.updateStTime(em);
 	}
-	
-	
-	
-	
+
+	@Override
+	public int updateWorkStatus(WorkDto workData) {
+		return workDao.updateWorkStatus(workData);
+	}
+
 }

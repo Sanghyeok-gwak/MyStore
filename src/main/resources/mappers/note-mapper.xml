@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="noteMapper">
-
-<resultMap id="sendNoteResultMap" type="SendNoteDto">
+<resultMap id="noteResultMap" type="NoteDto">
 	<result column="SEND_NO" property="sendNo"/>
 	<result column="TITLE" property="title"/>
 	<result column="CONTENT" property="content"/>
@@ -10,51 +9,135 @@
 	<result column="SEND_ID" property="sentId"/>
 	<result column="STATUS" property="status"/>
 	<result column="TEMP_STORAGE" property="tempStorage"/>
-</resultMap>
-<resultMap id="receptionNoteResultMap" type="ReceptionNoteDto">
+	<result column="RECEPTION_ID" property="receptionId"/>
 	<result column="RECEPTION_NO" property="receptionNo"/>
-	<result column="SEND_NO" property="sendNo"/>
-	<result column="SENT_ID" property="sentId"/>
 	<result column="RECEP_ID" property="recepId"/>
-	<result column="TITLE" property="title"/>
-	<result column="CONTENT" property="content"/>
 	<result column="REC_CHECK" property="recCheck"/>
-	<result column="REC_DATE" property="recCheck"/>
-	<result column="STATUS" property="status"/>
+	<result column="REC_DATE" property="recDate"/>
+	<result column="DELETE_DATE" property="deleteDate"/>
+	<result column="SOURCE" property="source"/>
 </resultMap>
 
-	<!-- 
-	<select id="selectInBoxCount" resultType="_int">
+
+	<select id="selectRecepCount" resultType="_int">
 	select
 				count(*)
 		FROM  
-	   		 TBL_NOTE
+	   		 TBL_RECEPTION_NOTE
 	WHERE 
-	    	 EMP_NO = #{empNo}
+	    	 RECEP_ID = #{empNo}
 		  and
-		     STATUS = 'D' 		
+		     STATUS = #{status} 		
+				
+	
+	</select>
+	
+	<select id="selectSendCount" resultType="_int">
+	select
+				count(*)
+		FROM  
+	   		 TBL_SEND_NOTE
+	WHERE 
+	    	 SEND_ID = #{empNo}
+		  and
+		     STATUS = #{status} 		
 				
 	
 	</select>
 	
 	<select id="selectInBox" resultMap="noteResultMap">
 		SELECT 
-	    NOTE_ID,
-	    NOTE_TITLE,
-	    NOTE_CONTENT,
-	    SENT_TIME,
-	    SEND_ID,
-	    DELIVER_ID,
-	    STATUS,
-	    RECEIVED_TIME,
-	    EMP_NO
+			    RECEPTION_NO,
+					SEND_NO,
+					SENT_ID,
+					RECEP_ID,
+					TITLE,
+					CONTENT,
+					REC_CHECK,
+					REC_DATE,
+					STATUS
 	FROM 
-	    TBL_NOTE
+	    TBL_RECEPTION_NOTE
 	WHERE 
-	    EMP_NO = #{empNo}
+	    RECEP_ID = #{empNo}
 	    and
-		     STATUS = 'D' 
+		     STATUS = 'Y'  
 	</select>
+	<select id="selectSendList" resultMap="noteResultMap">
+		SELECT
+					SEND_NO,
+					TITLE,
+					CONTENT,
+					SENT_DATE,
+					SEND_ID,
+					STATUS,
+					TEMP_STORAGE,
+					RECEPTION_ID
+	    FROM 
+	   			TBL_SEND_NOTE
+	   WHERE 
+			    SEND_ID = #{empNo}
+			    and
+				  STATUS = 'Y'  			
+	</select>
+	<select id="selectTemporayList" resultMap="noteResultMap">
+		SELECT
+					SEND_NO,
+					TITLE,
+					CONTENT,
+					SENT_DATE,
+					SEND_ID,
+					STATUS,
+					TEMP_STORAGE,
+					RECEPTION_ID
+	    FROM 
+	   			TBL_SEND_NOTE	
+	   WHERE 
+			    SEND_ID = #{empNo}
+			    and
+				  STATUS = 'Y'  			
+			    and
+				  TEMP_STORAGE = 'Y'  			
+	</select>
+	<select id="selectTrashNote" resultMap="noteResultMap">
+	SELECT 
+		    SEND_NO, 
+		    TITLE, 
+		    CONTENT, 
+		    SEND_ID, 
+		    STATUS, 
+		    NULL AS RECEPTION_NO, 
+		    NULL AS RECEP_ID,
+		    'R' AS SOURCE,
+		    DELETE_DATE
+		FROM 
+		    TBL_SEND_NOTE 
+		WHERE 
+		    STATUS = 'N'
+		    AND SEND_ID = #{empNo}
+		UNION ALL
+		SELECT 
+		    SEND_NO, 
+		    TITLE, 
+		    CONTENT, 
+		    NULL AS SEND_ID, 
+		    STATUS, 
+		    RECEPTION_NO, 
+		    RECEP_ID,
+		    'S' AS SOURCE,
+		    DELETE_DATE 
+		FROM 
+		    TBL_RECEPTION_NOTE 
+		WHERE 
+		    STATUS = 'N'
+		    AND RECEP_ID = #{empNo}
+	
+	
+	</select>
+	
+	
+	
+	<!-- 
 	<insert id="sendNote">
 	INSERT INTO 
 			         TBL_NOTE 

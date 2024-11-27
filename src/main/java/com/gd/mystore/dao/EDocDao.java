@@ -146,22 +146,26 @@ public class EDocDao {
 	}
 
 	
-	// 결재 목록 상세페이지
+	// 결재 대기 상세페이지
 	public EDocDto aprvlWait(int no) {
 		return sqlSession.selectOne("edocMapper.aprvlWait", no);
 	}
+	
+	// 결재 예정 상세페이지
+	public EDocDto aprvlscheduled(int no) {
+		return sqlSession.selectOne("edocMapper.aprvlscheduled", no);
+	}
 
+	// 결재 완료 상세페이지
+	public EDocDto aprvlcomplete(int no) {
+		return sqlSession.selectOne("edocMapper.aprvlcomplete", no);
+	}
+
+	// 결재자 정보 불러오기
 	public List<EDocApprovalDto> aprvlList(int no) {
 		return sqlSession.selectList("edocMapper.aprvlList", no);
 	}
 
-	public int aprvlcpl(EDocApprovalDto approval) {
-		return sqlSession.update("edocMapper.aprvlcpl", approval);
-	}
-	
-	public int aprvlcplEdoc(EDocDto edocDto) {
-		return sqlSession.update("edocMapper.aprvlcplEdoc", edocDto);
-	}
 
 	
 	// 결재하기
@@ -193,6 +197,15 @@ public class EDocDao {
     public int updateEdocStatusR(EDocDto edocDto) {
         return sqlSession.update("edocMapper.updateEdocStatusR", edocDto);
     }
+
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 	

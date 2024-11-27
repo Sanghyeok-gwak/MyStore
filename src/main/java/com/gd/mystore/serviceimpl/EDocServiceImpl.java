@@ -167,12 +167,25 @@ public class EDocServiceImpl implements EDocService {
 	}
 
 	
-	// 결재 목록 상세페이지
+	// 결재 대기 상세페이지
 	@Override
 	public EDocDto aprvlWait(int no) {
 		return edocDao.aprvlWait(no);
 	}
+	
+	// 결재 예정 상세페이지
+	@Override
+	public EDocDto aprvlscheduled(int no) {
+		return edocDao.aprvlscheduled(no);
+	}
 
+	// 결재 완료 상세페이지
+	@Override
+	public EDocDto aprvlcomplete(int no) {
+		return edocDao.aprvlcomplete(no);
+	}
+
+	// 결재자 정보 불러오기
 	@Override
 	public List<EDocApprovalDto> aprvlList(int no) {
 		return edocDao.aprvlList(no);
@@ -234,4 +247,5 @@ public class EDocServiceImpl implements EDocService {
         return (updateApprovalResult > 0 && updateEdocResult > 0) ? 1 : 0;
     }
 
+	
 }

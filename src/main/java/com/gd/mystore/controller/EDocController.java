@@ -487,6 +487,53 @@ public class EDocController {
 		
 		return "redirect:/edoc/aprvlwaitList.do";
 	}
+	
+	
+	// 결재 예정 상세페이지
+	@GetMapping("/aprvlscheduled.do")
+	public String aprvlscheduled(int no, Model model) {
+		
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
+		EDocDto edoc = edocService.aprvlscheduled(no);
+		
+		// 상세페이지에 필요한 결재자 정보
+		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
+		
+		String escapedContent = edoc.getEdocContent()
+                .replace("\"", "\\\"")  // 큰따옴표만 이스케이프
+                .replace("\r", "")      // 줄바꿈 제거
+                .replace("\n", "");     // 줄바꿈 제거
+		
+		model.addAttribute("edoc", edoc);
+		model.addAttribute("list", aprvlList);
+		model.addAttribute("edocContent", escapedContent);
+		
+		return "edoc/aprvlscheduled";		
+	}
+	
+	// 결재 완료 상세페이지	
+	@GetMapping("/aprvlcomplete.do")
+	public String aprvlcomplete(int no, Model model) {
+		
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
+		EDocDto edoc = edocService.aprvlcomplete(no);
+		
+		// 상세페이지에 필요한 결재자 정보
+		List<EDocApprovalDto> aprvlList = edocService.aprvlList(no);
+		
+		String escapedContent = edoc.getEdocContent()
+                .replace("\"", "\\\"")  // 큰따옴표만 이스케이프
+                .replace("\r", "")      // 줄바꿈 제거
+                .replace("\n", "");     // 줄바꿈 제거
+		
+		model.addAttribute("edoc", edoc);
+		model.addAttribute("list", aprvlList);
+		model.addAttribute("edocContent", escapedContent);
+		
+		return "edoc/aprvlcomplete";		
+	}
 
 	
 

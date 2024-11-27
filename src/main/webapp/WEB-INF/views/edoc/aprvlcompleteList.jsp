@@ -354,7 +354,7 @@ input[type=file]::file-selector-button {
 
 							<c:otherwise>
 								<c:forEach var="cl" items="${ list }">
-									<tr>
+									<tr onclick='location.href = "${contextPath}/edoc/aprvlcomplete.do?no=${ cl.edocNo }";'>
 										<td>${ cl.aprvlEdocNo }</td>
 										<td>${ cl.sampleNo }</td>
 										<td>${ cl.edocTitle }</td>

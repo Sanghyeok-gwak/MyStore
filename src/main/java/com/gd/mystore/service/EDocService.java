@@ -73,15 +73,26 @@ public interface EDocService {
 	List<EDocDto> draftRecoveryList(String no, PageInfoDto pi);
 	
 	
-	// 결재 목록 상세페이지
+	// 결재 상세페이지
 	// 결재 대기 상세페이지
 	EDocDto aprvlWait(int no);
+	
+	// 결재 예정 상세페이지
+	EDocDto aprvlscheduled(int no);
+	
+	// 결재 완료 상세페이지
+	EDocDto aprvlcomplete(int no);
+	
+	// 결재자 정보 불러오기
 	List<EDocApprovalDto>aprvlList(int no);
+	
 	
 	// 결재하기
 	int aprvlcpl(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no);
 	
 	// 반려하기
 	int aprvlrjt(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no);
+	
+
 	
 }

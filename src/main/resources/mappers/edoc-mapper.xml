@@ -712,40 +712,141 @@
 		   and
 		    	e.edoc_no = #{no}
 	</select>
+	
+	<!-- 결재 예정 상세페이지 -->
+	<select id="aprvlscheduled" resultMap="EdocDtoMap">
+		select 
+			    e.edoc_no,
+			    e.edoc_title,
+			    e.edoc_content,
+			    to_char(e.edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    e.edoc_enddate,
+			    e.final_date,
+			    e.edoc_status,
+			    e.emp_no,
+			    <!-- 작성자 이름 --> 
+			    (select emp.emp_name 
+			     from tbl_employee emp 
+			     where emp.emp_no = e.emp_no) as emp_name,
+			    <!-- 부서명 --> 
+			    (select dept.dept_name 
+			     from tbl_department dept 
+			     where dept.dept_code = 
+			           (select emp.dept_code 
+			            from tbl_employee emp 
+			            where emp.emp_no = e.emp_no) ) as dept_name,
+			    <!-- 샘플 양식 유형 -->
+			    (select s.sample_dot_code 
+			     from tbl_edoc_sample s 
+			     where s.sample_no = e.sample_no) as sample_dot_code,
+			    <!-- 작성자 직급 -->
+			    (select cc.nm 
+			     from tbl_common_code cc 
+			     where cc.cd = 
+			           (select emp.emp_rank 
+			            from tbl_employee emp 
+			            where emp.emp_no = e.emp_no) ) as nm,
+			    <!-- 첨부파일 정보 -->
+			    a.attach_no,
+			    a.attach_original_filename,
+			    a.attach_rename_filename,
+			    a.file_path
+			from 
+		    	tbl_edoc e
+		 	left join 
+		   		tbl_edoc_attachment a on e.edoc_no = a.attach_edoc_ref
+		  inner join 
+    			tbl_edoc_approval aprv on e.edoc_no = aprv.aprvl_edoc_no
+		 where 
+		    	aprv.aprvl_status = 'W'
+		   and
+		    	e.edoc_no = #{no}
+	</select>
+	
+	<!-- 결재 완료 상세페이지 -->
+	<select id="aprvlcomplete" resultMap="EdocDtoMap">
+		select 
+			    e.edoc_no,
+			    e.edoc_title,
+			    e.edoc_content,
+			    to_char(e.edoc_startdate, 'YYYY-MM-DD') edoc_startdate,
+			    e.edoc_enddate,
+			    e.final_date,
+			    e.edoc_status,
+			    e.emp_no,
+			    <!-- 작성자 이름 --> 
+			    (select emp.emp_name 
+			     from tbl_employee emp 
+			     where emp.emp_no = e.emp_no) as emp_name,
+			    <!-- 부서명 --> 
+			    (select dept.dept_name 
+			     from tbl_department dept 
+			     where dept.dept_code = 
+			           (select emp.dept_code 
+			            from tbl_employee emp 
+			            where emp.emp_no = e.emp_no) ) as dept_name,
+			    <!-- 샘플 양식 유형 -->
+			    (select s.sample_dot_code 
+			     from tbl_edoc_sample s 
+			     where s.sample_no = e.sample_no) as sample_dot_code,
+			    <!-- 작성자 직급 -->
+			    (select cc.nm 
+			     from tbl_common_code cc 
+			     where cc.cd = 
+			           (select emp.emp_rank 
+			            from tbl_employee emp 
+			            where emp.emp_no = e.emp_no) ) as nm,
+			    <!-- 첨부파일 정보 -->
+			    a.attach_no,
+			    a.attach_original_filename,
+			    a.attach_rename_filename,
+			    a.file_path
+			from 
+		    	tbl_edoc e
+		 	left join 
+		   		tbl_edoc_attachment a on e.edoc_no = a.attach_edoc_ref
+		  inner join 
+    			tbl_edoc_approval aprv on e.edoc_no = aprv.aprvl_edoc_no
+		 where 
+		    	aprv.aprvl_status = 'Y'
+		   and
+		    	e.edoc_no = #{no}
+	</select>
 
 	<!-- 결재자 목록 -->
 	<select id="aprvlList" resultMap="EDocApprovalDtoMap">
 		select 
-		    aprv.aprvl_no,              
-		    aprv.aprvl_edoc_no,         
-		    aprv.aprvl_rank,
-		    aprv.aprvl_status,
-		    aprv.aprvl_comment,
-		    aprv.aprvl_date,
-       	aprv.emp_no,
-		    <!-- 결재자 이름 -->
-		    (select emp.emp_name 
-		     from tbl_employee emp 
-		     where emp.emp_no = aprv.emp_no) as emp_name,
-		    <!-- 결재자 부서명 -->
-		    (select dept.dept_name 
-		     from tbl_department dept 
-		     where dept.dept_code = 
-		           (select emp.dept_code 
-		            from tbl_employee emp 
-		            where emp.emp_no = aprv.emp_no) ) as dept_name,
-		    <!-- 결재자 직급 -->
-		    (select code.nm 
-		     from tbl_common_code code 
-		     where code.cd = 
-		           (select emp.emp_rank 
-		            from tbl_employee emp 
-		            where emp.emp_no = aprv.emp_no) ) as nm
-		from 
-		    tbl_edoc_approval aprv
-		where 
-		    aprv.aprvl_edoc_no = #{no}
+			    aprv.aprvl_no,              
+			    aprv.aprvl_edoc_no,         
+			    aprv.aprvl_rank,
+			    aprv.aprvl_status,
+			    aprv.aprvl_comment,
+			    aprv.aprvl_date,
+	       	aprv.emp_no,
+			    <!-- 결재자 이름 -->
+			    (select emp.emp_name 
+			     from tbl_employee emp 
+			     where emp.emp_no = aprv.emp_no) as emp_name,
+			    <!-- 결재자 부서명 -->
+			    (select dept.dept_name 
+			     from tbl_department dept 
+			     where dept.dept_code = 
+			           (select emp.dept_code 
+			            from tbl_employee emp 
+			            where emp.emp_no = aprv.emp_no) ) as dept_name,
+			    <!-- 결재자 직급 -->
+			    (select code.nm 
+			     from tbl_common_code code 
+			     where code.cd = 
+			           (select emp.emp_rank 
+			            from tbl_employee emp 
+			            where emp.emp_no = aprv.emp_no) ) as nm
+			from 
+			    tbl_edoc_approval aprv
+		 where 
+			    aprv.aprvl_edoc_no = #{no}
 	</select>
+
 	
 	
 	

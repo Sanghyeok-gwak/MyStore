@@ -68,8 +68,13 @@
     	<div class="payment-list">
 	        <div class="btn-box-print">
 	        
-	        	<!-- 출력하기 로직 추가해야됨  -->
-	        	<button><i class="bi bi-printer" style="font-size:25px"></i></button>
+	        	<button type="button" onclick="window.location.href='${contextPath}/generatePdf'">
+				    <i class="bi bi-printer" style="font-size:25px"></i> 급여출력
+				</button>
+
+	        
+	        
+
 	        
 	        </div>
 	
