@@ -376,6 +376,11 @@ $(function() {
                             "action": function() {
                                 var tree = $('#jstree').jstree(true);
                                 tree.edit($node);  // 해당 노드를 수정 가능하도록 편집 모드로 진입
+								$(".jstree-rename-input").focusout(function() {
+									var id = $node.id;
+									var after_name = $(".jstree-rename-input").val();
+									alert(id + ':' + after_name);
+								});
                             }
                         };
 
