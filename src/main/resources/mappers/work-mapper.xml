@@ -51,10 +51,13 @@
 	<!-- 출근 -->
 	<update id="empWorkStartTime">
 		update tbl_work
-       	   set 
-          	   work_start_time = TO_CHAR(SYSDATE, 'HH24:MI:SS')
-     	 where emp_no = #{empNo}
-     	   and TRUNC(WORK_DAY) = TRUNC(SYSDATE)
+	     set work_start_time = to_char(sysdate, 'HH24:MI:SS')
+		     , work_attendance = case
+      when sysdate > to_date(to_char(sysdate, 'YY/MM/DD') || ' 09:00:00', 'YY/MM/DD HH24:MI:SS') then 'J'
+      else 'O'
+       end 
+		 where emp_no = #{empNo}
+		   and trunc(work_day) = trunc(sysdate)
 	</update>
 	
 	<!-- 퇴근 -->

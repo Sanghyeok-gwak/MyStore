@@ -68,7 +68,6 @@ public class WorkController {
 //			return workService.selectWorkCheck(em);
 			return 3;
 		}
-
 	}
 
 	@ResponseBody
