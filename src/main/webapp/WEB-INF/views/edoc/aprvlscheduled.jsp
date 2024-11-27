@@ -383,7 +383,7 @@ input {
 	                </tr>
 	                <tr>
 						<td id="aprr1_content2" rowspan="3" style="position: relative;">
-							<p style="margin-top:16px;">${aprvl.nm}</p>
+							<p style="margin-top:16px;">${aprvl.empName}</p>
 							<c:if test="${aprvl.aprvlStatus eq 'Y'}">
 								<img src="${ contextPath }/resources/images/승인.png" style="position: absolute; top:0px; left:10px; width: 130px; height:80px;">
 							</c:if>

@@ -32,7 +32,7 @@
       <div class="submenu">
         <a href="${ contextPath }/edoc/edocwrite.do">작성하기</a>
         <a href="${ contextPath }/edoc/aprvlwaitList.do">결재 대기 문서함</a>
-        <a href="${ contextPath }/edoc/aprvlscheduledList.do">결재 진행 문서함</a>
+        <a href="${ contextPath }/edoc/aprvlscheduledList.do">결재 예정 문서함</a>
         <a href="${ contextPath }/edoc/aprvlcompleteList.do">결재 완료 문서함</a>
         <a href="${ contextPath }/edoc/draftwaitList.do">기안 대기 문서함</a>
         <a href="${ contextPath }/edoc/draftprogressList.do">기안 진행 문서함</a>
@@ -40,7 +40,6 @@
         <a href="${ contextPath }/edoc/draftrejectList.do">기안 반려 문서함</a>
         <a href="${ contextPath }/edoc/draftrecoveryList.do">기안 회수 문서함</a>
         <a href="${ contextPath }/edoc/formlist.do">문서 양식 관리</a>
-        <a href="${ contextPath }/note/test.do">문서 양식 관리</a>
       </div>
 			
       <div class="side-icon" onclick="toggleSubmenu(this)">										
