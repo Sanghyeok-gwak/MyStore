@@ -132,12 +132,6 @@ public class PersonnelController {
     	
     }
    
-    @ResponseBody
-    @GetMapping(value="/slist.do", produces="application/json")
-    public List<SalaryDto> salaryList(int no) {
-    	return personnelService.selectSalaryList(no);
-    }
-    
     
     
     
