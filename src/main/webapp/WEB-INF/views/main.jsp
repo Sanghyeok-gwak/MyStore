@@ -146,6 +146,18 @@
 		.fc-day-fri a {
 		    color: black;
 		}
+		.main-home-top-calender {
+        display: flex;
+        flex-direction: column;
+        height: 100%; 
+   		}
+   		
+		#calendar {
+        width: 100%; 
+        height: 100%;
+        border: 1px solid #ddd;
+   		}
+		
 
     </style>
 	
@@ -290,6 +302,8 @@
           <div class="main-home-top-edsm" style="margin-right: 20px;">
             전자결재
           </div>
+          
+           <!-- 캘린더 시작 -->
           <div class="main-home-top-calender">
           	
           	<!-- 캘린더 부분 -->
@@ -303,47 +317,24 @@
         	        headerToolbar: {
         	            left: '',
         	            center: 'title',
-        	            right: ''
+        	            right: '' 
         	        },
-        	        initialView: 'dayGridMonth',
-        	        events: function(fetchInfo, successCallback, failureCallback) {
-        	            // 필터 조건 (필요에 따라 수정 가능)
-        	            let filters = {
-        	                personal: $('#personalSchedulesCheckbox').is(':checked'),
-        	                all: $('#allSchedulesCheckbox').is(':checked')
-        	            };
-
-        	            // Ajax 요청으로 서버에서 이벤트 데이터 조회
-        	            $.ajax({
-        	                url: `${contextPath}/calendar/selectEvents.do`, // 서버 엔드포인트
-        	                type: 'GET',
-        	                data: filters, // 필터 조건 전송
-        	                dataType: 'json',
-        	                success: function(response) {
-        	                    // 성공적으로 가져온 이벤트 데이터를 캘린더에 렌더링
-        	                    successCallback(response.map(event => {
-        	                        return {
-        	                            ...event,
-        	                            backgroundColor: event.color === 'B' ? 'SteelBlue' : 'SeaGreen', // 배경색
-        	                        };
-        	                    }));
-        	                },
-        	                error: function(err) {
-        	                    console.error('이벤트 조회 실패:', err);
-        	                    failureCallback(err); // 실패 시 FullCalendar에 오류 전달
-        	                }
-        	            });
-        	        }
+        	        locale: 'ko', 
+        	        initialView: 'dayGridMonth', 
+        	        height: '100%',
         	    });
 
-        	    // 캘린더 렌더링
         	    calendar.render();
         	});
 
-
           </script>
+          <!-- 캘린더 끝 -->
+          
+          
           	
           </div>
+          
+          
         </div>
         <div class="main-home-bottom">
           <div class="main-home-bottom-weather" style="margin-right: 20px;">
