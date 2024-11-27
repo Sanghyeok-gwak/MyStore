@@ -37,6 +37,4 @@ public interface PersonnelService {
 	 int selectSearchListCount(Map<String, String> search);
 	 List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
 	 
-	 List<SalaryDto> selectSalaryList(int empNo);
-
 }

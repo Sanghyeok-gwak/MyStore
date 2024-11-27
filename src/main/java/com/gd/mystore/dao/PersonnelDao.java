@@ -65,10 +65,6 @@ public class PersonnelDao {
 		return sqlSession.update("personnelMapper.updatequit", e);
 	}
 	
-	public List<SalaryDto> selectSalaryList(int empNo){
-		return sqlSession.selectList("personnelMapper.selectSalaryList", empNo);
-	}
-	
 	
 	
 }

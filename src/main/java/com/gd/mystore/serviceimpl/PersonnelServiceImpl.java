@@ -71,11 +71,6 @@ public class PersonnelServiceImpl implements PersonnelService {
 		return personnelDao.selectSearchList(search, pi);
 	}
 
-	@Override
-	public List<SalaryDto> selectSalaryList(int empNo) {
-		return personnelDao.selectSalaryList(empNo);
-	}
-
 
 
 }
