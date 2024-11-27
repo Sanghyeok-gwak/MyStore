@@ -66,11 +66,5 @@
 	       and TRUNC(WORK_DAY) = TRUNC(SYSDATE)
 	</update>
 	
-	<!-- 출근 상태 -->
-	<update>
-        update tbl_work
-               set work_attendance = #{workAttendance}
-         where emp_no = #{empNo}
-           and TRUNC(WORK_DAY) = TRUNC(SYSDATE)
-	</update>
+
 </mapper>
