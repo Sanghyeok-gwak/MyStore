@@ -69,6 +69,7 @@
      WHERE 
        		 EMP.EMP_EMPLOYMENT = 'Y'
        AND EMP.EMP_NO = #{empNo}
+       AND TRUNC(W.WORK_DAY) = TRUNC(SYSDATE)
        
   </select>
   <!-- AND TRUNC(W.WORK_DAY) = TRUNC(SYSDATE) 넣으면 null 반환 -->
