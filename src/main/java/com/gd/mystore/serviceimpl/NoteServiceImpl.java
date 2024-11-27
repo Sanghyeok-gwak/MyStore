@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.NoteDao;
-import com.gd.mystore.dto.NoteDto;
+import com.gd.mystore.dto.SendNoteDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.service.NoteService;
 
@@ -23,12 +23,12 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public List<NoteDto> selectInBox(PageInfoDto pi, String empNo) {
+	public List<SendNoteDto> selectInBox(PageInfoDto pi, String empNo) {
 		return noteDao.selectInBox(pi,empNo);
 	}
 
 	@Override
-	public int sendNote(NoteDto noteDto) {
+	public int sendNote(SendNoteDto noteDto) {
 		return noteDao.sendNote(noteDto);
 	}
 }

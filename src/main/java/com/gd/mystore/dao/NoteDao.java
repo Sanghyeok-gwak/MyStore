@@ -6,7 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.gd.mystore.dto.NoteDto;
+import com.gd.mystore.dto.SendNoteDto;
 import com.gd.mystore.dto.PageInfoDto;
 
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ public class NoteDao {
 		return sqlSession.selectOne("noteMapper.selectInBoxCount",empNo);
 	}
 
-	public List<NoteDto> selectInBox(PageInfoDto pi, String empNo){
+	public List<SendNoteDto> selectInBox(PageInfoDto pi, String empNo){
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
 		return sqlSession.selectList("noteMapper.selectInBox",empNo,rowBounds);
 	}
 	
-	public int sendNote(NoteDto noteDto) {
+	public int sendNote(SendNoteDto noteDto) {
 		return sqlSession.insert("noteMapper.sendNote",noteDto);
 	}
 	
