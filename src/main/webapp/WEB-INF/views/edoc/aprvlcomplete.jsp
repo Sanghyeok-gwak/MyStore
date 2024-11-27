@@ -382,8 +382,20 @@ input {
 	                  <td id="aprr1_content">${aprvl.nm}</td>
 	                </tr>
 	                <tr>
-	                  <td id="aprr1_content2" rowspan="3">${aprvl.empName}</td>
-	                </tr>
+										<td id="aprr1_content2" rowspan="3" style="position: relative;">
+										    <p style="margin-top: 16px;">${aprvl.empName}</p>
+										    <c:choose>
+										        <c:when test="${aprvl.aprvlStatus eq 'Y'}">
+										            <img src="${contextPath}/resources/images/승인.png"
+										                 style="position: absolute; top: -25px; left: 10px; width: 130px;">
+										        </c:when>
+										        <c:when test="${aprvl.aprvlStatus eq 'R'}">
+										            <img src="${contextPath}/resources/images/반려.png"
+										                 style="position: absolute; top: -25px; left: 10px; width: 130px;">
+										        </c:when>
+										    </c:choose>
+										</td>
+									</tr>
 	                <tr>
 	                  <td></td>
 	                </tr>

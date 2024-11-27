@@ -390,7 +390,12 @@ input {
 	                  <td id="aprr1_content">${aprvl.nm}</td>
 	                </tr>
 	                <tr>
-	                  <td id="aprr1_content2" rowspan="3">${aprvl.empName}</td>
+				 						<td id="aprr1_content2" rowspan="3" style="position: relative;">
+											<p style="margin-top:16px;">${aprvl.empName}</p>
+											<c:if test="${aprvl.aprvlStatus eq 'Y'}">
+												<img src="${ contextPath }/resources/images/승인.png" style="position: absolute; top: -25px; left: 10px; width: 130px;">
+											</c:if>
+										</td>
 	                </tr>
 	                <tr>
 	                  <td></td>

@@ -228,14 +228,14 @@ public class EDocServiceImpl implements EDocService {
 		
 		// 1번 결재자일 경우
         if (approval1.getEmpNo().equals(no)) {
-            approval1.setAprvlStatus("Y"); // 1번 결재자 상태를 'Y'로 변경
-            approval2.setAprvlStatus("Y"); // 2번 결재자 상태도 'Y'로 변경
+            approval1.setAprvlStatus("R"); // 1번 결재자 상태를 'Y'로 변경
+            approval2.setAprvlStatus(""); // 2번 결재자 상태도 'Y'로 변경
             edocDto.setEdocStatus("R");   // 전자문서 상태를 'R'로 변경
         }
         // 2번 결재자일 경우
         else if (approval2.getEmpNo().equals(no)) {
-            approval1.setAprvlStatus("Y"); // 1번 결재자 상태를 'Y'로 변경 (기본적으로 승인된 상태여야 함)
-            approval2.setAprvlStatus("Y"); // 2번 결재자 상태를 'Y'로 변경
+        	approval1.setAprvlStatus("Y"); // 1번 결재자 상태를 'Y'로 변경
+            approval2.setAprvlStatus("R"); // 2번 결재자 상태를 'R'로 변경
             edocDto.setEdocStatus("R");   // 전자문서 상태를 'R'로 변경
         }
 

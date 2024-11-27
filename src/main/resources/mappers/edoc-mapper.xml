@@ -446,7 +446,8 @@
 			    emp.emp_name AS emp_name,
 			    edoc.edoc_no,
 			    CASE 
-			        WHEN approval.aprvl_status = 'Y' THEN '완료' 
+			        WHEN approval.aprvl_status = 'Y' THEN '완료'
+			        WHEN approval.aprvl_status = 'R' THEN '반려' 
 			        ELSE approval.aprvl_status 
 			    END AS aprvl_status
 		  FROM 
@@ -459,7 +460,7 @@
 		    	tbl_edoc_sample sam ON sam.sample_no = edoc.sample_no
 		 WHERE 
 			    approval.emp_no = #{no}
-			    AND approval.aprvl_status = 'Y'
+ 					and approval.aprvl_status IN ('Y', 'R')
 			    and edoc.use_yn = 'Y'
 		ORDER BY 
 		    	edoc.edoc_startdate DESC		
@@ -808,7 +809,7 @@
 		  inner join 
     			tbl_edoc_approval aprv on e.edoc_no = aprv.aprvl_edoc_no
 		 where 
-		    	aprv.aprvl_status = 'Y'
+		    	 aprv.aprvl_status IN ('Y', 'R')
 		   and
 		    	e.edoc_no = #{no}
 	</select>
@@ -870,7 +871,7 @@
   </update>
 	
 	
-   <!-- 결재 상태 업데이트 -->
+   <!-- 결재 상태 업데이트(반려) -->
    <update id="updateApprovalStatusR">
       UPDATE TBL_EDOC_APPROVAL
       SET APRVL_STATUS = CASE
@@ -880,7 +881,7 @@
       WHERE APRVL_NO IN (#{approval1.aprvlNo}, #{approval2.aprvlNo})
    </update>
 
-   <!-- 전자문서 상태 업데이트 -->
+   <!-- 전자문서 상태 업데이트(반려) -->
    <update id="updateEdocStatusR">
       UPDATE TBL_EDOC
       SET EDOC_STATUS = #{edocStatus}
