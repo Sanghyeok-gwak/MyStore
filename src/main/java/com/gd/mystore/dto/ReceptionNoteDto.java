@@ -1,6 +1,5 @@
 package com.gd.mystore.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,14 +12,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 
-public class NoteDto {
-	private String noteId;
+
+
+public class ReceptionNoteDto {
+	private int receptionNo;
+	private int sendNo;
+	private String sentId;
+	private String recepId;
 	private String title;
 	private String content;
-	private String sentTime;
-	private String sentId;
-	private String deliverId;
+	private String recCheck;
+	private String recDate;
 	private String status;
-	private String receivedTime;
-	private String empNo;
+	
 }

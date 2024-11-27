@@ -2,18 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="noteMapper">
 
-<resultMap id="noteResultMap" type="NoteDto">
-	<result column="NOTE_ID" property="noteId"/>
-	<result column="NOTE_TITLE" property="title"/>
-	<result column="NOTE_CONTENT" property="content"/>
-	<result column="SENT_TIME" property="sentTime"/>
+<resultMap id="sendNoteResultMap" type="SendNoteDto">
+	<result column="SEND_NO" property="sendNo"/>
+	<result column="TITLE" property="title"/>
+	<result column="CONTENT" property="content"/>
+	<result column="SENT_DATE" property="sentDate"/>
 	<result column="SEND_ID" property="sentId"/>
-	<result column="DELIVER_ID" property="deliverId"/>
 	<result column="STATUS" property="status"/>
-	<result column="RECEIVED_TIME" property="receivedTime"/>
-	<result column="EMP_NO" property="empNo"/>
+	<result column="TEMP_STORAGE" property="tempStorage"/>
+</resultMap>
+<resultMap id="receptionNoteResultMap" type="ReceptionNoteDto">
+	<result column="RECEPTION_NO" property="receptionNo"/>
+	<result column="SEND_NO" property="sendNo"/>
+	<result column="SENT_ID" property="sentId"/>
+	<result column="RECEP_ID" property="recepId"/>
+	<result column="TITLE" property="title"/>
+	<result column="CONTENT" property="content"/>
+	<result column="REC_CHECK" property="recCheck"/>
+	<result column="REC_DATE" property="recCheck"/>
+	<result column="STATUS" property="status"/>
 </resultMap>
 
+	<!-- 
 	<select id="selectInBoxCount" resultType="_int">
 	select
 				count(*)
@@ -26,7 +36,6 @@
 				
 	
 	</select>
-	
 	
 	<select id="selectInBox" resultMap="noteResultMap">
 		SELECT 
@@ -74,4 +83,5 @@
 							 )
 							
 	</insert>	   
+	 -->
 </mapper>
