@@ -211,67 +211,57 @@
           </div>
           
           <script>
-          	window.onload = workCheck;
-          	
             const contextPath = '${contextPath}';
             const empNo = '${loginUser.empNo}';
             const workStartTime = '${loginUser.workStartTime}';
             const workEndTime = '${loginUser.workEndTime}';
           	
-          	function workCheck(){
-	          	$.ajax({
-					url: '${contextPath}/work/clockCheck',
-					type: 'get',
-					data: {
-						empNo: empNo,
-		                workStartTime: workStartTime,
-		                workEndTime: workEndTime
-					},
-					success: function(resData){
-						console.log(resData);
-					},
-					error: function(){
-						console.log('근태 버튼에 대한 ajax 통신 실패')
-					}
-				})
-          	}
-          	
           	function workColockIn(){
-          		$.ajax({
-          			url: '${contextPath}/work/clockIn',
-          			type: 'get',
-          			data: {
-						empNo: empNo,
-		                workStartTime: workStartTime,
-		                workEndTime: workEndTime
-          			},
-          			success: function(resData){
-          				console.log("정상")
-          				console.log(resData)
-          			},
-          			error: function(){
-						console.log('근태 버튼에 대한 ajax 통신 실패')
-					}
-          		})
+	          		$.ajax({
+	          			url: '${contextPath}/work/clockIn',
+	          			type: 'get',
+	          			data: {
+							empNo: empNo,
+			                workStartTime: workStartTime,
+			                workEndTime: workEndTime
+	          			},
+	          			success: function(resData){
+	          				console.log("정상")
+	          				console.log(resData)
+	          				
+	          				alert("출근처리가 완료되었습니다!");
+	
+	          	            location.reload();
+	          			},
+	          			error: function(){
+							console.log('근태 버튼에 대한 ajax 통신 실패')
+						}
+	          		})
           	}
           	
           	function workColockOut(){
-          		$.ajax({
-          			url: '${contextPath}/work/clockOut',
-          			type: 'get',
-          			data: {
-						empNo: empNo,
-		                workStartTime: workStartTime,
-		                workEndTime: workEndTime
-          			},
-          			success: function(resData){
-          				console.log("정상")
-          				console.log(resData)
-          			},
-          			error: function(){
-						console.log('근태 버튼에 대한 ajax 통신 실패')
-					}
-          		})
+         		if (confirm("퇴근하시겠습니까?")) {
+	          		$.ajax({
+	          			url: '${contextPath}/work/clockOut',
+	          			type: 'get',
+	          			data: {
+							empNo: empNo,
+			                workStartTime: workStartTime,
+			                workEndTime: workEndTime
+	          			},
+	          			success: function(resData){
+	          				console.log("정상")
+	          				console.log(resData)
+	          				
+	          				alert("퇴근 처리가 완료되었습니다!");
+	
+	          	            location.reload();
+	          			},
+	          			error: function(){
+							console.log('근태 버튼에 대한 ajax 통신 실패')
+						}
+	          		})
+          		}
           	}
 		  </script>
           
