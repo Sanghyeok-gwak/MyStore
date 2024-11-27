@@ -69,7 +69,10 @@
 	        <div class="btn-box-print">
 	        
 	        	<!-- 출력하기 로직 추가해야됨  -->
-	        	<button><i class="bi bi-printer" style="font-size:25px"></i></button>
+			    <button type="submit"><i class="bi bi-printer" style="font-size:25px"></i> 급여출력</button>
+	        
+	        
+
 	        
 	        </div>
 	
