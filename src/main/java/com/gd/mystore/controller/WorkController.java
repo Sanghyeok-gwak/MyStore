@@ -79,24 +79,12 @@ public class WorkController {
 
 		if (result > 0) {
 			List<WorkDto> list = workService.selectWorkCheck(em);
-			WorkDto workData = list.get(0);
-			
-			String workStartTime = workData.getWorkStartTime();
-			LocalTime lateTime = LocalTime.of(9, 0, 0);//시간 설정
-			LocalTime startTime = LocalTime.parse(workStartTime);
-			
-			if(startTime.isAfter(lateTime)) { //9시 이후 지각 처리
-				//지각
-				workData.setWorkAttendance("L");
-				return workService.updateWorkStatus(workData);
-			} else {
-				//정상 출근
-				workData.setWorkAttendance("O");
-				return workService.updateWorkStatus(workData);
-			}
-		}else {
-			return -1;
+			System.out.println("@@@@@@@@@@@@@@@@@" + list);
+			String a = list.get(0).getWorkStartTime();
+			System.out.println("################## : " + a);
 		}
+
+		return result;
 	}
 
 	// 퇴근 버튼

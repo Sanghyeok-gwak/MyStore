@@ -228,6 +228,7 @@
 	          			success: function(resData){
 	          				console.log("정상")
 	          				console.log(resData)
+	          				
 	          				if(resData > 0){
 		          				alert("출근처리가 완료되었습니다!");
 		          	            location.reload();
