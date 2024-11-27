@@ -186,7 +186,7 @@
                	
                 <div>퇴근시간:&nbsp&nbsp
                 	<c:choose>
-                		<c:when test="${ empty loginUser.getWorkStartTime() }">
+                		<c:when test="${ empty loginUser.getWorkEndTime() }">
                 			<span></span>
                 		</c:when>
                 		<c:otherwise>
