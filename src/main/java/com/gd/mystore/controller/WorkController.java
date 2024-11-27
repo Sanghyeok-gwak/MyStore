@@ -1,5 +1,6 @@
 package com.gd.mystore.controller;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,23 +79,35 @@ public class WorkController {
 
 		if (result > 0) {
 			List<WorkDto> list = workService.selectWorkCheck(em);
-			System.out.println("@@@@@@@@@@@@@@@@@" + list);
-			String a = list.get(0).getWorkStartTime();
-			System.out.println("################## : " + a);
+			WorkDto workData = list.get(0);
+			
+			String workStartTime = workData.getWorkStartTime();
+			LocalTime lateTime = LocalTime.of(9, 0, 0);//시간 설정
+			LocalTime startTime = LocalTime.parse(workStartTime);
+			
+			if(startTime.isAfter(lateTime)) { //9시 이후 지각 처리
+				//지각
+				workData.setWorkAttendance("L");
+				return workService.updateWorkStatus(workData);
+			} else {
+				//정상 출근
+				workData.setWorkAttendance("O");
+				return workService.updateWorkStatus(workData);
+			}
+		}else {
+			return -1;
 		}
-
-		return result;
 	}
 
 	// 퇴근 버튼
 	/*
-	 * 퇴근 버튼 클릭 시 update 진행 -> wor_end_time 현재 시간으로 변경 50% 미만 출근 시 결근 처리 초로 계산하면 될듯?
-	 * 다른 방법 있으면 그렇게 진행
+	 * 4시간 이상 8시간 미만 조퇴
+	 * 9시간 이상 출근
 	 */
 	@ResponseBody
 	@GetMapping("clockOut")
 	public int colockOut(EmpMemberDto em, Model model) {
-		model.addAttribute("popupMessage", "퇴근 처리");
+		
 		return workService.updateEndTime(em);
 	}
 

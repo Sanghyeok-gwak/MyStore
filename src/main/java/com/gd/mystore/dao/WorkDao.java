@@ -35,9 +35,11 @@ public class WorkDao {
 		return sqlSession.update("workMapper.empWorkStartTime", em);
 	}
 
-	public int upydateStTime(EmpMemberDto em) {
+	public int updateEndTime(EmpMemberDto em) {
 		return sqlSession.update("workMapper.empWorkEndTime", em);
 	}
 	
-	
+	public int updateWorkStatus(WorkDto workData) {
+		return sqlSession.update("workMapper.", workData);
+	}
 }

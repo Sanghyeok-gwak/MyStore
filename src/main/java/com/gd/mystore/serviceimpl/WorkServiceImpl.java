@@ -35,7 +35,12 @@ public class WorkServiceImpl implements WorkService {
 
 	@Override
 	public int updateEndTime(EmpMemberDto em) {
-		return workDao.upydateStTime(em);
+		return workDao.updateStTime(em);
+	}
+
+	@Override
+	public int updateWorkStatus(WorkDto workData) {
+		return workDao.updateWorkStatus(workData);
 	}
 
 }

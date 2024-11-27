@@ -20,4 +20,7 @@ public interface WorkService {
 
 	// 퇴근 업데이트
 	int updateEndTime(EmpMemberDto em);
+	
+	//출근 상태 업데이트
+	int updateWorkStatus(WorkDto workData);
 }
