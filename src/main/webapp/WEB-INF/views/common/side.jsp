@@ -13,7 +13,7 @@
 	        <a href="${ contextPath }/department/departmentModify.do">부서관리</a>					<!-- lv3 003-->
 	        <a href="${ contextPath }/department/departmentChangeHistory.do">부서 이동 이력</a>		<!-- lv3 003-->
 	        <a href="${ contextPath }/personnel/employeeManager">사원관리</a>						<!-- lv3 003-->
-	        <a href="${ contextPath }/salary/salaryMaster">급여관리</a>								<!-- lv3 003-->
+	        <%-- <a href="${ contextPath }/salary/salaryMaster">급여관리</a>			 --%>					<!-- lv3 003-->
 	      </div>
 			</c:if>
 	      <div class="side-icon" onclick="toggleSubmenu(this)">										
