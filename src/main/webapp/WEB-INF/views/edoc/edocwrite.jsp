@@ -393,7 +393,7 @@ input[type=file]::file-selector-button {
 						<div class="btn-box-hover">
 							<button class="btn1-hover"
 								style="width: 120px; margin-left: 20px; font-size: 18px;"
-								onclick="history.go(-1);">뒤로가기</button>
+								onclick="goBack();">뒤로가기</button>
 						</div>
 					</div>
 				</div>
@@ -703,6 +703,10 @@ input[type=file]::file-selector-button {
 	    // 처음 페이지 로드 시 상태 확인
 	    checkFormValidity();
 	});
+	
+    function goBack() {
+        window.history.back();
+    }
 	</script>
 
 	<!-- 모달 시작 -->
@@ -748,32 +752,32 @@ input[type=file]::file-selector-button {
 
 
 <!-- 
-원리 설명
-
-loaded.jstree 이벤트:
-loaded.jstree 이벤트는 트리가 처음으로 완전히 로드될 때 발생합니다. 
-이 이벤트를 이용해 트리가 처음 로드될 때 특정 레벨의 노드에서 체크박스를 제거합니다.
-
-open_node.jstree 이벤트:
-open_node.jstree 이벤트는 노드가 열릴 때마다 발생합니다. 
-사용자가 트리의 노드를 열 때마다 해당 노드와 그 하위 노드들에 대해 다시 체크박스를 제거합니다.
-
-removeCheckboxesAtLevels 함수:
-이 함수는 인자로 받은 레벨(들)에 대해 트리 내 해당 레벨의 모든 노드를 찾아내고, 각 노드의 체크박스를 제거합니다. 
-이를 위해 jQuery의 find 메서드를 사용하여 aria-level 속성이 일치하는 노드를 선택하고, 
-find('.jstree-checkbox').remove()를 통해 체크박스를 제거합니다.
-
-
-
-작동 과정
-
-트리가 처음 로드될 때 loaded.jstree 이벤트가 발생합니다. 
-이 때 removeCheckboxesAtLevels([1, 2, 3]) 함수가 호출되어 aria-level이 1, 2, 3인 모든 노드의 체크박스를 제거합니다.
-
-사용자가 트리의 노드를 열 때마다 open_node.jstree 이벤트가 발생합니다. 
-이 때도 removeCheckboxesAtLevels([1, 2, 3]) 함수가 호출되어 다시 한 번 aria-level이 1, 2, 3인 모든 노드의 체크박스를 제거합니다.
-
-이 두 가지 이벤트를 통해 초기 로드 시와 노드 열림 시마다 체크박스가 제거되어 원하는 대로 특정 레벨의 노드에서는 체크박스가 나타나지 않게 됩니다.
+	원리 설명
+	
+	loaded.jstree 이벤트:
+	loaded.jstree 이벤트는 트리가 처음으로 완전히 로드될 때 발생합니다. 
+	이 이벤트를 이용해 트리가 처음 로드될 때 특정 레벨의 노드에서 체크박스를 제거합니다.
+	
+	open_node.jstree 이벤트:
+	open_node.jstree 이벤트는 노드가 열릴 때마다 발생합니다. 
+	사용자가 트리의 노드를 열 때마다 해당 노드와 그 하위 노드들에 대해 다시 체크박스를 제거합니다.
+	
+	removeCheckboxesAtLevels 함수:
+	이 함수는 인자로 받은 레벨(들)에 대해 트리 내 해당 레벨의 모든 노드를 찾아내고, 각 노드의 체크박스를 제거합니다. 
+	이를 위해 jQuery의 find 메서드를 사용하여 aria-level 속성이 일치하는 노드를 선택하고, 
+	find('.jstree-checkbox').remove()를 통해 체크박스를 제거합니다.
+	
+	
+	
+	작동 과정
+	
+	트리가 처음 로드될 때 loaded.jstree 이벤트가 발생합니다. 
+	이 때 removeCheckboxesAtLevels([1, 2, 3]) 함수가 호출되어 aria-level이 1, 2, 3인 모든 노드의 체크박스를 제거합니다.
+	
+	사용자가 트리의 노드를 열 때마다 open_node.jstree 이벤트가 발생합니다. 
+	이 때도 removeCheckboxesAtLevels([1, 2, 3]) 함수가 호출되어 다시 한 번 aria-level이 1, 2, 3인 모든 노드의 체크박스를 제거합니다.
+	
+	이 두 가지 이벤트를 통해 초기 로드 시와 노드 열림 시마다 체크박스가 제거되어 원하는 대로 특정 레벨의 노드에서는 체크박스가 나타나지 않게 됩니다.
  -->
 
 

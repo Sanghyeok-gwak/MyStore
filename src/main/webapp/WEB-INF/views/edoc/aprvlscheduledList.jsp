@@ -336,7 +336,7 @@ pageEncoding="UTF-8"%>
 				
 											<c:otherwise>
 												<c:forEach var="cl" items="${ list }">
-													<tr>
+													<tr onclick='location.href = "${contextPath}/edoc/aprvlscheduled.do?no=${ cl.edocNo }";'>
 														<td>${ cl.aprvlEdocNo }</td>
 														<td>${ cl.sampleNo }</td>
 														<td>${ cl.edocTitle }</td>
