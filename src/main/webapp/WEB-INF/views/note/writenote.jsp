@@ -184,7 +184,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
             </div>
           </div>
           <div class="note-body">
-          	<form action="${contextPath }/note/send.do" method="post">
+          	<form action="${contextPath }/note/insert.no" method="post">
 	            <div>
 	                <b style="font-size: 25px; margin-left: 10px;">쪽지쓰기</b>
 	            </div>
@@ -203,9 +203,33 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
 	                    <div class="note-write-box2-text" style="width: 10%; height: 30px;">
 	                        <label>수신자</label>
 	                    </div>
-	                    <div class="note-write-box2-input" style="width: 90%; height: 30px;">
-	                        <input type="text" name="deliverId" style="width: 100%; height: 100%; padding-left: 10px;">
+	                    <div class="note-write-box2-input" style="width: 90%; height: 30px; display: flex;">
+	                        <input type="text" name="receptionId" id="receptionId" style="width: 100%; height: 100%; padding-left: 10px;" placeholder=",찍어서 표시하세요.">
+	                        <button type="button" onclick="fncheckEmp();" class="btn4" >조회</button>
 	                    </div>
+	                    <script>
+	                    	function fncheckEmp(){
+	                    		var receptionIdValue = document.getElementById('receptionId').value;
+	                    		
+	                    		$.ajax({
+	                    	            url: '${contextPath}/note/empcheck.no',
+	                    	            type: 'POST',
+	                    	            data: { 
+	                    	            	data: receptionIdValue
+	                    	            },
+	                    	            success: function(response) {
+	                    	                if(response == -1){
+	                    	                	alert('조회성공')
+	                    	                }else{
+	                    	                	alert('조회실패')
+	                    	                }  
+	                    	            },
+	                    	            error: function(xhr, status, error) {
+	                    	                console.error(error);
+	                    	            }
+	                    	        });
+	                    	}
+	                    </script>
 	                    <input type="hidden" name="sentId" value="${loginUser.empNo }">
 	                </div>
 	              </div>  
@@ -214,8 +238,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
 											style="margin-top: 30px; width: 100%; height: 420px;"></textarea>
 									</div>
 									<div class="note-write-btn-box">
-										<button type="button" class="btn4">임시저장</button>
-										<button type="submit" class="btn4">보내기</button>
+										<button type="submit" name="tempStorage" value="Y" class="btn4">임시저장</button>
+										<button type="submit" name="tempStorage" value="N"  class="btn4">보내기</button>
 									</div>
 									
 									<script> 
@@ -235,7 +259,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
 											$(document).ready(function() {
 												//스마트에디터 적용
 												smartEditor();
-												 // 폼 제출 시 스마트에디터 내용 textarea에 반영
+											  // 폼 제출 시 스마트에디터 내용 textarea에 반영
 										        $("form").submit(function() {
 										            // 스마트에디터에서 textarea로 내용을 반영
 										            oEditors.getById["editorTxt0"].exec("UPDATE_CONTENTS_FIELD", []);
@@ -249,5 +273,6 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
         </div>
       </div> 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+
 </body>
 </html>

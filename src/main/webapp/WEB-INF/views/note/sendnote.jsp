@@ -125,7 +125,7 @@
 			<button class="btn4" onclick="fnDeleteSelected();">휴지통</button>
 		</div>
 			<div class="table-box">
-			    <table class="table" style="text-align: center;">
+			    <table class="table table-hover" style="text-align: center;">
 			        <thead>
 			            <tr>
 				             <th style="width: 50px;">
@@ -146,18 +146,23 @@
 			        		</c:when>
 			        		<c:otherwise>
 			        			<c:forEach var="s" items="${list }" varStatus="status">
-					            <tr>
-				                <td><input type="checkBox"  name="sendNo" class="checkItem" value="${s.sendNo }"></td>
+					            <tr onclick="sendNo(${s.sendNo})">
+				                <td><input type="checkBox" onclick="event.stopPropagation()" name="sendNo" class="checkItem" value="${s.sendNo }"></td>
 				                <td>${list.size() - status.index}</td>
 				                <td>${s.title }</td>
-				                <td>${s.sentId }</td>
+				                <td>${s.receptionId }</td>
 				                <td>${s.sentDate}</td>
 					            </tr>
 					           </c:forEach> 
 			        		</c:otherwise>
 			        	</c:choose>	
 			        </tbody>
-			    </table>                
+			    </table>
+			    <script>
+	       	function sendNo(sendNo) {
+	       		window.location.href = '${contextPath}/note/sendDetail.no?no='+sendNo;
+	       	}
+       	</script>                
 				<div class="paging"> 
             <ul id="paging_area" class="pagination d-flex justify-content-center">
             

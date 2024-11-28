@@ -6,7 +6,7 @@
 	<result column="TITLE" property="title"/>
 	<result column="CONTENT" property="content"/>
 	<result column="SENT_DATE" property="sentDate"/>
-	<result column="SEND_ID" property="sentId"/>
+	<result column="SENT_ID" property="sentId"/>
 	<result column="STATUS" property="status"/>
 	<result column="TEMP_STORAGE" property="tempStorage"/>
 	<result column="RECEPTION_ID" property="receptionId"/>
@@ -38,7 +38,7 @@
 		FROM  
 	   		 TBL_SEND_NOTE
 	WHERE 
-	    	 SEND_ID = #{empNo}
+	    	 SENT_ID = #{empNo}
 		  and
 		     STATUS = #{status} 		
 				
@@ -49,7 +49,7 @@
 		SELECT 
 			    RECEPTION_NO,
 					SEND_NO,
-					SENT_ID,
+					e.EMP_NAME as "SENT_ID",
 					RECEP_ID,
 					TITLE,
 					CONTENT,
@@ -57,7 +57,8 @@
 					REC_DATE,
 					STATUS
 	FROM 
-	    TBL_RECEPTION_NOTE
+	     TBL_RECEPTION_NOTE
+	join TBL_EMPLOYEE e on (SENT_ID = e.EMP_NO)    
 	WHERE 
 	    RECEP_ID = #{empNo}
 	    and
@@ -69,14 +70,15 @@
 					TITLE,
 					CONTENT,
 					SENT_DATE,
-					SEND_ID,
+					SENT_ID,
 					STATUS,
 					TEMP_STORAGE,
-					RECEPTION_ID
+					e.EMP_NAME as "RECEPTION_ID"
 	    FROM 
 	   			TBL_SEND_NOTE
+	   	join TBL_EMPLOYEE e on (RECEPTION_ID = e.EMP_NO)		
 	   WHERE 
-			    SEND_ID = #{empNo}
+			    SENT_ID = #{empNo}
 			    and
 				  STATUS = 'Y'  			
 	</select>
@@ -86,14 +88,14 @@
 					TITLE,
 					CONTENT,
 					SENT_DATE,
-					SEND_ID,
+					SENT_ID,
 					STATUS,
 					TEMP_STORAGE,
 					RECEPTION_ID
 	    FROM 
 	   			TBL_SEND_NOTE	
 	   WHERE 
-			    SEND_ID = #{empNo}
+			    SENT_ID = #{empNo}
 			    and
 				  STATUS = 'Y'  			
 			    and
@@ -104,7 +106,7 @@
 		    SEND_NO, 
 		    TITLE, 
 		    CONTENT, 
-		    SEND_ID, 
+		    SENT_ID, 
 		    STATUS, 
 		    NULL AS RECEPTION_NO, 
 		    NULL AS RECEP_ID,
@@ -114,13 +116,13 @@
 		    TBL_SEND_NOTE 
 		WHERE 
 		    STATUS = 'N'
-		    AND SEND_ID = #{empNo}
+		    AND SENT_ID = #{empNo}
 		UNION ALL
 		SELECT 
 		    SEND_NO, 
 		    TITLE, 
 		    CONTENT, 
-		    NULL AS SEND_ID, 
+		    NULL AS SENT_ID, 
 		    STATUS, 
 		    RECEPTION_NO, 
 		    RECEP_ID,
@@ -188,6 +190,98 @@
 		 where
 		     	RECEPTION_NO = #{rValue} 	
 	</delete>
+	<select id="selectRecepDetail" resultMap="noteResultMap">
+		SELECT 
+			    RECEPTION_NO,
+					SEND_NO,
+					e.EMP_NAME as "SENT_ID",
+					RECEP_ID,
+					TITLE,
+					CONTENT,
+					REC_CHECK,
+					REC_DATE,
+					STATUS
+	FROM 
+	    TBL_RECEPTION_NOTE 
+	join TBL_EMPLOYEE e on (SENT_ID = e.EMP_NO)   
+	WHERE 
+	    RECEPTION_NO = #{no}
+	</select>
+	<select id="selectSendDetail" resultMap="noteResultMap">
+		SELECT
+					SEND_NO,
+					TITLE,
+					CONTENT,
+					SENT_DATE,
+					SENT_ID,
+					STATUS,
+					TEMP_STORAGE,
+					e.EMP_NAME as "RECEPTION_ID"
+	    FROM 
+	   			TBL_SEND_NOTE
+	   	join TBL_EMPLOYEE e on (RECEPTION_ID = e.EMP_NO)		
+	   WHERE 
+			    SEND_NO = #{no}
+	</select>
+	<select id="checkEmp" resultType="_int">
+		select count(*)
+		  from TBL_EMPLOYEE
+		 where emp_No = #{empNo} 
+	</select>
+	<insert id="insertNote">
+		INSERT INTO TBL_SEND_NOTE 
+		(
+    SEND_NO, 
+    TITLE, 
+    CONTENT, 
+    SENT_DATE, 
+    SENT_ID, 
+    STATUS, 
+    TEMP_STORAGE, 
+    RECEPTION_ID, 
+    DELETE_DATE
+		)
+		VALUES
+		(
+    SEND_NO_SEQ.nextval, 
+    #{title}, 
+    #{content}, 
+    sysdate, 
+    #{sentId}, 
+    'Y', 
+    #{tempStorage}, 
+    #{receptionId}, 
+    ''
+		)
+	</insert>
+	<insert id="insertRecepNote">
+	INSERT INTO TBL_RECEPTION_NOTE 
+							(
+							    RECEPTION_NO, 
+							    SEND_NO, 
+							    SENT_ID, 
+							    RECEP_ID, 
+							    TITLE, 
+							    CONTENT, 
+							    REC_CHECK, 
+							    REC_DATE, 
+							    STATUS, 
+							    DELETE_DATE
+							)
+							VALUES
+							(
+							    RECEPTION_NO_SEQ.nextval, 
+							    SEND_NO_SEQ.currval,
+							    #{sentId}, 
+							    #{receptionId}, 
+							    #{title}, 
+							    #{content}, 
+							    'N', 
+							    '', 
+							    'Y', 
+							    ''
+							)
+	</insert>
 	
 	<!-- 
 	<update id="">

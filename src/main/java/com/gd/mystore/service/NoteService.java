@@ -34,8 +34,16 @@ public interface NoteService {
 	
 	// 쪽지 삭제
 	int deleteNote(String[] checkedValues);
-	// 쪽지 보내기 
-	//int sendNote(SendNoteDto noteDto);
+	
+	// 받은 쪽지 상세페이지
+	NoteDto selectDetail(Map<String,Object> map);
+	
+	// 회원 아이디 체크
+	int checkEmp (String[] checkEmp);
+	
+	// 쪽지 보내기
+	int insertNote(NoteDto noteDto);
+	
 	
 	
 }

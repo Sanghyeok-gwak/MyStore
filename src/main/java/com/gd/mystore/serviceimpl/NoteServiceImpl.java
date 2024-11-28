@@ -119,6 +119,30 @@ public class NoteServiceImpl implements NoteService {
         	result+= noteDao.deletSendTrash(sValues.get(i));
         }
         
+		return result;
+	}
+
+	@Override
+	public NoteDto selectDetail(Map<String,Object> map) {
+		NoteDto noteDto = new NoteDto();
+		
+		if(map.get("type").equals("recep")) {
+			noteDto = noteDao.selectRecepDetail(((String)(map.get("no"))));
+		}else if(map.get("type").equals("send")){
+			noteDto = noteDao.selectSendDetail(((String)(map.get("no"))));
+			log.debug("noteDto : "+noteDto);
+		}
+		
+		return noteDto;
+	}
+
+	@Override
+	public int checkEmp(String[] checkEmp) {
+		int result = 0;
+		
+		for(String e : checkEmp) {
+			result += noteDao.checkEmp(e);
+		}
 		
 		
 		
@@ -126,10 +150,19 @@ public class NoteServiceImpl implements NoteService {
 		return result;
 	}
 
+	@Override
+	public int insertNote(NoteDto noteDto) {
+		
+		int result = noteDao.insertSendNote(noteDto);
+		
+		if(result>0 && !noteDto.getTempStorage().equals("Y")) {
+			result=0;
+			result = noteDao.insertRecepNote(noteDto);
+		}
+		
+		return result;
+	}
 
 
-//	@Override
-//	public int sendNote(SendNoteDto noteDto) {
-//		return noteDao.sendNote(noteDto);
-//	}
+
 }

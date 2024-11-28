@@ -62,7 +62,21 @@ public class NoteDao {
 		return sqlSession.delete("noteMapper.deletSendTrash",sValue);
 	}
 	
-	
+	public NoteDto selectRecepDetail(String no) {
+		return sqlSession.selectOne("noteMapper.selectRecepDetail",no);
+	}
+	public NoteDto selectSendDetail(String no){
+		return sqlSession.selectOne("noteMapper.selectSendDetail",no);
+	}
+	public int checkEmp(String empNo) {
+		return sqlSession.selectOne("noteMapper.checkEmp",empNo);
+	}
+	public int insertSendNote(NoteDto noteDto) {
+		return sqlSession.insert("noteMapper.insertNote",noteDto);
+	}
+	public int insertRecepNote(NoteDto noteDto) {
+		return sqlSession.insert("noteMapper.insertRecepNote",noteDto);
+	}
 	//public int sendNote(ReceptionNoteDto recepDto) {
 	//	return sqlSession.insert("noteMapper.sendNote",recepDto);
 	//}
