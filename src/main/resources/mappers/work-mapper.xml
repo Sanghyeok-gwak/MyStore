@@ -51,22 +51,33 @@
 	<!-- 출근 -->
 	<update id="empWorkStartTime">
 		update tbl_work
-	     set work_start_time = to_char(sysdate, 'HH24:MI:SS')
-		     , work_attendance = case
-												     when sysdate > to_date(to_char(sysdate, 'YY/MM/DD') || ' 09:00:00', 'YY/MM/DD HH24:MI:SS') then 'J'
-												     else 'O'
-												      end 
+	       set work_start_time = to_char(sysdate, 'HH24:MI:SS')
 		 where emp_no = #{empNo}
 		   and trunc(work_day) = trunc(sysdate)
 	</update>
 	
 	<!-- 퇴근 -->
 	<update id="empWorkEndTime">
-		update tbl_work
-	       set 
-	           WORK_END_TIME = TO_CHAR(SYSDATE, 'HH24:MI:SS')
-	     where emp_no = #{empNo}
-	       and TRUNC(WORK_DAY) = TRUNC(SYSDATE)
+	
+		<![CDATA[
+		UPDATE 
+			   TBL_WORK
+  		   SET 
+  		   	   WORK_END_TIME = TO_CHAR(SYSDATE, 'HH24:MI:SS')
+  		   	 , WORK_ATTENDANCE =
+                        CASE 
+                            WHEN ((TO_DATE(TO_CHAR(SYSDATE, 'HH24:MI:SS'), 'HH24:MI:SS') - TO_DATE(WORK_START_TIME, 'HH24:MI:SS')) * 24) < 4 THEN 'N'
+                            WHEN ((TO_DATE(TO_CHAR(SYSDATE, 'HH24:MI:SS'), 'HH24:MI:SS') - TO_DATE(WORK_START_TIME, 'HH24:MI:SS')) * 24) >= 4 
+                                 AND ((TO_DATE(TO_CHAR(SYSDATE, 'HH24:MI:SS'), 'HH24:MI:SS') - TO_DATE(WORK_START_TIME, 'HH24:MI:SS')) * 24) < 9 THEN 'J'
+                            WHEN TO_DATE(WORK_START_TIME, 'HH24:MI:SS') <= TO_DATE('09:00:00', 'HH24:MI:SS') 
+                                 AND TO_DATE(TO_CHAR(SYSDATE, 'HH24:MI:SS'), 'HH24:MI:SS') >= TO_DATE('18:00:00', 'HH24:MI:SS') THEN 'O'
+                            WHEN sysdate > to_date(to_char(sysdate, 'YY/MM/DD') || ' 09:00:00', 'YY/MM/DD HH24:MI:SS')
+                                 AND WORK_END_TIME IS NOT NULL then 'L'
+                            ELSE 'N'
+                        END
+		 WHERE emp_no = #{empNo}
+		   AND TRUNC(WORK_DAY) = TRUNC(SYSDATE)
+		  ]]>
 	</update>
 	
 

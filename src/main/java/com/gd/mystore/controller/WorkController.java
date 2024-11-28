@@ -81,18 +81,11 @@ public class WorkController {
 	
 	// 퇴근 버튼
 	/*
-	 * 퇴근 버튼 미 클릭 체크는 스케줄러 돌면서 퇴근데이터가 null 인지 확인후 상태를 N으로 변경 해야 할듯
 	 * 출근 지각은 처리 완료
-	 * 
-	 * 내가 해야할 거
-	 * ㄴ조퇴 -> 작성중인 쿼리문 활용
-	 * ㄴ결근 -> 출석을 안찍으면 자동 결근 처리
-	 * ㄴ출근 시간은 있는데 퇴근 데이터 NULL 결근 처리 -> 스케줄러로 퇴근 데이터 NULL이면 결근으로 업데이트?
 	 */
 	@ResponseBody
 	@GetMapping("clockOut")
 	public int colockOut(EmpMemberDto em, Model model) {
-		
 		return workService.updateEndTime(em);
 	}
 
