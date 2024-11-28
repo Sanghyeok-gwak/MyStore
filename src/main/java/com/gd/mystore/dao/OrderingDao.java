@@ -14,7 +14,9 @@ import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ProductDto;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class OrderingDao {
@@ -76,5 +78,15 @@ public class OrderingDao {
 	public List<ProductDto> selectAddProList(){
 		return sqlSession.selectList("orderingMapper.selectAddProList");
 	}
+	
+	public int selectSearchDateCount(String date) {
+		log.debug("asdf : "+sqlSession.selectOne("orderingMapper.selectSearchDateCount",date));
+		return sqlSession.selectOne("orderingMapper.selectSearchDateCount",date);
+	}
+	public List<OrderingListDto> selectSearchDate(PageInfoDto pi, String date) {
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
+		return sqlSession.selectList("orderingMapper.selectSearchDate",date,rowBounds);
+	}
+	
 	
 }

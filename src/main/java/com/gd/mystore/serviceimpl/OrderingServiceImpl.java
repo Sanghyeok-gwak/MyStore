@@ -107,6 +107,16 @@ public class OrderingServiceImpl implements OrderingService{
 		return orderingDao.selectAddProList();
 	}
 
+	@Override
+	public int selectSearchDateCount(String date) {
+		return orderingDao.selectSearchDateCount(date);
+	}
+
+	@Override
+	public List<OrderingListDto> selectSearchDate(PageInfoDto pi, String date) {
+		return orderingDao.selectSearchDate(pi,date);
+	}
+
 
 
 

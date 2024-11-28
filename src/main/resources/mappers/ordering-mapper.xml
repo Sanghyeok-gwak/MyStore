@@ -281,4 +281,43 @@
    order by PRODUCT_NO desc
   </select>
   
+  
+  
+  <select id="selectSearchDateCount" resultType="_int">
+  
+  SELECT 
+			    count(*)
+			FROM 
+		    	 TBL_ORDERING o
+		  join TBL_EMPLOYEE e on (o.EMP_NO = e.EMP_NO)
+		  where TO_CHAR(o.CREATE_DATE,'YYYY-MM-DD') = #{date}
+		  order by ORDER_NO desc
+  
+  </select>
+  <select id="selectSearchDate" resultMap="OrderingListResultMap">
+  
+  SELECT 
+				    ORDER_NO,
+				    e.EMP_NAME as "EMP_NO",
+				    BRANCH_NAME,
+				    ORDER_STATUS,
+				    TO_CHAR(ORDER_CHECKDATE,'YYYY-MM-DD') as "ORDER_CHECKDATE",
+				    o.CREATE_DATE,
+				    o.MODIFIER,
+				    o.MODIFY_DATE,
+				    o.USE_YN,
+				    o.DISPATCH_NO,
+	          o.APPROVAL_NO
+			FROM 
+		    	 TBL_ORDERING o
+		  join TBL_EMPLOYEE e on (o.EMP_NO = e.EMP_NO)
+		  where TO_CHAR(o.CREATE_DATE,'YYYY-MM-DD') = #{date}
+		  order by ORDER_NO desc
+  
+  </select>
+  
+  
+  
+  
+  
 </mapper>

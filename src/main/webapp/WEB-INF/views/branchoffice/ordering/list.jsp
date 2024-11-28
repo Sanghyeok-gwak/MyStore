@@ -61,15 +61,36 @@
               justify-content: end;
             }
           </style>
-          
           <div class="search-text">
             <div class="search-text-text">
               <span class="ffont3">발주 일</span>
             </div>
+          <form id="search_form" action="${contextPath}/ordering/searchdate.or" method="get">
             <div class="search-text-box">
-              <input type="date">
-              <button><i class="bi bi-search"></i></button>
+	            	<input type="hidden" name="page" value="1">
+              <input type="date" id="searchValue" name="keyword" style="padding-left: 10px;">
+              <button type="submit"><i class="bi bi-search"></i></button>
             </div>
+          </form>
+          <c:if test="${ not empty search }">
+	            <script>
+	            	$(document).ready(function(){
+										$("#paging_area a").on("click", function(){
+	            			
+	            			let page = $(this).text(); // Previous | Next | 페이지번호
+	            			if(page == 'Previous'){
+	            				page = ${pi.currentPage - 1};
+	            			}else if(page == 'Next'){
+	            				page = ${pi.currentPage + 1};
+	            			}
+	            			
+	            			$("#search_form input[name=page]").val(page);
+	            			$("#search_form").submit();
+	            			
+	            			return false;
+	            	})
+	            </script>
+	         </c:if>  
           </div>
         </div>
         <div class="order-add-box" style="display:flex; justify-content: end; margin-bottom:20px;">

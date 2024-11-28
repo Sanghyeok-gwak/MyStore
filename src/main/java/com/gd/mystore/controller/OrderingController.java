@@ -217,6 +217,22 @@ public class OrderingController {
 		
 		return "branchoffice/ordering/adminlist";
 	}
+	@GetMapping("searchdate.or")
+	public String searchOrder(@RequestParam(value="page", defaultValue="1") int currentPage,
+			@RequestParam(value="keyword", required=false) String keyword,Model model) {
+		
+		log.debug("keyword  : {} ",keyword);
+		int listCount = orderingService.selectSearchDateCount(keyword);
+		log.debug("keyword  : {} ",listCount);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
+		List<OrderingListDto> list = orderingService.selectSearchDate(pi,keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("search", keyword);
+		
+		return "branchoffice/ordering/list";
+	}
 	
 	
 	

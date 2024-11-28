@@ -50,5 +50,10 @@ public interface OrderingService {
 	// 발주 등록 리스트 
 	List<ProductDto> selectAddProList();
 	
+	// 발주 날짜 검색 카운트
+	int selectSearchDateCount (String date);
+	// 발주 날짜 검색
+	List<OrderingListDto> selectSearchDate(PageInfoDto pi,String date);
+	
 	
 }
