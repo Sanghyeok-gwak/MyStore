@@ -28,8 +28,8 @@
   
   <script>
     // JSP에서 contextPath를 JavaScript 변수로 전달
-    const contextPath = "${pageContext.request.contextPath}";
-</script>
+    const contextPath1 = "${pageContext.request.contextPath}";
+	</script>
   
   <script>
     	//에이작스로 system.systemBoardsList.do 요청
@@ -41,14 +41,12 @@
     	        url: '${contextPath}/system/sideBoardsList.do',
     	        type: 'get',
     	        success: function(resData) {
-    	            console.log("정상");
-    	            console.log(resData);
     	            
     	            let value = '';
     	            
     	            resData.forEach(board => {
     	            	if (board.boardtUse === "N") { 
-    	                    value += '<a href="' + contextPath + '/board/list.do?boardTypeNo=' + board.boardTypeNo + '">' 
+    	                    value += '<a href="' + contextPath1 + '/board/list.do?boardTypeNo=' + board.boardTypeNo + '">' 
     	                           + board.boardtName + '</a>';
     	                }
     	            });
