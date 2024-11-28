@@ -97,7 +97,120 @@
             </style>
             
            <form id="ordering-form" action="${contextPath}/ordering/insert.or" method="post">
-            <div class="btn-edit-add-box" style="display: flex; justify-content: end;">
+            <div class="btn-edit-add-box">
+            	<div class="calendar-box">
+            		<input id="order-date" type="date">
+            	</div>
+            	<script>
+            	// 날짜 입력창에 change 이벤트 리스너 추가
+            	document.getElementById("order-date").addEventListener("change", function() {
+            			// 선택된 날짜를 가져옴
+            	    const dateTime = document.getElementById("order-date").value;
+            	    console.log('날짜변경 실행확인 : '+dateTime);
+            	    console.log(dateTime);
+
+            	    // Ajax 호출
+            	    $.ajax({
+            	        url: '${contextPath}/ordering/regist.or',  // 요청 URL
+            	        data: { dateTime: dateTime },              // 서버에 보낼 데이터 (날짜)
+            	        dataType: 'json',                          // 서버 응답의 데이터 형식
+            	        type: 'get',                               // HTTP 요청 방식 (GET)
+            	        success: function(data) {
+            	            console.log(data);  // 서버 응답 데이터 확인
+            	            populateTable(data);  // 테이블을 갱신하는 함수 호출
+            	        },
+            	        error: function(xhr, status, error) {
+            	            console.log("Error: " + error);  // 오류 발생 시 콘솔에 출력
+            	        }
+            	    });
+            	});
+
+            	// 테이블을 채우는 함수
+            	function populateTable(data) {
+            	    console.log(data);  // 데이터 확인
+            	    const tableBody = document.querySelector('table tbody');
+            	    tableBody.innerHTML = '';  // 기존 테이블 내용 삭제
+
+            	    data.forEach(function(item) {
+            	        const row = document.createElement('tr');
+
+            	        row.innerHTML =
+            	            '<td>' + item.productDivision + '</td>' +
+            	            '<td>' + item.productName + '</td>' +
+            	            '<td>' + (item.event || '행사없음') + '</td>' +
+            	            '<td>' + item.inventory + '</td>' +
+            	            '<td><input style="padding-left:10px;" type="number" name="'+item.inventory+'" value="'+item.count+'"></td>' +
+            	            '<td>' + (item.useYn === 'Y' ? '발주가능' : '발주불가능') + '</td>';
+
+            	        row.classList.add('product-row');
+            	        row.setAttribute('data-productimg', item.productImg);
+            	        row.setAttribute('data-productno', item.productNo);
+            	        row.setAttribute('data-productname', item.productName);
+            	        row.setAttribute('data-cost', item.cost);
+            	        row.setAttribute('data-sailprice', item.sailPrice);
+            	        row.setAttribute('data-expiration', item.expirationPeriod);
+            	        row.setAttribute('data-delivery', item.deliveryDate);
+
+            	        tableBody.appendChild(row);
+            	    });
+            	}
+            	</script>
+            	<script>
+            	  // 페이지 로드 시 오늘 날짜를 기본값으로 설정
+            	  window.onload = function() {
+            	    var today = new Date().toISOString().split('T')[0];  // 오늘 날짜를 yyyy-mm-dd 형식으로 가져옴
+            	    document.getElementById("order-date").value = today;
+
+            	    const dateTime = document.getElementById("order-date").value;
+            	    console.log(dateTime);
+
+            	    $.ajax({
+            	      url: '${contextPath}/ordering/regist.or',
+            	      data: { dateTime: dateTime },
+            	      dataType: 'json',
+            	      type: 'get',
+            	      success: function(data) {
+            	        console.log(data);
+            	        populateTable(data);
+            	      },
+            	      error: function(xhr, status, error) {
+            	        console.log("Error: " + error);
+            	      }
+            	    });
+            	  };
+
+            	  // 테이블을 채우는 함수
+            	  function populateTable(data) {
+            	    console.log(data);
+            	    const tableBody = document.querySelector('table tbody');
+            	    tableBody.innerHTML = ''; 
+
+            	    data.forEach(function(item) {
+            	    const row = document.createElement('tr');
+
+            	      row.innerHTML =
+            	        '<td>' + item.productDivision + '</td>' +
+            	        '<td>' + item.productName + '</td>' +
+            	        '<td>' + (item.event || '행사없음') + '</td>' +
+            	        '<td>' + item.inventory + '</td>' +
+            	        '<td><input style="padding-left:10px;" type="number" name="count" value="'+item.count+'"></td>' +
+            	        '<td>' + (item.useYn === 'Y' ? '발주가능' : '발주불가능') + '</td>';
+
+            	      row.classList.add('product-row');
+            	      row.setAttribute('data-productimg', item.productImg);
+            	      row.setAttribute('data-productno', item.productNo);
+            	      row.setAttribute('data-productname', item.productName);
+            	      row.setAttribute('data-cost', item.cost);
+            	      row.setAttribute('data-sailprice', item.sailPrice);
+            	      row.setAttribute('data-expiration', item.expirationPeriod);
+            	      row.setAttribute('data-delivery', item.deliveryDate);
+
+            	      tableBody.appendChild(row);
+            	    });
+            	  }
+
+            	 
+							</script>
             	<div class="btn4-box">
 	              <button type="submit" class="btn4">등록 하기</button>
             	</div>
@@ -110,21 +223,21 @@
                     <th>상품명</th>
                     <th>할인행사</th>
                     <th>발주재고</th>
+                    <th>발주 수량</th>
                     <th>발주여부</th>
                   </tr>
                 </thead>
 	                <tbody>
-	                	 <c:forEach var="p" items="${list}" varStatus="status">
+	                	 <c:forEach var="p" items="${pro}" varStatus="status">
 	                    <input type="hidden" name="productList[${status.index}].productNo" value="${p.productNo}">
 	                    <input type="hidden" name="productList[${status.index}].productName" value="${p.productName}">
-		                  <tr class="product-row" data-productimg="${p.productImg}" data-productno="${p.productNo}" 
-		                      data-productname="${p.productName}" data-cost="${p.cost}" data-sailprice="${p.sailPrice}" 
-		                      data-expiration="${p.expirationPeriod}" data-delivery="${p.deliveryDate}">
-		                    <td>${p.productDivision }</td>
-			                	<td>${p.productName }</td>
-		                    <td>${p.event == null ? '행사없음' : p.event}</td>
-		                    <td><input style="padding-left:10px;" type="number" name="productList[${status.index}].inventory" value="0"></td>
-		                    <td>${p.useYn == 'Y' ? '발주가능' : '발주불가능'}</td>
+		                  <tr>
+		                    <td></td>
+			                	<td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
+		                    <td></td>
 		                  </tr>
 	                	</c:forEach>
 	                </tbody>
@@ -197,25 +310,28 @@
               </div>
             </div>
             <script>
-				      document.querySelectorAll('.product-row').forEach(function(row) {
-				        row.addEventListener('click', function() {
-				          const productImg = this.getAttribute('data-productimg');
-				          const productNo = this.getAttribute('data-productno');
-				          const productName = this.getAttribute('data-productname');
-				          const productCost = this.getAttribute('data-cost');
-				          const productSailPrice = this.getAttribute('data-sailprice');
-				          const productExpiration = this.getAttribute('data-expiration');
-				          const productDelivery = this.getAttribute('data-delivery');
-				
-				          document.getElementById('preview').src = productImg;  
-				          document.getElementById('product-id').textContent = productNo;  
-				          document.getElementById('product-name').textContent = productName;  
-				          document.getElementById('product-cost').textContent = productCost;  
-				          document.getElementById('product-price').textContent = productSailPrice; 
-				          document.getElementById('product-expiration').textContent = productExpiration;  
-				          document.getElementById('product-delivery').textContent = productDelivery;  
-				        });
-				      });
+         // 상품 클릭 시 상세정보 표시
+            document.querySelector('table tbody').addEventListener('click', function(event) {
+              // 클릭된 요소가 .product-row인 경우에만 실행
+              if (event.target.closest('.product-row')) {
+                const row = event.target.closest('.product-row');
+                const productImg = row.getAttribute('data-productimg');
+                const productNo = row.getAttribute('data-productno');
+                const productName = row.getAttribute('data-productname');
+                const productCost = row.getAttribute('data-cost');
+                const productSailPrice = row.getAttribute('data-sailprice');
+                const productExpiration = row.getAttribute('data-expiration');
+                const productDelivery = row.getAttribute('data-delivery');
+
+                document.getElementById('preview').src = productImg;
+                document.getElementById('product-id').textContent = productNo;
+                document.getElementById('product-name').textContent = productName;
+                document.getElementById('product-cost').textContent = productCost;
+                document.getElementById('product-price').textContent = productSailPrice;
+                document.getElementById('product-expiration').textContent = productExpiration;
+                document.getElementById('product-delivery').textContent = productDelivery;
+              }
+            });
 				    </script>
           </div>
         </div>

@@ -1,6 +1,7 @@
 package com.gd.mystore.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,9 @@ import com.gd.mystore.dto.ProductDto;
 import com.gd.mystore.service.OrderingService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class OrderingServiceImpl implements OrderingService{
@@ -50,6 +52,8 @@ public class OrderingServiceImpl implements OrderingService{
 			for(OrderingProductDto list :orderingProList ) {
 				result += orderingDao.insertOrderingPro(list);
 			}
+		}else {
+			log.debug("버그다");
 		}
 		
 		return result;
@@ -81,6 +85,26 @@ public class OrderingServiceImpl implements OrderingService{
 	@Override
 	public List<OrderingListDto> selectSearchList(PageInfoDto pi, String search) {
 		return orderingDao.selectSearchList(pi, search);
+	}
+
+	@Override
+	public int updateOrderPro(List<OrderingProductDto> productList,Map<String, Object> map) {
+		log.debug("Map : {}",map);
+		log.debug("productList : {}",productList);
+		int result = orderingDao.updateOrderList(map);
+		if(result> 0 && !productList.isEmpty()) {
+			result=0;
+			for(OrderingProductDto list :productList ) {
+				result += orderingDao.updateOrderPro(list);
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<ProductDto> selectAddProList() {
+		return orderingDao.selectAddProList();
 	}
 
 

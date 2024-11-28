@@ -73,7 +73,7 @@
         	<a href="${contextPath }/branchoffice/adminList.po">상품 관리</a>					<!-- LV  @ <= 3    -->
         </c:if>
         <c:if test="${loginUser.empAuth eq 'PS005'}">
-	        <a href="${contextPath }/ordering/insertPage.or">발주등록</a>							<!-- LV  @ == 5    -->
+	        <a href="${contextPath }/ordering/list.or">발주등록</a>							<!-- LV  @ == 5    -->
 	        <a href="${contextPath }/branchoffice/list.po">상품조회</a>						<!-- LV  @ == 5    -->
       	</c:if>
       </div>

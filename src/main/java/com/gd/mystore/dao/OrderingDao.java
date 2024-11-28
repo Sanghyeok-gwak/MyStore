@@ -1,6 +1,7 @@
 package com.gd.mystore.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -61,4 +62,19 @@ public class OrderingDao {
 		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
 		return sqlSession.selectList("orderingMapper.selectSearchList",search,rowBounds);
 	}
+	
+	public int updateOrderList(Map<String, Object> map) {
+		
+		return sqlSession.update("orderingMapper.updateOrderList",map);
+	}
+	
+	public int updateOrderPro(OrderingProductDto productList) {
+		return sqlSession.update("orderingMapper.updateOrderPro",productList);
+	}
+	
+	
+	public List<ProductDto> selectAddProList(){
+		return sqlSession.selectList("orderingMapper.selectAddProList");
+	}
+	
 }

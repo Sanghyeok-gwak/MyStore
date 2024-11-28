@@ -43,7 +43,7 @@ public class OrderingController {
 	@GetMapping("adminList.or")
 	public String adminList(@RequestParam(value="page", defaultValue="1") int currentPage , Model model) {
 		int listCount = orderingService.selectOrderListCount();
-		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
 		
 		List<OrderingListDto> list = orderingService.selectOrderList(pi);
 		
@@ -56,45 +56,93 @@ public class OrderingController {
 	
 	// 지점 발주 리스트
 	@GetMapping("list.or")
-	public String list() {
+	public String list(@RequestParam(value="page", defaultValue="1") int currentPage , Model model) {
+		
+		int listCount = orderingService.selectOrderListCount();
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		
+		List<OrderingListDto> list = orderingService.selectOrderList(pi);
+		
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		
 		return "branchoffice/ordering/list";
 	}
 	
-	//이건그냥 넘어가는 걸로 변경
-	@GetMapping("insertPage.or")
-	public String listPage() {
+	@GetMapping("detail.or")
+	public String detailPage(String orderNo,Model model) {
+		
+		List<ProductDto> list = orderingService.selectProductList(orderNo);
+		
+		
+		model.addAttribute("list", list);
+		
+		
+		return "branchoffice/ordering/detail";
+	}
+	
+	@PostMapping("update.or")
+	public String update(@RequestParam("orderNo") String orderNo
+						, @ModelAttribute OrderingListDto orderingListDto
+						, HttpSession session
+						, RedirectAttributes rdAttributes) {
+	    String empNo = ((EmpMemberDto)session.getAttribute("loginUser")).getEmpNo();
+		List<OrderingProductDto> productList = orderingListDto.getProductList();
+		
+		for(OrderingProductDto pro : productList) {
+			pro.setOrderNo(Integer.parseInt(orderNo));
+			pro.setModifier(empNo);
+		}
+		Map <String,Object> map = new HashMap<>();
+		map.put("empNo", empNo);
+		map.put("orderNo", orderNo);
+		int result = orderingService.updateOrderPro(productList, map);
+		if(productList.isEmpty() && result == 1 
+				|| !productList.isEmpty() && result == productList.size()) {
+			rdAttributes.addFlashAttribute("alertMsg", "발주 등록 성공");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "발주 등록 실패");			
+		}
+		
+		log.debug("askldfjioasdjfioasd : {}",productList);
+		
+	    return "redirect:/ordering/list.or";
+	}
+	
+	@GetMapping("insertpage.or")
+	public String insertPage(Model model) {
+		
+		List<ProductDto> list = orderingService.selectAddProList();
+		
+		
+		model.addAttribute("list", list);
+		
+		
 		return "branchoffice/ordering/regist";
 	}
-
 	
-	//이벤트줘서 하나로만 보이게 설정
-	@ResponseBody
-	@GetMapping("regist.or")
-	public List<ProductDto> list(String dateTime,Model model) {
-		log.debug("test : "+dateTime);
-		List<ProductDto> list = orderingService.selectProductList(dateTime);
-		
-		log.debug("list : {}",list);
-		return list;
-	}
+	
 	@PostMapping("insert.or")
 	public String insertOrdering(@ModelAttribute OrderingListDto orderingListDto,HttpSession session,RedirectAttributes rdAttributes) {
 	    orderingListDto.setEmpNo( String.valueOf( ((EmpMemberDto)session.getAttribute("loginUser")).getEmpNo() ) );
 	    orderingListDto.setDeptCode(((EmpMemberDto)session.getAttribute("loginUser")).getDeptCode() );
+	    log.debug("orderingListDto : {}",orderingListDto);
+
 	    
-	    log.debug(((EmpMemberDto)session.getAttribute("loginUser")).getDeptCode() );
 	    
 	    List<OrderingProductDto> productList = orderingListDto.getProductList();
 	    
 	    int result = orderingService.insertOrderingList(orderingListDto, productList);
 	    if(productList.isEmpty() && result == 1 
 				|| !productList.isEmpty() && result == productList.size()) {
-			rdAttributes.addFlashAttribute("alertMsg", "게시글 등록 성공");
+			rdAttributes.addFlashAttribute("alertMsg", "발주 등록 성공");
 		}else {
-			rdAttributes.addFlashAttribute("alertMsg", "게시글 등록 실패");			
+			rdAttributes.addFlashAttribute("alertMsg", "발주 등록 실패");			
 		}
 	    
-	    return "redirect:/ordering/regist.or";
+	    return "redirect:/ordering/list.or";
 	}
 	@ResponseBody
 	@PostMapping("orderingPro.or")
@@ -169,4 +217,20 @@ public class OrderingController {
 		
 		return "branchoffice/ordering/adminlist";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -64,178 +64,68 @@
           
           <div class="search-text">
             <div class="search-text-text">
-              <span class="ffont3">요청자</span>
+              <span class="ffont3">발주 일</span>
             </div>
             <div class="search-text-box">
-              <input type="text">
+              <input type="date">
               <button><i class="bi bi-search"></i></button>
             </div>
           </div>
         </div>
+        <div class="order-add-box" style="display:flex; justify-content: end; margin-bottom:20px;">
+        	<button class="btn4" onclick='location.href="${contextPath }/ordering/insertpage.or"'>발주등록</button>
+        </div>
         <div class="table-box">
-          <table class="table" style="text-align: center;">
+          <table class="table table-hover" style="text-align: center;">
             <thead>
               <tr>
-                <th width="100px"></th>
                 <th width="100px">번호</th>
                 <th width="200px">발주 요청일</th>
                 <th width="150px">요청자</th>
-                <th width="100px">수량</th>
                 <th width="150px">발주 승인 여부</th>
                 <th width="100px"></th>
               </tr>
             </thead>
             <tbody>
-              <!-- case1. 조회된 게시글이 없을 경우 -->
-              <!--
-                <tr>
-                  <td colspan="7" style="text-align: center;">존재하는 발주가 없습니다.</td>
-                </tr>
-                -->
-
-              <!-- case2. 조회된 게시글이 있을 경우 -->
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>10</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>9</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>8</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>7</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>6</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>5</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>4</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>3</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>2</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
-              <tr>
-                <td><input type="checkbox" name="list-checkBox" id=""></td>
-                <td>1</td>
-                <td>2024.11.05</td>
-                <td>김개똥</td>
-                <td>30</td>
-                <td>대기</td>
-                <td>
-                  <button class="btn4">
-                    조회
-                  </button>
-                </td>
-
-              </tr>
+                <c:choose>
+			        		<c:when test="${empty list }">
+              	<!-- case1. 조회된 게시글이 없을 경우 -->
+		                <tr>
+		                  <td colspan="6" style="text-align: center;">존재하는 발주가 없습니다.</td>
+		                </tr>
+			        		</c:when>
+		        		<c:otherwise>
+             		<!-- case2. 조회된 게시글이 있을 경우 -->
+		        			<c:forEach var="o" items="${list }">
+			              <tr class="order-row" data-order-no="${o.orderNo}">
+			                <td>${o.orderNo }</td>
+			                <td>${o.orderCheckDate }</td>
+			                <td>${o.empNo }</td>
+			                <td>
+			                	${o.orderStatus == 'N' ? '반려' : o.orderStatus == 'Y' ? '승인' : o.orderStatus == 'I' ? '대기중' : '상태 미정'}
+			                </td>
+			                <td>
+			                	<c:if test="${o.orderStatus == 'Y'}">
+				                  <button class="btn4 view-order" data-order-no="${o.orderNo}"   data-bs-toggle="modal" data-bs-target="#basicModal2">
+				                    배차
+				                  </button>
+			                  </c:if>
+			                </td>
+			              </tr>
+			            </c:forEach> 
+		        		</c:otherwise>
+		        	</c:choose>
             </tbody>
           </table>
+          <script>
+	          $(document).ready(function() {
+	        	    $(".order-row").click(function() {
+	        	        var orderNo = $(this).data("order-no"); 
+	        	        console.log(orderNo)
+	        	        window.location.href = '${contextPath}/ordering/detail.or?orderNo=' + orderNo;
+	        	    });
+	        	});
+          </script>
           <style>
             .pagination .page-link {
               color: rgba(109, 105, 108, 1);
@@ -249,28 +139,90 @@
               background-color: white;
             }
           </style>
+          
           <div class="paging"> 
-            <ul class="pagination d-flex justify-content-center text-dark" style="margin-top: 40px;">
-              <li class="page-item disabled">
-                <a class="page-link" href="">
-                  <i class="bi bi-chevron-double-left"></i> <span>이전</span>
-                </a>
+            <ul id="paging_area" class="pagination d-flex justify-content-center">
+            
+              <li class="page-item ${ pi.currentPage == 1 ? 'disabled' : '' }">
+              	<a class="page-link" href="${contextPath }/ordering/list.or?page=${pi.currentPage-1}"><i class="bi bi-chevron-double-left"></i><span>이전</span></a>
               </li>
-              <li class="page-item active"><a class="page-link" href="">1</a></li>
-              <li class="page-item"><a class="page-link" href="">2</a></li>
-              <li class="page-item"><a class="page-link" href="">3</a></li>
-              <li class="page-item"><a class="page-link" href="">4</a></li>
-              <li class="page-item"><a class="page-link" href="">5</a></li>
-              <li class="page-item">
-                <a class="page-link" href="">
-                  <span>다음</span>&nbsp;<i class="bi bi-chevron-double-right"></i>
-                </a>
+              
+              <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+              	<li class="page-item ${ pi.currentPage == p ? 'active' : '' }">
+              		<a class="page-link" href="${contextPath }/ordering/list.or?page=${p}">${ p }</a>
+              	</li>
+              </c:forEach>
+              
+              <li class="page-item ${ pi.currentPage == pi.maxPage ? 'disabled' : '' }">
+              	<a class="page-link" href="${contextPath }/ordering/list.or?page=${pi.currentPage+1}"><span>다음</span>&nbsp;<i
+									class="bi bi-chevron-double-right"></i></a>
               </li>
+              
             </ul>
           </div>
+          
         </div>
       </div>
 	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+	<div class="modal fade" id="basicModal2" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"> 
+                    <h5 class="modal-title">배차 조회</h5>  
+                </div>
+                <div class="modal-body">
+  
+
+                    <!-- Pick-Up Table -->
+                    <div class="pickUp_table">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">배차 차량종류</th>
+                                    <td id="car-type"></td>
+                                    <th scope="col">배차 운송기사</th>
+                                    <td id="car-name"></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">차량번호</th>
+                                    <td colspan="3" id="car-number"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Footer Approval Button -->
+                    <div class="footer_btn">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+		   $(document).ready(function () {
+			  $(".view-order").on("click", function () {
+			    const orderNo = $(this).data("order-no");
+			    
+			    $.ajax({
+			      url: '${contextPath}/ordering/orderingPro.or', 
+			      type: "post",
+			      data: { "orderNo": orderNo },
+			      dataType: "json",
+			      success: function (data) {
+	             document.getElementById("car-type").innerText = data.dis.vehicleType;
+				       document.getElementById("car-name").innerText = data.dis.opepator;
+				       document.getElementById("car-number").innerText = data.dis.licensPlate;
+			      },
+			      error: function () {
+			        alert("데이터를 불러오는 중 오류가 발생했습니다.");
+			      }
+			    });
+			  });
+			});	 
+    </script>
 </body>
 </html>

@@ -188,14 +188,6 @@
 						</div>
 						<div class="input-box-top-box5">
 						    <div class="input-box-top-box5-text">
-						        <span class="ffont3">수량</span>
-						    </div>
-						    <div class="input-box-top-box5-input">
-						        <input type="number" name="inventory" id="inventory" >
-						    </div>
-						</div>
-						<div class="input-box-top-box5">
-						    <div class="input-box-top-box5-text">
 						        <span class="ffont3">할인행사</span>
 						    </div>
 						    <div class="input-box-top-box5-input">
