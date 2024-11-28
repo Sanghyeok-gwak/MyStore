@@ -63,6 +63,9 @@
 .simple-btn:hover {
 	text-decoration: none;
 }
+.form-cont {
+ padding-left: 5px;
+}
 </style>
 
 
@@ -155,8 +158,10 @@
 										<td>${ e.createDate }</td>
 										<td>${ e.empEmail }</td>
 										<td>${ e.empPhone }</td>
-										<td><button id="salarybutton" class="enroll"
-												data-bs-toggle="modal" data-bs-target="#scrollingModal">등록</button></td>
+										<td><input type="hidden" class="empNo" value="${e.empNo}">
+										<button id="salarybutton" class="btn4" data-empNo="${e.empNo}" 
+										data-bs-toggle="modal" data-bs-target="#scrollingModal">등록
+										</button></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -203,14 +208,16 @@
 	</div>
 
 	<!-- 급여등록 모달 -->
-	<div class="modal fade" id="scrollingModal" tabindex="-1"
-		aria-labelledby="salaryModalLabel" aria-hidden="true">
+	<div class="modal fade" id="scrollingModal" tabindex="-1" aria-labelledby="salaryModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
+		
 			<div class="modal-content">
+				<form id="tax_form" action="${ contextPath }/salary/saveSalary" method="post" >
+			
 				<div class="modal-header">
-					<h5 class="modal-title" id="">${ e.empName }님급여지급</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					급여
+					<input type="hidden" id="empNo" name="empNo">
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 
 				<div class="modal-body">
@@ -223,42 +230,39 @@
 									<th scope="col">금액</th>
 								</tr>
 							</thead>
+							
 							<tbody>
 								<!-- 기본급 입력 -->
 								<tr>
 									<td><label for="baseSalary" class="form-label">기본급</label></td>
-									<td><input type="number" class="form-control"
-										id="baseSalary" placeholder="기본급을 입력하세요" min="0" required>
-										<button class="btn btn-secondary mt-2" id="salBase">보험료
-											적용</button></td>
+									<td><input type="text" class="form-control" name="salBase"
+										id="salBase" placeholder="기본급을 입력하세요" min="0" required>
+										
+										<button type="button" class="btn btn-secondary mt-2" id="Taxbutton" name="Taxbutton">보험료 적용</button></td>
 								</tr>
 
 								<!-- 국민연금 -->
 								<tr>
 									<td><label for="nationalPension" class="form-label">국민연금</label></td>
-									<td><input type="text" class="form-control" id="salNp"
-										readonly></td>
+									<td><input type="text" class="form-cont" name="salNp" id="salNp" readonly>&nbsp원</td>
 								</tr>
 
 								<!-- 건강보험 -->
 								<tr>
 									<td><label for="healthInsurance" class="form-label">건강보험</label></td>
-									<td><input type="text" class="form-control" id="salHi"
-										readonly></td>
+									<td><input type="text" class="form-cont" name="salHi" id="salHi" readonly>&nbsp원</td>
 								</tr>
 
 								<!-- 고용보험 -->
 								<tr>
 									<td><label for="unemploymentInsurance" class="form-label">고용보험</label></td>
-									<td><input type="text" class="form-control" id="salEi"
-										readonly></td>
+									<td><input type="text" class="form-cont" name="salEi" id="salEi" readonly>&nbsp원</td>
 								</tr>
 
 								<!-- 실지급급액 -->
 								<tr>
 									<td><label for="actualPayment" class="form-label">실지급급액</label></td>
-									<td><input type="text" class="form-control"
-										id="salNetSalary" readonly></td>
+									<td><input type="text" class="form-cont"  name="salNetSalary"  id="salNetSalary" readonly>&nbsp원</td>
 								</tr>
 							</tbody>
 						</table>
@@ -266,15 +270,66 @@
 
 				</div>
 
-				<div class="modal-footer">
+					<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" id="saveSalary">저장</button>
+					<button type="submit" class="btn btn-primary" id="saveSalary">저장</button>
 				</div>
+			  </form>
 			</div>
 		</div>
 	</div>
 	<!-- 모달 끝 -->
+
+	<script>
+	$(document).on("click", "#salarybutton", function () {
+
+		let empNo = $(this).siblings('.empNo').val();  // empNo 값 가져오기
+
+
+	    $.get('${contextPath}/salary/getSalary', { empNo: empNo }, function (data) {
+	        if (data) {
+	            
+	            
+	            $('#salBase').val(data.salBase ? data.salBase : '');
+	            $('#salNp').val(data.salNp ? data.salNp : '');
+	            $('#salHi').val(data.salHi ? data.salHi : '');
+	            $('#salEi').val(data.salEi ? data.salEi : '');
+	            $('#salNetSalary').val(data.salNetSalary ? data.salNetSalary : '');
+	        } else {
+
+	        	alert('급여 정보가 없습니다.');
+	        }
+	    });
+	});
+
+	// 기본급 입력 값과 보험 계산 버튼 클릭 시 이벤트
+	$(document).on("click", "#Taxbutton", function () {
+
+	    let salBase = Number(document.getElementById('salBase').value); 
+	    let salNp = document.getElementById('salNp'); // 국민연금
+	    let salHi = document.getElementById('salHi'); // 건강보험
+	    let salEi = document.getElementById('salEi'); // 고용보험
+	    let salNetSalary = document.getElementById('salNetSalary'); 
+
+	    let npAmount = Math.round(salBase * 0.045); // 국민연금 0.045
+	    let hiAmount = Math.round(salBase * 0.035); // 건강보험 0.035 
+	    let eiAmount = Math.round(salBase * 0.009); // 고용보험 0.009
+
+	    salNp.value = npAmount;
+	    salHi.value = hiAmount;
+	    salEi.value = eiAmount;
+
+	    let netSalary = Math.round(salBase - npAmount - hiAmount - eiAmount);
+	    salNetSalary.value = netSalary;
+
+	});
+
+	function inputNumberFormat(obj) {
+	    obj.value = obj.value.replace(/[^\d]/g, '');
+	}
+
+</script>
 
 
 

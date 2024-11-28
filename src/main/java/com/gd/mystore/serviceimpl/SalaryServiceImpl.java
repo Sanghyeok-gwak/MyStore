@@ -20,6 +20,16 @@ public class SalaryServiceImpl implements SalaryService {
 		return salarydao.selectsalary(empNo);
 	}
 
+	@Override
+	public SalaryDto getSalary(String empNo) {
+		return salarydao.getSalary(empNo);
+	}
+
+	@Override
+	public int saveSalary(SalaryDto s) {
+		return salarydao.saveSalary(s);
+	}
+
 	
 	
 	

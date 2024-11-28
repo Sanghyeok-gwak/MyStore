@@ -16,7 +16,7 @@ import lombok.ToString;
 public class SalaryDto {
 	
     private int salaryNo;                   // 급여 고유 번호
-    private int empNo;                      // 사원 번호
+    private String empNo;                      // 사원 번호
     private String salBase;                 // 기본 급여
     private String salOvertimePay;          // 시간 외 수당
     private String bonus;                   // 상여금

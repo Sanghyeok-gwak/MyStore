@@ -18,9 +18,13 @@ public class SalaryDao {
 		
 	}
 	
+	public SalaryDto getSalary(String empNo) {
+		return sqlsession.selectOne("personnelMapper.getSalary", empNo);
+	}
 	
-	
-	
+	public int saveSalary(SalaryDto s) {
+		return sqlsession.insert("personnelMapper.saveSalary", s);
+	}
 	
 	
 	

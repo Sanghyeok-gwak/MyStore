@@ -1,16 +1,17 @@
 package com.gd.mystore.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.SalaryDto;
@@ -49,10 +50,40 @@ public class SalaryController {
 	}
 	
 	
+	@GetMapping("/getSalary")
+	public ResponseEntity<SalaryDto> getSalary(@RequestParam("empNo") String empNo) {
+	    // 급여 정보 가져오기
+	    SalaryDto s = salaryservice.getSalary(empNo);
+	    
+	    if (s == null) {
+	    	
+	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	    }
+
+	    return ResponseEntity.ok(s);
+	}
 	
-	// 급여 관리 및 등록 기능
-	@GetMapping("/salaryMaster")
-	public void salaryMaster() {
+	
+
+	@PostMapping("/saveSalary")
+	public String saveSalary(SalaryDto s 
+							,RedirectAttributes rdAttributes) {
+		
+		int result = salaryservice.saveSalary(s);
+		
+		if(result > 0) {
+			rdAttributes.addFlashAttribute("alertMsg", "급여등록이 완료되었습니다.");
+			return "redirect:/personnel/employeeManager";
+					
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "급여등록에 실패했습니다. 다시 시도해주세요");
+			return "redirect:/personnel/employeeManager";
+		}
+		
+		
+	}
+	
+	
+		
 	}
 
-}

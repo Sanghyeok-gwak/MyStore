@@ -261,7 +261,7 @@ SELECT
 
 </update>
 
-<select id="selectSalaryList" resultMap="salaryResultMap">
+<select id="getSalary" resultMap="salaryResultMap">
    SELECT
         S.salary_no,
         S.emp_no,
@@ -279,6 +279,30 @@ SELECT
         E.EMP_NO = #{empNo}
 
 </select>
+
+<insert id="saveSalary">
+	INSERT INTO
+	    TBL_SALARY
+	(
+        SALARY_NO,
+        EMP_NO,
+        SAL_BASE,
+        SAL_NP,
+        SAL_HI,
+        SAL_EI,
+        SAL_NET_SALARY
+        )
+        VALUES
+        (
+        SALARY_NO_SEQ.NEXTVAL,
+        #{empNo},
+        #{salBase},
+        #{salNp},
+        #{salHi},
+        #{salEi},
+        #{salNetSalary}
+        )
+</insert>
 
 
 </mapper>

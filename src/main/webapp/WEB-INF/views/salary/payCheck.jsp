@@ -31,8 +31,7 @@
     .payment-list{
 	display:flex;
 	flex-direction: column;
-	padding-left: 100px;
-  padding-right: 100px;
+	padding: 0 25%
 	}
 	.btn-box-print{
 		display:flex;
@@ -72,10 +71,6 @@
 				    <i class="bi bi-printer" style="font-size:25px"></i> 급여출력
 				</button>
 
-	        
-	        
-
-	        
 	        </div>
 	
 	        <table class="paytable">
