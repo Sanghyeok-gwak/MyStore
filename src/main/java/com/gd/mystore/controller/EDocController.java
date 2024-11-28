@@ -99,6 +99,72 @@ public class EDocController {
 	    return "redirect:/edoc/formlist.do";
 	}
 	
+	// 문서 양식 상세페이지
+	@GetMapping("/edocmode.do")
+	public String edocmode(int no, Model model) {
+		
+		// 상세페이지에 필요한 데이터
+		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명,저장경로,실제파일명)들 데이터
+		EDocSampleDto eSample = edocService.edocMode(no);		
+		
+		String escapedContent = eSample.getSampleFormat()
+				.replace("\"", "\\\"")  // 큰따옴표만 이스케이프
+                .replace("\r", "")      // 줄바꿈 제거
+                .replace("\n", "");     // 줄바꿈 제거
+		
+		model.addAttribute("eSample", eSample);
+		model.addAttribute("edocContent", escapedContent);
+		
+		return "edoc/edocmode";		
+	}
+	
+	@PostMapping("/edocmodeModify.do")
+	public String edocmodeModify(@RequestParam("sampleNo") int sampleNo,
+								 @RequestParam("sampleDotCode") String sampleDotCode,  
+								 @RequestParam("sampleDesc") String sampleDesc,
+								 @RequestParam("editorTxt") String sampleFormat,
+								 HttpSession session,
+								 RedirectAttributes rdAttributes) {
+		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		EDocSampleDto esd = new EDocSampleDto();
+		
+		esd.setSampleNo(sampleNo);
+		esd.setSampleDotCode(sampleDotCode);
+		esd.setSampleDesc(sampleDesc);
+		esd.setSampleFormat(sampleFormat);
+		esd.setEmpNo(loginUser.getEmpNo());
+		
+		
+		int result = edocService.edocmodeModify(esd);
+		
+		if(result ==  1) {
+			rdAttributes.addFlashAttribute("alertMsg", "기안서 수정이 완료되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "기안서 수정 실패");			
+		}
+		
+		return "redirect:/edoc/formlist.do";
+	}
+	
+	@GetMapping("/samplesearch.do")
+	public String search(@RequestParam(value="page", defaultValue="1") int currentPage
+					   , @RequestParam Map<String, String> search
+					   , Model model) {
+		// Map<String,String> search ==> {condition=user_id|board_title|board_content, keyword=란}
+		
+		int listCount =  edocService.selectSearchListCount(search);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EDocSampleDto> list = edocService.selectSearchList(search, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("search", search);
+		
+		
+		return "edoc/edocmodelist";
+	}
+	
 	
 	
 	// 기안서 작성
@@ -716,27 +782,26 @@ public class EDocController {
 		
 		return "redirect:/edoc/draftrecoveryList.do";
 	}
+	
+	
 
 
-	// 메인화면 결재대기문서 기안진행문서 갯수
-	@GetMapping("/edocCount")
-	public String edocCount(Model model,
-							HttpSession session) {
-		
-		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
-		String no = loginUser.getEmpNo(); // 로그인한 사용자 번호
-		
-		int count1 = edocService.aprvlWaitListCount(no);
-		int count2 = edocService.draftProgressListCount(no);
-		
-		model.addAttribute("count1", count1);
-		model.addAttribute("count2", count2);
-		
-		System.out.println(count1);
-		System.out.println(count2);
-		
-		return "main";
-	}
+//	// 메인화면 결재대기문서 기안진행문서 갯수
+//	@GetMapping("/")
+//	public String edocCount(Model model,
+//							HttpSession session) {
+//		
+//		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+//		String no = loginUser.getEmpNo(); // 로그인한 사용자 번호
+//		
+//		int awlcount = edocService.aprvlWaitListCount(no);
+//		int dplcount = edocService.draftProgressListCount(no);
+//		
+//		model.addAttribute("awlcount", awlcount);
+//		model.addAttribute("dplcount", dplcount);
+//		
+//		return "main";
+//	}
 
 	
 

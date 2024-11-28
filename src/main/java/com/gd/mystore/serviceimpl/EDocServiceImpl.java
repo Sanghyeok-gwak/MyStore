@@ -1,6 +1,7 @@
 package com.gd.mystore.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,30 @@ public class EDocServiceImpl implements EDocService {
 	public int deleteEdocSample(String[] deleteNo) {
 		return edocDao.deleteEDocSample(deleteNo);
 	}
+	
+	// 문서 양식 상세페이지 or 수정가능
+	@Override
+	public EDocSampleDto edocMode(int no) {
+		return edocDao.edocMode(no);
+	}
+	
+	// 문서 양식 수정
+	@Override
+	public int edocmodeModify(EDocSampleDto esd) {
+		return edocDao.edocmodeModify(esd);
+	}
+	
+	@Override
+	public int selectSearchListCount(Map<String, String> search) {
+		return edocDao.selectSearchListCount(search);
+	}
 
+	@Override
+	public List<EDocSampleDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
+		return edocDao.selectSearchList(search, pi);
+	}
+
+	
 	
 	// 기안서 작성
 	@Override
@@ -309,6 +333,12 @@ public class EDocServiceImpl implements EDocService {
 		
 		return edocDao.draftUseN(edocDto);
 	}
+
+
+
+
+
+
 	
 	
 	

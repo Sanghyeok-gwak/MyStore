@@ -182,6 +182,60 @@
 		</where>
 	</update>
 	
+	<!-- 양식 상세페이지 -->
+	<select id="edocMode" resultMap="edocSampleResultMap">
+		SELECT 
+			    SAMPLE_NO,
+			    SAMPLE_DOT_CODE,
+			    SAMPLE_DESC,
+			    SAMPLE_FORMAT,
+			    EMP_NO,
+			    CREATE_DATE,
+			    MODIFIER,
+			    MODIFT_DATE,
+			    USE_YN
+		 FROM 
+		    	TBL_EDOC_SAMPLE
+		WHERE 
+		   		SAMPLE_NO = #{sampleNo}
+	</select>
+	
+	<update id="edocmodeModify">
+		UPDATE 
+					TBL_EDOC_SAMPLE
+		   SET 
+			    SAMPLE_DOT_CODE = #{sampleDotCode},
+			    SAMPLE_DESC = #{sampleDesc},
+			    SAMPLE_FORMAT = #{sampleFormat},
+			    MODIFIER = #{empNo},
+			    MODIFT_DATE = SYSDATE     
+		 WHERE 
+			    SAMPLE_NO = #{sampleNo}
+	</update>
+	
+	<select id="selectSearchListCount" resultType="_int">
+		select 
+					 count(*)
+			from tbl_edoc_sample sam
+			join tbl_employee e on (e.emp_no = sam.emp_no)
+		 where sam.USE_YN = 'Y'
+		   and ${condition} like '%' || #{keyword} || '%'
+	</select>
+
+	<select id="selectSearchList" resultMap="edocSampleResultMap">
+		select
+					sam.sample_no
+				, sam.sample_dot_code
+				, sam.sample_desc
+				, e.emp_name as emp_name
+				, to_char(sam.create_date, 'YYYY-MM-DD') create_date
+		  from tbl_edoc_sample sam
+		  join tbl_employee e on (e.emp_no = sam.emp_no)
+		 where sam.USE_YN = 'Y'
+		   and ${condition} like '%' || #{keyword} || '%'
+		 order by sample_no desc
+	</select>
+	
 	<!-- 전자결재 양식관리 -->
 	
 	
