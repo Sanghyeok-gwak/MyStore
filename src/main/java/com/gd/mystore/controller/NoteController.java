@@ -9,8 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.NoteDto;
@@ -29,6 +32,7 @@ public class NoteController {
 	
 	private final NoteService noteService;
 	private final PagingUtil pagingUtil;
+	
 	//받은 쪽지함
 	@GetMapping("reception.no")
 	public String reception(@RequestParam(value="page", defaultValue="1") int currentPage ,HttpSession session,Model model) {
@@ -38,11 +42,9 @@ public class NoteController {
 		map.put("status", 'Y');
 		
 		int listCount = noteService.selectRecepCount(map);
-		log.debug("listCount : "+listCount);
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		
 		List<NoteDto> list = noteService.selectInBox(pi,empNo);
-		log.debug("list확인 : {}",list);
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
@@ -60,7 +62,6 @@ public class NoteController {
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		
 		List<NoteDto> list = noteService.selectSendList(pi,empNo);
-		log.debug("list확인 : {}",list);
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
@@ -81,7 +82,6 @@ public class NoteController {
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		
 		List<NoteDto> list = noteService.selectTemporayList(pi,empNo);
-		log.debug("list확인 : {}",list);
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
@@ -100,7 +100,6 @@ public class NoteController {
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 10, 10);
 		
 		List<NoteDto> list = noteService.selectTrashNote(pi,empNo);
-		log.debug("list확인 : {}",list);
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
@@ -118,6 +117,39 @@ public class NoteController {
 	public void temporayAdd(){
 		
 	}
+	
+	
+	@ResponseBody
+	@PostMapping("receptrashnote.no")
+	public int recepTrashNote(String[] checkedValues) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("type", "recep");
+		map.put("checkedValues", checkedValues);
+		return noteService.updateRece(map);
+	}
+	@ResponseBody
+	@PostMapping("sendtrashnote.no")
+	public int sendTrashNote(String[] checkedValues) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("type", "send");
+		map.put("checkedValues", checkedValues);
+		
+		return noteService.updateRece(map);
+	}
+	
+	@ResponseBody
+	@PostMapping("delete.no")
+	public int deleteTrash(@RequestParam("checkedValues") String[] checkedValues) {
+		return noteService.deleteNote(checkedValues) ;
+	}
+	
+	@ResponseBody
+	@PostMapping("updatesend.no")
+	public int updateSendTrash(String[] checkedValues) {
+		return noteService.updateSendTrash(checkedValues) ;
+	}
+	
+	
 	
 	//@PostMapping("send.do")
 	//public String sendNote(SendNoteDto noteDto, Model model) {

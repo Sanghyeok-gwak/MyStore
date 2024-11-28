@@ -75,6 +75,12 @@
 		   color: red;
 		   background-color: white;
 		 }
+		 .note-body {
+			    display: flex ;
+			    flex-direction: column;
+		 }
+		 
+		 
 </style>
 </head>
 <body>
@@ -108,10 +114,14 @@
 		  </div>
 		</div>
 		<div class="note-body">
-		  <div>
+		  <div class="note-top">
 		      <b style="font-size: 25px; margin-left: 10px;">받은쪽지함</b>
-		</div>
+			</div>
 		<hr>
+			<div class="btn-box4" style="display: flex; justify-content: end; margin-bottom: 20px;">
+				<button class="btn4" onclick="fnDeleteSelected();">휴지통</button>
+			</div>
+			
       <script>
 			  // 'checkAll' 체크박스를 클릭하면 모든 체크박스를 선택하거나 해제
 			  function toggleAllCheckboxes(source) {
@@ -145,7 +155,7 @@
 			        		<c:otherwise>
 			        			<c:forEach var="r" items="${list }" varStatus="status">
 					            <tr>
-				                <td><input type="checkBox" name="receptionNo" class="checkItem" value="${r.receptionNo }"></td>
+				                <td><input type="checkBox"  name="receptionNo" class="checkItem" value="${r.receptionNo }"></td>
 				                <td>${list.size() - status.index}</td>
 				                <td>${r.title }</td>
 				                <td>${r.recepId }</td>
@@ -184,5 +194,40 @@
       
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+<script>
+			<!-- 상품 삭제 스크립트 -->
+    	function fnDeleteSelected() {
+	    const checkboxes = document.querySelectorAll('.checkItem:checked');
+	    const checkedValues = [];
+	    checkboxes.forEach(checkbox => {
+	        checkedValues.push(checkbox.value);
+	    });
+			console.log(checkedValues);
+	    if (checkedValues.length === 0) {
+	        alert('휴지통으로 보낼 데이터를 선택해주세요.');
+	        return;
+	    }
+
+	    const confirmation = confirm('선택한 쪽지를 휴지통으로 보내시겠습니까?'); 
+	    if (confirmation) {
+
+	        $.ajax({
+           		
+	        	url:'${contextPath}/note/receptrashnote.no',
+           		traditional: true, 
+           		type:'post',
+           		data: { checkedValues: checkedValues }, 
+           		success: function(result) {
+                       if (result>0) {
+                           alert('쪽지가 휴지통으로 이동 되었습니다.'); 
+                           location.reload(); 
+                       } else {
+                           alert('쪽지가 휴지통으로 이동실패 되었습니다.'); 
+                       }
+              }
+           	});
+	    }
+	}
+</script>
 </body>
 </html>

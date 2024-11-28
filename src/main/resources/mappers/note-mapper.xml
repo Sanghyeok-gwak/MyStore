@@ -131,12 +131,73 @@
 		WHERE 
 		    STATUS = 'N'
 		    AND RECEP_ID = #{empNo}
-	
+				order by DELETE_DATE 
 	
 	</select>
+	<update id="updateRece">
+		update
+					TBL_RECEPTION_NOTE
+			 set
+			    STATUS = 'N',
+			    DELETE_DATE = sysdate
+			    
+		 where
+		      RECEPTION_NO = #{checked} 	
+	</update>
+	<update id="updateSend">
+		update
+					TBL_SEND_NOTE
+			 set
+			    STATUS = 'N',
+			    DELETE_DATE = sysdate
+			    
+		 where
+		      SEND_NO = #{checked} 	
+	</update>
+	<update id="updateSendTrash">
+		update
+					TBL_RECEPTION_NOTE 
+			 set
+			    STATUS = 'Y',
+			    DELETE_DATE = sysdate
+			    
+		 where
+		      RECEPTION_NO = #{rValue} 	
+	</update>
+	<update id="updateRecepTrash">
+		update
+					TBL_SEND_NOTE
+			 set
+			    STATUS = 'Y',
+			    DELETE_DATE = ''
+			    
+		 where
+		      SEND_NO = #{sValue} 	
+	</update>
+	<delete id="deletRecepTrash">
+		delete 
+		  from
+		      TBL_SEND_NOTE
+		 where
+		      SEND_NO = #{sValue}   		  
+	</delete>
+	<delete id="deletSendTrash">
+		delete
+		  from
+		  		TBL_RECEPTION_NOTE
+		 where
+		     	RECEPTION_NO = #{rValue} 	
+	</delete>
 	
+	<!-- 
+	<update id="">
 	
+	</update>
+
+	<delete id="">
 	
+	</delete>
+	 -->
 	<!-- 
 	<insert id="sendNote">
 	INSERT INTO 

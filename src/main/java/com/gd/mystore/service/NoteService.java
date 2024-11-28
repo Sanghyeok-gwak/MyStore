@@ -26,6 +26,14 @@ public interface NoteService {
 	// 휴지통 리스트
 	List<NoteDto> selectTrashNote(PageInfoDto pi,String empNo);
 	
+	// 쪽지함 휴지통 보내기
+	int updateRece(Map<String, Object> map);
+	
+	// 휴지통 값 꺼내기
+	int updateSendTrash(String[] checkedValues);
+	
+	// 쪽지 삭제
+	int deleteNote(String[] checkedValues);
 	// 쪽지 보내기 
 	//int sendNote(SendNoteDto noteDto);
 	
