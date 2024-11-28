@@ -154,10 +154,12 @@
         </div>
 
         <!-- 답글 입력창 (동적으로 표시됨) -->
-      <div id="replyTextareaContainer${r.replyNo}" class="reply-textarea-container" style="display: none; margin-top: 10px; width: 100%;">
-    <textarea class="form-control" id="reply_content_${r.replyNo}" style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"></textarea>
-    <button class="btn2-hover" style="width: 8%; height: 40px;" onclick="submitReply(${r.replyNo})">작성하기</button>
-</div>
+     <form action="{contextPath}/board/boardDetail.do?no=${b.boardNo}" method="post">
+	    <div id="replyTextareaContainer${r.replyNo}" class="reply-textarea-container" style="display: none; margin-top: 10px; width: 100%;">
+	    		<textarea class="form-control" id="reply_content_${r.replyNo}" style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"></textarea>
+	    		<button class="btn2-hover" style="width: 8%; height: 40px;" onclick="submitReply(${r.replyNo})">작성하기</button>
+			</div>
+		</form>
 	
 
        
@@ -173,6 +175,9 @@
 		
 		
 			<script>
+			
+			
+			
 			
 			// 드롭다운 토글 함수
 				// 드롭다운 토글 함수
@@ -330,6 +335,7 @@
 				<label class="form-check-label" for="flexSwitchCheckDefault"></label>
 			</div>
 		</div>
+		
 		<div style="display: flex; justify-content: space-between; align-items: center;">
 			<textarea
 				class="form-control" id="reply_content" style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"></textarea>

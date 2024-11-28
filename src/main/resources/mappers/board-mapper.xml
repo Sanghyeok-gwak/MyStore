@@ -63,7 +63,7 @@
     <result column="CREATE_DATE" property="createDate" />
     <result column="MODIFIER" property="modifier" />
     <result column="MODIFY_DATE" property="modifyDate" />
-    
+    <result column="emp_name" property="empName" />	
   </resultMap>
   
 
@@ -434,9 +434,39 @@ ORDER BY
 		  
 	</insert>
 	
+	<insert id="insertGood"> 
+	insert 
+		  into tbl_good
+		  (
+		     reply_no
+		    , good_reply
+		    , creater
+		  )
+			values
+			(
+					#{replyNo}
+				, 'Y'
+				, #{empName}
+			)
+			
+	</insert>
 	
+	<update id="updateGood">
+		update
+					 tbl_good
+				set 
+						good_reply = #{goodReply}
+		 where reply_no = #{replyNo}
+	</update>
+		
+	<select id="countGood" resultMap="GoodResultMap">
+		
+		 select
+        count(*)
+			from tbl_good
+			where reply_no = #{replyNo}
 	
-	
+	</select>
 	
   
 

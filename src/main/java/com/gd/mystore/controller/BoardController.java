@@ -173,16 +173,11 @@ public class BoardController {
 	    // 모델에 데이터 추가
 	    model.addAttribute("b", b);  // 게시글 정보
 	    model.addAttribute("listCount", listCount);  // 댓글 수
-	    model.addAttribute("reply", reply);  // 댓글 목록
+	    model.addAttribute("reply", reply);  // 댓글 목
 	
 	}
 	
-	// 댓글 목록 json
-	@ResponseBody
-	@GetMapping(value="/rlist.do", produces="application/json")
-	public List<ReplyDto> replyList(int no) {
-		return boardService.replylist(no);
-	}
+
 	
 		
 	
@@ -253,6 +248,12 @@ public class BoardController {
 		return "redirect:/board/boardDetail.do?no=" + board.getBoardNo();
 		
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

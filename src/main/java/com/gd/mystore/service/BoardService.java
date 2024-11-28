@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
+import com.gd.mystore.dto.GoodDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ReplyDto;
 
@@ -45,5 +46,12 @@ public interface BoardService {
 		
 		// 댓글 등록 
 		int insertReply(ReplyDto r);
+		
+		int insertGood(GoodDto d);
+		
+		int updateGood(GoodDto d);
+		
+		int countGood(int replyNo);
+		
 		
 }

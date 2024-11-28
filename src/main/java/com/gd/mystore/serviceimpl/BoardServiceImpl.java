@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.gd.mystore.dao.BoardDao;
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
+import com.gd.mystore.dto.GoodDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ReplyDto;
 import com.gd.mystore.service.BoardService;
@@ -134,6 +135,21 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int insertReply(ReplyDto r) {
 		return boardDao.insertReply(r);
+	}
+
+	@Override
+	public int insertGood(GoodDto d) {
+		return boardDao.insertGood(d);
+	}
+
+	@Override
+	public int updateGood(GoodDto d) {
+		return boardDao.updateGood(d);
+	}
+
+	@Override
+	public int countGood(int replyNo) {
+		return boardDao.countGood(replyNo);
 	}
 
 	

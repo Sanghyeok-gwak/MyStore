@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
+import com.gd.mystore.dto.GoodDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ReplyDto;
 
@@ -102,5 +103,16 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertReply", r);
 	}
 	
+	public int insertGood(GoodDto g) {
+		return sqlSession.insert("boardMapper.insertGood", g);
+	}
+	
+	public int updateGood(GoodDto g) {
+		return sqlSession.update("boardMapper.updateGood" , g);
+		
+	}
+	public int countGood(int replyNo) {
+		return sqlSession.selectOne("boardMapper.countGood", replyNo);
+	}
 	
 }
