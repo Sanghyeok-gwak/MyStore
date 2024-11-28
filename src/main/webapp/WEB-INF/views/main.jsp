@@ -254,10 +254,18 @@
             justify-content: space-between;
             padding: 2% 0;
         }
+		.weather-body-top{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 
         .location-icon {
             display: flex;
             font-size: 200%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
         }
 
         .bottom-info {
@@ -491,15 +499,18 @@
                 <div class="main-home-bottom-weather" id="weather" style="margin-right: 20px;">
                     <!-- 
 						<br><br>
-						    <div>날씨는 1시간 마다 업데이트</div>
+						    <div>날씨는 3시간 마다 업데이트</div>
 								<div id="weatherInfo"></div>
 								<div id="nowtime"></div>
            -->
                     <div class="weather-body">
                         <!--<img style="width: 100%; height: 100%;" src="${contextPath}/resources/images/weather_img/rain_1.gif">-->
                         <div class="location-icon">
-                            <div id="city">위치</div>
-                            <div><i class="ri-map-pin-2-fill"></i></div>
+							<div class="weather-body-top">
+								<div id="city">위치</div>
+								<div><i class="ri-map-pin-2-fill"></i></div>
+							</div>
+							<div style="font-size: 25%;">3시간 간격 업데이트<br>제공: OpenWeatherMap</div>
                         </div>
                         <div class="weather-main">
                             <div><i class="bi bi-thermometer-half"></i></div>
