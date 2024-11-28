@@ -34,9 +34,9 @@
   <script>
     	//에이작스로 system.systemBoardsList.do 요청
     	
-    	window.onload = workColockOut();
+    	window.onload = sideBoardList();
     	
-    	function workColockOut(){
+    	function sideBoardList(){
     		$.ajax({
     	        url: '${contextPath}/system/sideBoardsList.do',
     	        type: 'get',
