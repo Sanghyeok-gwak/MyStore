@@ -12,59 +12,127 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.border.Border;
-import com.itextpdf.layout.border.SolidBorder;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.LineSeparator;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 
 public class GeneratePdfServlet extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// ByteArrayOutputStream을 사용하여 PDF를 메모리에서 생성
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-		// iText 7을 사용하여 PDF 문서 생성
-		PdfWriter pdfWriter = new PdfWriter(byteArrayOutputStream);
-		PdfDocument pdfDocument = new PdfDocument(pdfWriter);
-		pdfDocument.setDefaultPageSize(PageSize.A4);
-		Document document = new Document(pdfDocument);
+        // PDF 문서 생성
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PdfWriter pdfWriter = new PdfWriter(byteArrayOutputStream);
+        PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+        pdfDocument.setDefaultPageSize(PageSize.A4);
+        Document document = new Document(pdfDocument);
 
-		float twocol = 285f;
-		float twocol150 = twocol + 150f;
-		float twocolumnWidth[] = { twocol150, twocol };
+        // ** Title **
+        Paragraph title = new Paragraph("Payroll Statement - September")
+                .setFontSize(18)
+                .setTextAlignment(TextAlignment.CENTER)
+                .setBold();
+        document.add(title);
 
-		// PDF 내용 추가
-		Table table = new Table(twocolumnWidth);
-		document.add(new Cell().add("$ NO.").setBold().setBorder(Border.NO_BORDER));
-		document.add(new Cell().add("Name : chun ye chan").setBold().setBorder(Border.NO_BORDER));
-		document.add(new Cell().add("age : 25").setBold().setBorder(Border.NO_BORDER));
-		document.add(new Cell().add("gender : F").setBold().setBorder(Border.NO_BORDER));
+        // ** Payment Date Info **
+        document.add(new Paragraph("\nPayment Date: November 28, 2024")
+                .setFontSize(10)
+                .setTextAlignment(TextAlignment.LEFT));
 
-		/*
-		 * // 선 스타일 정의 LineSeparator lineSeparator = new LineSeparator(new
-		 * SolidBorder(1)); lineSeparator.setWidth(UnitValue.createPercentValue(100));
-		 * // 선 너비 설정 lineSeparator.setMarginTop(10); // 위쪽 여백
-		 * lineSeparator.setMarginBottom(10); // 아래쪽 여백
-		 * 
-		 * // 문서에 추가 document.add(lineSeparator);
-		 */
-		document.add(new Paragraph("don"));
-		document.add(new Paragraph("name: chun ye chan"));
-		document.add(new Paragraph("salary: 1원"));
-		document.add(new Paragraph("bonus: 1원"));
-		document.add(new Paragraph("Total: 2원"));
+        // ** Employee Information Table **
+        Table employeeInfoTable = new Table(UnitValue.createPercentArray(new float[]{1, 2, 1, 2}))
+                .setWidth(UnitValue.createPercentValue(100))
+                .setMarginBottom(20);
 
-		document.close();
+        employeeInfoTable.addCell(createCell("Department", true));
+        employeeInfoTable.addCell(createCell("Content Development", false));
+        employeeInfoTable.addCell(createCell("Position", true));
+        employeeInfoTable.addCell(createCell("Researcher", false));
+        employeeInfoTable.addCell(createCell("Name", true));
+        employeeInfoTable.addCell(createCell("JoonSooKing", false));
+        employeeInfoTable.addCell(createCell("Join Date", true));
+        employeeInfoTable.addCell(createCell("2012-09-07", false));
+        document.add(employeeInfoTable);
 
-		// HTTP 응답 설정: PDF 파일 다운로드 처리
-		response.setContentType("application/pdf");
-		response.setHeader("Content-Disposition", "attachment; filename=payroll.pdf");
+        // ** Salary Details Table **
+        Table salaryTable = new Table(UnitValue.createPercentArray(new float[]{2, 2, 2, 2}))
+                .setWidth(UnitValue.createPercentValue(100))
+                .setMarginBottom(20);
 
-		// 생성된 PDF 데이터를 HTTP 응답으로 전송
-		response.getOutputStream().write(byteArrayOutputStream.toByteArray());
-	}
+        salaryTable.addCell(createCell("Payment Item", true));
+        salaryTable.addCell(createCell("Amount", true));
+        salaryTable.addCell(createCell("Deduction Item", true));
+        salaryTable.addCell(createCell("Amount", true));
+
+        salaryTable.addCell(createCell("Base Salary", false));
+        salaryTable.addCell(createCell("2,500,000", false));
+        salaryTable.addCell(createCell("Tax", false));
+        salaryTable.addCell(createCell("84,290", false));
+
+        salaryTable.addCell(createCell("Bonus", false));
+        salaryTable.addCell(createCell("200,000", false));
+        salaryTable.addCell(createCell("Resident Tax", false));
+        salaryTable.addCell(createCell("9,420", false));
+
+        salaryTable.addCell(createCell("Position Allowance", false));
+        salaryTable.addCell(createCell("120,000", false));
+        salaryTable.addCell(createCell("Pension", false));
+        salaryTable.addCell(createCell("103,500", false));
+
+        salaryTable.addCell(createCell("Extra Work Allowance", false));
+        salaryTable.addCell(createCell("170,000", false));
+        salaryTable.addCell(createCell("Health Insurance", false));
+        salaryTable.addCell(createCell("66,700", false));
+
+        salaryTable.addCell(createCell("Overtime Allowance", false));
+        salaryTable.addCell(createCell("110,000", false));
+        salaryTable.addCell(createCell("Employment Insurance", false));
+        salaryTable.addCell(createCell("10,350", false));
+
+        // 빈 행 추가
+        for (int i = 0; i < 10; i++) { // 필요에 따라 10 이상의 값을 설정 가능
+            salaryTable.addCell(createCell(" ", false));
+            salaryTable.addCell(createCell(" ", false));
+            salaryTable.addCell(createCell(" ", false));
+            salaryTable.addCell(createCell(" ", false));
+        }
+
+        document.add(salaryTable);
+
+        // ** Total Amounts **
+        Table totalTable = new Table(UnitValue.createPercentArray(new float[]{1, 1}))
+                .setWidth(UnitValue.createPercentValue(100))
+                .setMarginTop(20);
+
+        totalTable.addCell(createCell("Total Payment", true));
+        totalTable.addCell(createCell("2,300,000", false));
+        totalTable.addCell(createCell("Total Deduction", true));
+        totalTable.addCell(createCell("333,260", false));
+        totalTable.addCell(createCell("Net Payment", true));
+        totalTable.addCell(createCell("1,966,380", false));
+        document.add(totalTable);
+
+        // Close document
+        document.close();
+
+        // HTTP response for PDF download
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=payroll.pdf");
+
+        // Send generated PDF as response
+        response.getOutputStream().write(byteArrayOutputStream.toByteArray());
+    }
+
+    private Cell createCell(String content, boolean isHeader) {
+        Cell cell = new Cell().add(new Paragraph(content));
+        if (isHeader) {
+            cell.setBold();
+        }
+        cell.setTextAlignment(TextAlignment.CENTER);
+        cell.setHeight(20); // 행 높이 추가 설정
+        return cell;
+    }
 }

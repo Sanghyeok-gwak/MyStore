@@ -52,16 +52,15 @@ public class SalaryController {
 	
 	@GetMapping("/getSalary")
 	public ResponseEntity<SalaryDto> getSalary(@RequestParam("empNo") String empNo) {
-	    // 급여 정보 가져오기
 	    SalaryDto s = salaryservice.getSalary(empNo);
-	    
+
 	    if (s == null) {
-	    	
-	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	    }
 
 	    return ResponseEntity.ok(s);
 	}
+
 	
 	
 
