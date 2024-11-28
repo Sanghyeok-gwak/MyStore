@@ -64,6 +64,7 @@ public class EmpMemberController {
 //		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpNo(), loginUser.getEmpPwd())) { // 로그인 성공
 		
 		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
+			session.setMaxInactiveInterval(1 * 60);
 			session.setAttribute("loginUser", loginUser);
 			
 			if(loginUser.getUseYn().equals("N")) {

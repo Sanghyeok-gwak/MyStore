@@ -20,10 +20,8 @@
 	        <img src="https://i.ibb.co/W0yxB5v/noticeboard.png">
 	        <span>게시판</span>
 	      </div>
-	      <div class="submenu">																		<!-- 예찬님 파트  추가 삭제 수정 처리-->
-	        <a href="${ contextPath }/board/list.do">공지사항</a>									<!-- lv5 -->
-	        <a href="#">자유게시판</a>																<!-- lv5 -->
-	        <a href="#">익명게시판</a>																<!-- lv5 -->
+	      <div class="submenu" id="boardMenus">
+	      	게시판
 	      </div>
       <div class="side-icon" onclick="toggleSubmenu(this)">
         <img src="https://i.ibb.co/pndFm5W/content-writing.png">
@@ -86,9 +84,11 @@
 	        <span>시스템 관리</span>
 	      </div>
 	      <div class="submenu">
-	        <a href="${ contextPath }/system/log.do">시스템로그</a>									<!-- LV  @ == 1    -->
+	        <!-- <a href="${ contextPath }/system/log.do">시스템로그</a> -->									<!-- LV  @ == 1    -->
 	        <a href="${ contextPath }/system/systemLv.do">시스템 레벨 관리</a>
 	        <a href="${ contextPath }/system/systemBoardsList.do">세부메뉴관리</a>
 	      </div>
       </c:if>
     </div>
+    
+    

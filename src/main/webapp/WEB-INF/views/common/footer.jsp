@@ -25,6 +25,43 @@
       }
     }
   </script>
+  
+  <script>
+    // JSP에서 contextPath를 JavaScript 변수로 전달
+    const contextPath = "${pageContext.request.contextPath}";
+</script>
+  
+  <script>
+    	//에이작스로 system.systemBoardsList.do 요청
+    	
+    	window.onload = workColockOut();
+    	
+    	function workColockOut(){
+    		$.ajax({
+    	        url: '${contextPath}/system/sideBoardsList.do',
+    	        type: 'get',
+    	        success: function(resData) {
+    	            console.log("정상");
+    	            console.log(resData);
+    	            
+    	            let value = '';
+    	            
+    	            resData.forEach(board => {
+    	            	if (board.boardtUse === "N") { 
+    	                    value += '<a href="' + contextPath + '/board/list.do?boardTypeNo=' + board.boardTypeNo + '">' 
+    	                           + board.boardtName + '</a>';
+    	                }
+    	            });
+
+    	            $('#boardMenus').html(value);
+    	            
+    	        },
+    	        error: function() {
+    	            console.log('side 게시판 리스트 대한 ajax 통신 실패');
+    	        }
+    	    });
+      	}
+    </script>
   <!-- Vendor JS Files -->
   <script src="${ contextPath }/assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="${ contextPath }/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -38,6 +38,15 @@ public class SystemController {
 	private final SystemService systemService;
 	private final PagingUtil pagingUtil;
 	
+	//사이드 게시판 리스트 조회
+	@ResponseBody
+	@GetMapping("/sideBoardsList.do")
+	public List<BoardTypeDto> sideBoards(Model model) {
+		List<BoardTypeDto> list = systemService.selectBodrList();
+		return list;
+	}
+	
+	
 	//게시판 리스트 조회
 	@GetMapping("/systemBoardsList.do")
 	public void systemBoards(Model model) {
