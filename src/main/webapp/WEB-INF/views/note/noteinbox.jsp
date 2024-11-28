@@ -79,7 +79,9 @@
 			    display: flex ;
 			    flex-direction: column;
 		 }
-		 
+		 .table tr {
+		 	cursor: pointer;
+		 }
 		 
 </style>
 </head>
@@ -133,7 +135,7 @@
 			</script>
 			<div class="table-box">
        	<form action="${contextPath }/temporayadd.no" method="get">
-			    <table class="table" style="text-align: center;">
+			    <table class="table table-hover" style="text-align: center;">
 			        <thead>
 			            <tr>
 				             <th style="width: 50px;">
@@ -154,11 +156,11 @@
 			        		</c:when>
 			        		<c:otherwise>
 			        			<c:forEach var="r" items="${list }" varStatus="status">
-					            <tr>
-				                <td><input type="checkBox"  name="receptionNo" class="checkItem" value="${r.receptionNo }"></td>
+					            <tr onclick="sendReceptionNo(${r.receptionNo})">
+				                <td><input type="checkBox" onclick="event.stopPropagation()"  name="receptionNo" class="checkItem" value="${r.receptionNo }"></td>
 				                <td>${list.size() - status.index}</td>
 				                <td>${r.title }</td>
-				                <td>${r.recepId }</td>
+				                <td>${r.sentId }</td>
 				                <td>${r.recCheck eq 'Y' ? 'r.recDate' : '' }</td>
 					            </tr>
 					           </c:forEach> 
@@ -167,6 +169,11 @@
 			        </tbody>
 			    </table>                
        	</form>
+       	<script>
+	       	function sendReceptionNo(receptionNo) {
+	       		window.location.href = '${contextPath}/note/recepDetail.no?no='+receptionNo;
+	       	}
+       	</script>
 				<div class="paging"> 
             <ul id="paging_area" class="pagination d-flex justify-content-center">
             

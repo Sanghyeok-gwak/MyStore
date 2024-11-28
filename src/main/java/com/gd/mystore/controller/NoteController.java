@@ -1,5 +1,6 @@
 package com.gd.mystore.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.NoteDto;
@@ -149,12 +150,62 @@ public class NoteController {
 		return noteService.updateSendTrash(checkedValues) ;
 	}
 	
-	
-	
-	//@PostMapping("send.do")
-	//public String sendNote(SendNoteDto noteDto, Model model) {
-	//	int result = noteService.sendNote(noteDto);
+	@GetMapping("recepDetail.no")
+	public String selectRecepDetail(String no,Model model){
+		Map<String, Object> map = new HashMap<>();
+		map.put("type", "recep");
+		map.put("no", no);
 		
-	//	return "note/noteinbox" ;
-	//}
+		NoteDto n = noteService.selectDetail(map);
+		n.setSource("Y");
+		log.debug("adsf : {}"+n);
+		model.addAttribute("n",n);
+		
+		return "note/detail";
+	}
+	
+	@GetMapping("sendDetail.no")
+	public String selectSendDetail(String no,Model model){
+		Map<String, Object> map = new HashMap<>();
+		map.put("type", "send");
+		map.put("no", no);
+		log.debug("no :"+map.get("type"));
+		log.debug("no :"+map.get("no"));
+		NoteDto n = noteService.selectDetail(map);
+		log.debug("adsf : {}"+n);
+		model.addAttribute("n",n);
+		
+		return "note/detail";
+	}
+	
+	@ResponseBody
+	@PostMapping("/empcheck.no")
+    public int checkEmp(@RequestParam("data") String data) {
+        
+        log.debug("test : "+data);
+        
+        String[] checkEmp = data.split(",");
+        int result = noteService.checkEmp(checkEmp);
+        if(result == checkEmp.length) {
+        	result= -1;
+        }
+        
+        return result;
+    }
+	
+	@PostMapping("insert.no")
+	public String insertNote(NoteDto noteDto, RedirectAttributes rdAttributes) {
+		
+		int result = noteService.insertNote(noteDto);
+		
+		if(result>0) {
+			rdAttributes.addFlashAttribute("alertMsg", "쪽지 전송 성공");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "쪽지 전송 실패");
+		}
+		
+		return "redirect:/note/reception.no";
+	}
+	
+	
 }
