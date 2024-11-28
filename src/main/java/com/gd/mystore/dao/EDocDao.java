@@ -225,6 +225,28 @@ public class EDocDao {
 		return sqlSession.selectOne("edocMapper.draftrecovery", no);
 	}
 
+	// 기안서 회수
+	public int updateEdocStatusT(EDocDto edocDto) {
+		return sqlSession.update("edocMapper.updateEdocStatusT", edocDto);
+	}
+
+	public int updateApprovalStatusT(EDocApprovalDto approval1, EDocApprovalDto approval2) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("approval1", approval1);
+        params.put("approval2", approval2);
+        
+        log.debug("approval1 : {}", approval1);
+        log.debug("approval2 : {}", approval2);
+        log.debug("params : {}", params);
+
+        return sqlSession.update("edocMapper.updateApprovalStatusT", params);
+    }
+
+	// 기안서 삭제
+	public int draftUseN(EDocDto edocDto) {
+		return sqlSession.update("edocMapper.draftUseN", edocDto);
+	}
+
     
     
     

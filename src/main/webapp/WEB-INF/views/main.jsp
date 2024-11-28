@@ -157,6 +157,42 @@
         height: 100%;
         border: 1px solid #ddd;
    		}
+   		
+   		.edocInpo{
+        display: flex;
+        font-size: larger;
+        font-weight: 700;
+      }
+      .edoc_btn_top{
+        height: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        border: 1px solid #8d8d8d;
+        border-radius: 10px;
+        box-shadow: 5px 3px 12px -5px gray;
+      }
+      .edoc_btn_top_font{
+        font-size: larger;
+        font-weight: 500;
+      }
+      .edoc_btn_top_btn{
+        width: 58%;
+        display: flex;
+        justify-content: center;
+      }
+      .edoc_btn_top_btn button{
+        width: 80%;
+        justify-content: center;
+      }
+      .edoc_btn_controll{
+        display: flex;
+        height: 100%;
+        padding: 0% 20%;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
 		
 
     </style>
@@ -299,8 +335,25 @@
 		        getClock();
 		        setInterval(getClock, 1000);
 		    	</script>
+		    	
           <div class="main-home-top-edsm" style="margin-right: 20px;">
-            전자결재
+            <div class="edocInpo">
+                <div>📜</div>
+                <div>전자결재</div>
+            </div>
+
+            <div class="edoc_btn_controll">
+              <div class="edoc_btn_top">
+                <div class="edoc_btn_top_font">결재 대기 문서 ${count1}개</div>
+                <div class="edoc_btn_top_btn"><a type="button" class="btn btn-outline-primary" href="${contextPath}/edoc/aprvlwaitList.do">이동하기</a></div>
+              </div>
+              
+              <div class="edoc_btn_top">
+                <div class="edoc_btn_top_font">기안 진행 문서 ${count2}개</div>
+                <div class="edoc_btn_top_btn"><a type="button" class="btn btn-outline-primary" href="${contextPath}/edoc/draftprogressList.do">이동하기</a></div>
+              </div>
+            </div>
+
           </div>
           
            <!-- 캘린더 시작 -->

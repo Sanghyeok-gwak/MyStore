@@ -451,7 +451,7 @@ input {
 <!-- 결제 모달 -->
 <div class="modal-overlay" id="approvalModalOverlay">
     <div class="modal" id="approvalModal">
-        <form action="${contextPath}/edoc/aprvlrjt.do" method="post">
+        <form action="${contextPath}/edoc/draftrcv.do" method="post">
             <span class="ffont1" style="width:20%; font-weight: bold;">기안서를 회수 하시겠습니까?</span>
             <c:forEach var="dto" items="${list}">
 					    <input type="hidden" name="aprvlNo" value="${dto.aprvlNo}" />
