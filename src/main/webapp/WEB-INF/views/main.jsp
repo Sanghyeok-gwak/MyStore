@@ -450,7 +450,7 @@
 				<div class="weather-main">
 					<div><i class="bi bi-thermometer-half"></i></div>
 					<div class="main-temp">
-						<div id="temp">온도</div>
+						<div id="temp">0</div>
 						<i class="ri-celsius-line"></i>
 					</div>
 					<div style="border: 1px solid yellow;">아이콘</div>
@@ -466,28 +466,28 @@
 					<div class="bottom-item">
 						<div>최고 기온</div>
 						<div class="bottom-icon">	
-							<div id="temp_max"></div>
+							<div id="temp_max">0</div>
 							<i class="ri-celsius-line"></i>
 						</div>
 					</div>
 					<div class="bottom-item">
 						<div>최저 기온</div>
 						<div class="bottom-icon">	
-							<div id="temp_min"></div>
+							<div id="temp_min">0</div>
 							<i class="ri-celsius-line"></i>
 						</div>
 					</div>
 					<div class="bottom-item">
 						<div>습도</div>
 						<div class="bottom-icon">	
-							<div id="humidity"></div>
+							<div id="humidity">0</div>
 							<div>%</div>
 						</div>
 					</div>
 					<div class="bottom-item">
 						<div>바람</div>
 						<div class="bottom-icon">	
-							<div id="wind"></div>
+							<div id="wind">0</div>
 							<div>m/s</div>
 						</div>
 					</div>
