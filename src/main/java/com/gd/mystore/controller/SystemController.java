@@ -79,11 +79,12 @@ public class SystemController {
 	@PostMapping("/boardUpdate.do")
 	public String systemBoardsEdit(BoardTypeDto bt
 								 , RedirectAttributes rdAttributes) {
+		
 		//체크박스 변환처리
 		if(bt.getBoardtUse() != null) {
-			bt.setBoardtUse("N");
-		}else {
 			bt.setBoardtUse("Y");
+		}else {
+			bt.setBoardtUse("N");
 		}
 		
 		int result = systemService.boardUpdate(bt);

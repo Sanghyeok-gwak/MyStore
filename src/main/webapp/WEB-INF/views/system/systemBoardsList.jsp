@@ -229,79 +229,11 @@
 		                      </td>
 		                    </tr>
 		                    <tr>
-		                      <th scope="row">권한 설정</th>
-		                      <td>
-		                        <div style="display: flex">
-		                          <div style="margin: 0 50px 0 0">쓰기</div>
-		                          <div>
-		                            <select class="form-select" id="SelectLv" name="boardtContent" aria-label="Default select example">
-		                              <option value="5">Lv 5</option>
-		                              <option value="4">Lv 4</option>
-		                              <option value="3">Lv 3</option>
-		                              <option value="2">Lv 2</option>
-		                              <option value="1">Lv 1</option>
-		                            </select>
-		                          </div>
-		                        </div>
-		                        <div style="display: flex; margin: 5px 0 5px 0">
-		                          <div style="margin: 0 20px 0 0">댓글쓰기</div>
-		                          <div>
-		                            <select class="form-select" id="SelectComment" name="boardtWrite" aria-label="Default select example">
-		                              <option value="5">Lv 5</option>
-		                              <option value="4">Lv 4</option>
-		                              <option value="3">Lv 3</option>
-		                              <option value="2">Lv 2</option>
-		                              <option value="1">Lv 1</option>
-		                            </select>
-		                          </div>
-		                        </div>
-		                        <div style="display: flex">
-		                          <div style="margin: 0 50px 0 0">읽기</div>
-		                          <div>
-		                            <select class="form-select" id="SelectWrite" name="boardtRead" aria-label="Default select example">
-		                              <option value="5">Lv 5</option>
-		                              <option value="4">Lv 4</option>
-		                              <option value="3">Lv 3</option>
-		                              <option value="2">Lv 2</option>
-		                              <option value="1">Lv 1</option>
-		                            </select>
-		                          </div>
-		                        </div>
-		                      </td>
-		                    </tr>
-		                    <tr>
 		                      <th scope="row">감추기 설정</th>
 		                      <td style="display: flex">
 		                        메뉴감추기
 		                        <div class="form-check" style="margin: 0 0 0 10px">
 		                          <input class="form-check-input" type="checkbox" name="boardtUse" id="gridCheck1" />
-		                        </div>
-		                      </td>
-		                    </tr>
-		                    <tr>
-		                      <th scope="row">지점 여부</th>
-		                      <td style="display: flex">
-		                        지점
-		                        <div class="form-check" style="margin: 0 0 0 10px">
-		                          <input class="form-check-input" type="checkbox" name="officeUse" id="gridCheck2" />
-		                        </div>
-		                        <div style="width: 60%;">
-			                        <select class="form-select" name="deptCode" aria-label="Default select example">
-			                        
-																<c:choose>
-																	<c:when test=" ${ empty bt.getDeptCode()}">
-																		<option value="">비고</option>
-																	</c:when>
-																	<c:otherwise>
-																	
-																		<c:forEach var="bl" items="${ bt.getDeptCode() }">
-																		 	<option value="">${bl.getDeptCode()}</option>
-								               			</c:forEach>
-								               			
-																	</c:otherwise>
-																</c:choose>
-																
-	                           </select>
 		                        </div>
 		                      </td>
 		                    </tr>
@@ -344,7 +276,7 @@
                     const officeUse = this.getAttribute('data-officeUse');
                     const deptCode = this.getAttribute('data-deptCode');
                     
-                    console.log(officeUse);
+                    console.log(boardtUse);
                     
                     //게시판 번호
 										input_No.value = boardTypeNo;
@@ -366,25 +298,12 @@
                         selectElement.value = 'S';
                     }
                     
-                    //쓰기 권한 설정
-                    const selectElementLv = document.getElementById('SelectLv');
-                    selectElementLv.value = boardtContent;
                     
-                    //댓글 쓰기 설정
-										const selectElementComment = document.getElementById('SelectComment');
-										selectElementComment.value = boardtWrite;
-					
-					          //읽기 쓰기 설정
-										const selectElementWrite = document.getElementById('SelectWrite');
-										selectElementWrite.value = boardtRead;
 										
 										//감추기 설정
 										const selectElementHide = document.getElementById('gridCheck1');
-										selectElementHide.checked = boardtUse == 'N';
+										selectElementHide.checked = boardtUse == 'Y';
 										
-										//지점 여부
-										const selectElementofficeUse = document.getElementById('gridCheck2');
-										selectElementofficeUse.checked = officeUse == 'N';
 										
 										
                   });

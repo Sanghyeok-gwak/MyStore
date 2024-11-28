@@ -1,18 +1,11 @@
 package com.gd.mystore.dao;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.gd.mystore.dto.BoardTypeDto;
 import com.gd.mystore.dto.EmpMemberDto;
-import com.gd.mystore.dto.LogDto;
-import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.WorkDto;
 
 import lombok.RequiredArgsConstructor;
