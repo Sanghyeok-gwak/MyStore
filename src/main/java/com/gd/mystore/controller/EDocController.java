@@ -718,7 +718,22 @@ public class EDocController {
 	}
 
 
-	
+	// 메인화면 결재대기문서 기안진행문서 갯수
+	@GetMapping("/edocCount")
+	public String edocCount(Model model,
+							HttpSession session) {
+		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo(); // 로그인한 사용자 번호
+		
+		int count1 = edocService.aprvlWaitListCount(no);
+		int count2 = edocService.draftProgressListCount(no);
+		
+		model.addAttribute("count1", count1);
+		model.addAttribute("count2", count2);			
+		
+		return "main";
+	}
 
 	
 

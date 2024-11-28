@@ -39,7 +39,9 @@
         <a href="${ contextPath }/edoc/draftcompleteList.do">기안 승인 문서함</a>
         <a href="${ contextPath }/edoc/draftrejectList.do">기안 반려 문서함</a>
         <a href="${ contextPath }/edoc/draftrecoveryList.do">기안 회수 문서함</a>
-        <a href="${ contextPath }/edoc/formlist.do">문서 양식 관리</a>
+        <c:if test="${loginUser.empAuth eq 'PS001' || loginUser.empAuth eq 'PS002' || loginUser.empAuth eq 'PS003' }">
+        	<a href="${ contextPath }/edoc/formlist.do">문서 양식 관리</a>
+        </c:if>
       </div>
 			
       <div class="side-icon" onclick="toggleSubmenu(this)">										
@@ -75,6 +77,7 @@
         <c:if test="${loginUser.empAuth eq 'PS005'}">
 	        <a href="${contextPath }/ordering/list.or">발주등록</a>							<!-- LV  @ == 5    -->
 	        <a href="${contextPath }/branchoffice/list.po">상품조회</a>						<!-- LV  @ == 5    -->
+	        <a href="${contextPath }/sales/list.po">매출</a>
       	</c:if>
       </div>
 			<c:if test="${loginUser.empAuth eq 'PS001'}">
