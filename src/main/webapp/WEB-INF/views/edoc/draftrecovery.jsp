@@ -349,7 +349,7 @@ input {
 
 					<div id="enddiv">
 						<div class="btn-box-hover"> 
-							<button class="btn3-hover" style="width: 120px; font-size: 18px;" type="button" 
+							<button class="btn1-hover" style="width: 120px; font-size: 18px;" type="button" 
 							onclick="openApprovalModal()">삭제하기</button> 
 						</div>  
 						<div class="btn-box-hover"> 
@@ -451,14 +451,8 @@ input {
 <!-- 결제 모달 -->
 <div class="modal-overlay" id="approvalModalOverlay">
     <div class="modal" id="approvalModal">
-        <form action="${contextPath}/edoc/aprvlrjt.do" method="post">
+        <form action="${contextPath}/edoc/draftUseN.do" method="post">
             <span class="ffont1" style="width:20%; font-weight: bold;">기안서를 삭제 하시겠습니까?</span>
-            <c:forEach var="dto" items="${list}">
-					    <input type="hidden" name="aprvlNo" value="${dto.aprvlNo}" />
-					    <input type="hidden" name="empNo" value="${dto.empNo}" />
-					    <input type="hidden" name="aprvlEdocNo" value="${dto.aprvlEdocNo}" />
-					    <input type="hidden" name="aprvlRank" value="${dto.aprvlRank}" />
-						</c:forEach>
             <input type="hidden" name="edocNo" value="${edoc.edocNo}">
             <div style="display:flex; justify-content: center; margin-top:30px;">
 		          <div class="btn-box-hover"> 

@@ -282,5 +282,59 @@ public class EDocServiceImpl implements EDocService {
 		return edocDao.draftrecovery(no);
 	}
 
+	// 기안서 회수
+	@Override
+	public int draftrcv(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto) {
+
+        approval1.setAprvlStatus(""); // 1번 결재자 상태를 ''로 변경
+        approval2.setAprvlStatus(""); // 2번 결재자 상태도 ''로 변경
+        edocDto.setEdocStatus("T");   // 전자문서 상태를 'T'로 변경
+
+        // 상태 업데이트
+        int updateEdocResult = edocDao.updateEdocStatusT(edocDto);
+        int updateApprovalResult = edocDao.updateApprovalStatusT(approval1, approval2);
+        
+        log.debug("updateEdocResult : {}", updateEdocResult);
+        log.debug("updateApprovalResult : {}", updateApprovalResult);
+
+
+        // 결과 반환
+        return (updateApprovalResult > 0 && updateEdocResult > 0) ? 1 : 0;
+	}
+
+	@Override
+	public int draftUseN(EDocDto edocDto) {
+		
+		edocDto.setUseYN("N");
+		
+		return edocDao.draftUseN(edocDto);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 }
