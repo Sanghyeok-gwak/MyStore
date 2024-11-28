@@ -1,6 +1,7 @@
 package com.gd.mystore.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.gd.mystore.dto.DispatchDto;
 import com.gd.mystore.dto.OrderingListDto;
@@ -42,4 +43,12 @@ public interface OrderingService {
 	
 	// 상품 검색 
 	List<OrderingListDto> selectSearchList(PageInfoDto pi,String search);
+
+	// 발주 상품 수정
+	int updateOrderPro(List<OrderingProductDto> productList,Map<String, Object> map);
+	
+	// 발주 등록 리스트 
+	List<ProductDto> selectAddProList();
+	
+	
 }

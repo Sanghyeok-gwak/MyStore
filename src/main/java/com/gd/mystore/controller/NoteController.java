@@ -110,9 +110,15 @@ public class NoteController {
 	
 	
 	@GetMapping("write.no")
-	public String testPage12() {
+	public String writenotePage() {
 		return "note/writenote";
 	}
+	
+	@GetMapping("temporayadd.no")
+	public void temporayAdd(){
+		
+	}
+	
 	//@PostMapping("send.do")
 	//public String sendNote(SendNoteDto noteDto, Model model) {
 	//	int result = noteService.sendNote(noteDto);

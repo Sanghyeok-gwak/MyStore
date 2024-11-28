@@ -96,10 +96,11 @@
               }
             </style>
             
-           <form id="ordering-form" action="${contextPath}/ordering/insert.or" method="post">
+           <form id="ordering-form" action="${contextPath}/ordering/update.or" method="post">
             <div class="btn-edit-add-box" style="display: flex; justify-content: end;">
+            	<input type="hidden" name="orderNo" value="${param.orderNo}">
             	<div class="btn4-box">
-	              <button type="submit" class="btn4">등록 하기</button>
+	              <button type="submit" class="btn4">수정 하기</button>
             	</div>
             </div>
             <div class="table-box">
@@ -123,7 +124,7 @@
 		                    <td>${p.productDivision }</td>
 			                	<td>${p.productName }</td>
 		                    <td>${p.event == null ? '행사없음' : p.event}</td>
-		                    <td><input style="padding-left:10px;" type="number" name="productList[${status.index}].inventory" value="0"></td>
+		                    <td><input style="padding-left:10px;" type="number" name="productList[${status.index}].inventory" value="${p.count }"></td>
 		                    <td>${p.useYn == 'Y' ? '발주가능' : '발주불가능'}</td>
 		                  </tr>
 	                	</c:forEach>

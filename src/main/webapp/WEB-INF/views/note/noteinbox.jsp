@@ -112,11 +112,23 @@
 		      <b style="font-size: 25px; margin-left: 10px;">받은쪽지함</b>
 		</div>
 		<hr>
+      <script>
+			  // 'checkAll' 체크박스를 클릭하면 모든 체크박스를 선택하거나 해제
+			  function toggleAllCheckboxes(source) {
+			    var checkboxes = document.querySelectorAll('.checkItem');
+			    checkboxes.forEach(function(checkbox) {
+			      checkbox.checked = source.checked;
+			    });
+			  }
+			</script>
 			<div class="table-box">
+       	<form action="${contextPath }/temporayadd.no" method="get">
 			    <table class="table" style="text-align: center;">
 			        <thead>
 			            <tr>
-				             <th style="width: 50px;"><input type="checkbox" name="" id=""></th>
+				             <th style="width: 50px;">
+				             	<input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes(this)">
+				             </th>
 				             <th style="width: 100px;">번호</th>
 				             <th style="width: 300px;">제목</th>
 				             <th style="width: 150px;">보낸사람</th>
@@ -133,7 +145,7 @@
 			        		<c:otherwise>
 			        			<c:forEach var="r" items="${list }" varStatus="status">
 					            <tr>
-				                <td><input type="checkBox" value="${r.receptionNo }"></td>
+				                <td><input type="checkBox" name="receptionNo" class="checkItem" value="${r.receptionNo }"></td>
 				                <td>${list.size() - status.index}</td>
 				                <td>${r.title }</td>
 				                <td>${r.recepId }</td>
@@ -144,6 +156,7 @@
 			        	</c:choose>	
 			        </tbody>
 			    </table>                
+       	</form>
 				<div class="paging"> 
             <ul id="paging_area" class="pagination d-flex justify-content-center">
             
