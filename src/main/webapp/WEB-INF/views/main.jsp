@@ -335,21 +335,22 @@
 		        getClock();
 		        setInterval(getClock, 1000);
 		    	</script>
+		    	
           <div class="main-home-top-edsm" style="margin-right: 20px;">
             <div class="edocInpo">
                 <div>📜</div>
-                <div>전자결재 <- 아이콘 템플릿에 아이콘 찾은 후 변경 그리고 글자 크기도 변경해주세욥</div>
+                <div>전자결재</div>
             </div>
 
             <div class="edoc_btn_controll">
               <div class="edoc_btn_top">
-                <div class="edoc_btn_top_font">결재 대기 문서 0개</div>
-                <div class="edoc_btn_top_btn"><button type="button" class="btn btn-outline-primary">이동하기</button></div>
+                <div class="edoc_btn_top_font">결재 대기 문서 ${count1}개</div>
+                <div class="edoc_btn_top_btn"><a type="button" class="btn btn-outline-primary" href="${contextPath}/edoc/aprvlwaitList.do">이동하기</a></div>
               </div>
               
               <div class="edoc_btn_top">
-                <div class="edoc_btn_top_font">결재 진행 문서 0개</div>
-                <div class="edoc_btn_top_btn"><button type="button" class="btn btn-outline-primary">이동하기</button></div>
+                <div class="edoc_btn_top_font">기안 진행 문서 ${count2}개</div>
+                <div class="edoc_btn_top_btn"><a type="button" class="btn btn-outline-primary" href="${contextPath}/edoc/draftprogressList.do">이동하기</a></div>
               </div>
             </div>
 

@@ -730,7 +730,10 @@ public class EDocController {
 		int count2 = edocService.draftProgressListCount(no);
 		
 		model.addAttribute("count1", count1);
-		model.addAttribute("count2", count2);			
+		model.addAttribute("count2", count2);
+		
+		System.out.println(count1);
+		System.out.println(count2);
 		
 		return "main";
 	}
