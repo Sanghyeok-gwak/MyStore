@@ -28,7 +28,9 @@
 		<typeAlias type="com.gd.mystore.dto.CalendarDto" alias="CalendarDto"/>									<!-- 풀캘린더 -->
 		<typeAlias type="com.gd.mystore.dto.LogDto" alias="LogDto"/>														<!-- 로그 -->
 		<typeAlias type="com.gd.mystore.dto.WorkDto" alias="WorkDto"/>													<!-- 근태 -->
-		<typeAlias type="com.gd.mystore.dto.NoteDto" alias="NoteDto"/>											<!-- 쪽지 -->
+		<typeAlias type="com.gd.mystore.dto.NoteDto" alias="NoteDto"/>													<!-- 쪽지 -->
+		<typeAlias type="com.gd.mystore.dto.ReplyDto" alias="ReplyDto"/>												<!-- 댓글 -->
+		
 		
 	</typeAliases>
 	

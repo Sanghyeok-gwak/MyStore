@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.ReplyDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,6 +85,16 @@ public class BoardDao {
 	
 	public int deleteAttach(String[] delFileNo) {
 		return sqlSession.delete("boardMapper.deleteAttach" , delFileNo);
+	}
+	
+	
+	public int replycount(int boardNo) {
+		return sqlSession.selectOne("boardMapper.replycount", boardNo);
+	}
+	
+
+	public List<ReplyDto> replylist(int boardNo){
+		return sqlSession.selectList("boardMapper.replylist", boardNo);
 	}
 	
 }

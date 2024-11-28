@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,6 +21,7 @@ import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.ReplyDto;
 import com.gd.mystore.service.BoardService;
 import com.gd.mystore.util.FileUtil;
 import com.gd.mystore.util.PagingUtil;
@@ -152,12 +154,24 @@ public class BoardController {
 		// 상세페이지에 필요한 데이터
 		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명, 저장경로, 실제파일명)들 데이터
 		BoardDto b = boardService.selectBoard(no);
+		int listCount = boardService.replycount(no);
 		// boardNo, boardTitle, boardContent, boardWriter, registDt, attachList
+		List<ReplyDto> reply = boardService.replylist(no);
+		
 		
 		model.addAttribute("b", b);		
-					
-	
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("reply", reply);
+		
 	}
+	
+	
+	@ResponseBody
+	@GetMapping(value="/rlist.do", produces="application/json")
+	public List<ReplyDto> replyList(int no) {
+		return boardService.replylist(no);
+	}
+
 	
 	@PostMapping("/boardModify.do")
 	public void modifyPage(int no, Model model) {
@@ -209,6 +223,8 @@ public class BoardController {
 		return "redirect:/board/boardDetail.do?no=" + board.getBoardNo();
 		
 	}
+	
+	
 	
 	
 	

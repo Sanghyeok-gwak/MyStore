@@ -28,7 +28,7 @@
 							<div >${ b.empName }</div>
 							<div style="display: flex; justify-content: space-between; gap: 10px;">
 								<div style="margin-right: 50px;">${ b.createDate }</div>
-								<div style="margin-right: 50px;">댓글 수 ${ b.boardCount }</div>
+								<div style="margin-right: 50px;">댓글 수 ${ listCount }</div>
 								<div>조회 수 ${ b.boardCount }</div>
 							</div>
 						</div>
@@ -76,13 +76,15 @@
 			<table>
 				<td style="padding-top: 5px; padding-bottom: 5px; padding-left: 0; padding-right: 0;">
 					<div style="display: flex; justify-content: space-between; width: 100%; font-size: 18px;">
-						<div>댓글 1개</div>
+						<div>댓글 ${ listCount }개</div>
 					</div>
 				</td>
 
 			</table>
 
 		</div>
+		
+		
 		<style>
 			.reply-box{
 				margin-left:5px;
@@ -93,17 +95,17 @@
 			<div class="d-flex" style="flex-direction: column; font-size: 18px; margin-top: 10px;">
 				<!-- 작성자 및 댓글 텍스트 부분 -->
 				<div class="d-flex" style="display: flex;  align-items: center; width: 20%;">
-					<div style="width:100%;"><span>김개똥</span></div> 
+					<div style="width:100%;"><span>${reply.empNo }</span></div> 
 					<div><i class="bi bi-three-dots"></i></div>
 				</div>
 	
 	
 				<!-- 댓글 텍스트 -->
-				<div style="padding-bottom: 5px; margin-top: 5px;">댓글</div>
+				<div style="padding-bottom: 5px; margin-top: 5px;">${reply.replyContent}</div>
 	
 				<!-- 댓글 관련 정보 (날짜, 답글쓰기, 하트이모티콘) -->
 				<div class="d-flex" style=" margin-top: 5px; gap: 3px; width: 20%; color: #afacac;">
-					<div>2024-11-02</div>
+					<div>날짜</div>
 					<div style="margin-left: 20px; margin-top: -1px;">답글쓰기</div>
 					<i class="bi bi-heart" style="margin-left: 20px;"></i>
 				</div>
@@ -120,12 +122,42 @@
 		</div>
 		<div style="display: flex; justify-content: space-between; align-items: center;">
 			<textarea
-				style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"></textarea>
+				class="form-control" id="reply_content" style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"></textarea>
 
-			<button class="btn2-hover" style="width: 8%; height: 40px;">작성하기</button>
+			<button class="btn2-hover" style="width: 8%; height: 40px;" onclick="fn_insertReply();">작성하기</button>
 		</div>
 		
 	</div>
+	
+	
+	 <script>
+         	 $(document).ready(function(){
+         		 fn_replyList();
+         	 })
+         
+         	 // 해당 게시글의 댓글 목록 조회용 (ajax) 함수
+         	 function fn_replyList(){
+         		 $.ajax({
+         			 url: '${contextPath}/board/rlist.do',
+         			 data: "no=" + ${b.boardNo},
+         			 success: function(resData){
+         				 console.log(resData); // [{}, {}, ..]
+         				 
+         				 /*
+         				 	<tr>
+                     <th>user02</th>
+                     <td>댓글입니다.너무웃기다앙</td>
+                     <td>2020-04-10</td>
+                  </tr>
+         				 */
+         				
+         				 
+         				 
+         			 }
+         		 })
+         	 }
+         	
+         </script>
 	
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

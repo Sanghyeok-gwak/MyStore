@@ -6,6 +6,7 @@ import java.util.Map;
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.ReplyDto;
 
 public interface BoardService {
 	
@@ -37,5 +38,9 @@ public interface BoardService {
 		List<BoardFileDto> selectDelAttach(String[] delFileNo);
 		int updateBoard(BoardDto board, String[] delFileNo);
 		
+		int replycount(int boardNo);
+		
+		
+		List<ReplyDto> replylist(int boardNo);
 		
 }

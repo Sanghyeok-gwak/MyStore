@@ -20,11 +20,11 @@ public class ReplyDto {
 	private int refBno;
 	private String uprReplyNo;
 	private String status;
-	private int empNo;
+	private String empNo;
 	private String createDate;
 	private int modifier;
 	private String modifyDate;
 	private String useYN;
-	
+	private String boardNo;
 	
 }

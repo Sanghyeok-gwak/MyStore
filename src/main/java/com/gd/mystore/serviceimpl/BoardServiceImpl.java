@@ -10,6 +10,7 @@ import com.gd.mystore.dao.BoardDao;
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.ReplyDto;
 import com.gd.mystore.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -117,7 +118,17 @@ public class BoardServiceImpl implements BoardService {
 					 	&& result3 == list.size()
 					 		? 1 : -1;
 	}
-
+	
+	@Override
+	public int replycount(int boardNo) {
+		
+		return boardDao.replycount(boardNo);
+	}
+	
+	@Override
+	public List<ReplyDto> replylist(int boardNo) {
+		return boardDao.replylist(boardNo);
+	}
 	
 	
 }

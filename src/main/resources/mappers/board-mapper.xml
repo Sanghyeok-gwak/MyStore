@@ -40,6 +40,26 @@
     <result column="USE_YN" property="useYN"/>
   </resultMap>	
 
+	<resultMap id="ReplyResultMap" type="ReplyDto">
+    <result column="REPLY_NO" property="replyNo" />
+    <result column="REPLY_CONTENT" property="replyContent" />
+    <result column="REF_BNO" property="refBno" /> 
+    <result column="UPR_REPLY_NO" property="uprReplyNo" />
+    <result column="STATUS" property="status" />
+    <result column="EMP_NO" property="empNo" />
+    <result column="create_date" property="createDate" />	
+    <result column="MODIFIER" property="modifier" />	
+    <result column="MODIFY_DATE" property="modifyDate" />	
+    <result column="USE_YN" property="useYN" />	
+    <result column="board_no" property="boardNo" />	
+  </resultMap>
+
+
+
+
+
+
+
   <!-- 게시글 목록 갯수 -->
   <select id="selectBoardListCount" resultType="_int">
     SELECT COUNT(*) 
@@ -278,7 +298,7 @@
 		    c.file_path,
 		    c.filesystem_name,
 		    c.original_name,
-        d.boardt_name
+        b.board_type_no
 		FROM tbl_board b
 		JOIN tbl_employee e ON b.emp_no = e.emp_no
 		LEFT JOIN tbl_boardfile c ON c.ref_type = 'A' AND c.ref_no = b.board_no
@@ -297,7 +317,7 @@
 			from tbl_boardfile
 		 <where>
 		 	<foreach item="no" collection="array"
-				open="file_no in (" separator=","	close=")">
+				open="boardfile_no in (" separator=","	close=")">
 		 		#{no}
 		 	</foreach>
 		 </where>
@@ -323,14 +343,45 @@
 		from tbl_boardfile
 	 <where>
 		 	<foreach item="no" collection="array"
-				open="file_no in (" separator=","	close=")">
+				open="boardfile_no in (" separator=","	close=")">
 		 		#{no}
 		 	</foreach>
 		 </where>
 	
 	</delete>
   
+  <select id="replycount" resultType="_int">
+   SELECT
+  			 COUNT(*)
+    FROM 
+    		TBL_REPLY r
+    join tbl_board b on b.board_no = r.ref_bno
+    WHERE r.ref_bno=  #{boardNo}
   
+  
+  
+  </select>
+  
+  <select id="replylist" resultMap="ReplyResultMap">
+  
+  select 
+        r. reply_no
+    ,    r.reply_content
+    ,    r.ref_bno
+    ,    r.status
+    ,   r.emp_no
+    ,   r.create_date
+    ,   r.use_yn
+    ,  b.board_no
+    from tbl_reply r
+    join tbl_board b on b.board_no = r.ref_bno
+    where b.board_no = #{boardNo}
+          
+  
+  
+  
+  
+  </select>
   
 
 </mapper>
