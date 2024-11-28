@@ -158,10 +158,15 @@
 										<td>${ e.createDate }</td>
 										<td>${ e.empEmail }</td>
 										<td>${ e.empPhone }</td>
-										<td><input type="hidden" class="empNo" value="${e.empNo}">
-										<button id="salarybutton" class="btn4" data-empNo="${e.empNo}" 
-										data-bs-toggle="modal" data-bs-target="#scrollingModal">등록
-										</button></td>
+										<td>
+										    <button 
+										        id="salarybutton" 
+										        class="btn4" 
+										        data-empno="${e.empNo}" 
+										        data-bs-toggle="modal" 
+										        data-bs-target="#scrollingModal">등록</button>
+										</td>
+
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -283,25 +288,29 @@
 
 	<script>
 	$(document).on("click", "#salarybutton", function () {
+	    // 클릭된 버튼의 data-empNo 속성 값 가져오기
+	    let empNo = $(this).data("empno");
 
-		let empNo = $(this).siblings('.empNo').val();  // empNo 값 가져오기
+	    // hidden input에 empNo 값 설정
+	    $("#empNo").val(empNo);
 
-
+	    // AJAX 요청으로 급여 데이터 가져오기
 	    $.get('${contextPath}/salary/getSalary', { empNo: empNo }, function (data) {
 	        if (data) {
-	            
-	            
-	            $('#salBase').val(data.salBase ? data.salBase : '');
-	            $('#salNp').val(data.salNp ? data.salNp : '');
-	            $('#salHi').val(data.salHi ? data.salHi : '');
-	            $('#salEi').val(data.salEi ? data.salEi : '');
-	            $('#salNetSalary').val(data.salNetSalary ? data.salNetSalary : '');
+	            // 서버에서 받은 데이터를 모달에 채우기
+	            $('#salBase').val(data.salBase || '');
+	            $('#salNp').val(data.salNp || '');
+	            $('#salHi').val(data.salHi || '');
+	            $('#salEi').val(data.salEi || '');
+	            $('#salNetSalary').val(data.salNetSalary || '');
 	        } else {
-
-	        	alert('급여 정보가 없습니다.');
+	            alert('급여 정보가 없습니다.');
 	        }
+	    }).fail(function () {
+	        alert('데이터를 가져오는 데 실패했습니다.');
 	    });
 	});
+
 
 	// 기본급 입력 값과 보험 계산 버튼 클릭 시 이벤트
 	$(document).on("click", "#Taxbutton", function () {
