@@ -97,4 +97,10 @@ public class BoardDao {
 		return sqlSession.selectList("boardMapper.replylist", boardNo);
 	}
 	
+	
+	public int insertReply(ReplyDto r) {
+		return sqlSession.insert("boardMapper.insertReply", r);
+	}
+	
+	
 }

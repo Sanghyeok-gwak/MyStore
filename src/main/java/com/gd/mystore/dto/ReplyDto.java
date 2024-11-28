@@ -1,5 +1,8 @@
 package com.gd.mystore.dto;
 
+import java.util.Date;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,10 +24,14 @@ public class ReplyDto {
 	private String uprReplyNo;
 	private String status;
 	private String empNo;
-	private String createDate;
+	private Date createDate;
 	private int modifier;
 	private String modifyDate;
 	private String useYN;
 	private String boardNo;
+	private String empName;
+	private String formattedCreateDate;
+	
+	private List<ReplyDto> replyList;
 	
 }

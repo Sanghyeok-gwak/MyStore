@@ -30,6 +30,7 @@
 		<typeAlias type="com.gd.mystore.dto.WorkDto" alias="WorkDto"/>													<!-- 근태 -->
 		<typeAlias type="com.gd.mystore.dto.NoteDto" alias="NoteDto"/>													<!-- 쪽지 -->
 		<typeAlias type="com.gd.mystore.dto.ReplyDto" alias="ReplyDto"/>												<!-- 댓글 -->
+		<typeAlias type="com.gd.mystore.dto.GoodDto" alias="GoodDto"/>													<!-- 좋아요 -->											<!-- 댓글 -->
 		
 		
 	</typeAliases>

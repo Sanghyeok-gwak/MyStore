@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <c:set var="contextPath" value="${ pageContext.request.contextPath }"/>     
 <!DOCTYPE html>
 <html>
@@ -10,6 +12,11 @@
 <style>
 .text-box{
 	overflow-y: scroll;
+}
+.dropdown-menu .dropdown-item-text:hover {
+    background-color: #f1f1f1; /* 호버 시 배경 색 변경 */
+   
+    cursor: pointer; /* 마우스 커서가 손 모양으로 변경 */
 }
 </style>
 </head>
@@ -89,29 +96,232 @@
 			.reply-box{
 				margin-left:5px;
 				margin-right:150px;
+				
+			}
+			.reply-reply-box{
+				margin-left:5px;
+				margin-right:150px;
+				
 			}
 		</style>
-		<div class="reply-box">		
-			<div class="d-flex" style="flex-direction: column; font-size: 18px; margin-top: 10px;">
-				<!-- 작성자 및 댓글 텍스트 부분 -->
-				<div class="d-flex" style="display: flex;  align-items: center; width: 20%;">
-					<div style="width:100%;"><span>${reply.empNo }</span></div> 
-					<div><i class="bi bi-three-dots"></i></div>
-				</div>
+		
+<c:forEach var="r" items="${reply}">
+  <c:if test="${not empty r.uprReplyNo}">
+            <i class="bi bi-arrow-return-right" style="margin-top:10px;"></i>
+        </c:if>
+    <div class="reply-box"
+         <c:if test="${not empty r.uprReplyNo}"> 
+            style="margin-left:50px;"
+         </c:if>
+         >
+        <div class="d-flex" style="flex-direction: column; font-size: 18px; margin-top: 10px;">
+            <!-- 작성자 및 댓글 텍스트 부분 -->
+            <div class="d-flex" style="display: flex; align-items: center; width: 50%;">
+                <div style="width:100%;"><span>${r.empName}</span></div> 
+                <c:if test="${loginUser.empNo eq r.empNo}">
+                    <!-- 드롭다운 아이콘 클릭 -->
+                    <div class="dropdown" style="cursor: pointer;" onclick="toggleDropdown(event)">
+                        <div>
+                            <i class="bi bi-three-dots"></i>
+                        </div>
+                        <!-- 드롭다운 메뉴 (기본적으로 숨김) -->
+                        <div class="dropdown-menu" style="display: none;">
+                            <span class="dropdown-item-text">수정</span>
+                            <span class="dropdown-item-text">삭제</span>
+                        </div>
+                    </div>
+                </c:if>
+            </div>
+    
+            <!-- 댓글 텍스트 -->
+            <div style="padding-bottom: 5px; margin-top: 5px; width: 50%;">${r.replyContent}</div>
+    
+            <!-- 댓글 관련 정보 (날짜, 답글쓰기, 하트이모티콘) -->
+            <div class="d-flex" style="margin-top: 5px; gap: 3px; width: 29%; color: #afacac;">
+                <div>${r.formattedCreateDate}</div>
+                
+                <!-- 답글이 아닐 경우 답글쓰기 버튼 표시 -->
+                <c:if test="${empty r.uprReplyNo}">
+                    <div style="margin-left: 20px; margin-top: -1px; cursor: pointer;" onclick="toggleTextarea(${r.replyNo})">답글쓰기</div>
+                </c:if>
+
+                <div class="like-container" style="position: relative; cursor: pointer;">
+                    <!-- 비어있는 하트 아이콘 (위에 표시될 아이콘) -->
+                    <i class="bi bi-heart-fill" style="position: absolute; left: 0; top: 0; color: red; z-index: 0; display: none;" onclick="toggleLike(this)"></i>
+                    <i class="bi bi-heart" style="position: absolute; left: 0; top: 0; z-index: 1;" onclick="toggleLike(this)"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 답글 입력창 (동적으로 표시됨) -->
+      <div id="replyTextareaContainer${r.replyNo}" class="reply-textarea-container" style="display: none; margin-top: 10px; width: 100%;">
+    <textarea class="form-control" id="reply_content_${r.replyNo}" style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"></textarea>
+    <button class="btn2-hover" style="width: 8%; height: 40px;" onclick="submitReply(${r.replyNo})">작성하기</button>
+</div>
 	
-	
-				<!-- 댓글 텍스트 -->
-				<div style="padding-bottom: 5px; margin-top: 5px;">${reply.replyContent}</div>
-	
-				<!-- 댓글 관련 정보 (날짜, 답글쓰기, 하트이모티콘) -->
-				<div class="d-flex" style=" margin-top: 5px; gap: 3px; width: 20%; color: #afacac;">
-					<div>날짜</div>
-					<div style="margin-left: 20px; margin-top: -1px;">답글쓰기</div>
-					<i class="bi bi-heart" style="margin-left: 20px;"></i>
-				</div>
-			</div>
-	
-		</div>
+
+       
+    </div>
+</c:forEach>
+
+
+
+		
+		
+		
+		
+		
+		
+			<script>
+			
+			// 드롭다운 토글 함수
+				// 드롭다운 토글 함수
+			function toggleDropdown(event) {
+			    // 모든 드롭다운 메뉴 찾기
+			    const allDropdownMenus = document.querySelectorAll('.dropdown-menu');
+			
+			    // 현재 클릭된 드롭다운 메뉴
+			    const clickedDropdownMenu = event.currentTarget.querySelector('.dropdown-menu');
+			
+			    // 모든 드롭다운 메뉴를 닫음
+			    allDropdownMenus.forEach(menu => {
+			        if (menu !== clickedDropdownMenu) {
+			            menu.style.display = 'none';  // 다른 드롭다운은 숨기기
+			        }
+			    });
+			
+			    // 현재 클릭된 드롭다운 메뉴 열기/닫기
+			    if (clickedDropdownMenu.style.display === 'none' || clickedDropdownMenu.style.display === '') {
+			        clickedDropdownMenu.style.display = 'block';  // 열기
+			    } else {
+			        clickedDropdownMenu.style.display = 'none';  // 닫기
+			    }
+			}
+			
+			// 문서에서 다른 부분을 클릭하면 드롭다운을 닫는 함수
+			function closeDropdowns(event) {
+			    const allDropdownMenus = document.querySelectorAll('.dropdown-menu');
+			    const clickedDropdown = event.target.closest('.dropdown'); // 클릭된 요소가 드롭다운 내부인지를 확인
+			    
+			    // 드롭다운 외부를 클릭했다면
+			    if (!clickedDropdown) {
+			        allDropdownMenus.forEach(menu => {
+			            menu.style.display = 'none'; // 모든 드롭다운 메뉴를 닫기
+			        });
+			    }
+			}
+			
+			// 문서 전체에 클릭 이벤트 추가
+			document.addEventListener('click', closeDropdowns);
+
+
+			
+			
+    function toggleLike(clickedIcon) {
+        // 부모 요소인 like-container 안의 아이콘들을 찾음
+        const likeContainer = clickedIcon.closest('.like-container');
+        const heartIcon = likeContainer.querySelector('.bi-heart');
+        const heartFillIcon = likeContainer.querySelector('.bi-heart-fill');
+
+        // 하트 아이콘과 채워진 하트 아이콘의 상태를 토글
+        if (clickedIcon === heartIcon) {
+            heartIcon.style.display = 'none';
+            heartFillIcon.style.display = 'inline-block';
+        } else {
+            heartIcon.style.display = 'inline-block';
+            heartFillIcon.style.display = 'none';
+        }
+    }
+    
+    function toggleTextarea(replyNo) {
+        // 모든 답글 텍스트 영역을 찾음
+        const allTextareaContainers = document.querySelectorAll('.reply-textarea-container');
+        
+        // 모든 답글 텍스트 영역을 숨김
+        allTextareaContainers.forEach(function(container) {
+            // 클릭된 텍스트 영역이 아닌 다른 모든 영역을 숨김
+            if (container.id !== 'replyTextareaContainer' + replyNo) {
+                container.style.display = 'none';
+            }
+        });
+
+        // 클릭한 답글 텍스트 영역만 열기
+        const textareaContainer = document.getElementById('replyTextareaContainer' + replyNo);
+        if (textareaContainer) {
+            // 현재 텍스트 영역의 스타일을 확인하여 열려 있는지 확인
+            const currentDisplay = window.getComputedStyle(textareaContainer).display;
+
+            // 만약 현재 display가 'none'이라면 열고, 아니면 닫음
+            if (currentDisplay === 'none') {
+                textareaContainer.style.display = 'block';  // 열기
+            } else {
+                textareaContainer.style.display = 'none';  // 닫기
+            }
+        }
+    }
+
+
+
+
+
+    function submitReply() {
+        const replyContent = document.getElementById("replyTextarea").value;
+        
+        // 답글 내용이 있을 경우 처리 (예시로 콘솔에 출력)
+        if (replyContent.trim() !== "") {
+            console.log("작성된 답글:", replyContent);
+            
+            // 서버에 답글을 제출하거나 추가적인 동작을 여기에 추가
+            
+            // 텍스트 영역 숨기기
+            document.getElementById("replyTextareaContainer").style.display = "none";
+            document.getElementById("replyTextarea").value = ""; // 텍스트 영역 초기화
+        } else {
+            alert("답글을 입력해주세요.");
+        }
+    }
+ // 답글 텍스트영역 토글
+    function toggleTextarea(replyNo) {
+        // 해당 댓글의 답글 입력창 토글
+        var textareaContainer = document.getElementById('replyTextareaContainer' + replyNo);
+        if (textareaContainer) {
+            textareaContainer.style.display = (textareaContainer.style.display === 'none' || textareaContainer.style.display === '') ? 'block' : 'none';
+        }
+    }
+
+    // 댓글 작성 AJAX
+    function submitReply(parentReplyNo) {
+        var replyContent = document.getElementById('reply_content_' + parentReplyNo).value;
+
+        if (replyContent.trim() === "") {
+            alert("답글 내용을 입력해주세요.");
+            return;
+        }
+
+        $.ajax({
+            url: '${contextPath}/board/addReply.do',
+            type: 'POST',
+            data: {
+                boardNo: ${b.boardNo}, 
+                replyContent: replyContent,
+                parentReplyNo: parentReplyNo
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert("답글이 작성되었습니다.");
+                    location.reload();  // 답글 작성 후 페이지 새로 고침하여 댓글 리스트 갱신
+                } else {
+                    alert("답글 작성에 실패했습니다.");
+                }
+            },
+            error: function() {
+                alert("서버 오류가 발생했습니다.");
+            }
+        });
+    }
+
+    
+</script>
 		<hr style="opacity:1;">
 		<div style="margin-top: 10px; color: #afacac; display: flex; align-items: center;">
 			<i class="bi bi-lock" style="margin-right: 10px; margin-bottom: 10px;">&nbsp;비밀댓글</i>
@@ -129,35 +339,7 @@
 		
 	</div>
 	
-	
-	 <script>
-         	 $(document).ready(function(){
-         		 fn_replyList();
-         	 })
-         
-         	 // 해당 게시글의 댓글 목록 조회용 (ajax) 함수
-         	 function fn_replyList(){
-         		 $.ajax({
-         			 url: '${contextPath}/board/rlist.do',
-         			 data: "no=" + ${b.boardNo},
-         			 success: function(resData){
-         				 console.log(resData); // [{}, {}, ..]
-         				 
-         				 /*
-         				 	<tr>
-                     <th>user02</th>
-                     <td>댓글입니다.너무웃기다앙</td>
-                     <td>2020-04-10</td>
-                  </tr>
-         				 */
-         				
-         				 
-         				 
-         			 }
-         		 })
-         	 }
-         	
-         </script>
+		
 	
 </div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -52,8 +52,20 @@
     <result column="MODIFY_DATE" property="modifyDate" />	
     <result column="USE_YN" property="useYN" />	
     <result column="board_no" property="boardNo" />	
+    <result column="emp_Name" property="empName" />	
+    
   </resultMap>
-
+  
+  <resultMap id="GoodResultMap" type="GoodDto">
+    <result column="REPLY_NO" property="replyNo" />
+    <result column="GOOD_REPLY" property="goodReply" />
+    <result column="CREATER" property="creater" /> 
+    <result column="CREATE_DATE" property="createDate" />
+    <result column="MODIFIER" property="modifier" />
+    <result column="MODIFY_DATE" property="modifyDate" />
+    
+  </resultMap>
+  
 
 
 
@@ -364,24 +376,71 @@
   
   <select id="replylist" resultMap="ReplyResultMap">
   
-  select 
-        r. reply_no
-    ,    r.reply_content
-    ,    r.ref_bno
-    ,    r.status
-    ,   r.emp_no
-    ,   r.create_date
-    ,   r.use_yn
-    ,  b.board_no
-    from tbl_reply r
-    join tbl_board b on b.board_no = r.ref_bno
-    where b.board_no = #{boardNo}
-          
+  SELECT
+    r.reply_no,
+    r.reply_content,
+    r.ref_bno,
+    r.status,
+    r.emp_no,
+    r.create_date,
+    r.use_yn,
+    b.board_no,
+    r.status AS reply_status,
+    e.emp_Name,
+    r.upr_reply_no,
+    parent.reply_content AS parent_reply_content,
+    parent.reply_no AS parent_reply_no
+FROM
+    tbl_reply r
+JOIN tbl_board b ON b.board_no = r.ref_bno
+LEFT JOIN tbl_employee e ON e.emp_no = r.emp_no
+LEFT JOIN tbl_reply parent ON parent.reply_no = r.upr_reply_no
+WHERE
+    b.board_no = #{boardNo}
+ORDER BY
+    CASE 
+        WHEN r.upr_reply_no IS NULL THEN TO_NUMBER(r.reply_no) 
+        ELSE TO_NUMBER(r.upr_reply_no) 
+    END ASC,
+    r.create_date ASC
+</select>
+
+
   
+  <insert id="insertReply">
+		insert
+		  into tbl_reply
+		  (
+		    reply_no
+		  , reply_content
+		  , ref_bno
+		  , upr_reply_no
+		  , status
+		  , emp_no
+		  , create_date
+		  , use_yn
+		  )
+		  values
+		  (
+		    seq_rno.nextval
+		  , #{replyContent}
+		  , #{refBno}
+		  , #{uprReplyNo}
+		  , #{status}
+		  , #{empNo}
+		  , SYSDATE
+		  , 'Y'
+		  )
+		  
+	</insert>
+	
+	
+	
+	
+	
   
+
   
-  
-  </select>
   
 
 </mapper>

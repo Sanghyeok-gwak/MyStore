@@ -43,4 +43,7 @@ public interface BoardService {
 		
 		List<ReplyDto> replylist(int boardNo);
 		
+		// 댓글 등록 
+		int insertReply(ReplyDto r);
+		
 }

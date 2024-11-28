@@ -129,6 +129,13 @@ public class BoardServiceImpl implements BoardService {
 	public List<ReplyDto> replylist(int boardNo) {
 		return boardDao.replylist(boardNo);
 	}
+
+	
+	@Override
+	public int insertReply(ReplyDto r) {
+		return boardDao.insertReply(r);
+	}
+
 	
 	
 }

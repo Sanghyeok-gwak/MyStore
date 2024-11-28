@@ -1,6 +1,7 @@
 package com.gd.mystore.controller;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -150,27 +152,55 @@ public class BoardController {
 	
 	
 	@GetMapping("/boardDetail.do")
-	public void detail(int no, Model model) {
-		// 상세페이지에 필요한 데이터
-		// 게시글(제목,작성자,작성일,내용) 데이터, 첨부파일(원본명, 저장경로, 실제파일명)들 데이터
-		BoardDto b = boardService.selectBoard(no);
-		int listCount = boardService.replycount(no);
-		// boardNo, boardTitle, boardContent, boardWriter, registDt, attachList
-		List<ReplyDto> reply = boardService.replylist(no);
-		
-		
-		model.addAttribute("b", b);		
-		model.addAttribute("listCount", listCount);
-		model.addAttribute("reply", reply);
-		
+	public void detail(int no,  Model model) {
+	    // 상세페이지에 필요한 데이터
+	    // 게시글(제목, 작성자, 작성일, 내용) 데이터, 첨부파일(원본명, 저장경로, 실제파일명)들 데이터
+	    BoardDto b = boardService.selectBoard(no);
+	    int listCount = boardService.replycount(no);
+	    
+	    // 게시글에 대한 댓글 목록
+	    List<ReplyDto> reply = boardService.replylist(no);
+	    
+	    // 각 댓글의 createDate 포맷팅
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	    
+	    // 댓글 목록에서 createDate 포맷팅 후 변경
+	    for (ReplyDto r : reply) {
+	        String formattedDate = sdf.format(r.getCreateDate());  // r.getCreateDate()가 Date일 경우
+	        r.setFormattedCreateDate(formattedDate); // 포맷팅된 날짜를 ReplyDto 객체에 추가
+	    }
+
+	    // 모델에 데이터 추가
+	    model.addAttribute("b", b);  // 게시글 정보
+	    model.addAttribute("listCount", listCount);  // 댓글 수
+	    model.addAttribute("reply", reply);  // 댓글 목록
+	
 	}
 	
-	
+	// 댓글 목록 json
 	@ResponseBody
 	@GetMapping(value="/rlist.do", produces="application/json")
 	public List<ReplyDto> replyList(int no) {
 		return boardService.replylist(no);
 	}
+	
+		
+	
+	// 댓글 작성
+    @PostMapping("/rinsert.do")
+    @ResponseBody
+    public String replyInsert(@RequestBody ReplyDto r, HttpSession session) {
+        // 세션에서 로그인된 사용자 정보 가져오기
+        EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            r.setEmpNo(String.valueOf(loginUser.getEmpName()));
+        }
+        
+        // 댓글 DB에 삽입
+        int result = boardService.insertReply(r);
+        return result > 0 ? "SUCCESS" : "FAIL";
+    }
+
 
 	
 	@PostMapping("/boardModify.do")
@@ -182,7 +212,7 @@ public class BoardController {
 		    model.addAttribute("deptList", deptList);
 		    model.addAttribute("boardTypeList", boardTypeList);
 
-		model.addAttribute("b", boardService.selectBoard(no));
+		    model.addAttribute("b", boardService.selectBoard(no));
 	}
 	
 	@PostMapping("/update.do")
