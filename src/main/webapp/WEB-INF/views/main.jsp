@@ -193,7 +193,51 @@
         flex-direction: column;
         justify-content: space-evenly;
       }
-		
+	  #weather{
+		color: white;
+		background: linear-gradient(154deg, #99a1ef, #75cefa);
+	   }
+	   .weather-body{
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 2% 0;
+	   }
+	   .location-icon{
+		display: flex;
+		font-size: 200%;
+	   }
+	   .bottom-info{
+		display: flex;
+		justify-content: space-around;
+		font-size: 130%;
+		font-weight: 500;
+	   }
+	   .bottom-item{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	   }
+	   .bottom-icon{
+		display: flex;
+	   }
+	   .weather-main{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 300%;
+		margin-top: 15%;
+	   }
+	   .main-temp{
+		display: flex;
+		margin: 0 2%;
+	   }
+	   #nowtime{
+		font-size: 130%;
+	   }
+
 
     </style>
 	
@@ -390,49 +434,154 @@
           
         </div>
         <div class="main-home-bottom">
-          <div class="main-home-bottom-weather" style="margin-right: 20px;">
+          <div class="main-home-bottom-weather" id="weather" style="margin-right: 20px;">
+          <!-- 
 						<br><br>
-							
-							
-						<form action="${contextPath}/weather/coord" method="get">
-						    <input type="hidden" name="lat" value="37.4765509">
-						    <input type="hidden" name="lon" value="126.8801713">
 						    <div>날씨는 1시간 마다 업데이트</div>
-						    <div class="btn-box-hover">
-						        <button style="overflow-z: auto;"class="btn3-hover" type="submit">날씨 확인</button>
-						    </div>
-						</form>
-						<div id="weatherInfo"></div>
-				    
+								<div id="weatherInfo"></div>
+								<div id="nowtime"></div>
+           -->
+			<div class="weather-body">
+				<!--<img style="width: 100%; height: 100%;" src="${contextPath}/resources/images/weather_img/rain_1.gif">-->
+				<div class="location-icon">
+					<div id="city">위치</div>
+					<div><i class="ri-map-pin-2-fill"></i></div>
+				</div>
+				<div class="weather-main">
+					<div><i class="bi bi-thermometer-half"></i></div>
+					<div class="main-temp">
+						<div id="temp">온도</div>
+						<i class="ri-celsius-line"></i>
+					</div>
+					<div style="border: 1px solid yellow;">아이콘</div>
+				</div>
+				
+				<div style="display: flex;justify-content: space-between;">
+					<div id="nowtime"></div>
+					<img style="width: 10%;" src="${contextPath}/resources/images/weather_img/rain_1.gif">
+					<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>
+				</div>
+
+				<div class="bottom-info">
+					<div class="bottom-item">
+						<div>최고 기온</div>
+						<div class="bottom-icon">	
+							<div id="temp_max"></div>
+							<i class="ri-celsius-line"></i>
+						</div>
+					</div>
+					<div class="bottom-item">
+						<div>최저 기온</div>
+						<div class="bottom-icon">	
+							<div id="temp_min"></div>
+							<i class="ri-celsius-line"></i>
+						</div>
+					</div>
+					<div class="bottom-item">
+						<div>습도</div>
+						<div class="bottom-icon">	
+							<div id="humidity"></div>
+							<div>%</div>
+						</div>
+					</div>
+					<div class="bottom-item">
+						<div>바람</div>
+						<div class="bottom-icon">	
+							<div id="wind"></div>
+							<div>m/s</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		   
           </div>
           
           <script>
-		          var weatherObject = ${weatherData};
-		          
-		          console.log(weatherObject)
-		
-		          // 필요한 데이터만 추출
-		          var coord1 = weatherObject.coord.lat; // 좌표
-		          var coord2 = weatherObject.coord.lon; // 좌표
-		          var temperature = weatherObject.main.temp; // 기온
-		          var temp_max = weatherObject.main.temp_max; // 최고기온
-		          var temp_min = weatherObject.main.temp_min; // 최저기온
-		          var weatherDescription = weatherObject.weather[0].description; // 날씨 설명
-		          var humidity = weatherObject.main.humidity; // 습도
-		          var windSpeed = weatherObject.wind.speed; // 바람 속도
-		          var cityName = weatherObject.name; // 도시 이름
-		
-		          // 원하는 데이터를 화면에 출력
-		          document.getElementById("weatherInfo").innerHTML = 
-		              "위치: " + cityName + "<br>" +
-		              "좌표: " + coord1 + ", " + coord2 + "<br>" + 
-		              "기온: " + temperature + "°C<br>" +
-		              "최고: " + temp_max + "°C<br>" +
-		              "최저: " + temp_min + "°C<br>" +
-		              "날씨: " + weatherDescription + "<br>" +
-		              "습도: " + humidity + "%<br>" +
-		              "바람: " + windSpeed + " m/s";
+		        
+	          window.onload = weather();
+			 
+		      	function weather(){
+		      		$.ajax({
+		      	        url: '${contextPath}/weather/coord',
+		      	        type: 'get',
+		      	     		dataType: 'json',
+		      	        success: function(resData) {
+		      	            console.log("날씨 데이터 정상");
+		      	            console.log(resData);
+		      	            
+							var weatherObject = resData;
+
+							// 필요한 데이터 추출
+							var coord1 = weatherObject.coord.lat; // 좌표
+							var coord2 = weatherObject.coord.lon; // 좌표
+							var temperature = weatherObject.main.temp; // 기온
+							var temp_max = weatherObject.main.temp_max; // 최고기온
+							var temp_min = weatherObject.main.temp_min; // 최저기온
+							var weatherDescription = weatherObject.weather[0].description; // 날씨 설명
+							var humidity = weatherObject.main.humidity; // 습도
+							var windSpeed = weatherObject.wind.speed; // 바람 속도
+							var cityName = weatherObject.name; // 도시 이름
+
+							// 날씨 데이터를 출력
+							document.getElementById("city").innerHTML =cityName;
+															
+							document.getElementById("temp").innerHTML = temperature.toFixed(0);
+								
+							document.getElementById("temp_max").innerHTML =temp_max.toFixed(1);
+
+							document.getElementById("temp_min").innerHTML =temp_min.toFixed(1);
+							
+							//document.getElementById("weatherInfo").innerHTML = weatherDescription;
+							
+							document.getElementById("humidity").innerHTML = humidity;
+							
+							document.getElementById("wind").innerHTML = windSpeed;
+							
+
+							//https://www.unscreen.com/upload
+		              },
+		              error: function () {
+		                  console.log('날씨 데이터 ajax 통신 실패');
+		              }
+		      	    });
+		        	}
+		      	
+		      	
+		      	
+		        //오늘 날짜출력
+				$(document).ready(function () {
+
+					function convertTime() {
+						var now = new Date();
+
+						// 월과 일 가져오기
+						var month = now.getMonth() + 1;
+						var date = now.getDate();
+
+						// 요일 배열
+						var days = ['일', '월', '화', '수', '목', '금', '토'];
+						var dayOfWeek = days[now.getDay()];
+
+						// 날짜와 요일 반환
+						return month + ' ' + date + ', ' + dayOfWeek ;
+					}
+
+					var currentTime = convertTime();
+					$('#nowtime').append(currentTime);
+				});
+
           </script>
+					<!-- 
+		           //날씨아이콘출력
+			        //WeatherResult.weater[0].icon
+			        var weathericonUrl =
+			            '<img src= "http://openweathermap.org/img/wn/'
+			            + WeatherResult.weather[0].icon +
+			            '.png" alt="' + WeatherResult.weather[0].description + '"/>'
+		
+			        $('.SeoulIcon').html(weathericonUrl);
+					 -->          
           
           <div class="main-home-bottom-message" style="margin-right: 20px;">
 							공간#
