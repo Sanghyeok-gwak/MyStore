@@ -111,6 +111,12 @@ public interface EDocService {
 	// 기안 회수 상세페이지
 	EDocDto draftrecovery(int no);
 	
+	// 기안서 회수
+	int draftrcv(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto);
+	
+	// 기안서 삭제
+	int draftUseN(EDocDto edocDto);
+	
 
 	
 }

@@ -1137,6 +1137,33 @@
 		   and
 		    	e.edoc_no = #{no}
 	</select>
+	
+	
+	<!-- 전자문서 상태 업데이트(회수) -->
+	<update id="updateEdocStatusT">
+	   UPDATE TBL_EDOC
+	   SET EDOC_STATUS = #{edocStatus}
+	   WHERE EDOC_NO = #{edocNo}
+	</update>
+	
+	<!-- 결재 상태 업데이트(회수) -->
+	<update id="updateApprovalStatusT">
+	   UPDATE TBL_EDOC_APPROVAL
+	   SET APRVL_STATUS = CASE
+	       WHEN APRVL_NO = #{approval1.aprvlNo} THEN #{approval1.aprvlStatus}
+	       WHEN APRVL_NO = #{approval2.aprvlNo} THEN #{approval2.aprvlStatus}
+	   END
+	   WHERE APRVL_NO IN (#{approval1.aprvlNo}, #{approval2.aprvlNo})
+	</update>
+	
+	<!-- 전자문서 상태 업데이트(삭제) -->
+	<update id="draftUseN">
+	   UPDATE TBL_EDOC
+	   SET USE_YN = #{useYN}
+	   WHERE EDOC_NO = #{edocNo}
+	</update>
+	
+
  
  
  

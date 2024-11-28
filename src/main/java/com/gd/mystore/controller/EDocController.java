@@ -655,6 +655,68 @@ public class EDocController {
 		return "edoc/draftrecovery";		
 	}
 	
+	// 기안서 회수
+	@PostMapping("/draftrcv.do")
+	public String draftrcv(@RequestParam("aprvlNo") List<Integer> aprvlNo,
+						   @RequestParam("empNo") List<String> empNo,
+				           @RequestParam("aprvlEdocNo") List<Integer> aprvlEdocNo,
+				           @RequestParam("aprvlRank") List<Integer> aprvlRank,
+				           @RequestParam("edocNo") int edocNo,
+				           RedirectAttributes rdAttributes) {
+
+		
+		// 결재 정보 전달 객체 생성
+		EDocApprovalDto approval1 = new EDocApprovalDto();
+		EDocApprovalDto approval2 = new EDocApprovalDto();
+		
+		approval1.setAprvlNo(aprvlNo.get(0));
+		approval1.setAprvlEdocNo(aprvlEdocNo.get(0));
+		approval1.setAprvlRank(aprvlRank.get(0));
+		approval1.setEmpNo(empNo.get(0));
+		
+		approval2.setAprvlNo(aprvlNo.get(1));
+		approval2.setAprvlEdocNo(aprvlEdocNo.get(1));
+		approval2.setAprvlRank(aprvlRank.get(1));
+		approval2.setEmpNo(empNo.get(1));
+		
+		EDocDto edocDto = new EDocDto();
+		edocDto.setEdocNo(edocNo);
+		
+		// Service 호출
+		int result = edocService.draftrcv(approval1, approval2, edocDto);
+		
+		log.debug("result : {}", result);
+		
+		if(result ==  1) {
+			rdAttributes.addFlashAttribute("alertMsg", "기안서 회수가 완료되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "기안서 회수 실패");			
+		}
+		
+		return "redirect:/edoc/draftwaitList.do";
+	}
+	
+	// 기안서 삭제
+	@PostMapping("/draftUseN.do")
+	public String draftUseN(@RequestParam("edocNo") int edocNo,
+				            RedirectAttributes rdAttributes) {		
+		
+		EDocDto edocDto = new EDocDto();
+		edocDto.setEdocNo(edocNo);
+		
+		// Service 호출
+		int result = edocService.draftUseN(edocDto);
+		
+		
+		if(result ==  1) {
+			rdAttributes.addFlashAttribute("alertMsg", "기안서 삭제가 완료되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "기안서 삭제 실패");			
+		}
+		
+		return "redirect:/edoc/draftrecoveryList.do";
+	}
+
 
 	
 
