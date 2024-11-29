@@ -55,8 +55,35 @@
 			
 			<div class="side-icon" onclick='location.href="${contextPath }/note/reception.no"'>
         <img src="https://i.ibb.co/bK3vZM2/message-ww.png">
-        <span>쪽지</span>																		<!-- lv5 -->
+        <span>쪽지</span>
+        <div class="note-count">0</div>																		<!-- lv5 -->
       </div>
+      
+      <script>
+        
+  			const loginUser = '${loginUser.empNo}';
+  			var noteCount = document.querySelector('.note-count');
+      	document.addEventListener('DOMContentLoaded', function() {
+					$.ajax({
+						url: '${contextPath}/note/sideCount.no',
+						type: 'post',
+						data: {userNo:loginUser},
+					  success: function(response) {
+						  noteCount.textContent = response;
+					  }
+						
+					})
+					console.log(noteCount);
+     	 	});
+		 		const sock = new SockJS("${contextPath}/notews");
+		 		sock.onmessage = onMessage;
+		 		
+		 		function onMessage(evt) {
+		 		      		
+		 			noteCount.textContent = evt.data;
+		 		      		
+		 		}
+      </script>
       
 			<div class="side-icon" onclick='location.href="${ contextPath }/calendar/fullCalendar.do"'>
         <img src="https://i.ibb.co/fQtpVbV/wall-calendar-2.png">

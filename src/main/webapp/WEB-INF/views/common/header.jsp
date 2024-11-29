@@ -8,18 +8,7 @@
 			@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Noto+Sans+KR:wght@100..900&display=swap');
 		</style>
 	<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script> 
-	<script>
-		const sock = new SockJS("${contextPath}/notews");
-		sock.onmessage = onMessage;
-		
-		function onMessage(evt) {
-		      		
-			console.log('들어옴');
-			console.log(evt.data);
-		      		
-		      	}
-				
-	</script>
+	
 
 	<!-- Vendor CSS Files -->
    <link href="${contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -45,6 +34,17 @@
    
    <link href="${contextPath}/assets/css/style.css" rel="stylesheet">
    <style>
+   	.note-count{
+	    border-radius: 100%;
+	    background-color: red;
+	    width: 15px;
+	    height: 15px;
+	    display: flex ;
+	    justify-content: center;
+	    align-items: center;
+	    font-size: 13px;
+	    margin-bottom: 18px;
+   	}
     * {
       margin: 0;
       padding: 0;

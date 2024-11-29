@@ -191,6 +191,11 @@ public class NoteServiceImpl implements NoteService {
 		
 		return result;
 	}
+
+	@Override
+	public int sideCount(String userNo) {
+		return noteDao.checkCount(userNo);
+	}
 	
 }
 		

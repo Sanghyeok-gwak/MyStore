@@ -221,8 +221,10 @@ public class NoteController {
 		
 		return "note/tempdetail";
 	}
-	
-	
-	
+	@ResponseBody
+	@PostMapping("sideCount.no")
+	public int sideCount(@RequestParam String userNo) {
+		return noteService.sideCount(userNo);
+	}
 	
 }
