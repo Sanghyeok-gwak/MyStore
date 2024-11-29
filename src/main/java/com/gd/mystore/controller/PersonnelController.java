@@ -3,18 +3,18 @@ package com.gd.mystore.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.PageInfoDto;
-import com.gd.mystore.dto.SalaryDto;
+import com.gd.mystore.service.EmailService;
 import com.gd.mystore.service.PersonnelService;
 import com.gd.mystore.util.PagingUtil;
 
@@ -29,6 +29,8 @@ public class PersonnelController {
 
 	private final PersonnelService personnelService;
 	private final PagingUtil pagingUtil;
+	private final BCryptPasswordEncoder bcryptPwdEncoder;
+
 	
 	// 직원 리스트 조회 
 	// 사이드바에 있는 메뉴 클릭시 /personnel/employeeManager             => 1번페이지 요청
@@ -118,6 +120,11 @@ public class PersonnelController {
     @PostMapping("/insert")
      public String insertEmp(EmpMemberDto e
     		 			   , RedirectAttributes rdAttributes) {	
+    	
+    	String newPwd = "qwer1234";
+    	
+    	e.setEmpPwd ( bcryptPwdEncoder.encode(newPwd) );
+
     	
     	int result = personnelService.insertEmp(e);
     	
