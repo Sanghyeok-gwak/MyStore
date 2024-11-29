@@ -34,7 +34,7 @@ public class MypageDao {
 	}
 	
 	public int selectworkStatusCount(int empNo) {
-		return sqlSession.selectOne("workStatusMapper.selectworkStatusCount");
+		return sqlSession.selectOne("workStatusMapper.selectworkStatusCount", empNo);
 		
 	}
 	public List<WorkStatusDto> selectworkStatusList(PageInfoDto pi, int empNo){
