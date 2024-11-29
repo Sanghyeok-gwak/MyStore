@@ -65,7 +65,7 @@ public class EmpMemberController {
 //		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
 			session.setMaxInactiveInterval(60 * 60); // 세션 1시간 설정
 			session.setAttribute("loginUser", loginUser);
-			
+				
 			if(loginUser.getUseYn().equals("N")) {
 				rdAttributes.addFlashAttribute("alertMsg", "최초 로그인, 비밀번호를 변경해주세요☺️");
 				return "redirect:/mypage/passwordRecovery";
