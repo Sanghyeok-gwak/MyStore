@@ -487,7 +487,11 @@ input {
 					bUseToolbar : false, // 툴바 사용여부 (true: 사용, false: 미사용)
 					bUseVerticalResizer : false,
 					// 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
-					bUseModeChanger : false
+					bUseModeChanger : false,
+					
+	        fOnBeforeUnload: function() {
+	             return null;  // 페이지 이탈 시 경고창을 띄우지 않음
+	        }
 					// 모드 탭(Editor | HTML | TEXT) 사용여부 (true: 사용, false: 미사용)
 				},
 				fCreator : "createSEditor2"

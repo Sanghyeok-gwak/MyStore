@@ -374,7 +374,10 @@ input[type=file]::file-selector-button {
 				sSkinURI : "${contextPath}/smarteditor/SmartEditor2Skin.html", // 스마트에디터 skin 경로
 				htParams : {
 					bUseVerticalResizer : false,
-					// 입력창 크기 조절바 사용여부 (true: 사용, false: 미사용)
+					
+	        fOnBeforeUnload: function() {
+	             return null;  // 페이지 이탈 시 경고창을 띄우지 않음
+	        }
 				},
 				fCreator : "createSEditor2"
 			});
