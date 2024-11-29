@@ -278,7 +278,7 @@
             </div>
 
             <!-- 버튼 -->
-            <div class="input-box-top-box" style="display: flex; justify-content: center;  margin-left: 200px;">
+            <div class="btn-box-hover" style="display: flex; justify-content: center;  margin-left: 200px;">
                 <button type="submit" class="btn3-hover ffont3" style="width: 373px; height: 35px; :">등록하기</button>
                 <a href="${ contextPath }">
                 <button type="button" class="btn3-hover ffont3" style="width: 373px; height: 35px;">홈으로</button>
