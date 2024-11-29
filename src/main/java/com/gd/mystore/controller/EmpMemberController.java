@@ -61,9 +61,9 @@ public class EmpMemberController {
 		
 		EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
 		
-//		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpNo(), loginUser.getEmpPwd())) { // 로그인 성공
-		
-		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
+		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpPwd(), loginUser.getEmpPwd())) { // 로그인 성공
+//		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
+			session.setMaxInactiveInterval(60 * 60); // 세션 1시간 설정
 			session.setAttribute("loginUser", loginUser);
 			
 			if(loginUser.getUseYn().equals("N")) {
@@ -92,9 +92,9 @@ public class EmpMemberController {
 
 			// 변경할 비밀번호 길이 설정
 			String newPwd = emailService.randomPassword(8);
-
-			// 세션에 비밀번호 변경
-			loginUser.setEmpPwd(newPwd);
+			
+			// 세션에 비밀번호 변경(암호화)
+			loginUser.setEmpPwd(bcryptPwdEncoder.encode(newPwd));
 
 			// 변경된 비밀번호 DB 업데이트 진행
 			int result = empMemberService.updatePwdMember(loginUser);

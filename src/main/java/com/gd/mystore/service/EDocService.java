@@ -1,6 +1,7 @@
 package com.gd.mystore.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.gd.mystore.dto.DepartmentDto;
 import com.gd.mystore.dto.EDocApprovalDto;
@@ -21,6 +22,16 @@ public interface EDocService {
 	
 	// 양식 삭제
 	int deleteEdocSample(String[] deleteNo);
+	
+	// 양식 상세수정페이지
+	EDocSampleDto edocMode(int no);
+	
+	// 양식 수정
+	int edocmodeModify(EDocSampleDto esd);
+	
+	// 게시글 검색 조회 (페이징 처리)
+	int selectSearchListCount(Map<String, String> search);
+	List<EDocSampleDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
 	
 	
 	// 기안서 작성
@@ -116,6 +127,9 @@ public interface EDocService {
 	
 	// 기안서 삭제
 	int draftUseN(EDocDto edocDto);
+
+
+
 	
 
 	

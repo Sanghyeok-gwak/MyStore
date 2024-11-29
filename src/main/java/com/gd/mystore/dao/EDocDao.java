@@ -42,6 +42,25 @@ public class EDocDao {
 	public int deleteEDocSample(String[] deleteNo) {
 		return sqlSession.update("edocMapper.deleteEdocSample", deleteNo);
 	}
+	
+	public EDocSampleDto edocMode(int no) {
+		return sqlSession.selectOne("edocMapper.edocMode", no);
+	}
+	
+	public int edocmodeModify(EDocSampleDto esd) {
+		return sqlSession.update("edocMapper.edocmodeModify", esd);
+	}
+	
+	public int selectSearchListCount(Map<String, String> search) {
+		return sqlSession.selectOne("edocMapper.selectSearchListCount", search);
+	}
+
+	public List<EDocSampleDto> selectSearchList(Map<String, String> search, PageInfoDto pi) {
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.selectSearchList", search, rowBounds);
+	}
+
+
 
 	
 	// 기안서 작성
@@ -246,6 +265,10 @@ public class EDocDao {
 	public int draftUseN(EDocDto edocDto) {
 		return sqlSession.update("edocMapper.draftUseN", edocDto);
 	}
+
+
+
+
 
     
     

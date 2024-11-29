@@ -314,18 +314,19 @@ input[type=file]::file-selector-button {
 				</div>
 
 				<form action="${contextPath}/edoc/samplesearch.do" method="get">
+					<input type="hidden" name="page" value="1">
 					<div style="display: flex;">
 						<div>
 							<select name="condition" id="lang"
 								style="height: 40px; margin-bottom: 20px;">
 								<option value="sample_desc">유형</option>
-								<option value="emp_no">기안자</option>
+								<option value="emp_name">생성자</option>
 							</select>
 						</div>
 
 						<!-- width값은 페이지에 맞게 조절해주세요 -->
 						<div class="search_box" style="width: 500px; height: 40px;">
-							<input class="input_b" type="text" placeholder="검색"
+							<input class="input_b" type="text" placeholder="검색" name="keyword" value="${search.keyword }"
 								style="height: auto;">
 							<div class="icon">
 								<button type="submit">
@@ -333,9 +334,35 @@ input[type=file]::file-selector-button {
 								</button>
 							</div>
 						</div>
-
 					</div>
 				</form>
+				<c:if test="${ not empty search }">
+	            <script>
+	            	$(document).ready(function(){
+	            		$("#search_form select").val('${search.condition}');
+	            		
+	            		// 검색후의 페이징바 클릭시 검색 form 을 강제로 submit 
+	            		// (단, 페이지번호는 현재 클릭한 페이지번호로 바꿔서)
+	            		$("#paging_area a").on("click", function(){
+	            			
+	            			let page = $(this).text(); // Previous | Next | 페이지번호
+	            			if(page == 'Previous'){
+	            				page = ${pi.currentPage - 1};
+	            			}else if(page == 'Next'){
+	            				page = ${pi.currentPage + 1};
+	            			}
+	            			
+	            			$("#search_form input[name=page]").val(page);
+	            			$("#search_form").submit();
+	            			
+	            			return false; // 기본이벤트(href='/board/list.do' url요청)가 동작 안되도록
+	            			
+	            		})
+	            	})
+	            </script>
+            </c:if>
+				
+				
 
 			</div>
 			<!-- 중간1 end-->
@@ -357,7 +384,7 @@ input[type=file]::file-selector-button {
 						</tr>
 					</thead>
 
-					<tbody>
+					<tbody style="cursor: pointer;"> 
 						<c:choose>
 							<c:when test="${ empty list }">
 								<tr>
@@ -369,7 +396,7 @@ input[type=file]::file-selector-button {
 
 							<c:otherwise>
 								<c:forEach var="s" items="${ list }">
-									<tr>
+									<tr onclick='location.href = "${contextPath}/edoc/edocmode.do?no=${ s.sampleNo }";'>
 										<td>
 											<input type="checkbox" class="list-checkbox" 
 														 style="width: 18px; height: 18px;">
