@@ -129,6 +129,7 @@ public class PersonnelController {
     	int result = personnelService.insertEmp(e);
     	
     	if(result > 0) { // 성공 => 리스트페이지
+    		personnelService.workInsertEmp(e);
 			rdAttributes.addFlashAttribute("alertMsg", "성공적으로 직원등록 되었습니다.");
     		return "redirect:/personnel/employeeManager";
     		

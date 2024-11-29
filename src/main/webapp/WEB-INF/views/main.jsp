@@ -552,13 +552,11 @@
                                 <div id="temp">0</div>
                                 <i class="ri-celsius-line"></i>
                             </div>
-                            <div style="border: 1px solid yellow;">아이콘</div>
+                            <div id="weatherInfo">아이콘</div>
                         </div>
 
                         <div style="display: flex;justify-content: space-between;">
                             <div id="nowtime"></div>
-                            <img style="width: 10%;" src="${contextPath}/resources/images/weather_img/rain_1.gif">
-                            <i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>
                         </div>
 
                         <div class="bottom-info">
@@ -629,9 +627,11 @@
                                 document.getElementById("temp_max").innerHTML = temp_max.toFixed(1);
 
                                 document.getElementById("temp_min").innerHTML = temp_min.toFixed(1);
-
-                                //document.getElementById("weatherInfo").innerHTML = weatherDescription;
-
+								
+                                if(weatherDescription == "clear sky"){
+	                                 document.getElementById("weatherInfo").innerHTML = ;
+                                }
+								<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>
                                 document.getElementById("humidity").innerHTML = humidity;
 
                                 document.getElementById("wind").innerHTML = windSpeed;

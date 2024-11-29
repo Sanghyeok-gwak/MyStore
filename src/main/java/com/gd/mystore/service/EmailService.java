@@ -20,7 +20,7 @@ public class EmailService {
 	private JavaMailSenderImpl mailSender;
 	
 	public String randomPassword(int length) {
-	    String charList = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	    String charList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 	    Random random = new Random();
 	    StringBuilder randomString = new StringBuilder();
 
@@ -37,8 +37,7 @@ public class EmailService {
 		String toMail = email;
 		String title = "[MY STORE]변경된 비밀번호 입니다."; // 이메일 제목
 		String content = "<h1>MY STORE</h1>" + // html 형식으로 작성
-				"<br><br>" + "변경된 비밀번호는 '" + authNumber + "' 입니다." + "<br>" + "마이페이지에서 수정 해주세요." + "<br>" + "<br>"
-				+ "<img src=\"https://i.ibb.co/2659g1K/employee2-jpg.png\" class=\"head_img\">"; // 홈페이지 로고?
+				"<br><br>" + "변경된 비밀번호는 '" + authNumber + "' 입니다." + "<br>" + "마이페이지에서 수정 해주세요.";
 		mailSend(setFrom, toMail, title, content);
 	}
 

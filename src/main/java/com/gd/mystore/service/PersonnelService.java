@@ -37,4 +37,7 @@ public interface PersonnelService {
 	 int selectSearchListCount(Map<String, String> search);
 	 List<EmpMemberDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
 	 
+	 //신규사원 근태 추가
+	 int workInsertEmp(EmpMemberDto e);
+	 
 }
