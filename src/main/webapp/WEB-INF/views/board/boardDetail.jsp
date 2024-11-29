@@ -126,8 +126,8 @@
                         </div>
                         <!-- 드롭다운 메뉴 (기본적으로 숨김) -->
                         <div class="dropdown-menu" style="display: none;">
-                            <span class="dropdown-item-text">수정</span>
-                            <span class="dropdown-item-text">삭제</span>
+   												  <span class="dropdown-item-text" onclick="editReply(${r.replyNo}, '${r.replyContent}')">수정</span>
+                            <span class="dropdown-item-text" onclick="deleteReply(${r.replyNo})">삭제</span>
                         </div>
                     </div>
                 </c:if>
@@ -147,7 +147,7 @@
 
                 <div class="like-container" style="position: relative; cursor: pointer;">
                     <!-- 비어있는 하트 아이콘 (위에 표시될 아이콘) -->
-                    <i class="bi bi-heart-fill" style="position: absolute; left: 0; top: 0; color: red; z-index: 0; display: none;" onclick="toggleLike(this)"></i>
+                    <i class="bi bi-heart-fill" style="position: absolute; left: 0; top: 0; color: red; z-index: 0; display: none;" onclick="toggleLike(this)"></i><span style="margin-left:24px;">1</span>
                     <i class="bi bi-heart" style="position: absolute; left: 0; top: 0; z-index: 1;" onclick="toggleLike(this)"></i>
                 </div>
             </div>
@@ -185,6 +185,106 @@
         return true;
     }
 </script>
+<script>
+    $(document).ready(function() {
+        // 좋아요 버튼 클릭 시
+        $(".like-btn").click(function() {
+            var container = $(this).closest(".like-container");
+            var replyNo = container.data("reply-no"); // 댓글 번호
+            var empName = container.data("emp-name"); // 사용자 이름
+            var isLiked = container.find(".bi-heart-fill").is(":visible"); // 현재 좋아요 상태
+
+            // 서버로 보낼 데이터 (현재 상태에 따라)
+            var data = {
+                replyNo: replyNo,
+                empName: empName,
+                goodReply: isLiked ? 'N' : 'Y' // 좋아요 상태 반전
+            };
+
+            // AJAX 요청
+            $.ajax({
+                url: '/board/goodReply.do',  // 서버 URL (컨트롤러 맵핑)
+                type: 'POST',                // 요청 방식
+                data: data,                  // 전송할 데이터
+                success: function(response) {
+                    // 좋아요 상태를 반영
+                    if (data.goodReply === 'Y') {
+                        // 좋아요 성공 시 아이콘 변경
+                        container.find(".bi-heart").hide();
+                        container.find(".bi-heart-fill").show();
+                    } else {
+                        // 좋아요 취소 시 아이콘 변경
+                        container.find(".bi-heart").show();
+                        container.find(".bi-heart-fill").hide();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("오류가 발생했습니다. 다시 시도해주세요.");
+                }
+            });
+        });
+    });
+</script>
+
+
+
+	<script>
+	
+	
+    function deleteReply(replyNo) {
+    	
+        var form = document.createElement('form');
+        
+        
+        form.method = 'POST';
+        form.action = '${contextPath}/board/replydelete.do'; 
+
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'replyNo';
+        input.value = replyNo;
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+
+
+<script>
+    // 댓글 수정 함수
+    function editReply(replyNo, replyContent) {
+        // 수정할 댓글 번호와 내용에 대한 정보를 받아와서
+        // 수정 페이지로 이동하거나, 수정 폼을 동적으로 생성하는 방식으로 처리
+        var updatedContent = prompt("댓글을 수정하세요", replyContent);
+        
+        if (updatedContent !== null && updatedContent !== replyContent) {
+            // 수정된 댓글 내용을 포함하여 POST 요청을 보내기 위한 동적 폼 생성
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '${contextPath}/board/replyUpdate.do'; // 댓글 수정 처리 경로
+            
+            // 댓글 번호와 수정된 내용을 hidden input으로 추가
+            var inputReplyNo = document.createElement('input');
+            inputReplyNo.type = 'hidden';
+            inputReplyNo.name = 'replyNo';
+            inputReplyNo.value = replyNo;
+            form.appendChild(inputReplyNo);
+
+            var inputReplyContent = document.createElement('input');
+            inputReplyContent.type = 'hidden';
+            inputReplyContent.name = 'replyContent';
+            inputReplyContent.value = updatedContent;
+            form.appendChild(inputReplyContent);
+
+            // 폼을 DOM에 추가하고 전송
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
+
+	
 	
 
 <script>

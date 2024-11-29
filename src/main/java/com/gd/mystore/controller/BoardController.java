@@ -1,11 +1,15 @@
 package com.gd.mystore.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.BoardFileDto;
 import com.gd.mystore.dto.EmpMemberDto;
+import com.gd.mystore.dto.GoodDto;
 import com.gd.mystore.dto.PageInfoDto;
 import com.gd.mystore.dto.ReplyDto;
 import com.gd.mystore.service.BoardService;
@@ -263,16 +268,97 @@ public class BoardController {
 	
 	
 	
+	@PostMapping("/delete.do")
+	public String remove(int no, RedirectAttributes rdAttributes) {
+		int result = boardService.deleteBoard(no);
+		
+		if(result > 0) {
+			rdAttributes.addFlashAttribute("alertMsg", "성공적으로 삭제되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "게시글 삭제에 실패하였습니다.");
+		}
+		
+		return "redirect:/board/list.do";
+	}
+	
+	@PostMapping("/replydelete.do")
+	public String removeReply(int replyNo, RedirectAttributes rdAttributes , HttpServletRequest request) {
+		
+		 String referer = request.getHeader("Referer"); // referer 헤더에서 현재 URL을 가져옴
+
+		int result = boardService.deleteReplyCompletely(replyNo);
+		
+	
+		if(result > 0) {
+			rdAttributes.addFlashAttribute("alertMsg", "댓글이 삭제되었습니다.");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "댓글 삭제에 실패하였습니다.");
+		}
+		
+		 return "redirect:" + referer; // referer 변수에 저장된 현재 페이지로 리다이렉트
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PostMapping("/replyUpdate.do")
+	public String updateReply(ReplyDto r, RedirectAttributes rdAttributes , HttpServletRequest request) {
+		
+		
+		 String referer = request.getHeader("Referer"); // referer 헤더에서 현재 URL을 가져옴
+		
+		 int result = boardService.replyUpdate(r);
+		 
+		 if(result > 0) {
+				rdAttributes.addFlashAttribute("alertMsg", "댓글이 수정되었습니다.");
+			}else {
+				rdAttributes.addFlashAttribute("alertMsg", "댓글 수정에 실패하였습니다.");
+			}
+		
+		 return "redirect:" + referer; // referer 변수에 저장된 현재 페이지로 리다이렉트
+		 
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    // 클라이언트에서 전달된 파라미터 처리
+	    int replyNo = Integer.parseInt(request.getParameter("replyNo"));  // 댓글 번호
+	    String empName = request.getParameter("empName");                  // 사용자 이름
+	    String goodReply = request.getParameter("goodReply");              // 좋아요 상태 ('Y' or 'N')
+
+	    GoodDto goodDto = new GoodDto();
+	    goodDto.setReplyNo(replyNo);
+	    goodDto.setEmpName(empName);
+	    goodDto.setGoodReply(goodReply);
+
+	    int result = 0; 
+
+	    try {
+	        if ("Y".equals(goodReply)) {
+	            // 최초 좋아요 추가 또는 기존 좋아요를 다시 'Y'로 설정하는 경우
+	            // 먼저 이미 좋아요가 눌러졌는지 확인하고, 눌러졌으면 UPDATE, 아니면 INSERT
+	            int count = boardService.checkGoodStatus(goodDto);
+	            if (count > 0) {
+	                // 이미 좋아요 상태라면 상태 변경 (UPDATE)
+	                result = boardService.updateGood(goodDto);
+	            } else {
+	                // 처음 좋아요 추가 (INSERT)
+	                result = boardService.insertGood(goodDto);
+	            }
+	        } else {
+	            // 좋아요 상태가 'N'으로 변경되는 경우
+	            result = boardService.updateGood(goodDto);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    // 클라이언트로 응답 (성공 여부)
+	    if (result > 0) {
+	        response.setStatus(HttpServletResponse.SC_OK); // 성공
+	    } else {
+	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 실패
+	    }
+	}
+
 	
 	
 	

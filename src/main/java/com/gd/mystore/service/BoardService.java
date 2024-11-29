@@ -47,11 +47,24 @@ public interface BoardService {
 		// 댓글 등록 
 		int insertReply(ReplyDto r);
 		
+		// 좋아요 등록
 		int insertGood(GoodDto d);
 		
+		// 좋아요 상태확인
+		int checkGoodStatus(GoodDto g);
+		
+		// 좋아요 상태변경
 		int updateGood(GoodDto d);
 		
 		int countGood(int replyNo);
+		
+		// 게시글 삭제 
+		int deleteBoard(int boardNo);
+		
+		// 댓글 완전삭제 (스케줄러에 의해 작동)
+		int deleteReplyCompletely(int replyNo);
+		
+		int replyUpdate(ReplyDto r);
 		
 		
 }

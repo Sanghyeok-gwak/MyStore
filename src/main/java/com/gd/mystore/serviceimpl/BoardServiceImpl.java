@@ -146,10 +146,29 @@ public class BoardServiceImpl implements BoardService {
 	public int updateGood(GoodDto d) {
 		return boardDao.updateGood(d);
 	}
+	@Override
+	public int checkGoodStatus(GoodDto g) {
+		return boardDao.checkGoodStatus(g);
+	}
 
 	@Override
 	public int countGood(int replyNo) {
 		return boardDao.countGood(replyNo);
+	}
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		return boardDao.deleteBoard(boardNo);
+	}
+	
+	@Override
+	public int deleteReplyCompletely(int replyNo) {
+		return boardDao.deleteReplyCompletely(replyNo);
+	}
+
+	@Override
+	public int replyUpdate(ReplyDto r) {
+		return boardDao.replyUpdate(r);
 	}
 
 	

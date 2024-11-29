@@ -103,16 +103,40 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertReply", r);
 	}
 	
-	public int insertGood(GoodDto g) {
-		return sqlSession.insert("boardMapper.insertGood", g);
+	public int insertGood(GoodDto d) {
+		return sqlSession.insert("boardMapper.insertGood", d);
 	}
 	
-	public int updateGood(GoodDto g) {
-		return sqlSession.update("boardMapper.updateGood" , g);
+	public int updateGood(GoodDto d) {
+		return sqlSession.update("boardMapper.updateGood" , d);
 		
 	}
+	public int checkGoodStatus(GoodDto g) {
+		return sqlSession.update("boardMapper.checkGoodStatus" , g);
+		
+	}
+	
+	
+	
+	
 	public int countGood(int replyNo) {
 		return sqlSession.selectOne("boardMapper.countGood", replyNo);
 	}
+	
+	public int deleteBoard(int boardNo) {
+		return sqlSession.update("boardMapper.deleteBoard", boardNo);
+	}
+	
+	public int deleteReplyCompletely(int replyNo) {
+		return sqlSession.update("boardMapper.deleteReplyCompletely", replyNo);
+	}
+
+	public int replyUpdate(ReplyDto r) {
+		return sqlSession.update("boardMapper.replyUpdate", r);
+	}
+
+
+
+
 	
 }

@@ -14,7 +14,7 @@
     <result column="create_date" property="createDate" />	
     <result column="modifier" property="modifier" />	
     <result column="modify_date" property="modifyDate" />	
-    <result column="user_yn" property="userYN" />	
+    <result column="use_yn" property="useYN" />	
     <result column="emp_name" property="empName" />	
     <result column="dept_name" property="deptName" />	
     <result column="boardt_name" property="boardtName"/>
@@ -53,6 +53,9 @@
     <result column="USE_YN" property="useYN" />	
     <result column="board_no" property="boardNo" />	
     <result column="emp_Name" property="empName" />	
+    <result column="reply_no" property="replyNo" />	
+    <result column="good_reply" property="goodReply" />	
+    <result column="creater" property="creater" />	
     
   </resultMap>
   
@@ -65,12 +68,6 @@
     <result column="MODIFY_DATE" property="modifyDate" />
     <result column="emp_name" property="empName" />	
   </resultMap>
-  
-
-
-
-
-
 
   <!-- 게시글 목록 갯수 -->
   <select id="selectBoardListCount" resultType="_int">
@@ -376,33 +373,39 @@
   
   <select id="replylist" resultMap="ReplyResultMap">
   
-    SELECT
-    r.reply_no,
-    r.reply_content,
-    r.ref_bno,
-    r.status,
-    r.emp_no,
-    r.create_date,
-    r.use_yn,
-    b.board_no,
-    r.status AS reply_status,
-    e.emp_Name,
-    r.upr_reply_no,
-    parent.reply_content AS parent_reply_content,
-    parent.reply_no AS parent_reply_no
-FROM
-    tbl_reply r
-JOIN tbl_board b ON b.board_no = r.ref_bno
-LEFT JOIN tbl_employee e ON e.emp_no = r.emp_no
-LEFT JOIN tbl_reply parent ON parent.reply_no = r.upr_reply_no
-WHERE
-    b.board_no = #{boardNo}
-ORDER BY
-CASE 
-    WHEN r.upr_reply_no IS NULL THEN TO_NUMBER(r.reply_no) 
-    ELSE TO_NUMBER(r.upr_reply_no) 
-END ASC,
-r.create_date ASC
+	 SELECT
+		    r.reply_no,
+		    r.reply_content,
+		    r.ref_bno,
+		    r.status,
+		    r.emp_no,
+		    r.create_date,
+		    r.use_yn,
+		    b.board_no,
+		    r.status AS reply_status,
+		    e.emp_Name,
+		    r.upr_reply_no,
+		    g.reply_no,
+        g.good_reply,
+        g.creater,
+		    parent.reply_content AS parent_reply_content,
+		    parent.reply_no AS parent_reply_no
+		    
+		FROM
+		    tbl_reply r
+		JOIN tbl_board b ON b.board_no = r.ref_bno
+		LEFT JOIN tbl_employee e ON e.emp_no = r.emp_no
+		LEFT JOIN tbl_reply parent ON parent.reply_no = r.upr_reply_no
+	  left join tbl_good g on r.reply_no = g.reply_no
+		WHERE
+		    b.board_no = #{boardNo}
+		    and r.use_yn = 'Y'
+		ORDER BY
+		CASE 
+		    WHEN r.upr_reply_no IS NULL THEN TO_NUMBER(r.reply_no) 
+		    ELSE TO_NUMBER(r.upr_reply_no) 
+		END ASC,
+		r.create_date ASC
 </select>
 
 
@@ -459,17 +462,32 @@ r.create_date ASC
 		 where reply_no = #{replyNo}
 	</update>
 		
-	<select id="countGood" resultMap="GoodResultMap">
-		
-		 select
-        count(*)
-			from tbl_good
-			where reply_no = #{replyNo}
+  <select id="checkGoodStatus" parameterType="GoodDto" resultType="int">
+        SELECT COUNT(*) 
+        FROM tbl_good
+        WHERE reply_no = #{replyNo} AND creater = #{empName} AND good_reply = 'Y'
+    </select>
 	
-	</select>
-	
+		<update id="deleteBoard">
+		update
+		       tbl_board
+		   set use_Yn = 'N'
+		 where board_no = #{boardNo}
+	</update>
   
-
+	<update id="deleteReplyCompletely">
+    UPDATE tbl_reply
+	    SET use_Yn = 'N'
+    WHERE reply_no = #{replyNo}
+	    OR upr_reply_no = #{replyNo}
+	</update>
+  
+  <update id="replyUpdate">
+			update tbl_reply
+			   set reply_content = #{replyContent}
+  		 where reply_no = #{replyNo}
+  
+  </update>
   
   
 

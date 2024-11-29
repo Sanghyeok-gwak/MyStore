@@ -23,5 +23,4 @@ public class GoodDto {
 	private int modifier;
 	private String modifyDate;
 	private String empName;
-	
 }
