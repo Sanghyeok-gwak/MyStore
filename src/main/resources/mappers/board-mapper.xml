@@ -376,7 +376,7 @@
   
   <select id="replylist" resultMap="ReplyResultMap">
   
-  SELECT
+    SELECT
     r.reply_no,
     r.reply_content,
     r.ref_bno,
@@ -398,11 +398,11 @@ LEFT JOIN tbl_reply parent ON parent.reply_no = r.upr_reply_no
 WHERE
     b.board_no = #{boardNo}
 ORDER BY
-    CASE 
-        WHEN r.upr_reply_no IS NULL THEN TO_NUMBER(r.reply_no) 
-        ELSE TO_NUMBER(r.upr_reply_no) 
-    END ASC,
-    r.create_date ASC
+CASE 
+    WHEN r.upr_reply_no IS NULL THEN TO_NUMBER(r.reply_no) 
+    ELSE TO_NUMBER(r.upr_reply_no) 
+END ASC,
+r.create_date ASC
 </select>
 
 
@@ -422,11 +422,11 @@ ORDER BY
 		  )
 		  values
 		  (
-		    seq_rno.nextval
+		    reply_no_seq.nextval
 		  , #{replyContent}
 		  , #{refBno}
 		  , #{uprReplyNo}
-		  , #{status}
+		  , 'A'
 		  , #{empNo}
 		  , SYSDATE
 		  , 'Y'

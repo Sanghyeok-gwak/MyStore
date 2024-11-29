@@ -154,13 +154,53 @@
         </div>
 
         <!-- 답글 입력창 (동적으로 표시됨) -->
-     <form action="{contextPath}/board/boardDetail.do?no=${b.boardNo}" method="post">
-	    <div id="replyTextareaContainer${r.replyNo}" class="reply-textarea-container" style="display: none; margin-top: 10px; width: 100%;">
-	    		<textarea class="form-control" id="reply_content_${r.replyNo}" style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"></textarea>
-	    		<button class="btn2-hover" style="width: 8%; height: 40px;" onclick="submitReply(${r.replyNo})">작성하기</button>
-			</div>
-		</form>
+    
+<form action="${contextPath}/board/addReply.do" method="post" onsubmit="return validateForm1(${r.replyNo})">
+    <input type="hidden" name="replyContent" id="hidden_reply_content_${r.replyNo}" value="${r.replyContent}" />
+    <input type="hidden" name="refBno" value="${b.boardNo}" />  <!-- 게시글 번호 -->
+    <input type="hidden" name="uprReplyNo" value="${r.replyNo}" />  <!-- 댓글 번호 -->
+    <input type="hidden" name="empNo" value="${loginUser.empNo}" />  <!-- 작성자 번호 -->
+
+    <div id="replyTextareaContainer${r.replyNo}" class="reply-textarea-container" style="display: none; margin-top: 10px; width: 100%;">
+        <textarea 
+            class="form-control" 
+            id="reply_content_${r.replyNo}" 
+            style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"
+            oninput="updateHiddenReplyContent(${r.replyNo})"  
+        ></textarea>
+        <button type="submit" class="btn2-hover" style="width: 8%; height: 40px;">작성하기</button>
+    </div>
+</form>
+
+<script>
+    function validateForm1(replyNo) {
+        var replyContent = document.getElementById('reply_content_' + replyNo).value.trim();
+        
+        if (replyContent === '') {
+            alert('내용을 입력해주세요.');
+            return false;  // 폼 제출을 방지합니다.
+        }
+        
+        // 폼 제출을 허용합니다.
+        return true;
+    }
+</script>
 	
+
+<script>
+    // 텍스트 영역에 입력된 값을 숨겨진 input 필드에 동적으로 설정
+    function updateHiddenReplyContent(replyNo) {
+        // 텍스트 영역에서 값을 가져옴
+        var replyContent = document.getElementById("reply_content_" + replyNo).value;
+
+        // 해당하는 hidden input 필드에 값 설정
+        document.getElementById("hidden_reply_content_" + replyNo).value = replyContent;
+    }
+    
+    
+</script>
+
+
 
        
     </div>
@@ -294,54 +334,75 @@
         }
     }
 
-    // 댓글 작성 AJAX
-    function submitReply(parentReplyNo) {
-        var replyContent = document.getElementById('reply_content_' + parentReplyNo).value;
-
-        if (replyContent.trim() === "") {
-            alert("답글 내용을 입력해주세요.");
-            return;
-        }
-
-        $.ajax({
-            url: '${contextPath}/board/addReply.do',
-            type: 'POST',
-            data: {
-                boardNo: ${b.boardNo}, 
-                replyContent: replyContent,
-                parentReplyNo: parentReplyNo
-            },
-            success: function(response) {
-                if (response.success) {
-                    alert("답글이 작성되었습니다.");
-                    location.reload();  // 답글 작성 후 페이지 새로 고침하여 댓글 리스트 갱신
-                } else {
-                    alert("답글 작성에 실패했습니다.");
-                }
-            },
-            error: function() {
-                alert("서버 오류가 발생했습니다.");
-            }
-        });
-    }
-
+    
     
 </script>
 		<hr style="opacity:1;">
-		<div style="margin-top: 10px; color: #afacac; display: flex; align-items: center;">
-			<i class="bi bi-lock" style="margin-right: 10px; margin-bottom: 10px;">&nbsp;비밀댓글</i>
-			<div class="form-check form-switch" style="margin-left: 10px; margin-bottom: 10px;">
-				<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"> 
-				<label class="form-check-label" for="flexSwitchCheckDefault"></label>
-			</div>
-		</div>
-		
-		<div style="display: flex; justify-content: space-between; align-items: center;">
-			<textarea
-				class="form-control" id="reply_content" style="width: 90%; height: 100px; resize: none; border: 1px solid #000000"></textarea>
+	
+<form action="${contextPath}/board/addReply.do" method="post" onsubmit="return validateForm2()">
+    <input type="hidden" name="replyContent" value="${not empty r.replyContent && r.replyContent.startsWith(',') ? r.replyContent.substring(1) : r.replyContent}" />
+    <input type="hidden" name="refBno" value="${b.boardNo}" />
+    <input type="hidden" name="uprReplyNo" value="${r.uprReplyNo}" />
+    <input type="hidden" name="boarNo" value="${r.status}" />
+    <input type="hidden" name="empNo" value="${r.empNo}" />
+    
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <textarea
+            class="form-control" id="reply_content" name="replyContent" style="width: 90%; height: 100px; resize: none; border: 1px solid #000000">${not empty r.replyContent && r.replyContent.startsWith(',') ? r.replyContent.substring(1) : r.replyContent}</textarea>
+        <button type="submit" class="btn2-hover" style="width: 8%; height: 40px;">작성하기</button>
+    </div>
+</form>
 
-			<button class="btn2-hover" style="width: 8%; height: 40px;" onclick="fn_insertReply();">작성하기</button>
-		</div>
+<script>
+    function validateForm2() {
+        var replyContent = document.getElementById('reply_content').value.trim();
+        
+        if (replyContent === '') {
+            alert('내용을 입력해주세요.');
+            return false;  // 폼 제출을 방지합니다.
+        }
+        
+        // 폼 제출을 허용합니다.
+        return true;
+    }
+</script>
+
+
+<script>
+// 댓글 내용 체크 함수
+function validateReplyForm(formId) {
+    // 폼 내의 textarea 요소를 찾음
+    var replyTextarea = document.querySelector(`#${formId} textarea`);
+    
+    // 답글 작성 시 hidden 필드 값도 체크
+    var hiddenReplyContent = document.querySelector(`#${formId} input[name="replyContent"]`);
+
+    // 댓글이나 답글 내용이 공백인지 체크
+    if (replyTextarea.value.trim() === "" && hiddenReplyContent.value.trim() === "") {
+        alert("내용을 입력해주세요.");
+        replyTextarea.focus();  // 텍스트 영역에 포커스를 주어 사용자가 다시 입력할 수 있도록 함
+        return false;  // 폼 제출을 막음
+    }
+
+    return true;  // 내용이 있으면 폼을 제출
+}
+
+// 첫 번째 댓글 폼을 제출하기 전에 내용 확인
+document.querySelector('#frm1').onsubmit = function(event) {
+    if (!validateReplyForm('frm1')) {
+        event.preventDefault();  // 폼이 제출되지 않도록 막음
+    }
+};
+
+// 두 번째 댓글 폼을 제출하기 전에 내용 확인
+document.querySelector('#frm2').onsubmit = function(event) {
+    if (!validateReplyForm('frm2')) {
+        event.preventDefault();  // 폼이 제출되지 않도록 막음
+    }
+};
+</script>
+
+
 		
 	</div>
 	

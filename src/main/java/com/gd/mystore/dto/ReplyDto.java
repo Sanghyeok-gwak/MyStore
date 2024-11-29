@@ -20,7 +20,7 @@ public class ReplyDto {
 
 	private int replyNo;
 	private String replyContent;
-	private int refBno;
+	private Integer refBno;
 	private String uprReplyNo;
 	private String status;
 	private String empNo;
