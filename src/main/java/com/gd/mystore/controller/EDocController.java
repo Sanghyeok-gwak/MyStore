@@ -3,6 +3,7 @@ package com.gd.mystore.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -786,22 +787,26 @@ public class EDocController {
 	
 
 
-//	// 메인화면 결재대기문서 기안진행문서 갯수
-//	@GetMapping("/")
-//	public String edocCount(Model model,
-//							HttpSession session) {
-//		
-//		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
-//		String no = loginUser.getEmpNo(); // 로그인한 사용자 번호
-//		
-//		int awlcount = edocService.aprvlWaitListCount(no);
-//		int dplcount = edocService.draftProgressListCount(no);
-//		
-//		model.addAttribute("awlcount", awlcount);
-//		model.addAttribute("dplcount", dplcount);
-//		
-//		return "main";
-//	}
+	// 메인화면 결재대기문서 기안진행문서 갯수
+	@ResponseBody
+	@GetMapping("/edocCount")
+	public Map<String, String> edocCount(EmpMemberDto em,
+							HttpSession session) {
+		
+		String no = em.getEmpNo(); // 로그인한 사용자 번호
+		
+		int awlcount = edocService.aprvlWaitListCount(no);
+		int dplcount = edocService.draftProgressListCount(no);
+		
+		String awl = String.valueOf(awlcount);
+		String dpl = String.valueOf(dplcount);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("awlcount", awl);
+		map.put("dplcount", dpl);
+		
+		return map;
+	}
 
 	
 
