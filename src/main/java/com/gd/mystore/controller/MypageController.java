@@ -1,18 +1,25 @@
 package com.gd.mystore.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.EmpMemberDto;
+import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.WorkStatusDto;
 import com.gd.mystore.service.EmpMemberService;
 import com.gd.mystore.service.MypageService;
+import com.gd.mystore.util.PagingUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +34,8 @@ public class MypageController {
 	private final EmpMemberService selectEmpMember;
 	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	
+	private final PagingUtil pagingUtil;
+
 	// 내 정보 조회 및 수정 기능
 	@GetMapping("/myInfo")
 	public void myInfo() {}
@@ -201,8 +210,22 @@ public class MypageController {
 	
 
 	// 근무 상태 확인 기능
-	@GetMapping("/workStatus")
-	public void workStatus() {
+	@GetMapping("/workStatus.wo")
+	public void workStatus(@RequestParam(value="page", defaultValue="1") int currentPage
+		   , @RequestParam(value="empNo", defaultValue="1001") int empNo
+           , Model model) { 
+		
+		int listCount = mypageService.selectworkStatusCount(empNo);
+		System.out.println(listCount);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<WorkStatusDto> list = mypageService.selectworkStatusList(pi,empNo);
+	
+		String empName = mypageService.selectEmpName(empNo);
+		
+	    model.addAttribute("pi", pi);
+	    model.addAttribute("list", list);
+	    model.addAttribute("empName", empName);
+	   System.out.println("#########" + pi);
 	}
 
 }

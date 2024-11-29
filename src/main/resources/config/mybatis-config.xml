@@ -31,7 +31,8 @@
 		<typeAlias type="com.gd.mystore.dto.NoteDto" alias="NoteDto"/>													<!-- 쪽지 -->
 		<typeAlias type="com.gd.mystore.dto.ReplyDto" alias="ReplyDto"/>												<!-- 댓글 -->
 		<typeAlias type="com.gd.mystore.dto.GoodDto" alias="GoodDto"/>													<!-- 좋아요 -->											<!-- 댓글 -->
-		
+		<typeAlias type="com.gd.mystore.dto.WorkStatusDto" alias="WorkStatusDto"/>
+
 		
 	</typeAliases>
 	
@@ -50,7 +51,7 @@
 		<mapper resource="mappers/board-mapper.xml"/>										<!-- 게시판 매퍼 -->
 		<mapper resource="mappers/work-mapper.xml"/>										<!-- 근태 매퍼 -->
 		<mapper resource="mappers/note-mapper.xml"/>										<!-- 쪽지 매퍼 -->
-		
+		<mapper resource="mappers/workStatus-mapper.xml"/>										
 		
 		<!-- 지점 mapper -->
 		<mapper resource="mappers/empMember-mapper.xml"/>

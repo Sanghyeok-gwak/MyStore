@@ -1,9 +1,13 @@
 package com.gd.mystore.serviceimpl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.gd.mystore.dao.MypageDao;
 import com.gd.mystore.dto.EmpMemberDto;
+import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.WorkStatusDto;
 import com.gd.mystore.service.MypageService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,6 +38,21 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int selectEmpPwd(String checkpwd) {
 		return mypageDao.selectEmpPwd(checkpwd);
+	}
+
+	@Override
+	public int selectworkStatusCount(int empNo) {
+		return mypageDao.selectworkStatusCount(empNo);
+	}
+
+	@Override
+	public List<WorkStatusDto> selectworkStatusList(PageInfoDto pi,int empNo) {
+		return mypageDao.selectworkStatusList(pi , empNo);
+	}
+
+	@Override
+	public String selectEmpName(int empNo) {
+		 return mypageDao.selectEmpName(empNo);
 	}
 
 

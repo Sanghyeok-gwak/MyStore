@@ -50,7 +50,7 @@
         <a href="${ contextPath }/mypage/myInfo">회원수정</a>									<!-- lv5 -->	
         <a href="${ contextPath }/mypage/passwordRecovery">비밀번호 수정</a>					<!-- lv5 -->	
         <a href="${ contextPath }/salary/payCheck">급여 조회</a>								<!-- lv5 -->
-        <a href="${ contextPath }/mypage/workStatus">근태조회</a>								<!-- lv5 -->
+        <a href="${ contextPath }/mypage/workStatus.wo">근태조회</a>								<!-- lv5 -->
       </div>
 			
 			<div class="side-icon" onclick='location.href="${contextPath }/note/reception.no"'>
