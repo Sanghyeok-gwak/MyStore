@@ -312,7 +312,7 @@ input[type=file]::file-selector-button {
 					<!-- width값은 페이지에 맞게 조절해주세요 -->
 					<div class="search_box" style="width: 500px; height: 40px;">
 						<input class="input_b" type="text" placeholder="검색"
-							style="height: auto;">
+							style="height: auto; padding: 5px;">
 						<div class="icon">
 							<button type="submit">
 								<i class="bi bi-search"></i>
