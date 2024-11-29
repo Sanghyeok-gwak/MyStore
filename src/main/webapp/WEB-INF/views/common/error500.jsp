@@ -33,11 +33,11 @@
     <div class="container">
 
       <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
-        <h1>404</h1>
+        <h1>500</h1>
         <h2>잘못된 접근입니다.</h2>
         <a class="btn" href="${contextPath}">메인으로 돌아가기</a>
         <div style="display: flex; justify-content: center;">
-          <img src="${contextPath}/resources/images/404_img.png" class="img-fluid py-5" alt="Page Not Found" >
+          <img src="${contextPath}/resources/images/505_img.png" class="img-fluid py-5" alt="Page Not Found" >
         </div>
       </section>
 

@@ -498,6 +498,7 @@ input[type=file]::file-selector-button {
 				});
 			}
 		}
+		
 
 		// 폼 제출
 		function submitForm() {
