@@ -568,6 +568,7 @@ public class EDocController {
 						   @RequestParam("empNo") List<String> empNo,
 				           @RequestParam("aprvlEdocNo") List<Integer> aprvlEdocNo,
 				           @RequestParam("aprvlRank") List<Integer> aprvlRank,
+				           @RequestParam("aprvlComment") String aprvlComment,
 				           @RequestParam("edocNo") int edocNo,
 				           HttpSession session,
 				           RedirectAttributes rdAttributes) {
@@ -583,11 +584,13 @@ public class EDocController {
 		approval1.setAprvlEdocNo(aprvlEdocNo.get(0));
 		approval1.setAprvlRank(aprvlRank.get(0));
 		approval1.setEmpNo(empNo.get(0));
+		approval1.setAprvlComment(aprvlComment);
 		
 		approval2.setAprvlNo(aprvlNo.get(1));
 		approval2.setAprvlEdocNo(aprvlEdocNo.get(1));
 		approval2.setAprvlRank(aprvlRank.get(1));
 		approval2.setEmpNo(empNo.get(1));
+		approval1.setAprvlComment(aprvlComment);
 		
 		EDocDto edocDto = new EDocDto();
 		edocDto.setEdocNo(edocNo);

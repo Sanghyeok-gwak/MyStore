@@ -352,6 +352,10 @@ input {
 							<button class="btn2-hover" style="width: 120px; margin-left: 20px; font-size: 18px;" type="button" 
 							onclick="goBack()">뒤로가기</button>
 						</div>
+						<div class="btn-box-hover"> 
+							<button class="btn3-hover" style="width: 120px; margin-left: 20px; font-size: 18px;" type="button" 
+							onclick="openApprovalModal()">반려사유</button>
+						</div>
 					</div>
 				</div>
 				<hr>
@@ -443,6 +447,20 @@ input {
 
 		</div>      
 	</div>
+	
+	<!-- 결제 모달 -->
+<div class="modal-overlay" id="approvalModalOverlay">
+    <div class="modal" id="approvalModal">
+      <span class="ffont1" style="width:20% ; font-weight: bold;">반려사유</span>
+				<input type="text" value="${list[0].aprvlComment}" style="margin-top:20px; padding:5px" readonly>
+         <div style="display:flex; justify-content: center; margin-top:30px;">
+	        <div class="btn-box-hover"> 
+						<button class="btn3-hover" style="width: 120px; font-size: 18px;" type="button"
+						onclick="closeApprovalModal()">확인</button> 
+					</div>  
+     		</div>
+    </div>
+</div>
 
 	<script>
 		let oEditors = []; // 스마트에디터 초기화 
@@ -501,13 +519,81 @@ input {
 		}
 	</script>
 	
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
+	<script>
+			function openApprovalModal() {
+			    document.getElementById('approvalModalOverlay').style.display = 'block';
+			    document.getElementById('approvalModal').style.display = 'block';
+			}
+			
+			function closeApprovalModal() {
+			    document.getElementById('approvalModalOverlay').style.display = 'none';
+			    document.getElementById('approvalModal').style.display = 'none';
+			}
+	
+	    function goBack() {
+	        window.history.back();
+	    }
+	</script>
 
 
 	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
+
+<style>
+	/* 모달 기본 스타일 */
+       .modal {
+           display: none; /* 기본적으로 숨김 */
+           position: fixed; /* 화면 고정 */
+           z-index: 1000; /* 다른 요소보다 위에 표시 */
+           left: 50%;
+           top: 50%;
+           transform: translate(-50%, -50%);
+           width: 500px; /* 원하는 너비 조정 */
+           height: 200px;
+           background-color: white;
+           box-shadow: 0 5px 15px rgba(0,0,0,.5);
+           padding: 20px;
+           border-radius: 8px;
+       }
+
+       /* 모달을 화면 전체에 반투명 배경으로 감싸기 */
+       .modal-overlay {
+           display: none; /* 기본적으로 숨김 */
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background: rgba(0, 0, 0, 0.5);
+           z-index: 999; /* 모달 창보다 낮게 설정 */
+       }
+       
+         .modal-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .modal textarea {
+            width: 100%;
+            height: 100px;
+            resize: none; /* 크기 조절 비활성화 */
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+
+        .modal-footer button {
+            padding: 0.5rem 1rem;
+        }
+</style>
+
+
+
+
 </html>
