@@ -64,6 +64,9 @@ public class PersonnelDao {
 	public int updatequit(EmpMemberDto e) {
 		return sqlSession.update("personnelMapper.updatequit", e);
 	}
+	public int workInsertEmp(EmpMemberDto e) {
+		return sqlSession.insert("workMapper.newEmpInsert", e);
+	}
 	
 	
 	

@@ -71,6 +71,12 @@ public class PersonnelServiceImpl implements PersonnelService {
 		return personnelDao.selectSearchList(search, pi);
 	}
 
+	@Override
+	public int workInsertEmp(EmpMemberDto e) {
+		return personnelDao.workInsertEmp(e);
+		
+	}
+
 
 
 }

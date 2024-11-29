@@ -32,12 +32,37 @@
 					  null,
 					  'Y',
 					  SYSDATE,
-					  '0000',   --시스템 번호
+					  '9999',   --시스템 번호
 					  SYSDATE,
 					  'Y',
 					  'N'
 			FROM  tbl_employee e
-		 where  e.use_yn = 'Y'
+		 where  e.EMP_EMPLOYMENT = 'Y'
+	</insert>
+	
+	<insert id="newEmpInsert">
+		INSERT INTO tbl_work 
+		(
+		  WORK_NO, EMP_NO, WORK_TYPE_CODE, WORK_DAY, WORK_START_TIME, WORK_END_TIME, 
+		  WORK_PERMIT, CREATE_DATE, MODIFIER, MODIFIER_DATE, USE_YN, WORK_ATTENDANCE
+		)
+        VALUES
+        (
+             work_no_seq.NEXTVAL,   
+              (  select MAX(EMP_NO)
+                  FROM tbl_employee
+              ),              
+              'Y',
+              SYSDATE,
+              null,
+              null,
+              'Y',
+              SYSDATE,
+              '9999',   --시스템 번호
+              SYSDATE,
+              'Y',
+              'N'
+        )
 	</insert>
 
 	<select id="workCheck" resultMap="empWorkResultMap">

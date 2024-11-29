@@ -1,9 +1,14 @@
 package com.gd.mystore.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.gd.mystore.dto.EmpMemberDto;
+import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.dto.WorkStatusDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +33,19 @@ public class MypageDao {
 		return sqlSession.selectOne("personnelMapper.selectEmpPwd", checkpwd);
 	}
 	
-	
-	
+	public int selectworkStatusCount(int empNo) {
+		return sqlSession.selectOne("workStatusMapper.selectworkStatusCount", empNo);
+		
+	}
+	public List<WorkStatusDto> selectworkStatusList(PageInfoDto pi, int empNo){
+		
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1 ) * pi.getBoardLimit() ,  pi.getBoardLimit());
+		
+		return sqlSession.selectList("workStatusMapper.selectworkStatusList", empNo, rowBounds);
+
+		
+	}
+	public String selectEmpName(int empNo) {
+		return sqlSession.selectOne("workStatusMapper.selectEmpName", empNo);
+	}
 }

@@ -65,7 +65,7 @@
       LEFT JOIN
            tbl_department DC ON EMP.DEPT_CODE = DC.DEPT_CODE
       LEFT JOIN
-           tbl_work w on emp.emp_no =w.emp_no
+           tbl_work w on emp.emp_no = w.emp_no
      WHERE 
        		 EMP.EMP_EMPLOYMENT = 'Y'
        AND EMP.EMP_NO = #{empNo}

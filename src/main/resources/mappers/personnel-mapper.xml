@@ -224,7 +224,7 @@ SELECT
 		#{empAddress},
 		#{empPostcode},
 		#{empDetailAddress},
-		1234,           
+		#{empPwd},           
 		#{deptCode},         
 		#{empProfile}       
 	)

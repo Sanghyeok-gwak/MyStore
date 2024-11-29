@@ -222,6 +222,11 @@
             font-size: larger;
             font-weight: 500;
         }
+        
+        .edoc_btn_top2_font {
+            font-size: larger;
+            font-weight: 500;
+        }
 
         .edoc_btn_top_btn {
             width: 58%;
@@ -236,7 +241,7 @@
 
         .edoc_btn_controll {
             display: flex;
-            height: 100%;
+            height: 90%;
             padding: 0% 20%;
             flex-direction: column;
             justify-content: space-evenly;
@@ -445,23 +450,52 @@
 
                 <div class="main-home-top-edsm" style="margin-right: 20px;">
                     <div class="edocInpo">
-                        <div>📜</div>
-                        <div>전자결재</div>
+                        <div style="font-size:30px; margin-right:10px;">📜</div>
+                        <div style="font-size:30px">전자결재</div>
                     </div>
 
                     <div class="edoc_btn_controll">
                         <div class="edoc_btn_top">
-                            <div class="edoc_btn_top_font">결재 대기 문서 ${count1}개</div>
+                            <div class="edoc_btn_top_font"></div>
                             <div class="edoc_btn_top_btn"><a type="button" class="btn btn-outline-primary" href="${contextPath}/edoc/aprvlwaitList.do">이동하기</a></div>
                         </div>
 
                         <div class="edoc_btn_top">
-                            <div class="edoc_btn_top_font">기안 진행 문서 ${count2}개</div>
+                            <div class="edoc_btn_top2_font"></div>
                             <div class="edoc_btn_top_btn"><a type="button" class="btn btn-outline-primary" href="${contextPath}/edoc/draftprogressList.do">이동하기</a></div>
                         </div>
                     </div>
 
                 </div>
+                
+                <script>
+                	window.onload = edocCount();
+										
+                    function edocCount() {
+                        $.ajax({
+                            url: '${contextPath}/edoc/edocCount',
+                            type: 'get',
+                            data: {
+                                empNo: empNo,
+                            },
+                            success: function(resData) {
+                                console.log("정상")
+                                console.log(resData)
+                             		
+                                const awlcount = resData.awlcount;
+                                document.querySelector(".edoc_btn_top_font").textContent = '결재 대기 문서 ' + awlcount + '개';
+                                
+                                const dplcount = resData.dplcount;
+                                document.querySelector(".edoc_btn_top2_font").textContent = '결재 대기 문서 ' + dplcount + '개';
+                                                        
+                            },
+                            
+                            error: function() {
+                                console.log('결재 갯수에 대한 ajax 통신 실패')
+                            }
+                        })
+                    }
+                </script>
 
                 <!-- 캘린더 시작 -->
                 <div class="main-home-top-calender">
@@ -518,13 +552,11 @@
                                 <div id="temp">0</div>
                                 <i class="ri-celsius-line"></i>
                             </div>
-                            <div style="border: 1px solid yellow;">아이콘</div>
+                            <div id="weatherInfo">아이콘</div>
                         </div>
 
                         <div style="display: flex;justify-content: space-between;">
                             <div id="nowtime"></div>
-                            <img style="width: 10%;" src="${contextPath}/resources/images/weather_img/rain_1.gif">
-                            <i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>
                         </div>
 
                         <div class="bottom-info">
@@ -595,9 +627,11 @@
                                 document.getElementById("temp_max").innerHTML = temp_max.toFixed(1);
 
                                 document.getElementById("temp_min").innerHTML = temp_min.toFixed(1);
-
-                                //document.getElementById("weatherInfo").innerHTML = weatherDescription;
-
+								
+                                if(weatherDescription == "clear sky"){
+	                                 document.getElementById("weatherInfo").innerHTML = ;
+                                }
+								<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>
                                 document.getElementById("humidity").innerHTML = humidity;
 
                                 document.getElementById("wind").innerHTML = windSpeed;

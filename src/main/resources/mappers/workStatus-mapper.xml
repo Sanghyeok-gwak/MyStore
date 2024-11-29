@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="workStatusMapper">
+
+    <resultMap id="workStatusMap" type="WorkStatusDto">
+        <result column="EMP_NO" property="empNo" />
+        <result column="WORK_DAY" property="workDay" />
+        <result column="DAY_OF_WEEK" property="dayOfWeek" />
+        <result column="WORK_TYPE" property="workType" />
+        <result column="WORK_START_TIME" property="workStartTime" />
+        <result column="WORK_END_TIME" property="workEndTime" />
+        <result column="ASSIGNED_LEAVE" property="assignedLeave" />
+        <result column="AVAILABLE_LEAVE" property="availableLeave" />
+        <result column="EMP_NAME" property="empName"/>
+    </resultMap>
+
+    <select id="selectworkStatusCount" resultType="_int">
+        SELECT 
+            COUNT(*)
+        FROM 
+            tbl_work W
+        WHERE 
+            W.USE_YN = 'Y'
+            AND W.EMP_NO = #{empNo}
+    </select>
+
+    <select id="selectEmpName" resultType="String">
+        SELECT EMP_NAME
+        FROM tbl_employee
+        WHERE EMP_NO = #{empNo}
+    </select>
+
+    <select id="selectworkStatusList" resultMap="workStatusMap">
+        SELECT 
+            W.EMP_NO, 
+            W.WORK_DAY, 
+            TO_CHAR(W.WORK_DAY, 'DAY', 'NLS_DATE_LANGUAGE=KOREAN') AS DAY_OF_WEEK,
+            CASE W.WORK_ATTENDANCE
+                WHEN 'O' THEN '출근'
+                WHEN 'N' THEN '결근'
+                WHEN 'L' THEN '지각'
+                WHEN 'J' THEN '조퇴'
+                ELSE '기타'
+            END AS WORK_TYPE,
+            W.WORK_START_TIME, 
+            W.WORK_END_TIME,
+            NVL(R.WORK_FAST_END, 0) AS ASSIGNED_LEAVE,
+            NVL(R.WORK_FAST_END, 0) - NVL(R.WORK_ABSENCE, 0) AS AVAILABLE_LEAVE,
+            E.EMP_NAME  
+        FROM 
+            tbl_work W
+        LEFT JOIN 
+            tbl_work_realtime R ON W.EMP_NO = R.EMP_NO
+        LEFT JOIN 
+            tbl_employee E ON W.EMP_NO = E.EMP_NO  
+        WHERE 
+            W.EMP_NO = #{empNo}
+        ORDER BY 
+            W.WORK_DAY
+    </select>
+
+</mapper>
