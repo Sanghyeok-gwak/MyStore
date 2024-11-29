@@ -50,6 +50,18 @@
         margin-top: 40px;
         justify-content: center;
     }
+    /* paging 스타일 start*/
+		.pagination .page-link {
+			color: rgba(109, 105, 108, 1);
+			background-color: white;
+			border: none;
+		}
+		
+		.pagination .page-item.active .page-link {
+			border: 1px solid red;
+			color: red;
+			background-color: white;
+		}
     .table_head_color > th{
         background-color: rgba(123, 131, 211, 0.9) !important;
         color: #ffffff !important;
