@@ -631,12 +631,12 @@
                                 document.getElementById("temp_max").innerHTML = temp_max.toFixed(1);
 
                                 document.getElementById("temp_min").innerHTML = temp_min.toFixed(1);
-								
+								/*
                                 switch(weatherDescription) {
                                 case 'clear sky':
                                 	console.log("clear sky 정상 작동")
                                 	
-                                	document.getElementById("weatherInfo").innerHTML = <i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>;
+                                	document.getElementById("weatherInfo").innerHTML = '<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>';
                                   break
 
                                 case 'few clouds':  
@@ -668,7 +668,7 @@
                                   ...
                                   [break]
                               }
-								
+								*/
                                 document.getElementById("humidity").innerHTML = humidity;
 
                                 document.getElementById("wind").innerHTML = windSpeed;

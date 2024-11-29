@@ -22,6 +22,17 @@
 	<resources mapping="/smarteditor/**" location="/smarteditor/" />
 	<resources location="file:///upload/" mapping="/upload/**"></resources>
 
+	   <!-- webSocket 관련 등록 구문 -->
+   <beans:bean class="com.gd.mystore.handler.ChatEchoHandler" id="chatEchoHandler" />
+   <websocket:handlers>
+      <websocket:mapping handler="chatEchoHandler" path="/notews" />
+      <websocket:handshake-interceptors>
+         <beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+      </websocket:handshake-interceptors>
+      <websocket:sockjs />
+   </websocket:handlers>
+
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />

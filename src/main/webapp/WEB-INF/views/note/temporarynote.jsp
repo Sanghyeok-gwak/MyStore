@@ -113,10 +113,9 @@
 		</div>
 		<hr>
 			<div class="table-box">
-			    <table class="table" style="text-align: center;">
+			    <table class="table table-hover" style="text-align: center;">
 			        <thead>
-			            <tr>
-				             <th style="width: 50px;"><input type="checkbox" name="" id=""></th>
+			            <tr >
 				             <th style="width: 100px;">번호</th>
 				             <th style="width: 300px;">제목</th>
 				             <th style="width: 150px;">받을사람</th>
@@ -126,14 +125,13 @@
 			        <tbody>
 			        	<c:choose>
 			        		<c:when test="${empty list }">
-			        			<tr>
+			        			<tr >
 			                  <td colspan="5" style="text-align: center;">존재하는 쪽지가 없습니다.</td>
 			                </tr>
 			        		</c:when>
 			        		<c:otherwise>
 			        			<c:forEach var="s" items="${list }" varStatus="status">
-					            <tr>
-				                <td><input type="checkBox" value="${s.sendNo }"></td>
+					            <tr onclick="sendNo(${s.sendNo})">
 				                <td>${list.size() - status.index}</td>
 				                <td>${s.title }</td>
 				                <td>${s.sentId }</td>
@@ -143,7 +141,13 @@
 			        		</c:otherwise>
 			        	</c:choose>	
 			        </tbody>
-			    </table>                
+			    </table>  
+			    
+			    <script>
+		       	function sendNo(sendNo) {
+		       		window.location.href = '${contextPath}/note/tempDetail.no?no='+sendNo;
+		       	}
+       		</script>              
 				<div class="paging"> 
             <ul id="paging_area" class="pagination d-flex justify-content-center">
             

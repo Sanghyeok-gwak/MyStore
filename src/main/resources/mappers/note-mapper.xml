@@ -73,14 +73,14 @@
 					SENT_ID,
 					STATUS,
 					TEMP_STORAGE,
-					e.EMP_NAME as "RECEPTION_ID"
+					RECEPTION_ID
 	    FROM 
 	   			TBL_SEND_NOTE
-	   	join TBL_EMPLOYEE e on (RECEPTION_ID = e.EMP_NO)		
 	   WHERE 
 			    SENT_ID = #{empNo}
 			    and
-				  STATUS = 'Y'  			
+				  STATUS = 'Y'
+				  ORDER BY SENT_DATE DESC	
 	</select>
 	<select id="selectTemporayList" resultMap="noteResultMap">
 		SELECT
@@ -216,10 +216,10 @@
 					SENT_ID,
 					STATUS,
 					TEMP_STORAGE,
-					e.EMP_NAME as "RECEPTION_ID"
+					RECEPTION_ID
 	    FROM 
 	   			TBL_SEND_NOTE
-	   	join TBL_EMPLOYEE e on (RECEPTION_ID = e.EMP_NO)		
+	   		
 	   WHERE 
 			    SEND_NO = #{no}
 	</select>
@@ -283,43 +283,14 @@
 							)
 	</insert>
 	
-	<!-- 
-	<update id="">
-	
-	</update>
-
-	<delete id="">
-	
-	</delete>
-	 -->
-	<!-- 
-	<insert id="sendNote">
-	INSERT INTO 
-			         TBL_NOTE 
-							(
-							 NOTE_ID, 
-							 NOTE_TITLE, 
-							 NOTE_CONTENT, 
-							 SENT_TIME, 
-							 SEND_ID, 
-							 DELIVER_ID, 
-							 STATUS, 
-							 RECEIVED_TIME, 
-							 EMP_NO
-							 )
-							 VALUES
-							 (
-							 NOTE_NO_SEQ.NEXTVAL,
-							 #{title},
-							 #{content},
-							 sysdate,
-							 #{sentId},
-							 #{deliverId},
-							 'Y',
-							 sysdate,
-							 #{sentId}
-							 )
-							
-	</insert>	   
-	 -->
+	<select id="checkCount" resultType="_int">
+	SELECT 
+			    count(*)
+	FROM 
+	    TBL_RECEPTION_NOTE 
+ where
+      RECEP_ID = #{no}
+   and  
+      REC_CHECK = 'N'	    
+	</select>
 </mapper>
