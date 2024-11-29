@@ -107,7 +107,7 @@ public class MypageController {
 
 	    }
 	    
-	    return "redirect:/mypage/passwordRecovery";
+	    return "redirect:/";
 	    
 	}
 	    
