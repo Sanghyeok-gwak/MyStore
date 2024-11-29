@@ -2,6 +2,7 @@ package com.gd.mystore.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class MypageController {
 	
 	private final MypageService mypageService;
 	private final EmpMemberService selectEmpMember;
+	private final BCryptPasswordEncoder bcryptPwdEncoder;
 	
 	// 내 정보 조회 및 수정 기능
 	@GetMapping("/myInfo")
@@ -55,7 +57,8 @@ public class MypageController {
 	    // 현재 세션에 로그인된 사용자 정보 가져오기
 	    EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
 	    
-	    if (loginUser != null && checkpwd.equals(loginUser.getEmpPwd())) {
+	    
+	    if (loginUser != null && bcryptPwdEncoder.matches(checkpwd, loginUser.getEmpPwd())) {
 	        return "YYYYY"; // 비밀번호가 일치할 경우
 	    } else {
 	        return "NNNNN"; // 비밀번호가 일치하지 않을 경우
@@ -67,6 +70,7 @@ public class MypageController {
 	@GetMapping("/passwordRecovery")
 	public void passwordRecovery() {}
 	
+	/*
 	@PostMapping("/passwordRecovery")
 	public String passwordRecovery(String EmpPwd
 						     , String newPassword
@@ -85,7 +89,6 @@ public class MypageController {
 		}
 		
 		   // 현재 비밀번호와 세션에 담긴 비밀번호 비교
-		   /*(bcryptPwdEncoder.matches  비밀번호 암호화 진행시 추가해야됨*/
 		if  (EmpPwd.equals(loginUser.getEmpPwd())) {
 			
 			// 새 비밀번호 설정
@@ -112,6 +115,7 @@ public class MypageController {
 		return "redirect:/mypage/passwordRecovery";
 		
 	}
+	*/
 	
 	/*
 	@PostMapping("/passwordRecovery")
@@ -142,7 +146,7 @@ public class MypageController {
 	    loginUser.setEmpPwd(encodedPassword);
 
 	    // 4. 비밀번호 업데이트
-	    int result = mypageService.updatePassword(loginUser);
+	    int result = mypageService.passwordRecovery(loginUser);
 
 	    // 5. 처리 결과 메시지 설정
 	    if (result > 0) {
@@ -154,8 +158,45 @@ public class MypageController {
 
 	    return "redirect:/mypage/passwordRecovery";
 	}
-	 
 	 */
+	
+	@PostMapping("/passwordRecovery")
+	public String passwordRecovery(String EmpPwd,
+	                               String newPassword,
+	                               String confirmPassword,
+	                               RedirectAttributes rdAttributes,
+	                               HttpSession session) {
+
+	    // 세션에서 로그인 정보 가져오기
+	    EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+	    
+	    
+	    
+	    if(bcryptPwdEncoder.matches(EmpPwd, loginUser.getEmpPwd())) {
+	    	
+	    	loginUser.setEmpPwd( bcryptPwdEncoder.encode(newPassword));
+	    	
+		    int result = mypageService.passwordRecovery(loginUser);
+	    	
+		 // 5. 처리 결과 메시지 설정
+		    if (result > 0) {
+		        session.setAttribute("loginUser", loginUser); // 세션 갱신
+		        rdAttributes.addFlashAttribute("alertMsg", "비밀번호가 성공적으로 변경되었습니다.");
+		    } else {
+		        rdAttributes.addFlashAttribute("alertMsg", "비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+		    }
+
+	    }
+	    
+	    return "redirect:/mypage/passwordRecovery";
+	    
+	}
+	    
+	    
+	    
+	    
+
+	    
 	
 	
 
