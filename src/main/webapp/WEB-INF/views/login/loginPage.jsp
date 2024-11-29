@@ -192,18 +192,6 @@
             <div class="password_recovery">
               <a href="${ contextPath }/login/pwdRecovery.do">비밀번호 찾기</a>
             </div>
-            
-            <br><br>
-            <form action="${ contextPath }/login/signin.do" method="post" >
-            	<button>1001 로그인</button>
-            	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1001"/>
-            	<input type="hidden" class="input-bar1" name="empPwd" placeholder="비밀번호 입력해주세요" value="1234"/>
-            </form>
-            <form action="${ contextPath }/login/signin.do" method="post">
-            	<button>1002 로그인</button>
-            	<input type="hidden" name="empNo" placeholder="사번을 입력해주세요" value="1002"/>
-            	<input type="hidden" name="empPwd"placeholder="비밀번호 입력해주세요" value="1234"/>
-            </form>
           </div>
         </div>
       </div>

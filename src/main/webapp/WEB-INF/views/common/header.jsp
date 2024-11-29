@@ -7,7 +7,19 @@
 		<style>
 			@import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Noto+Sans+KR:wght@100..900&display=swap');
 		</style>
-
+	<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script> 
+	<script>
+		const sock = new SockJS("${contextPath}/notews");
+		sock.onmessage = onMessage;
+		
+		function onMessage(evt) {
+		      		
+			console.log('들어옴');
+			console.log(evt.data);
+		      		
+		      	}
+				
+	</script>
 
 	<!-- Vendor CSS Files -->
    <link href="${contextPath}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -398,21 +410,6 @@
   <div class="head-text">
     <div class="head_right_logo">
       <div class="header_right_list"> 
-      	<form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
-           	<button>1001 사원 로그인</button>
-           	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1001"/>
-           	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
-        </form>
-        <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
-           	<button>1003 관리자 로그인</button>
-           	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1003"/>
-           	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="3333"/>
-        </form>  
-        <form action="${ contextPath }/login/signin.do" method="post" id="signup_form">
-           	<button>1010 지점 로그인</button>
-           	<input type="hidden" class="input-bar1" name="empNo" placeholder="사번을 입력해주세요" value="1010"/>
-           	<input type="hidden" class="input-bar1" name="empPwd" id="right_pwd" placeholder="비밀번호 입력해주세요" value="1234"/>
-        </form>  
           <nav class="header-nav ms-auto">
                 <img src="<c:out value='${ loginUser.empProfile }' default='${ contextPath }/resources/images/defaultImg.png' />" class="head_img">
           </nav>

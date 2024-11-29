@@ -81,4 +81,8 @@ public class NoteDao {
 	//	return sqlSession.insert("noteMapper.sendNote",recepDto);
 	//}
 	
+	public int checkCount(String no) {
+		return sqlSession.selectOne("noteMapper.checkCount",no);
+	}
+	
 }

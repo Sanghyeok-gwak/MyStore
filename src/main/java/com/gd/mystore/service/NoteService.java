@@ -1,5 +1,6 @@
 package com.gd.mystore.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public interface NoteService {
 	int checkEmp (String[] checkEmp);
 	
 	// 쪽지 보내기
-	int insertNote(NoteDto noteDto);
+	int insertNote(NoteDto noteDto) throws IOException;
 	
 	
 	

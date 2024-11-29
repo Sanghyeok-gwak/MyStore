@@ -486,7 +486,7 @@
                                 document.querySelector(".edoc_btn_top_font").textContent = '결재 대기 문서 ' + awlcount + '개';
                                 
                                 const dplcount = resData.dplcount;
-                                document.querySelector(".edoc_btn_top2_font").textContent = '결재 대기 문서 ' + dplcount + '개';
+                                document.querySelector(".edoc_btn_top2_font").textContent = '기안 진행 문서 ' + dplcount + '개';
                                                         
                             },
                             
@@ -553,10 +553,15 @@
                                 <i class="ri-celsius-line"></i>
                             </div>
                             <div id="weatherInfo">아이콘</div>
+                            
                         </div>
 
                         <div style="display: flex;justify-content: space-between;">
-                            <div id="nowtime"></div>
+                            <div id="nowtime"></div>                              
+                              <i class="ri-celsius-line"></i>
+                              <i class="ri-sun-fill"></i>
+                              <i class="ri-sun-cloudy-line"></i>
+                              <i class="ri-cloudy-line"></i>
                         </div>
 
                         <div class="bottom-info">
@@ -564,7 +569,6 @@
                                 <div>최고 기온</div>
                                 <div class="bottom-icon">
                                     <div id="temp_max">0</div>
-                                    <i class="ri-celsius-line"></i>
                                 </div>
                             </div>
                             <div class="bottom-item">
@@ -627,11 +631,44 @@
                                 document.getElementById("temp_max").innerHTML = temp_max.toFixed(1);
 
                                 document.getElementById("temp_min").innerHTML = temp_min.toFixed(1);
-								
-                                if(weatherDescription == "clear sky"){
-	                                 document.getElementById("weatherInfo").innerHTML = ;
-                                }
-								<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>
+								/*
+                                switch(weatherDescription) {
+                                case 'clear sky':
+                                	console.log("clear sky 정상 작동")
+                                	
+                                	document.getElementById("weatherInfo").innerHTML = '<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>';
+                                  break
+
+                                case 'few clouds':  
+                                  ...
+                                  break
+                                case 'scattered clouds':  
+                                  ...
+                                  break
+                                case 'broken clouds':  
+                                  ...
+                                  [break]
+                                case 'shower rain':  
+                                  ...
+                                  [break]
+                                case 'rain':  
+                                  ...
+                                  [break]
+                                case 'thunderstorm':  
+                                  ...
+                                  [break]
+                                case 'snow':  
+                                  ...
+                                  [break]
+                                case 'mist':  
+                                  ...
+                                  [break]
+
+                                default:
+                                  ...
+                                  [break]
+                              }
+								*/
                                 document.getElementById("humidity").innerHTML = humidity;
 
                                 document.getElementById("wind").innerHTML = windSpeed;
@@ -645,7 +682,7 @@
                         });
                     }
 
-
+ 
 
                     //오늘 날짜출력
                     $(document).ready(function() {
@@ -684,17 +721,7 @@
                     공간#
                 </div>
                 <div class="main-home-bottom-board">
-                    <c:choose>
-                        <c:when test="${ empty loginUser.getEmpNo() }">
-                            세션정보 없음
-                        </c:when>
-
-                        <c:otherwise>
-                            현재 로그인 세션 정보
-                            <br>
-                            ${ loginUser.toString() }
-                        </c:otherwise>
-                    </c:choose>
+                    
                 </div>
             </div>
         </div>

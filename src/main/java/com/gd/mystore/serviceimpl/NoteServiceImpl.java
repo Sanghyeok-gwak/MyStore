@@ -1,14 +1,20 @@
 package com.gd.mystore.serviceimpl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import com.gd.mystore.dao.NoteDao;
+import com.gd.mystore.dto.EmpMemberDto;
 import com.gd.mystore.dto.NoteDto;
 import com.gd.mystore.dto.PageInfoDto;
+import com.gd.mystore.handler.ChatEchoHandler;
 import com.gd.mystore.service.NoteService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,7 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 
 public class NoteServiceImpl implements NoteService {
 	private final NoteDao noteDao;
-
+	
+	private final  ChatEchoHandler chat;
+	
+	
 	@Override
 	public int selectRecepCount(Map<String,Object> map) {
 		return noteDao.selectRecepCount(map);
@@ -151,18 +160,37 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public int insertNote(NoteDto noteDto) {
+	public int insertNote(NoteDto noteDto) throws IOException {
 		
 		int result = noteDao.insertSendNote(noteDto);
 		
+		
+		String[] receptionIds = noteDto.getReceptionId().split(","); // ["B", "C"]
+		
+		// noteDto.getReceptionId() => "B,C"
+	
 		if(result>0 && !noteDto.getTempStorage().equals("Y")) {
 			result=0;
-			result = noteDao.insertRecepNote(noteDto);
+			
+			for(String receptionId : receptionIds) {
+				noteDto.setReceptionId(receptionId);
+				result += noteDao.insertRecepNote(noteDto);
+				
+			}
+			
+			List<WebSocketSession> list = chat.getSessionList();
+			
+			for(WebSocketSession wss : list) {
+				if( noteDto.getReceptionId().contains( ((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo())) {
+					int count = noteDao.checkCount(((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo());
+					wss.sendMessage(new TextMessage(String.valueOf(count)));
+					
+				}
+			}
 		}
 		
 		return result;
 	}
-
-
-
+	
 }
+		

@@ -90,6 +90,7 @@
         .btn-box-hover button {
             width: 373px;
             height: 35px;
+            boarder-radius: 5px;
         }	
      	
      	.input-box-top input {

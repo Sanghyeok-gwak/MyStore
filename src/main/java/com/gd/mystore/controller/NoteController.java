@@ -1,5 +1,6 @@
 package com.gd.mystore.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -194,7 +195,7 @@ public class NoteController {
     }
 	
 	@PostMapping("insert.no")
-	public String insertNote(NoteDto noteDto, RedirectAttributes rdAttributes) {
+	public String insertNote(NoteDto noteDto, RedirectAttributes rdAttributes) throws IOException {
 		
 		int result = noteService.insertNote(noteDto);
 		
@@ -206,6 +207,22 @@ public class NoteController {
 		
 		return "redirect:/note/reception.no";
 	}
+	
+	@GetMapping("tempDetail.no")
+	public String tempDetailPage(String no,Model model) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("type", "send");
+		map.put("no", no);
+		log.debug("no :"+map.get("type"));
+		log.debug("no :"+map.get("no"));
+		NoteDto n = noteService.selectDetail(map);
+		log.debug("adsf : {}"+n);
+		model.addAttribute("n",n);
+		
+		return "note/tempdetail";
+	}
+	
+	
 	
 	
 }
