@@ -11,11 +11,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -152,18 +151,20 @@ public class BoardController {
 	
 	
 	@GetMapping("/boardDetail.do")
-	public void detail(int no,  Model model) {
+	public void detail(@RequestParam(value = "no", required = false) Integer no, 
+		      @ModelAttribute ReplyDto ReplyDto,  // BoardDto 객체로 자동 바인딩
+              Model model) {
+	
 	    // 상세페이지에 필요한 데이터
-	    // 게시글(제목, 작성자, 작성일, 내용) 데이터, 첨부파일(원본명, 저장경로, 실제파일명)들 데이터
 	    BoardDto b = boardService.selectBoard(no);
 	    int listCount = boardService.replycount(no);
-	    
+
 	    // 게시글에 대한 댓글 목록
 	    List<ReplyDto> reply = boardService.replylist(no);
-	    
+
 	    // 각 댓글의 createDate 포맷팅
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	    
+
 	    // 댓글 목록에서 createDate 포맷팅 후 변경
 	    for (ReplyDto r : reply) {
 	        String formattedDate = sdf.format(r.getCreateDate());  // r.getCreateDate()가 Date일 경우
@@ -173,28 +174,39 @@ public class BoardController {
 	    // 모델에 데이터 추가
 	    model.addAttribute("b", b);  // 게시글 정보
 	    model.addAttribute("listCount", listCount);  // 댓글 수
-	    model.addAttribute("reply", reply);  // 댓글 목
-	
+	    model.addAttribute("reply", reply);  // 댓글 목록
 	}
+
 	
 
 	
 		
 	
-	// 댓글 작성
-    @PostMapping("/rinsert.do")
-    @ResponseBody
-    public String replyInsert(@RequestBody ReplyDto r, HttpSession session) {
-        // 세션에서 로그인된 사용자 정보 가져오기
-        EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
-        if (loginUser != null) {
-            r.setEmpNo(String.valueOf(loginUser.getEmpName()));
-        }
-        
-        // 댓글 DB에 삽입
-        int result = boardService.insertReply(r);
-        return result > 0 ? "SUCCESS" : "FAIL";
-    }
+	   // 댓글 작성
+	@PostMapping("/addReply.do")
+	public String replyInsert(ReplyDto r, HttpSession session) {
+	    // 로그인된 사용자 정보에서 사용자 번호를 가져와 replyWriter에 설정
+	    EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+
+	    // 로그인된 사용자 정보가 있을 경우 댓글 작성자 정보 설정
+	    if (loginUser != null) {
+	        r.setEmpNo(loginUser.getEmpNo()); // 댓글 작성자의 empNo 설정
+	    }
+
+	    if (r.getReplyContent() != null && r.getReplyContent().startsWith(",")) {
+	        r.setReplyContent(r.getReplyContent().substring(1)); // 첫 번째 ',' 제거
+	    }
+	    
+	    // 댓글을 데이터베이스에 추가
+	    int result = boardService.insertReply(r);
+	    
+	 
+
+	    // 댓글 추가 성공/실패에 따라 리다이렉트 처리
+	    return "redirect:/board/boardDetail.do?no=" + r.getRefBno();
+	}
+
+
 
 
 	
