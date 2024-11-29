@@ -61,8 +61,8 @@ public class EmpMemberController {
 		
 		EmpMemberDto loginUser = empMemberService.selectEmpMember(em);
 		
-//		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpPwd(), loginUser.getEmpPwd())) { // 로그인 성공
-		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
+		if(loginUser != null && bcryptPwdEncoder.matches(em.getEmpPwd(), loginUser.getEmpPwd())) { // 로그인 성공
+//		if (loginUser != null && em.getEmpPwd().equals(loginUser.getEmpPwd())) {
 			session.setMaxInactiveInterval(60 * 60); // 세션 1시간 설정
 			session.setAttribute("loginUser", loginUser);
 			
