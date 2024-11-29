@@ -56,7 +56,7 @@
         WHERE 
             W.EMP_NO = #{empNo}
         ORDER BY 
-            W.WORK_DAY
+            W.WORK_DAY desc
     </select>
 
 </mapper>

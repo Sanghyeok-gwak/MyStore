@@ -129,7 +129,6 @@ public class MypageController {
 		int empNo = Integer.parseInt(loginUser.getEmpNo());
 		
 		int listCount = mypageService.selectworkStatusCount(empNo);
-		log.debug("listCount : {}", listCount );
 		
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
 		List<WorkStatusDto> list = mypageService.selectworkStatusList(pi, empNo);
@@ -139,7 +138,6 @@ public class MypageController {
 	    model.addAttribute("pi", pi);
 	    model.addAttribute("list", list);
 	    model.addAttribute("empName", empName);
-	   System.out.println("#########" + pi);
 	}
 
 }
