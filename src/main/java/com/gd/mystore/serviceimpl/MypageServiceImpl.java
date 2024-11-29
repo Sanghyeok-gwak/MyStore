@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 public class MypageServiceImpl implements MypageService {
 	
 	private final MypageDao mypageDao;
+	
+	//private final BCryptPasswordEncoder passwordEncoder; // 비밀번호 암호화 객체
+
 
 	// 마이페이지 내 정보 수정
 	@Override
