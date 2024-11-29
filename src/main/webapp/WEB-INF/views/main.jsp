@@ -631,7 +631,44 @@
                                 document.getElementById("temp_max").innerHTML = temp_max.toFixed(1);
 
                                 document.getElementById("temp_min").innerHTML = temp_min.toFixed(1);
-                               
+								
+                                switch(weatherDescription) {
+                                case 'clear sky':
+                                	console.log("clear sky 정상 작동")
+                                	
+                                	document.getElementById("weatherInfo").innerHTML = <i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>;
+                                  break
+
+                                case 'few clouds':  
+                                  ...
+                                  break
+                                case 'scattered clouds':  
+                                  ...
+                                  break
+                                case 'broken clouds':  
+                                  ...
+                                  [break]
+                                case 'shower rain':  
+                                  ...
+                                  [break]
+                                case 'rain':  
+                                  ...
+                                  [break]
+                                case 'thunderstorm':  
+                                  ...
+                                  [break]
+                                case 'snow':  
+                                  ...
+                                  [break]
+                                case 'mist':  
+                                  ...
+                                  [break]
+
+                                default:
+                                  ...
+                                  [break]
+                              }
+								
                                 document.getElementById("humidity").innerHTML = humidity;
 
                                 document.getElementById("wind").innerHTML = windSpeed;
@@ -684,17 +721,7 @@
                     공간#
                 </div>
                 <div class="main-home-bottom-board">
-                    <c:choose>
-                        <c:when test="${ empty loginUser.getEmpNo() }">
-                            세션정보 없음
-                        </c:when>
-
-                        <c:otherwise>
-                            현재 로그인 세션 정보
-                            <br>
-                            ${ loginUser.toString() }
-                        </c:otherwise>
-                    </c:choose>
+                    
                 </div>
             </div>
         </div>
