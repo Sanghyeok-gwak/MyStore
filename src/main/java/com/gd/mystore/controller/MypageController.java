@@ -113,6 +113,50 @@ public class MypageController {
 		
 	}
 	
+	/*
+	@PostMapping("/passwordRecovery")
+	public String passwordRecovery(String EmpPwd,
+	                               String newPassword,
+	                               String confirmPassword,
+	                               RedirectAttributes rdAttributes,
+	                               HttpSession session) {
+
+	    // 세션에서 로그인 정보 가져오기
+	    EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+
+	    // 1. 새 비밀번호가 일치하는지 확인
+	    if (!newPassword.equals(confirmPassword)) {
+	        rdAttributes.addFlashAttribute("alertMsg", "변경할 비밀번호가 일치하지 않습니다.");
+	        return "redirect:/mypage/passwordRecovery";
+	    }
+
+	    // 2. 현재 비밀번호 검증
+	    String storedPassword = mypageService.getEncryptedPassword(loginUser.getEmpNo()); // DB에서 암호화된 비밀번호 가져오기
+	    if (!passwordEncoder.matches(EmpPwd, storedPassword)) {
+	        rdAttributes.addFlashAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
+	        return "redirect:/mypage/passwordRecovery";
+	    }
+
+	    // 3. 새 비밀번호 암호화
+	    String encodedPassword = passwordEncoder.encode(newPassword);
+	    loginUser.setEmpPwd(encodedPassword);
+
+	    // 4. 비밀번호 업데이트
+	    int result = mypageService.updatePassword(loginUser);
+
+	    // 5. 처리 결과 메시지 설정
+	    if (result > 0) {
+	        session.setAttribute("loginUser", loginUser); // 세션 갱신
+	        rdAttributes.addFlashAttribute("alertMsg", "비밀번호가 성공적으로 변경되었습니다.");
+	    } else {
+	        rdAttributes.addFlashAttribute("alertMsg", "비밀번호 변경에 실패했습니다. 다시 시도해주세요.");
+	    }
+
+	    return "redirect:/mypage/passwordRecovery";
+	}
+	 
+	 */
+	
 	
 
 	// 근무 상태 확인 기능
