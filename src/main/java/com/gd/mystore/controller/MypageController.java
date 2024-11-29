@@ -107,7 +107,7 @@ public class MypageController {
 
 	    }
 	    
-	    return "redirect:/mypage/passwordRecovery";
+	    return "redirect:/";
 	    
 	}
 	    
@@ -122,13 +122,17 @@ public class MypageController {
 	// 근무 상태 확인 기능
 	@GetMapping("/workStatus.wo")
 	public void workStatus(@RequestParam(value="page", defaultValue="1") int currentPage
-		   , @RequestParam(value="empNo", defaultValue="1001") int empNo
+		   , HttpSession session
            , Model model) { 
 		
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		int empNo = Integer.parseInt(loginUser.getEmpNo());
+		
 		int listCount = mypageService.selectworkStatusCount(empNo);
-		System.out.println(listCount);
+		log.debug("listCount : {}", listCount );
+		
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
-		List<WorkStatusDto> list = mypageService.selectworkStatusList(pi,empNo);
+		List<WorkStatusDto> list = mypageService.selectworkStatusList(pi, empNo);
 	
 		String empName = mypageService.selectEmpName(empNo);
 		

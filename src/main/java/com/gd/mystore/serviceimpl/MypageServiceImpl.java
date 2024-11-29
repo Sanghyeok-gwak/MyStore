@@ -46,7 +46,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public List<WorkStatusDto> selectworkStatusList(PageInfoDto pi,int empNo) {
+	public List<WorkStatusDto> selectworkStatusList(PageInfoDto pi, int empNo) {
 		return mypageDao.selectworkStatusList(pi , empNo);
 	}
 
