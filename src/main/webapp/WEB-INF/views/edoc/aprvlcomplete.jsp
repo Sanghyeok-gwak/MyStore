@@ -425,7 +425,7 @@ input {
 
 			<!-- smarteditor start-->
 			<div id="smarteditor" style="margin-top: 10px;">
-				<textarea name="editorTxt" id="editorTxt0" rows="15" style="width: 100%"></textarea>
+				<textarea name="editorTxt" id="editorTxt0" rows="15" style="width: 100%;"></textarea>
 			</div>
 			<!-- smarteditor end-->
 

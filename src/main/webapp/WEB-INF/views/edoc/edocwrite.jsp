@@ -433,7 +433,7 @@ input[type=file]::file-selector-button {
 				<div id="middiv2" style="width: 100%;">
 					<div id="form_title">제목</div>
 					<div class="input-bar" style="width: 100%;">
-						<input type="text" id="title" name="title" class="input-bar1">
+						<input type="text" id="title" name="title" class="input-bar1" style="padding-left: 10px;">
 					</div>
 				</div>
 
