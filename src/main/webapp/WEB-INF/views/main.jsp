@@ -296,7 +296,6 @@
             justify-content: center;
             align-items: center;
             font-size: 300%;
-            margin-top: 15%;
         }
 
         .main-temp {
@@ -306,6 +305,12 @@
 
         #nowtime {
             font-size: 130%;
+        }
+        .weather-icon{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 500%;
         }
     </style>
 
@@ -510,7 +515,7 @@
                             var calendar = new FullCalendar.Calendar(calendarEl, {
                                 headerToolbar: {
                                     left: '',
-                                    center: 'title',
+                                    center: 'title', 
                                     right: ''
                                 },
                                 locale: 'ko',
@@ -532,38 +537,38 @@
             <div class="main-home-bottom">
                 <div class="main-home-bottom-weather" id="weather" style="margin-right: 20px;">
                     <!-- 
-						<br><br>
-						    <div>날씨는 3시간 마다 업데이트</div>
-								<div id="weatherInfo"></div>
-								<div id="nowtime"></div>
-           -->
+											<br><br>
+											    <div>날씨는 3시간 마다 업데이트</div>
+													<div id="weatherInfo"></div>
+													<div id="nowtime"></div>
+					           -->
                     <div class="weather-body">
-                        <!--<img style="width: 100%; height: 100%;" src="${contextPath}/resources/images/weather_img/rain_1.gif">-->
-                        <div class="location-icon">
-							<div class="weather-body-top">
-								<div id="city">위치</div>
-								<div><i class="ri-map-pin-2-fill"></i></div>
-							</div>
-							<div style="font-size: 25%;">3시간 간격 업데이트<br>제공: OpenWeatherMap</div>
+                        <div>
+	                        <div class="location-icon">
+														<div class="weather-body-top">
+															<div id="city">위치</div>
+															<div><i class="ri-map-pin-2-fill"></i></div>
+														</div>
+	                        </div>
+	                        <div style="display: flex;justify-content: space-between;">
+	                            <div id="nowtime"></div>                              
+	                        </div>
                         </div>
-                        <div class="weather-main">
-                            <div><i class="bi bi-thermometer-half"></i></div>
-                            <div class="main-temp">
-                                <div id="temp">0</div>
-                                <i class="ri-celsius-line"></i>
-                            </div>
-                            <div id="weatherInfo">아이콘</div>
-                            
+                        
+                        <div>
+	                        <div class="weather-icon">
+		                      	<div id="weatherInfo">아이콘</div>
+	                        </div>
+	                      	
+	                        <div class="weather-main">
+	                            <div><i class="bi bi-thermometer-half"></i></div>
+	                            <div class="main-temp">
+	                                <div id="temp">현재 기온</div>
+	                                <i class="ri-celsius-line"></i>
+	                            </div>
+	                        </div>
                         </div>
-
-                        <div style="display: flex;justify-content: space-between;">
-                            <div id="nowtime"></div>                              
-                              <i class="ri-celsius-line"></i>
-                              <i class="ri-sun-fill"></i>
-                              <i class="ri-sun-cloudy-line"></i>
-                              <i class="ri-cloudy-line"></i>
-                        </div>
-
+                        
                         <div class="bottom-info">
                             <div class="bottom-item">
                                 <div>최고 기온</div>
@@ -607,7 +612,6 @@
                             type: 'get',
                             dataType: 'json',
                             success: function(resData) {
-                                console.log("날씨 데이터 정상");
                                 console.log(resData);
 
                                 var weatherObject = resData;
@@ -618,10 +622,10 @@
                                 var temperature = weatherObject.main.temp; // 기온
                                 var temp_max = weatherObject.main.temp_max; // 최고기온
                                 var temp_min = weatherObject.main.temp_min; // 최저기온
-                                var weatherDescription = weatherObject.weather[0].description; // 날씨 설명
+                                var weatherDescription = weatherObject.weather[0].id; // 날씨 설명
                                 var humidity = weatherObject.main.humidity; // 습도
                                 var windSpeed = weatherObject.wind.speed; // 바람 속도
-                                var cityName = weatherObject.name; // 도시 이름
+                                var cityName = weatherObject.name; // 도시 이름=
 
                                 // 날씨 데이터를 출력
                                 document.getElementById("city").innerHTML = cityName;
@@ -631,58 +635,33 @@
                                 document.getElementById("temp_max").innerHTML = temp_max.toFixed(1);
 
                                 document.getElementById("temp_min").innerHTML = temp_min.toFixed(1);
-								/*
-                                switch(weatherDescription) {
-                                case 'clear sky':
-                                	console.log("clear sky 정상 작동")
-                                	
-                                	document.getElementById("weatherInfo").innerHTML = '<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>';
-                                  break
-
-                                case 'few clouds':  
-                                  ...
-                                  break
-                                case 'scattered clouds':  
-                                  ...
-                                  break
-                                case 'broken clouds':  
-                                  ...
-                                  [break]
-                                case 'shower rain':  
-                                  ...
-                                  [break]
-                                case 'rain':  
-                                  ...
-                                  [break]
-                                case 'thunderstorm':  
-                                  ...
-                                  [break]
-                                case 'snow':  
-                                  ...
-                                  [break]
-                                case 'mist':  
-                                  ...
-                                  [break]
-
-                                default:
-                                  ...
-                                  [break]
-                              }
-								*/
+								
+																if (weatherDescription >= 200 && weatherDescription < 600) {
+																			document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-cloud-rain"></i>';
+															        console.log( "비");
+															    } else if (weatherDescription >= 600 && weatherDescription < 700) {
+															        console.log( "눈");
+																			document.getElementById("weatherInfo").innerHTML = '<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>';
+															    } else if (weatherDescription >= 700 && weatherDescription < 800) {
+															    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-cloud-fog2"></i>';
+															        console.log( "대기 상태");
+															    } else if (weatherDescription >= 801 && weatherDescription < 900) {
+															    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-clouds"></i>';
+															        console.log( "구름");
+															    } else {
+															    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-sun"></i>';
+															        console.log( "맑음");
+															    }
+																			
                                 document.getElementById("humidity").innerHTML = humidity;
 
                                 document.getElementById("wind").innerHTML = windSpeed;
-
-
-                                //https://www.unscreen.com/upload
                             },
                             error: function() {
                                 console.log('날씨 데이터 ajax 통신 실패');
                             }
                         });
                     }
-
- 
 
                     //오늘 날짜출력
                     $(document).ready(function() {
