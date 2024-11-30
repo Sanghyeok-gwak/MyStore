@@ -109,6 +109,7 @@ public class EDocServiceImpl implements EDocService {
 	}
 
 	
+	
 	// 결재 목록 조회
 	@Override
 	public int aprvlWaitListCount(String no) {
@@ -140,6 +141,7 @@ public class EDocServiceImpl implements EDocService {
 		return edocDao.aprvlCompleteList(no, pi);
 	}
 
+	
 	
 	// 기안서 목록 조회
 	@Override
@@ -191,7 +193,19 @@ public class EDocServiceImpl implements EDocService {
 	public List<EDocDto> draftRecoveryList(String no, PageInfoDto pi) {
 		return edocDao.draftRecoveryList(no, pi);
 	}
+	
+	// 기안 대기 문서 검색
+	@Override
+	public int selectDraftWaitSearchListCount(Map<String, String> search, String no) {
+		return edocDao.selectDraftWaitSearchListCount(search, no);
+	}
 
+	@Override
+	public List<EDocSampleDto> selectDraftWaitSearchList(Map<String, String> search, PageInfoDto pi, String no) {
+		return edocDao.selectDraftWaitSearchList(search, pi, no);
+	}
+
+	
 	
 	// 결재 대기 상세페이지
 	@Override
@@ -216,6 +230,18 @@ public class EDocServiceImpl implements EDocService {
 	public List<EDocApprovalDto> aprvlList(int no) {
 		return edocDao.aprvlList(no);
 	}
+	
+	// 결재 대기 문서 검색
+	@Override
+	public int selectAprvlWaitSearchListCount(Map<String, String> search, String no) {
+		return edocDao.selectAprvlWaitSearchListCount(search, no);
+	}
+
+	@Override
+	public List<EDocSampleDto> selectAprvlWaitSearchList(Map<String, String> search, PageInfoDto pi, String no) {
+		return edocDao.selectAprvlWaitSearchList(search, pi, no);
+	}
+	
 	
 	
 	// 결재 반려
@@ -249,6 +275,7 @@ public class EDocServiceImpl implements EDocService {
     }
 	
 	
+	
 	// 반려하기
 	@Override
 	public int aprvlrjt(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no) {
@@ -274,6 +301,7 @@ public class EDocServiceImpl implements EDocService {
         return (updateApprovalResult > 0 && updateEdocResult > 0) ? 1 : 0;
     }
 
+	
 	
 	// 기안 상세페이지
 	// 기안 대기 상세페이지
@@ -333,6 +361,9 @@ public class EDocServiceImpl implements EDocService {
 		
 		return edocDao.draftUseN(edocDto);
 	}
+
+
+
 
 
 

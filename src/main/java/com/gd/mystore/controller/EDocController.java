@@ -302,6 +302,28 @@ public class EDocController {
 		return "edoc/aprvlwaitList";
 	}
 	
+	// 결재 대기 문서 검색
+	@GetMapping("/aprvlwaitListsearch.do")
+	public String aprvlWaitListSearch(@RequestParam(value="page", defaultValue="1") int currentPage
+					   , @RequestParam Map<String, String> search
+					   , HttpSession session
+					   , Model model) {
+		// Map<String,String> search ==> {condition=user_id|board_title|board_content, keyword=란}
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo();
+		
+		int listCount =  edocService.selectAprvlWaitSearchListCount(search, no);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EDocSampleDto> list = edocService.selectAprvlWaitSearchList(search, pi, no);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("search", search);
+		
+		
+		return "edoc/aprvlwaitList";
+	}
+	
 	// 결재 목록 예정(페이징)
 	@GetMapping("/aprvlscheduledList.do")
 	public String aprvlScheduledList(@RequestParam(value="page", defaultValue="1") int currentPage
@@ -361,6 +383,28 @@ public class EDocController {
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);		
+		
+		return "edoc/draftwaitList";
+	}
+	
+	// 기안 대기 문서 검색
+	@GetMapping("/draftwaitListsearch.do")
+	public String draftWaitListSearch(@RequestParam(value="page", defaultValue="1") int currentPage
+					   , @RequestParam Map<String, String> search
+					   , HttpSession session
+					   , Model model) {
+		// Map<String,String> search ==> {condition=user_id|board_title|board_content, keyword=란}
+		EmpMemberDto loginUser = (EmpMemberDto) session.getAttribute("loginUser");
+		String no = loginUser.getEmpNo();
+		
+		int listCount =  edocService.selectDraftWaitSearchListCount(search, no);
+		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
+		List<EDocSampleDto> list = edocService.selectDraftWaitSearchList(search, pi, no);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("search", search);
+		
 		
 		return "edoc/draftwaitList";
 	}
@@ -810,6 +854,8 @@ public class EDocController {
 		
 		return map;
 	}
+	
+
 
 	
 

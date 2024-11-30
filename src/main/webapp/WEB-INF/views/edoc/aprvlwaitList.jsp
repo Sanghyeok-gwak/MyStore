@@ -363,30 +363,56 @@ input[type=file]::file-selector-button {
 			<hr>
 
 			<!-- 중간1 start-->
-			<form action="${contextPath}/edoc/aprvlwaitListsearch.do" method="get">
-				<div style="display: flex; justify-content: flex-end;">
-					<div>
-						<select name="condition" id="lang"
-							style="height: 40px; margin-bottom: 20px;">
-							<option value="sample_desc">제목</option>
-							<option value="emp_no">기안자</option>
-						</select>
-					</div>
+				<form action="${contextPath}/edoc/aprvlwaitListsearch.do" method="get">
+					<input type="hidden" name="page" value="1">
+					<div style="display: flex; justify-content: flex-end;">
+						<div>
+							<select name="condition" id="lang"
+								style="height: 40px; margin-bottom: 20px;">
+								<option value="sample_desc">유형</option>
+								<option value="emp_name">생성자</option>
+							</select>
+						</div>
 
-					<!-- width값은 페이지에 맞게 조절해주세요 -->
-					<div class="search_box" style="width: 500px; height: 40px;">
-						<input class="input_b" type="text" placeholder="검색"
-							style="height: auto; padding: 5px;">
-						<div class="icon">
-							<button type="submit">
-								<i class="bi bi-search"></i>
-							</button>
+						<!-- width값은 페이지에 맞게 조절해주세요 -->
+						<div class="search_box" style="width: 500px; height: 40px;">
+							<input class="input_b" type="text" placeholder="검색" name="keyword" value="${search.keyword }"
+								style="height: auto;">
+							<div class="icon">
+								<button type="submit">
+									<i class="bi bi-search"></i>
+								</button>
+							</div>
 						</div>
 					</div>
-
-				</div>
-			</form>
+				</form>
+				<c:if test="${ not empty search }">
+	            <script>
+	            	$(document).ready(function(){
+	            		$("#search_form select").val('${search.condition}');
+	            		
+	            		// 검색후의 페이징바 클릭시 검색 form 을 강제로 submit 
+	            		// (단, 페이지번호는 현재 클릭한 페이지번호로 바꿔서)
+	            		$("#paging_area a").on("click", function(){
+	            			
+	            			let page = $(this).text(); // Previous | Next | 페이지번호
+	            			if(page == 'Previous'){
+	            				page = ${pi.currentPage - 1};
+	            			}else if(page == 'Next'){
+	            				page = ${pi.currentPage + 1};
+	            			}
+	            			
+	            			$("#search_form input[name=page]").val(page);
+	            			$("#search_form").submit();
+	            			
+	            			return false; // 기본이벤트(href='/board/list.do' url요청)가 동작 안되도록
+	            			
+	            		})
+	            	})
+	            </script>
+            </c:if>
 			<!-- 중간1 end-->
+			
 
 
 			<!-- 중간2 start -->

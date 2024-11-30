@@ -34,6 +34,7 @@ public interface EDocService {
 	List<EDocSampleDto> selectSearchList(Map<String, String> search, PageInfoDto pi);
 	
 	
+	
 	// 기안서 작성
 	// 양식유형만 조회
 	List<EDocSampleDto> selectEDocFormList();
@@ -48,6 +49,7 @@ public interface EDocService {
 	int edocInsert(EDocDto edoc, List<EDocApprovalDto> approvalList);
 	
 	
+	
 	// 결재 목록 조회
 	// 결재 대기 목록(페이징)
 	int aprvlWaitListCount(String no);
@@ -60,6 +62,11 @@ public interface EDocService {
 	// 결재 완료 목록(페이징)
 	int aprvlCompleteListCount(String no);
 	List<EDocDto> aprvlCompleteList(String no, PageInfoDto pi);
+	
+	// 결재 대기 문서 검색
+	int selectAprvlWaitSearchListCount(Map<String, String> search, String no);
+	List<EDocSampleDto> selectAprvlWaitSearchList(Map<String, String> search, PageInfoDto pi, String no);
+	
 	
 	
 	// 기안서 목록 조회
@@ -83,6 +90,11 @@ public interface EDocService {
 	int draftRecoveryListCount(String no);
 	List<EDocDto> draftRecoveryList(String no, PageInfoDto pi);
 	
+	// 기안 대기 문서 검색
+	int selectDraftWaitSearchListCount(Map<String, String> search, String no);
+	List<EDocSampleDto> selectDraftWaitSearchList(Map<String, String> search, PageInfoDto pi, String no);
+	
+	
 	
 	// 결재 상세페이지
 	// 결재 대기 상세페이지
@@ -98,12 +110,14 @@ public interface EDocService {
 	List<EDocApprovalDto>aprvlList(int no);
 	
 	
+	
 	// 결재 반려
 	// 결재하기
 	int aprvlcpl(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no);
 	
 	// 반려하기
 	int aprvlrjt(EDocApprovalDto approval1, EDocApprovalDto approval2, EDocDto edocDto, String no);
+	
 	
 	
 	// 기안 상세페이지
@@ -127,6 +141,8 @@ public interface EDocService {
 	
 	// 기안서 삭제
 	int draftUseN(EDocDto edocDto);
+	
+
 
 
 

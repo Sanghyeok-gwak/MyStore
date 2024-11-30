@@ -361,8 +361,12 @@ input[type=file]::file-selector-button {
 								<c:otherwise>
 									<c:forEach var="fl" items="${ list }">
 										<tr onclick='location.href = "${contextPath}/edoc/draftrecovery.do?no=${ fl.edocNo }";'>
-											<td><input type="checkbox" class="list-checkbox"
-												style="width: 18px; height: 18px;"></td>
+											<td>
+											<input type="checkbox" 
+																 class="list-checkbox"
+																 style="width: 18px; height: 18px;"
+																 onclick="event.stopPropagation();">
+											</td>
 											<td>${ fl.edocNo }</td>
 											<td>${ fl.sampleNo }</td>
 											<td>${ fl.edocTitle }</td>

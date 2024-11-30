@@ -61,7 +61,6 @@ public class EDocDao {
 	}
 
 
-
 	
 	// 기안서 작성
 	public List<EDocSampleDto> selectEdocFormList() {
@@ -87,6 +86,7 @@ public class EDocDao {
 	public int saveApproval(EDocApprovalDto approval) {
 		return sqlSession.insert("edocMapper.saveApproval", approval);
 	}
+	
 	
 	
 	// 결재 목록 조회
@@ -116,7 +116,24 @@ public class EDocDao {
 		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
 		return sqlSession.selectList("edocMapper.aprvlCompleteList", no, rowBounds);
 	}
+	
+	// 결재 대기 목록 검색
+	public int selectAprvlWaitSearchListCount(Map<String, String> search, String no) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("search", search);
+	    params.put("no", no);
+		return sqlSession.selectOne("edocMapper.selectAprvlWaitSearchListCount", params);
+	}
 
+	public List<EDocSampleDto> selectAprvlWaitSearchList(Map<String, String> search, PageInfoDto pi, String no) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("search", search);
+	    params.put("no", no);
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.selectAprvlWaitSearchList", params, rowBounds);
+	}
+
+	
 	
 	// 기안서 목록 조회
 	public int draftWaitListCount(String no) {
@@ -163,7 +180,24 @@ public class EDocDao {
 		RowBounds rowBounds = new RowBounds( (pi.getCurrentPage() - 1) * pi.getBoardLimit(), pi.getBoardLimit());
 		return sqlSession.selectList("edocMapper.draftRecoveryList", no, rowBounds);
 	}
+	
+	// 기안 대기 문서 검색
+	public int selectDraftWaitSearchListCount(Map<String, String> search, String no) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("search", search);
+	    params.put("no", no);
+		return sqlSession.selectOne("edocMapper.selectDraftWaitSearchListCount", params);
+	}
+	
+	public List<EDocSampleDto> selectDraftWaitSearchList(Map<String, String> search, PageInfoDto pi, String no) {
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("search", search);
+	    params.put("no", no);
+		RowBounds rowBounds = new RowBounds((pi.getCurrentPage() - 1) * pi.getBoardLimit() , pi.getBoardLimit());
+		return sqlSession.selectList("edocMapper.selectDraftWaitSearchList", params, rowBounds);
+	}
 
+	
 	
 	// 결재 대기 상세페이지
 	public EDocDto aprvlWait(int no) {
@@ -186,6 +220,7 @@ public class EDocDao {
 	}
 
 
+	
 	// 결재 반려
 	// 결재하기
     // 결재 상태 업데이트
@@ -217,6 +252,7 @@ public class EDocDao {
         return sqlSession.update("edocMapper.updateEdocStatusR", edocDto);
     }
 
+    
     
     // 기안 상세페이지
  	// 기안 대기 상세페이지
@@ -265,6 +301,10 @@ public class EDocDao {
 	public int draftUseN(EDocDto edocDto) {
 		return sqlSession.update("edocMapper.draftUseN", edocDto);
 	}
+
+
+
+
 
 
 

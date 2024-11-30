@@ -398,8 +398,10 @@ input[type=file]::file-selector-button {
 								<c:forEach var="s" items="${ list }">
 									<tr onclick='location.href = "${contextPath}/edoc/edocmode.do?no=${ s.sampleNo }";'>
 										<td>
-											<input type="checkbox" class="list-checkbox" 
-														 style="width: 18px; height: 18px;">
+											<input type="checkbox" 
+														 class="list-checkbox" 
+														 style="width: 18px; height: 18px;"
+														 onclick="event.stopPropagation();">
 										</td>
 										<td>${ s.sampleNo }</td>
 										<td>${ s.sampleDotCode }</td>
