@@ -200,7 +200,8 @@
 					CONTENT,
 					REC_CHECK,
 					REC_DATE,
-					STATUS
+					STATUS,
+					SENT_DATE
 	FROM 
 	    TBL_RECEPTION_NOTE 
 	join TBL_EMPLOYEE e on (SENT_ID = e.EMP_NO)   
@@ -266,7 +267,8 @@
 							    REC_CHECK, 
 							    REC_DATE, 
 							    STATUS, 
-							    DELETE_DATE
+							    DELETE_DATE,
+							    SENT_DATE
 							)
 							VALUES
 							(
@@ -279,7 +281,8 @@
 							    'N', 
 							    '', 
 							    'Y', 
-							    ''
+							    '',
+							    sysdate
 							)
 	</insert>
 	
@@ -293,4 +296,13 @@
    and  
       REC_CHECK = 'N'	    
 	</select>
+	<update id="selectSendYDetail">
+		update
+					TBL_RECEPTION_NOTE
+			 set
+			    REC_CHECK = 'Y',
+			    REC_DATE = sysdate
+		 where
+		      RECEPTION_NO = #{no} 	
+	</update>
 </mapper>

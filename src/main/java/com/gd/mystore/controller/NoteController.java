@@ -152,14 +152,14 @@ public class NoteController {
 	}
 	
 	@GetMapping("recepDetail.no")
-	public String selectRecepDetail(String no,Model model){
+	public String selectRecepDetail(String no,Model model,String recCheck){
 		Map<String, Object> map = new HashMap<>();
 		map.put("type", "recep");
 		map.put("no", no);
-		
+		map.put("recCheck", recCheck);
+		log.debug("map : {}",map);
 		NoteDto n = noteService.selectDetail(map);
 		n.setSource("Y");
-		log.debug("adsf : {}"+n);
 		model.addAttribute("n",n);
 		
 		return "note/detail";
@@ -168,12 +168,8 @@ public class NoteController {
 	@GetMapping("sendDetail.no")
 	public String selectSendDetail(String no,Model model){
 		Map<String, Object> map = new HashMap<>();
-		map.put("type", "send");
-		map.put("no", no);
-		log.debug("no :"+map.get("type"));
-		log.debug("no :"+map.get("no"));
+		
 		NoteDto n = noteService.selectDetail(map);
-		log.debug("adsf : {}"+n);
 		model.addAttribute("n",n);
 		
 		return "note/detail";
@@ -207,6 +203,7 @@ public class NoteController {
 		
 		return "redirect:/note/reception.no";
 	}
+	
 	
 	@GetMapping("tempDetail.no")
 	public String tempDetailPage(String no,Model model) {

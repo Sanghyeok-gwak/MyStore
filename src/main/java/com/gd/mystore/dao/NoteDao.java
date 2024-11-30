@@ -84,5 +84,7 @@ public class NoteDao {
 	public int checkCount(String no) {
 		return sqlSession.selectOne("noteMapper.checkCount",no);
 	}
-	
+	public int selectSendYDetail(Map<String,Object> map) {
+		return sqlSession.update("noteMapper.selectSendYDetail",map);
+	}
 }

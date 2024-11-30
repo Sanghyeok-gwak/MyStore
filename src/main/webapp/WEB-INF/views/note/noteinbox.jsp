@@ -134,45 +134,49 @@
 			  }
 			</script>
 			<div class="table-box">
-       	<form action="${contextPath }/temporayadd.no" method="get">
-			    <table class="table table-hover" style="text-align: center;">
-			        <thead>
-			            <tr>
-				             <th style="width: 50px;">
-				             	<input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes(this)">
-				             </th>
-				             <th style="width: 100px;">번호</th>
-				             <th style="width: 300px;">제목</th>
-				             <th style="width: 150px;">보낸사람</th>
-				             <th style="width: 200px;">확인 일시</th>
-			            </tr>    
-			        </thead>
-			        <tbody>
-			        	<c:choose>
-			        		<c:when test="${empty list }">
-			        			<tr>
-			                  <td colspan="5" style="text-align: center;">존재하는 쪽지가 없습니다.</td>
-			                </tr>
-			        		</c:when>
-			        		<c:otherwise>
-			        			<c:forEach var="r" items="${list }" varStatus="status">
-					            <tr onclick="sendReceptionNo(${r.receptionNo})">
-				                <td><input type="checkBox" onclick="event.stopPropagation()"  name="receptionNo" class="checkItem" value="${r.receptionNo }"></td>
-				                <td>${list.size() - status.index}</td>
-				                <td>${r.title }</td>
-				                <td>${r.sentId }</td>
-				                <td>${r.recCheck eq 'Y' ? 'r.recDate' : '' }</td>
-					            </tr>
-					           </c:forEach> 
-			        		</c:otherwise>
-			        	</c:choose>	
-			        </tbody>
-			    </table>                
-       	</form>
+       	<form action="${contextPath }/temporaryadd.no" method="get">
+				    <table class="table table-hover" style="text-align: center;">
+				        <thead>
+				            <tr>
+				                <th style="width: 50px;">
+				                    <input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes(this)">
+				                </th>
+				                <th style="width: 100px;">번호</th>
+				                <th style="width: 300px;">제목</th>
+				                <th style="width: 150px;">보낸사람</th>
+				                <th style="width: 200px;">확인 일시</th>
+				            </tr>    
+				        </thead>
+				        <tbody>
+				            <c:choose>
+				                <c:when test="${empty list}">
+				                    <tr>
+				                        <td colspan="5" style="text-align: center;">존재하는 쪽지가 없습니다.</td>
+				                    </tr>
+				                </c:when>
+				                <c:otherwise>
+				                    <c:forEach var="r" items="${list}" varStatus="status">
+				                        <input type="hidden" id="recCheck_${status.index}" value="${r.recCheck}">
+				                        <tr onclick="sendReceptionNo(${r.receptionNo}, '${r.recCheck}')">
+				                            <td>
+				                                <input type="checkBox" onclick="event.stopPropagation()" name="receptionNo" class="checkItem" value="${r.receptionNo}">
+				                            </td>
+				                            <td>${list.size() - status.index}</td>
+				                            <td>${r.title}</td>
+				                            <td>${r.sentId}</td>
+				                            <td>${r.recCheck eq 'Y' ? r.recDate : ''}</td>
+				                        </tr>
+				                    </c:forEach>
+				                </c:otherwise>
+				            </c:choose>    
+				        </tbody>
+				    </table>
+				</form>
        	<script>
-	       	function sendReceptionNo(receptionNo) {
-	       		window.location.href = '${contextPath}/note/recepDetail.no?no='+receptionNo;
-	       	}
+	       	function sendReceptionNo(receptionNo, recCheck) {
+            console.log("receptionNo: " + receptionNo + ", recCheck: " + recCheck);
+            window.location.href = '${contextPath}/note/recepDetail.no?no=' + receptionNo + '&recCheck=' + recCheck;
+	        }
        	</script>
 				<div class="paging"> 
             <ul id="paging_area" class="pagination d-flex justify-content-center">

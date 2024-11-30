@@ -697,14 +697,12 @@
 					 -->
 
                 <div class="main-home-bottom-message" style="margin-right: 20px;">
-                    공간#
                 </div>
                 <div class="main-home-bottom-board">
                     
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <jsp:include page="/WEB-INF/views/common/footer.jsp" />

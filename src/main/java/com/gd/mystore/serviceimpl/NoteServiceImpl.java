@@ -134,9 +134,17 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public NoteDto selectDetail(Map<String,Object> map) {
 		NoteDto noteDto = new NoteDto();
-		
+		int result = 0;
 		if(map.get("type").equals("recep")) {
-			noteDto = noteDao.selectRecepDetail(((String)(map.get("no"))));
+			if(((String)(map.get("recCheck"))).equals("Y")) {
+				noteDto = noteDao.selectRecepDetail(((String)(map.get("no"))));
+			}else if(((String)(map.get("recCheck"))).equals("N")) {
+			    result = noteDao.selectSendYDetail(map);
+			    if(result>0) {
+			    	noteDto = noteDao.selectRecepDetail(((String)(map.get("no"))));
+			    }
+			}
+			
 		}else if(map.get("type").equals("send")){
 			noteDto = noteDao.selectSendDetail(((String)(map.get("no"))));
 			log.debug("noteDto : "+noteDto);
