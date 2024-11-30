@@ -193,6 +193,16 @@
 		
 </update>
 
+<delete id="deleteDepartment">
+	delete
+		from tbl_department
+	 where
+	 			dept_code = #{deptCode}
+	 	 and dept_name = #{deptName}
+
+
+</delete>
+
 <select id="getDeptCodeByName" resultMap="departmentResultMap">
 	select
 				dept_code
@@ -223,6 +233,8 @@
 </select>
 
 
+
+  
 
 
 </mapper>

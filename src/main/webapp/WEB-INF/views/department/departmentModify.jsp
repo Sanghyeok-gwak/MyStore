@@ -65,7 +65,42 @@ input {
     overflow-y: auto;  /* 자식 요소가 높이를 초과할 경우 수직 스크롤 추가 */
     overflow-x: hidden;  /* 하단(수평) 스크롤을 없앰 */
 }
+ /* 모달 스타일 */
+    .modal {
+        display: none; /* 기본적으로 숨겨짐 */
+        position: fixed; /* 화면에 고정 */
+        z-index: 1; /* 최상위 */
+        left: 0;
+        top: 0;
+        width: 100%; /* 화면 전체 */
+        height: 100%; /* 화면 전체 */
+        overflow: auto; /* 스크롤 가능 */
+        background-color: rgb(0,0,0); /* 배경은 반투명 검정 */
+        background-color: rgba(0,0,0,0.4); /* 배경에 투명도 추가 */
+    }
 
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
 </style>
 
 </head>
@@ -92,7 +127,6 @@ input {
         </div>
         <div class="btn-box-hover">
             <button id="editNodeBtn" class="btn2-hover" style="width: 50px;">수정</button>
-            <button id="submitNodeBtn" class="btn3-hover" style="width: 50px;">등록</button>
         </div>
     <!-- 트리 영역에 스크롤 적용 -->
     </div>
@@ -195,7 +229,88 @@ input {
 			</div>
 		</div>
 	</div>
+<div id="moveDeptModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2>부서 이동</h2>
+        <p>이곳에 부서 이동 관련 내용이 표시됩니다.</p>
+        <!-- 부서 이동을 위한 폼 내용 추가 -->
+        <form>
+            <label for="targetDept">목표 부서:</label>
+            <select id="targetDept" name="targetDept">
+                <option value="Dept1">부서 1</option>
+                <option value="Dept2">부서 2</option>
+                <option value="Dept3">부서 3</option>
+            </select>
+            <button type="submit" id="moveDeptBtn">이동</button>
+        </form>
+    </div>
+</div>
+<script>
+    // "이동" 버튼 클릭 시 모달 열기
+    $("#MoveDept").click(function() {
+        $("#moveDeptModal").show(); // 모달 표시
+    });
 
+    // 모달 닫기 버튼 클릭 시 모달 닫기
+    $("#closeModal").click(function() {
+        $("#moveDeptModal").hide(); // 모달 숨기기
+    });
+
+    // 모달 외부 클릭 시 모달 닫기
+    $(window).click(function(event) {
+        if ($(event.target).is("#moveDeptModal")) {
+            $("#moveDeptModal").hide(); // 모달 숨기기
+        }
+    });
+</script>
+
+
+<script>
+$('#jstree').on("select_node.jstree", function (e, data) {
+    var tree = $('#jstree').jstree(true);
+
+    // AJAX 요청을 통해 서버에서 해당 부서에 대한 정보를 가져오기
+    $.ajax({
+        url: "${contextPath}/department/departmentModify/search",  // 서버에서 데이터를 가져오는 URL
+        type: 'GET',
+        data: { deptName: data.node.text }, // 클릭된 노드의 ID를 파라미터로 전달
+        success: function(response) {
+            console.log("서버 응답:", response);  // 응답을 콘솔에 출력
+
+            var tbody = $('#TeamList tbody');
+            tbody.empty();  // 기존 데이터 비우기
+
+            var counter = 1;
+
+            // response.data 배열을 사용하여 테이블에 데이터 채우기
+            if (response.data && Array.isArray(response.data)) {
+                $.each(response.data, function(index, dept) {
+                    var row = '<tr>';
+
+                    // empName이 존재하는 경우에만 <td> 추가
+                 row += '<td style="width:30px; text-align:center; vertical-align:middle;"><input type="checkbox" class="team-checkbox" data-index="' + index + '" style="width:17px; height:17px; margin-top:6px;"></td>';
+                    row += '<td>' + (dept.empName || '없음') + '</td>';
+                    row += '<td>' + (dept.empNo || '없음') + '</td>';
+                    row += '<td>' + (dept.nm || '없음') + '</td>';
+                    row += '<td>' + (dept.deptName || '없음') + '</td>';
+
+                    row += '</tr>';
+                    tbody.append(row);
+                   
+                });
+            } else {
+                console.error("응답 데이터가 배열이 아닙니다.");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX 요청 오류:", status, error);
+        }
+    });
+});
+
+
+</script>
 		<!-- AJAX로 데이터 검색 및 테이블에 반영 -->
 	<script>
 $(document).ready(function() {
@@ -350,24 +465,48 @@ $(function() {
                     // 루트 노드일 경우
                     if ($node.parent === "#") {
                         menuItems["create"] = {
-                            "label": "부서추가",
-                            "action": function() {
-                                var tree = $('#jstree').jstree(true);
-                                var newNode = {
-                                    "text": "새 부서",
-                                    "parent": $node.id
-                                };
-                                tree.create_node($node, newNode, "last", function(newNode) {
-                                    tree.edit(newNode);
-                                    // 새 부서 데이터를 설정
-                                    newDeptData = {
-                                        deptName: newNode.text,
-                                        deptUpStair: $node.id
-                                    };
-                                });
-                            }
-                        };
-                    }
+                        		 "label": "부서추가",
+                                 "action": function() {
+                                     var tree = $('#jstree').jstree(true);
+                                     var newNode = {
+                                         "text": "새 부서",
+                                         "parent": $node.id
+                                     };
+                                     tree.create_node($node, newNode, "last", function(newNode) {
+                                         tree.edit(newNode);
+                                         // 새 부서 데이터를 설정
+                                         newDeptData = {
+                                             deptName: newNode.text,
+                                             deptUpStair: $node.id
+                                         };
+                                         // 서버로 새 부서 데이터 전송
+                                         $.ajax({
+                                        	    url: "${contextPath}/department/departmentModify/data",  // 부서 추가 처리 URL
+                                        	    type: "POST",
+                                        	    contentType: "application/json",
+                                        	    data: JSON.stringify({
+                                        	        deptName: newDeptData.deptName,
+                                        	        deptCode: "",  // 신규 부서에는 deptCode 없음
+                                        	        treeData: JSON.stringify(newDeptData)  // 부서 추가를 위한 treeData
+                                        	    }),
+                                        	    success: function(response) {
+                                        	        if (response.success) {
+                                        	            alert("부서가 성공적으로 추가되었습니다.");
+                                        	            loadTreeData();
+                                        	        } else {
+                                        	            alert("부서 추가 실패: " + response.message);
+                                        	        }
+                                        	    },
+                                        	    error: function(xhr, status, error) {
+                                        	        alert("서버와의 연결에 오류가 발생했습니다.");
+                                        	        console.error(xhr.responseText);
+                                        	    }
+                                        	});
+
+                                     });
+                                 }
+                             };
+                         }
 
                     // 루트 노드가 아닐 경우
                     if ($node.parent !== "#") {
@@ -376,23 +515,82 @@ $(function() {
                             "action": function() {
                                 var tree = $('#jstree').jstree(true);
                                 tree.edit($node);  // 해당 노드를 수정 가능하도록 편집 모드로 진입
-								$(".jstree-rename-input").focusout(function() {
-									var id = $node.id;
-									var after_name = $(".jstree-rename-input").val();
-									alert(id + ':' + after_name);
+                                $(".jstree-rename-input").focusout(function() {
+                                    var id = $node.id;
+                                    var after_name = $(".jstree-rename-input").val();
+                                    var updateDeptData = {
+                                        deptCode: id,
+                                        deptName: after_name,
+                                        treeData: JSON.stringify({deptCode: id, deptName: after_name, operation: "update"})  // 부서명 변경을 위한 treeData
+                                    };
+
+                                    $.ajax({
+                                        url: "${contextPath}/department/departmentModify/update",  // 부서명 변경 처리 URL
+                                        type: "POST",
+                                        contentType: "application/json",
+                                        data: JSON.stringify(updateDeptData),
+                                        success: function(response) {
+                                            if (response.success) {
+                                                alert("부서 이름이 성공적으로 변경되었습니다.");
+                                                loadTreeData();  // 트리 데이터를 새로고침하여 변경된 사항 반영
+                                            } else {
+                                                alert("부서 이름 변경 실패: " + response.message);
+                                            }
+                                        },
+                                        error: function(xhr, status, error) {
+                                            alert("서버와의 연결에 오류가 발생했습니다.");
+                                            console.error(xhr.responseText);
+                                        }
+                                    });
+                                
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
 								});
                             }
                         };
 
                         menuItems["remove"] = {
-                            "label": "삭제",
-                            "action": function() {
-                                var tree = $('#jstree').jstree(true);
-                                if (confirm("정말로 삭제하시겠습니까?")) {
-                                    tree.delete_node($node);  // 해당 노드를 삭제
-                                }
-                            }
-                        };
+                        	    "label": "삭제",
+                        	    "action": function() {
+                        	        var tree = $('#jstree').jstree(true);
+                        	        if (confirm("정말로 삭제하시겠습니까?")) {
+                        	            // 서버로 삭제 요청
+                        	            $.ajax({
+                        	                url: "${contextPath}/department/departmentModify/delete",  // 부서 삭제 처리 URL
+                        	                type: "POST",
+                        	                contentType: "application/json",
+                        	                data: JSON.stringify({
+                        	                    deptCode: $node.id,  // 삭제할 부서의 ID
+                        	                    deptName: $node.text,  // 삭제할 부서의 이름 (추가 정보로 보낼 수 있음)
+                        	                    // treeData: JSON.stringify(treeData)  // 트리 구조 데이터를 전달할 경우 사용할 수 있음
+                        	                    operation: "delete"
+                        	                }),
+                        	                success: function(response) {
+                        	                    if (response.success) {
+                        	                        alert("부서가 성공적으로 삭제되었습니다.");
+                        	                        tree.delete_node($node);  // 트리에서 해당 노드를 삭제
+                        	                    } else {
+                        	                        alert("부서 삭제 실패: " + response.message);
+                        	                    }
+                        	                },
+                        	                error: function(xhr, status, error) {
+                        	                    alert("서버와의 연결에 오류가 발생했습니다.");
+                        	                    console.error(xhr.responseText);  // 오류 로그 확인
+                        	                }
+                        	            });
+                        	        }
+                        	    }
+                        	};
+
                     }
 
                     return menuItems;  // 메뉴 항목 반환
@@ -407,70 +605,7 @@ $(function() {
     // 초기 트리 데이터 로드 및 트리 초기화
     initializeTree(editMode);
 
-    $("#submitNodeBtn").click(function() {
-        const selectedNode = $('#jstree').jstree('get_selected');
-        const treeData = $('#jstree').jstree('get_json');  // 트리 구조 데이터 가져오기
-
-        if (selectedNode.length > 0) {
-            let nodeId = selectedNode[0];
-            let nodeName = $('#jstree').jstree('get_text', nodeId);  // 현재 부서명
-
-            // 트리에서 노드의 원래 부서명 가져오기
-            let nodeData = $('#jstree').jstree('get_node', nodeId).data;
-            let originalNodeName = nodeData.originalDeptName || nodeName;  // 원래 부서명 가져오기
-
-            console.log("Original Node Name:", originalNodeName);  // 디버그 로그 추가
-
-            let isNewDepartment = false;
-            let isNameChanged = false;
-
-            // 새 부서 추가 또는 이름 변경 여부 확인
-            if (nodeName === "본사") {
-                isNewDepartment = true;
-            } else if (nodeName !== originalNodeName) {
-                isNameChanged = true;
-            }
-
-            // 부서명 수정
-            nodeName = "새 부서";  // 사용자가 수정한 부서명
-
-            console.log("Sending Data:", {
-                deptName: nodeName,
-                originalDeptName: originalNodeName,  // 원래 부서명
-                isNewDepartment: isNewDepartment,  // 부서 추가 여부
-                isNameChanged: isNameChanged,  // 부서명 변경 여부
-                treeData: treeData  // 트리 데이터
-            });
-
-            $.ajax({
-                url: '/mystore/department/departmentModify/data',  // 요청 URL
-                type: 'POST',
-                contentType: 'application/json',  // JSON 형식으로 요청
-                data: JSON.stringify({
-                    deptName: nodeName,
-                    originalDeptName: originalNodeName,
-                    isNewDepartment: isNewDepartment,
-                    isNameChanged: isNameChanged,
-                    treeData: treeData  // 이미 객체 형식으로 처리
-                }),
-                success: function(response) {
-                    if (response.success) {
-                        alert("부서 수정/추가 완료!");
-                        loadTreeData(); // 트리 새로 고침
-                    } else {
-                        alert("부서 수정/추가 실패: " + (response.message || "알 수 없는 오류"));
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert("서버와의 연결에 문제가 발생했습니다.");
-                    console.error(error);  // error 콘솔 출력
-                }
-            });
-
-        } else {
-            alert("수정 또는 추가할 부서를 선택하세요.");
-        }
-    });
+  
 
 
 

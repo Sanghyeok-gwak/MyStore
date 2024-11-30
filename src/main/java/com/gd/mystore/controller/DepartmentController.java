@@ -9,10 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
@@ -39,10 +39,8 @@ public class DepartmentController {
 	                               Model model) {
 	    List<DepartmentDto> searchResult = new ArrayList<>();
 	    List<EmpMemberDto> departmentTree = new ArrayList<>();
-	    List<DepartmentDto> teamList = new ArrayList<>();
-	   
-	    // TeamList 호출 시 deptName을 전달
-	    teamList = departmentService.TeamList(deptName);
+	 
+	
 	    
 	    // 부서 트리 조회
 	    departmentTree = departmentService.DeptTree();
@@ -61,10 +59,7 @@ public class DepartmentController {
 	    if (!departmentTree.isEmpty()) {
 	        model.addAttribute("departmentTree", departmentTree);  // 부서 트리 결과
 	    }
-	    if (!teamList.isEmpty()) {
-	        model.addAttribute("teamList", teamList);  // 팀 리스트 결과 추가
-	    }
-
+	  
 	    // 결과가 없을 때 메시지 처리
 	    if (searchResult.isEmpty()) {
 	        model.addAttribute("noEmployeesFound", "해당하는 직원이 없습니다.");
@@ -89,10 +84,7 @@ public class DepartmentController {
 	) {
 	    List<EmpMemberDto> departmentTree = new ArrayList<>();
 	    List<DepartmentDto> searchResult = new ArrayList<>();
-	    List<DepartmentDto> teamList = new ArrayList<>();
-	    
-	    // TeamList 호출 시 deptName을 전달
-	    teamList = departmentService.TeamList(deptName);
+	 
 	    
 	    // 부서 트리 조회
 	    departmentTree = departmentService.DeptTree();
@@ -112,79 +104,120 @@ public class DepartmentController {
 	    if (!departmentTree.isEmpty()) {
 	        response.put("departmentTree", departmentTree);
 	    }
-	    if (!teamList.isEmpty()) {
-	        response.put("teamList", teamList);  // 팀 리스트 결과 추가
-	    }
+	   
 
 	    return response;
 	}
 
 	
-	
 	@PostMapping("/departmentModify/data")
 	@ResponseBody
-	public Map<String, Object> modifyDepartment(
-	        @RequestParam String deptName, 
-	        @RequestParam String originalDeptName,
-	        @RequestParam boolean isNewDepartment,
-	        @RequestParam boolean isNameChanged,
-	        @RequestParam String treeData) {
+	public Map<String, Object> modifyDepartment(@RequestBody DepartmentDto departmentDto) {
 
 	    Map<String, Object> response = new HashMap<>();
-	    
-	    // 디버그용 로그 추가
-	    System.out.println("Received deptName: " + deptName);
-	    System.out.println("Received originalDeptName: " + originalDeptName);  // 확인
-	    System.out.println("isNameChanged: " + isNameChanged);
-	    System.out.println("isNewDepartment: " + isNewDepartment);
 
 	    try {
-	        // 1. 새 부서 추가 시
-	        if (isNewDepartment) {
-	            int insertResult = departmentService.insertDepartment(deptName);  // 부서 추가
+	        // 부서 추가 처리
+	        if (departmentDto.getDeptCode() == null || departmentDto.getDeptCode().isEmpty()) {
+	            // 부서 추가 로직
+	            int insertResult = departmentService.insertDepartment(departmentDto);
 	            if (insertResult > 0) {
 	                response.put("success", true);
 	                response.put("message", "부서 추가 완료");
-	                return response;
 	            } else {
 	                response.put("success", false);
 	                response.put("message", "부서 추가에 실패했습니다.");
 	            }
+	            return response;
 	        }
 
-	        // 2. 부서명 변경 시
-	        if (isNameChanged) {
-	            List<DepartmentDto> deptCodeList = departmentService.getDeptCodeByName(originalDeptName);
+	       
 
-	            if (!deptCodeList.isEmpty()) {
-	                DepartmentDto deptDto = new DepartmentDto();
-	                deptDto.setDeptName(deptName);
-	                deptDto.setDeptCode(deptCodeList.get(0).getDeptCode());  // 부서 코드 설정
-
-	                int updateResult = departmentService.updateDepartmentName(deptDto);  // 부서명 변경
-	                if (updateResult > 0) {
-	                    response.put("success", true);
-	                    response.put("message", "부서명이 변경되었습니다.");
-	                } else {
-	                    response.put("success", false);
-	                    response.put("message", "부서명 변경에 실패했습니다.");
-	                }
-	            } else {
-	                response.put("success", false);
-	                response.put("message", "부서명이 존재하지 않습니다.");
-	            }
-	        }
 	    } catch (Exception e) {
-	        // 예외가 발생하면 로그에 출력하고 클라이언트에 메시지 전달
-	        e.printStackTrace();
 	        response.put("success", false);
-	        response.put("message", "서버 오류: " + e.getMessage());
+	        response.put("message", "오류 발생: " + e.getMessage());
 	    }
 
 	    return response;
 	}
 
+	// 부서 삭제 처리
+	@PostMapping("/departmentModify/update")
+	@ResponseBody
+	public Map<String, Object> updateDepartment(@RequestBody DepartmentDto departmentDto) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        // 부서 삭제 처리
+	    	 // 부서명 변경 처리
+	        if (departmentDto.getDeptName() != null && !departmentDto.getDeptName().isEmpty()) {
+	            int updateResult = departmentService.updateDepartmentName(departmentDto);
+	            if (updateResult > 0) {
+	                response.put("success", true);
+	                response.put("message", "부서명이 변경되었습니다.");
+	            } else {
+	                response.put("success", false);
+	                response.put("message", "부서명 변경에 실패했습니다.");
+	            }
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "변경할 부서명이 존재하지 않습니다.");
+	        }
+	    } catch (Exception e) {
+	        response.put("success", false);
+	        response.put("message", "오류 발생: " + e.getMessage());
+	    }
+	    return response;
+	}
 
+	
+	
+	
+	
+	// 부서 삭제 처리
+	@PostMapping("/departmentModify/delete")
+	@ResponseBody
+	public Map<String, Object> deleteDepartment(@RequestBody DepartmentDto departmentDto) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        // 부서 삭제 처리
+	        if (departmentDto.getDeptCode() != null && !departmentDto.getDeptCode().isEmpty()) {
+	            int deleteResult = departmentService.deleteDepartment(departmentDto);
+	            if (deleteResult > 0) {
+	                response.put("success", true);
+	                response.put("message", "부서 삭제 완료");
+	            } else {
+	                response.put("success", false);
+	                response.put("message", "부서 삭제에 실패했습니다.");
+	            }
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "삭제할 부서가 존재하지 않습니다.");
+	        }
+	    } catch (Exception e) {
+	        response.put("success", false);
+	        response.put("message", "오류 발생: " + e.getMessage());
+	    }
+	    return response;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
     @GetMapping("/departmentChangeHistory.do")
     public String search(
@@ -227,15 +260,31 @@ public class DepartmentController {
 
     
 
+    @GetMapping("/departmentModify/search")
+    @ResponseBody
+    public Map<String, Object> getDepartmentInfo(@RequestParam String deptName) {
+        Map<String, Object> response = new HashMap<>();
+        
+        try {
+            // 부서 정보를 서비스에서 가져옴
+            List<EmpMemberDto> deptList = departmentService.TeamList(deptName);
+            
+            // 부서 정보가 존재하는 경우
+            if (deptList != null && !deptList.isEmpty()) {
+                response.put("success", true);
+                response.put("data", deptList);  // 부서 정보 리스트
+            } else {
+                response.put("success", false);
+                response.put("message", "부서 정보를 찾을 수 없습니다.");
+            }
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "오류 발생: " + e.getMessage());
+        }
+        
+        return response;  // 응답을 JSON 형태로 반환
+    }
 
-
-
-
-	
-	@GetMapping("/departmentSearch")
-	public void test2() {
-	}
-	
 
 	
 	

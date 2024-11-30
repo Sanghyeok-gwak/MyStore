@@ -46,8 +46,8 @@ public class DepartmentDao {
 		}
 
 
-		public int insertDepartment(String deptName) {
-			return sqlSession.insert("departmentMapper.insertDepartment",deptName);
+		public int insertDepartment(DepartmentDto departmentDto) {
+			return sqlSession.insert("departmentMapper.insertDepartment",departmentDto);
 		}
 
 
@@ -59,8 +59,13 @@ public class DepartmentDao {
 			return sqlSession.selectList("departmentMapper.getDeptCodeByName", deptName);
 		}
 		
-		public List<DepartmentDto> TeamList(String deptName) {
+		public List<EmpMemberDto> TeamList(String deptName) {
 			return sqlSession.selectList("departmentMapper.TeamList", deptName);
+		}
+
+
+		public int deleteDepartment(DepartmentDto d) {
+			return sqlSession.delete("departmentMapper.deleteDepartment", d);
 		}
 		
 		

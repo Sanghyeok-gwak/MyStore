@@ -17,11 +17,13 @@ public interface DepartmentService {
 
 	List<EmpMemberDto> DeptTree();
 
-	int insertDepartment(String deptName);
+	int insertDepartment(DepartmentDto departmentDto);
 
 	int updateDepartmentName(DepartmentDto d);
 	
+	int deleteDepartment (DepartmentDto d );
+	
 	List<DepartmentDto> getDeptCodeByName(String deptName);
 
-	List<DepartmentDto> TeamList(String deptName);
+	List<EmpMemberDto> TeamList(String deptName);
 }

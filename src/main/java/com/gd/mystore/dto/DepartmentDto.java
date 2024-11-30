@@ -26,7 +26,7 @@ public class DepartmentDto {
 	private String modifyDate;
 	private String useYN;
 	
-	private String nm; // 부서 이름
+	private String nm; 
 	private String empName;
 	 
 	private List<DepartmentDto> children;

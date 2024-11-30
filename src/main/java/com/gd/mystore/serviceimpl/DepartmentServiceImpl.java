@@ -41,11 +41,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public int insertDepartment(String deptName) {
-		return departmentDao.insertDepartment(deptName);
-	}
-
-	@Override
 	public int updateDepartmentName(DepartmentDto d) {
 		return departmentDao.updateDepartmentName(d);
 	}
@@ -56,9 +51,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public List<DepartmentDto> TeamList(String deptName) {
+	public List<EmpMemberDto> TeamList(String deptName) {
 		
 		return departmentDao.TeamList(deptName);
+	}
+
+	@Override
+	public int insertDepartment(DepartmentDto departmentDto) {
+		return departmentDao.insertDepartment(departmentDto);
+	}
+
+	@Override
+	public int deleteDepartment(DepartmentDto d) {
+		return departmentDao.deleteDepartment(d);
 	}
 	
 	
