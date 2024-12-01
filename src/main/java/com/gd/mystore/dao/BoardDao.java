@@ -135,6 +135,11 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.replyUpdate", r);
 	}
 
+	public List<BoardDto> selectmainBoardList() {
+		return sqlSession.selectList("boardMapper.selectmainBoardList");
+		
+	}
+
 
 
 

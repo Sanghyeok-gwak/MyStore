@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
 import com.gd.mystore.dto.EmpMemberDto;
@@ -259,6 +260,9 @@ public class DepartmentController {
 
 
     
+    
+    
+    
 
     @GetMapping("/departmentModify/search")
     @ResponseBody
@@ -286,6 +290,5 @@ public class DepartmentController {
     }
 
 
-	
 	
 }

@@ -66,5 +66,7 @@ public interface BoardService {
 		
 		int replyUpdate(ReplyDto r);
 		
+		List<BoardDto> selectmainBoardList();
+		
 		
 }

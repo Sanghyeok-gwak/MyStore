@@ -772,8 +772,64 @@
 		    	        }
                 </script>
                 <div class="main-home-bottom-board">
+                         <div class="main-home-bottom-message-box">
+			      <div class="main-home-bottom-message-box-top">
+			          <div style="font-size:30px; margin-right:10px;">📜&nbsp&nbsp공지사항</div>
+			         
+			      </div>
+			      <table class="table table-hover">
+			          <thead style=" text-align: center; vertical-align: middle;">
+			              <tr>
+			                  <th style="width:80px;">구분</th>
+			                  <th style="width:220px;">제목</th>
+			                  <th style="width:90px;">작성자</th>
+			                  <th style="width:90px;">작성일</th>
+			              </tr>
+			          </thead>
+			          <tbody id="boardTableBody">
+			              <!-- AJAX로 데이터 추가 -->
+			            </tbody>
+			      </table>
+			  </div>      
                     
                 </div>
+                <script>
+                $(document).ready(function() {
+                    // 페이지 로딩 시 AJAX 요청을 통해 데이터를 가져옴
+                    $.ajax({
+                        url: '${contextPath}/board/mainlist.do',  // 데이터 요청 URL
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            console.log(response);  // 서버 응답을 콘솔에 출력하여 확인
+                            if (response.success) {
+                                var tableBody = $('#boardTableBody');
+                                if (Array.isArray(response.boardList)) {
+                                    response.boardList.forEach(function(board) {
+                          
+                                        // 테이블 행 추가
+                                        var row = $('<tr onclick=location.href="${contextPath}/board/list.do?boardTypeNo=1001" style="text-align:center; vertical-align:middle;">');
+                                        row.append('<td>' + board.boardDept + '</td>');  // 구분
+                                        row.append('<td>' + board.boardTitle + '</td>');  // 제목
+                                        row.append('<td>' + board.empName + '</td>');  // 작성자 (emp_name)
+                                        row.append('<td	>' + board.createDate + '</td>');  // 작성일
+                                        tableBody.append(row);
+                                    });
+                                } else {
+                                    console.error('boardList가 배열이 아닙니다');
+                                }
+                            } else {
+                                alert(response.message || '게시물을 불러오는 데 실패했습니다.');
+                            }
+                        },
+                        error: function() {
+                            alert('AJAX 요청 실패');
+                        }
+                    });
+                });
+
+
+</script>
             </div>
         </div>
     </div>

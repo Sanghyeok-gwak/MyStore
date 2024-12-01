@@ -233,6 +233,43 @@
 </select>
 
 
+    <!-- 부서 이동 내역을 insert하는 쿼리 -->
+    <insert id="insertTransferHistory" >
+        <![CDATA[
+        INSERT INTO tbl_dep_transfer (
+            TRANSFER_CODE,
+            TRANSFER_BEFORE,
+            TRANSFER_AFTER,
+            TRANSFER_DATE,
+            EMP_NO,
+            CREATE_DATE,
+            modifier,
+            modify_date
+            USE_YN
+        ) VALUES (
+            dept_transfer_no_seq.nextval,
+            (SELECT DEPT_code FROM tbl_employee WHERE EMP_NO = #{empNo}), 
+            #{newDeptCode},
+           	SYSDATE,
+            #{empNo},
+            SYSDATE,
+            #{modifier},
+            SYSDATE,
+            'Y'
+        )
+        ]]>
+    </insert>
+
+    <!-- 직원의 부서 코드를 업데이트하는 쿼리 -->
+    <update id="updateEmployeeDepartment" >
+        <![CDATA[
+        UPDATE tbl_employee
+        SET DEPT_code = #{newDeptCode} 
+        WHERE EMP_NO = #{empNo} 
+        ]]>
+    </update>
+
+
 
   
 

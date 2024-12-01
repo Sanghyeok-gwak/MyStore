@@ -67,6 +67,7 @@ public class DepartmentDao {
 		public int deleteDepartment(DepartmentDto d) {
 			return sqlSession.delete("departmentMapper.deleteDepartment", d);
 		}
-		
+
+
 		
 }

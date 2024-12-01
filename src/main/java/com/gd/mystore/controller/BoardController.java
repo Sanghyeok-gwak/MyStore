@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -360,6 +362,35 @@ public class BoardController {
 	}
 
 	
-	
+	@GetMapping("/mainlist.do")
+	@ResponseBody
+	public Map<String, Object> getBoardList() {
+
+	    Map<String, Object> response = new HashMap<>();
+
+	    try {
+	        // 게시판 목록 조회
+	        List<BoardDto> list = boardService.selectmainBoardList();
+	        
+	        // 반환된 데이터 확인
+	        if (list != null && !list.isEmpty()) {
+	            response.put("success", true);
+	            response.put("boardList", list);  // 게시판 목록
+	        } else {
+	            response.put("success", false);
+	            response.put("message", "게시판 목록이 없습니다.");
+	        }
+	        
+	    } catch (Exception e) {
+	        // 오류 발생 시
+	        response.put("success", false);
+	        response.put("message", "게시판 목록을 불러오는 데 실패했습니다.");
+	        e.printStackTrace();  // 예외 출력
+	    }
+
+	    return response;
+	}
+
+
 	
 }

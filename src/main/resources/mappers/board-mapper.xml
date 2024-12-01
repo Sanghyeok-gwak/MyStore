@@ -489,6 +489,22 @@
   
   </update>
   
-  
+<select id="selectmainBoardList" resultMap="boardResultMap">
+	   <![CDATA[
+        SELECT * FROM (
+            SELECT 
+                board_dept, 
+                board_title, 
+                (SELECT emp_name 
+                 FROM tbl_employee 
+                 WHERE emp_no = tbl_board.emp_no) AS emp_name,  
+                 TO_CHAR(create_date, 'YYYY-MM-DD') AS create_date
+            FROM tbl_board
+            ORDER BY board_no DESC
+        )
+        WHERE ROWNUM <= 5
+    ]]>
+</select>
+
 
 </mapper>

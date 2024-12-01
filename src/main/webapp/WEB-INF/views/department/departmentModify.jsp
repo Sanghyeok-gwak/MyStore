@@ -230,23 +230,55 @@ input {
 		</div>
 	</div>
 <div id="moveDeptModal" class="modal" style="display: none;">
-    <div class="modal-content">
+    <div class="modal-content" style="height:310px;">
         <span id="closeModal" class="close">&times;</span>
         <h2>부서 이동</h2>
-        <p>이곳에 부서 이동 관련 내용이 표시됩니다.</p>
-        <!-- 부서 이동을 위한 폼 내용 추가 -->
+  
         <form>
-            <label for="targetDept">목표 부서:</label>
-            <select id="targetDept" name="targetDept">
-                <option value="Dept1">부서 1</option>
-                <option value="Dept2">부서 2</option>
-                <option value="Dept3">부서 3</option>
-            </select>
-            <button type="submit" id="moveDeptBtn">이동</button>
+        	
+        		<div  style="margin-top:20px;">
+            <label for="UpdeptName">이전 시킬 상위 부서:</label>
+           <input type="text" id="UpdeptName" name="UpdeptName" list="UpdeptNameList" placeholder="상위 부서 입력" style="width:200px; padding-left:10px; margin-left:10px;">
+						</div>
+						<div style="margin-top:20px;">
+            <label for="DeptName">이전 시킬 부서:</label>
+            <input type="text" id="DeptName" name="DeptName" list="DeptNameList" placeholder="이전 할 부서 입력"  style="width:200px; padding-left:10px; margin-left:44px;">
+							</div>
+							 <div class="btn-box-hover" style="display: flex; justify-content: flex-end;">
+							    <button class="btn3-hover" type="submit" id="moveDeptBtn" style="margin-top:30px;">이동</button>
+							</div>
+
         </form>
     </div>
 </div>
+
+
+
+
 <script>
+$(document).on('change', '.team-checkbox', function() {
+    // 체크박스를 선택한 행을 가져옴
+    var $row = $(this).closest('tr');
+    
+    // 해당 행에서 데이터를 가져옴
+    var empNo = $row.find('td').eq(2).text();  // 사번 (3번째 열)
+    var deptUpStair = $row.find('td').eq(4).text();  // 상위 부서 (5번째 열)
+    var deptName = $row.find('td').eq(5).text();  // 부서명 (6번째 열)
+
+    // 모달에 값을 설정
+    $('#UpdeptName').val(deptUpStair);  // 상위 부서
+    $('#DeptName').val(deptName);  // 부서명
+
+    // 부서 이동 버튼을 활성화 또는 선택된 데이터로 처리
+    $('#moveDeptBtn').off('click').on('click', function() {
+        // 부서 이동을 위한 데이터를 여기서 사용할 수 있습니다.
+        console.log('이동할 사번:', empNo);
+        console.log('이동할 부서:', deptName);
+        console.log('이동할 상위 부서:', deptUpStair);
+        
+        // 서버로 AJAX 요청 보내거나 모달에서 처리할 수 있습니다.
+    });
+});
     // "이동" 버튼 클릭 시 모달 열기
     $("#MoveDept").click(function() {
         $("#moveDeptModal").show(); // 모달 표시
@@ -263,6 +295,8 @@ input {
             $("#moveDeptModal").hide(); // 모달 숨기기
         }
     });
+    
+    
 </script>
 
 

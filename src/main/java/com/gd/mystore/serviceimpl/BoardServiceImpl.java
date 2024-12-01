@@ -171,6 +171,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.replyUpdate(r);
 	}
 
+	@Override
+	public List<BoardDto> selectmainBoardList() {
+		return boardDao.selectmainBoardList();
+	}
+
 	
 	
 }

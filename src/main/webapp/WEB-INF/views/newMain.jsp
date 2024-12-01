@@ -777,6 +777,27 @@
 						  });
 						</script>
 			<div class="main-home-bottom-board">
+             <div class="main-home-bottom-message-box">
+			      <div class="main-home-bottom-message-box-top">
+			          <div style="font-size:30px; margin-right:10px;">📜</div>
+			          <div style="font-size:30px">공지사항</div>
+			      </div>
+			      <table class="table table-hover">
+			          <thead>
+			              <tr>
+			                  <th style="width:80px;">번호</th>
+			                  <th style="width:100px;">보낸이</th>
+			                  <th style="width:150px;">제목</th>
+			                  <th style="width:150px;">시간</th>
+			              </tr>
+			          </thead>
+			          <tbody id="messageTableBody">
+			              <!-- AJAX로 데이터 추가 -->
+			            </tbody>
+			      </table>
+			  </div>      
+                    
+                    
                     
       </div>	
  		</div>
