@@ -61,7 +61,7 @@ public class GeneratePdfServlet extends HttpServlet {
         employeeInfoTable.addCell(createCell("Position", true, pdfFont)); // Position
         employeeInfoTable.addCell(createCell("Researcher", false, pdfFont)); // Researcher
         employeeInfoTable.addCell(createCell("Name", true, pdfFont)); // Name
-        employeeInfoTable.addCell(createCell("JoonSooKing", false, pdfFont)); // Name
+        employeeInfoTable.addCell(createCell("Leesiyeon", false, pdfFont)); // Name
         employeeInfoTable.addCell(createCell("Join Date", true, pdfFont)); // Join Date
         employeeInfoTable.addCell(createCell("2024-11-05", false, pdfFont)); // Join Date
         document.add(employeeInfoTable);
