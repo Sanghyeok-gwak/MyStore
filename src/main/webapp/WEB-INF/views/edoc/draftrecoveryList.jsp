@@ -309,9 +309,8 @@ input[type=file]::file-selector-button {
 						<div>
 							<select name="languages" id="lang"
 								style="height: 40px; margin-bottom: 20px;">
-								<option value="select">분류</option>
-								<option value="vac">제목</option>
-								<option value="dept">기안자</option>
+								<option value="vac">유형</option>
+								<option value="dept">제목</option>
 							</select>
 						</div>
 
@@ -341,9 +340,8 @@ input[type=file]::file-selector-button {
 									style="width: 18px; height: 18px;"></th>
 								<th scope="col">번호</th>
 								<th scope="col">유형</th>
-								<th scope="col">양식설명</th>
+								<th scope="col">제목</th>
 								<th scope="col">기안일</th>
-								<th scope="col">만료일</th>
 								<th scope="col">상태</th>
 							</tr>
 						</thead>
@@ -371,7 +369,6 @@ input[type=file]::file-selector-button {
 											<td>${ fl.sampleNo }</td>
 											<td>${ fl.edocTitle }</td>
 											<td>${ fl.startDt }</td>
-											<td>${ fl.endDt }</td>
 											<td>${ fl.edocStatus }</td>
 										</tr>
 									</c:forEach>
