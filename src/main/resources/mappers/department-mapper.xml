@@ -239,21 +239,22 @@
         INSERT INTO tbl_dep_transfer (
             TRANSFER_CODE,
             TRANSFER_BEFORE,
-            TRANSFER_AFTER,
             TRANSFER_DATE,
             EMP_NO,
             CREATE_DATE,
             modifier,
-            modify_date
+            modify_date,
             USE_YN
         ) VALUES (
             dept_transfer_no_seq.nextval,
-            (SELECT DEPT_code FROM tbl_employee WHERE EMP_NO = #{empNo}), 
-            #{newDeptCode},
+            (SELECT d.DEPT_NAME
+								FROM tbl_employee e
+								JOIN tbl_department d ON e.DEPT_CODE = d.DEPT_CODE
+								WHERE e.EMP_NO = #{empNo}), 
            	SYSDATE,
             #{empNo},
             SYSDATE,
-            #{modifier},
+            1003,
             SYSDATE,
             'Y'
         )
@@ -264,11 +265,24 @@
     <update id="updateEmployeeDepartment" >
         <![CDATA[
         UPDATE tbl_employee
-        SET DEPT_code = #{newDeptCode} 
+        SET DEPT_code = (SELECT dept_code
+													 from tbl_department
+													WHERE dept_Name = #{deptName})
         WHERE EMP_NO = #{empNo} 
         ]]>
     </update>
 
+		<!-- 이동 후 부서 기록 삽입 -->
+		<update id="updateAfterDept" >
+        <![CDATA[
+        UPDATE tbl_dep_transfer
+        SET transfer_after = (SELECT d.DEPT_NAME
+																FROM tbl_employee e
+																JOIN tbl_department d ON e.DEPT_CODE = d.DEPT_CODE
+														  	WHERE e.EMP_NO = #{empNo})
+      WHERE EMP_NO = #{empNo} 
+        ]]>
+    </update>
 
 
   

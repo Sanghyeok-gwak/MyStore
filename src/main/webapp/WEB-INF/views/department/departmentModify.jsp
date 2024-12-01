@@ -144,7 +144,7 @@ input {
 							style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
 							<b>구성원</b>
 							 <div class="btn-box-hover">
-							   <button id="MoveDept" class="btn3-hover" style="width: 50px;">이동</button>
+							   <button id="MoveDept" class="btn3-hover" style="width: 50px; display: none;">이동</button>
 							   </div>
 						</div>
 						<div style="height: calc(100% - 60px); overflow-y: auto;">
@@ -230,24 +230,26 @@ input {
 		</div>
 	</div>
 <div id="moveDeptModal" class="modal" style="display: none;">
-    <div class="modal-content" style="height:310px;">
+    <div class="modal-content" style="height:380px;">
         <span id="closeModal" class="close">&times;</span>
         <h2>부서 이동</h2>
-  
-        <form>
-        	
-        		<div  style="margin-top:20px;">
-            <label for="UpdeptName">이전 시킬 상위 부서:</label>
-           <input type="text" id="UpdeptName" name="UpdeptName" list="UpdeptNameList" placeholder="상위 부서 입력" style="width:200px; padding-left:10px; margin-left:10px;">
-						</div>
-						<div style="margin-top:20px;">
-            <label for="DeptName">이전 시킬 부서:</label>
-            <input type="text" id="DeptName" name="DeptName" list="DeptNameList" placeholder="이전 할 부서 입력"  style="width:200px; padding-left:10px; margin-left:44px;">
-							</div>
-							 <div class="btn-box-hover" style="display: flex; justify-content: flex-end;">
-							    <button class="btn3-hover" type="submit" id="moveDeptBtn" style="margin-top:30px;">이동</button>
-							</div>
 
+        <form id="moveDeptForm" action="/department/moveDept" method="post">
+            <div style="margin-top:20px;">
+                <label for="nowDeptName">현재 부서:</label>
+                <input type="text" id="nowDeptName" name="nowDept" list="UpdeptNameList" style="width:200px; padding-left:10px; margin-left:78px; background-color: #EBEAEA;" readonly>
+            </div>
+            <div style="margin-top:20px;">
+                <label for="UpdeptName">이전 시킬 상위 부서:</label>
+                <input type="text" id="UpdeptName" name="UpdeptName" list="UpdeptNameList" placeholder="상위 부서 입력" style="width:200px; padding-left:10px; margin-left:10px;">
+            </div>
+            <div style="margin-top:20px;">
+                <label for="DeptName">이전 시킬 부서:</label>
+                <input type="text" id="DeptName" name="DeptName" list="DeptNameList" placeholder="이전 할 부서 입력" style="width:200px; padding-left:10px; margin-left:44px;">
+            </div>
+            <div class="btn-box-hover" style="display: flex; justify-content: flex-end;">
+                <button class="btn3-hover" type="submit" id="moveDeptBtn" style="margin-top:30px;">이동</button>
+            </div>
         </form>
     </div>
 </div>
@@ -257,32 +259,101 @@ input {
 
 <script>
 $(document).on('change', '.team-checkbox', function() {
-    // 체크박스를 선택한 행을 가져옴
-    var $row = $(this).closest('tr');
+
+	$('#MoveDept').hide();   
+	
+	// 체크된 체크박스의 부모 tr 요소에서 데이터 추출
+    var row = $(this).closest('tr');
+    var empName = row.find('td').eq(1).text();  // 이름
+    var empNo = row.find('td').eq(2).text();    // 사번
+    var deptName = row.find('td').eq(4).text();  // 부서명
+
     
-    // 해당 행에서 데이터를 가져옴
-    var empNo = $row.find('td').eq(2).text();  // 사번 (3번째 열)
-    var deptUpStair = $row.find('td').eq(4).text();  // 상위 부서 (5번째 열)
-    var deptName = $row.find('td').eq(5).text();  // 부서명 (6번째 열)
+    var checkedCheckboxes = $('.team-checkbox:checked'); // 선택된 체크박스들
 
-    // 모달에 값을 설정
-    $('#UpdeptName').val(deptUpStair);  // 상위 부서
-    $('#DeptName').val(deptName);  // 부서명
+    // 두 개 이상의 체크박스가 선택되면 알림을 띄우고 첫 번째 체크박스를 비활성화
+    if (checkedCheckboxes.length > 1) {
+        alert("정확한 이동을 위해 한명씩 이동시켜주세요.");
+        $('.team-checkbox').prop('checked', false); // 현재 클릭된 체크박스를 해제
+        return;
+    }
 
-    // 부서 이동 버튼을 활성화 또는 선택된 데이터로 처리
-    $('#moveDeptBtn').off('click').on('click', function() {
-        // 부서 이동을 위한 데이터를 여기서 사용할 수 있습니다.
-        console.log('이동할 사번:', empNo);
-        console.log('이동할 부서:', deptName);
-        console.log('이동할 상위 부서:', deptUpStair);
-        
-        // 서버로 AJAX 요청 보내거나 모달에서 처리할 수 있습니다.
-    });
+    // "이동" 버튼의 표시/숨기기 처리
+    if (checkedCheckboxes.length === 1) {
+        $('#MoveDept').show();  // "이동" 버튼 보이기
+    } else {
+        $('#MoveDept').hide();  // "이동" 버튼 숨기기
+    }
+    // 해당 데이터를 모달에 전달
+
+    $('#nowDeptName').val(deptName)
+
+    // 부서명과 사원번호는 서버에서 다른 정보를 요구할 수 있으므로 추가적인 로직을 설정할 수 있음
 });
     // "이동" 버튼 클릭 시 모달 열기
-    $("#MoveDept").click(function() {
-        $("#moveDeptModal").show(); // 모달 표시
+$(document).ready(function() {
+    // "이동" 버튼 클릭 시 모달 열기
+    $('#MoveDept').click(function() {
+        $('#moveDeptModal').show(); // 모달을 보이게 함
     });
+
+    // 모달 닫기 버튼 클릭 시 모달 닫기
+    $('#closeModal').click(function() {
+        $('#moveDeptModal').hide(); // 모달을 숨김
+    });
+
+    // 체크박스가 변경되었을 때 선택된 행의 데이터 모달에 전달
+    $(document).on('change', '.team-checkbox', function() {
+        var row = $(this).closest('tr');  // 체크된 체크박스의 부모 tr 요소
+        var empName = row.find('td').eq(1).text();  // 이름
+        var empNo = row.find('td').eq(2).text();    // 사번
+        var deptName = row.find('td').eq(4).text();  // 부서명
+
+        // 해당 데이터를 모달에 전달
+        $('#nowDeptName').val(deptName);
+    });
+
+    // "이동" 버튼 클릭 시 서버로 부서 이동 요청 (AJAX)
+    $('#moveDeptBtn').click(function(e) {
+        e.preventDefault();  // 기본 동작 방지
+
+        // 모달에서 입력된 데이터 가져오기
+        var row = $('.team-checkbox:checked').closest('tr');  // 체크된 항목의 row 찾기
+        var empNo = row.find('td').eq(2).text();  // 사원번호
+        var nowDeptName = $('#nowDeptName').val();
+        var upDeptName = $('#UpdeptName').val();
+        var deptName = $('#DeptName').val();
+        var modifier = row.find('td').eq(1).text();  // 수정자 (이름)
+
+        // 서버로 부서 이동 요청 (AJAX)
+        $.ajax({
+            url: '${contextPath}/department/moveDept',  // 서버에서 부서 이동 처리 URL (예시)
+            type: 'POST',
+            data: {
+                nowDeptName: nowDeptName,
+                upDeptName: upDeptName,
+                deptName: deptName,
+                empNo: empNo,  // 사원번호
+                modifier: modifier  // 수정자
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('부서 이동 성공');
+                    $('#moveDeptModal').hide();  // 모달 닫기
+                    location.reload();  // 페이지 새로고침 (테이블 갱신을 위한 예시)
+                } else {
+                    alert('부서 이동 실패');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX 요청 오류:", status, error);
+                alert('부서 이동 중 오류가 발생했습니다.');
+            }
+        });
+    });
+});
+
+
 
     // 모달 닫기 버튼 클릭 시 모달 닫기
     $("#closeModal").click(function() {
@@ -310,7 +381,6 @@ $('#jstree').on("select_node.jstree", function (e, data) {
         type: 'GET',
         data: { deptName: data.node.text }, // 클릭된 노드의 ID를 파라미터로 전달
         success: function(response) {
-            console.log("서버 응답:", response);  // 응답을 콘솔에 출력
 
             var tbody = $('#TeamList tbody');
             tbody.empty();  // 기존 데이터 비우기
@@ -333,8 +403,6 @@ $('#jstree').on("select_node.jstree", function (e, data) {
                     tbody.append(row);
                    
                 });
-            } else {
-                console.error("응답 데이터가 배열이 아닙니다.");
             }
         },
         error: function(xhr, status, error) {
@@ -399,12 +467,6 @@ $(document).ready(function() {
                     alert("검색된 결과가 없습니다.");
                 }
 
-                // 부서 트리 출력 부분 (필요 시 추가)
-                if (response.departmentTree) {
-                    // 부서 트리 관련 처리가 필요하다면 이곳에 추가
-                    // 예: response.departmentTree를 사용하여 부서 트리 UI 업데이트
-                    console.log(response.departmentTree);
-                }
 
             },
             error: function(xhr, status, error) {

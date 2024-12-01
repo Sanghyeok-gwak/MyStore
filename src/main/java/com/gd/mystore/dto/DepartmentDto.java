@@ -28,7 +28,8 @@ public class DepartmentDto {
 	
 	private String nm; 
 	private String empName;
-	 
+	private String nowDeptName;
+	private String upDeptName;
 	private List<DepartmentDto> children;
 
 }

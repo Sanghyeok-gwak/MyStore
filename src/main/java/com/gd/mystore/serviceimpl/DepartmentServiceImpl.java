@@ -1,8 +1,10 @@
 package com.gd.mystore.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.mystore.dao.DepartmentDao;
 import com.gd.mystore.dto.DepTransferDto;
@@ -65,6 +67,32 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public int deleteDepartment(DepartmentDto d) {
 		return departmentDao.deleteDepartment(d);
 	}
+
+	   @Transactional
+	    @Override
+	    public int moveDept(Map<String, Object> params) {
+	        // 1. 부서 이동 기록 삽입
+	        int insertHistory = departmentDao.insertTransferHistory(params);
+	        if (insertHistory == 0) {
+	            throw new RuntimeException("부서 이동 기록 삽입 실패");
+	        }
+
+	        // 2. 직원 부서 코드 업데이트
+	        int updateEmployee = departmentDao.updateEmployeeDepartment(params);
+	        if (updateEmployee == 0) {
+	            throw new RuntimeException("직원 부서 코드 업데이트 실패");
+	        }
+
+	        // 3. 이동 후 부서 기록 삽입
+	        int updateAfterDept = departmentDao.updateAfterDept(params);
+	        if (updateAfterDept == 0) {
+	            throw new RuntimeException("이동 후 부서 기록 삽입 실패");
+	        }
+
+	        return 1;  // 모든 작업이 성공적으로 수행되면 1을 반환
+	    }
+
+
 
 
 	

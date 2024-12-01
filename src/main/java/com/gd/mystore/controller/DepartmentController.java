@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gd.mystore.dto.BoardDto;
 import com.gd.mystore.dto.DepTransferDto;
 import com.gd.mystore.dto.DepartmentDto;
 import com.gd.mystore.dto.EmpMemberDto;
@@ -287,6 +288,46 @@ public class DepartmentController {
         }
         
         return response;  // 응답을 JSON 형태로 반환
+    }
+
+    
+    
+    @PostMapping("/moveDept")
+    public ResponseEntity<Map<String, Object>> moveDept(@RequestParam String nowDeptName, 
+                                                        @RequestParam String upDeptName, 
+                                                        @RequestParam String deptName, 
+                                                        @RequestParam String empNo,
+                                                        @RequestParam String modifier) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // 파라미터를 Map으로 묶어 전달
+            Map<String, Object> params = new HashMap<>();
+            params.put("nowDeptName", nowDeptName);
+            params.put("upDeptName", upDeptName);
+            params.put("deptName", deptName);
+            params.put("empNo", empNo);
+            params.put("modifier", modifier);
+
+            // 부서 이동 처리 (반환값을 int형 변수로 받음)
+            int rowsAffected = departmentService.moveDept(params); // SQL에서 처리된 행의 수를 반환
+
+            // 성공 시
+            if (rowsAffected > 0) {
+                response.put("success", true);
+                response.put("message", "부서 이동이 성공적으로 완료되었습니다.");
+            } else {
+                response.put("success", false);
+                response.put("message", "부서 이동에 실패했습니다. 처리된 데이터가 없습니다.");
+            }
+            
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            // 예외 발생 시
+            response.put("success", false);
+            response.put("message", "부서 이동 처리 중 오류가 발생했습니다: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
     }
 
 

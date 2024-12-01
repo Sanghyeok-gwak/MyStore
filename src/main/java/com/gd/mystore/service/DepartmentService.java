@@ -27,5 +27,8 @@ public interface DepartmentService {
 
 	List<EmpMemberDto> TeamList(String deptName);
 
+	int moveDept(Map<String, Object> params);
+
+	
 
 }

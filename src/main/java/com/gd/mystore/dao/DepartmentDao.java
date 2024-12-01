@@ -69,5 +69,19 @@ public class DepartmentDao {
 		}
 
 
+		public int insertTransferHistory(Map<String, Object> params) {
+	        return sqlSession.insert("departmentMapper.insertTransferHistory", params);
+	    }
+
+	    // 직원 부서 코드 업데이트
+	    public int updateEmployeeDepartment(Map<String, Object> params) {
+	        return sqlSession.update("departmentMapper.updateEmployeeDepartment", params);
+	    }
+
+	    // 이동 후 부서 기록 삽입
+	    public int updateAfterDept(Map<String, Object> params) {
+	        return sqlSession.insert("departmentMapper.updateAfterDept", params);
+	    }
+
 		
 }
