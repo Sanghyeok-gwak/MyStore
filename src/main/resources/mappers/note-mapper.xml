@@ -55,7 +55,8 @@
 					CONTENT,
 					REC_CHECK,
 					REC_DATE,
-					STATUS
+					STATUS,
+					TO_CHAR(SENT_DATE,'YYYY-MM-DD') as "SENT_DATE"
 	FROM 
 	     TBL_RECEPTION_NOTE
 	join TBL_EMPLOYEE e on (SENT_ID = e.EMP_NO)    
@@ -63,6 +64,7 @@
 	    RECEP_ID = #{empNo}
 	    and
 		     STATUS = 'Y'  
+	order by SENT_DATE 	     
 	</select>
 	<select id="selectSendList" resultMap="noteResultMap">
 		SELECT
@@ -80,6 +82,8 @@
 			    SENT_ID = #{empNo}
 			    and
 				  STATUS = 'Y'
+				  and
+				  TEMP_STORAGE = 'N'
 				  ORDER BY SENT_DATE DESC	
 	</select>
 	<select id="selectTemporayList" resultMap="noteResultMap">
@@ -201,7 +205,7 @@
 					REC_CHECK,
 					REC_DATE,
 					STATUS,
-					SENT_DATE
+					TO_CHAR(SENT_DATE,'YYYY-MM-DD') as "SENT_DATE"
 	FROM 
 	    TBL_RECEPTION_NOTE 
 	join TBL_EMPLOYEE e on (SENT_ID = e.EMP_NO)   
@@ -285,6 +289,36 @@
 							    sysdate
 							)
 	</insert>
+	<insert id="insertTempRecepNote">
+	INSERT INTO TBL_RECEPTION_NOTE 
+							(
+							    RECEPTION_NO, 
+							    SEND_NO, 
+							    SENT_ID, 
+							    RECEP_ID, 
+							    TITLE, 
+							    CONTENT, 
+							    REC_CHECK, 
+							    REC_DATE, 
+							    STATUS, 
+							    DELETE_DATE,
+							    SENT_DATE
+							)
+							VALUES
+							(
+							    RECEPTION_NO_SEQ.nextval, 
+							    #{sendNo},
+							    #{sentId}, 
+							    #{receptionId}, 
+							    #{title}, 
+							    #{content}, 
+							    'N', 
+							    '', 
+							    'Y', 
+							    '',
+							    sysdate
+							)
+	</insert>
 	
 	<select id="checkCount" resultType="_int">
 	SELECT 
@@ -315,13 +349,15 @@
 					CONTENT,
 					REC_CHECK,
 					REC_DATE,
-					STATUS
+					STATUS,
+					TO_CHAR(SENT_DATE,'YYYY-MM-DD') as "SENT_DATE"
 	FROM 
 	     TBL_RECEPTION_NOTE
 	WHERE 
 	    RECEP_ID = #{no}
 	    and
-		     STATUS = 'Y'  
+		     STATUS = 'Y' 
+		  order by SENT_DATE 	    
 		     
 	</select>
 	<select id="selectReadNote" resultType="_int">
@@ -344,6 +380,14 @@
 		  and
 		     REC_CHECK = 'N' 	
 	</select>
+	<update id="updateTemp">
+		update
+					TBL_SEND_NOTE
+			 set
+			    TEMP_STORAGE = 'N'
+		 where
+		      SENd_NO = #{sendNo}
+	</update>
 	
 	
 	

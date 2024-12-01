@@ -204,7 +204,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
 	                        <label>수신자</label>
 	                    </div>
 	                    <div class="note-write-box2-input" style="width: 90%; height: 30px; display: flex;">
-	                        <input type="text" name="receptionId" id="receptionId" style="width: 100%; height: 100%; padding-left: 10px;" placeholder=",찍어서 표시하세요.">
+	                        <input type="text" name="receptionId" id="receptionId" style="width: 100%; height: 100%; padding-left: 10px;" placeholder="사원번호를 입력하세요.">
 	                        <button type="button" onclick="fncheckEmp();" class="btn4" >조회</button>
 	                    </div>
 	                    <script>

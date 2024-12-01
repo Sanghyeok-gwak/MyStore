@@ -24,6 +24,7 @@ public class NoteDto {
 	private String status;
 	private String tempStorage;
 	private String receptionId;
+	private String sendId;
 	// reception
 	private int receptionNo;
 	private String recepId;

@@ -45,6 +45,8 @@ public interface NoteService {
 	// 쪽지 보내기
 	int insertNote(NoteDto noteDto) throws IOException;
 	
+	int recInsertTemp(NoteDto noteDto) throws IOException;
+	
 	// 쪽지 카운트
 	int sideCount(String userNo);
 	

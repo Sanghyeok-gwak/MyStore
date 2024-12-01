@@ -219,6 +219,36 @@ public class NoteServiceImpl implements NoteService {
 	public int selectNoReadNote(String no) {
 		return noteDao.selectNoReadNote(no);
 	}
+
+	@Override
+	public int recInsertTemp(NoteDto noteDto) throws IOException {
+		int result = noteDao.updateTemp(noteDto);
+		log.debug("result : "+result);
+		
+		String[] receptionIds = noteDto.getReceptionId().split(","); // ["B", "C"]
+		
+		if(result >0) {
+			for(String receptionId : receptionIds) {
+				noteDto.setReceptionId(receptionId);
+				result += noteDao.insertTempRecepNote(noteDto);
+				
+			}
+			
+			List<WebSocketSession> list = chat.getSessionList();
+			
+			for(WebSocketSession wss : list) {
+				if( noteDto.getReceptionId().contains( ((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo())) {
+					int count = noteDao.checkCount(((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo());
+					wss.sendMessage(new TextMessage(String.valueOf(count)));
+					
+				}
+			}
+		}
+		
+		
+		
+		return result;
+	}
 	
 }
 		

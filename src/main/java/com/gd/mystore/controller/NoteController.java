@@ -166,9 +166,11 @@ public class NoteController {
 	}
 	
 	@GetMapping("sendDetail.no")
-	public String selectSendDetail(String no,Model model){
+	public String selectSendDetail(String no,Model model,String recCheck){
 		Map<String, Object> map = new HashMap<>();
-		
+		map.put("type", "send");
+		map.put("no", no);
+		map.put("recCheck", recCheck);
 		NoteDto n = noteService.selectDetail(map);
 		model.addAttribute("n",n);
 		
@@ -196,9 +198,9 @@ public class NoteController {
 		int result = noteService.insertNote(noteDto);
 		
 		if(result>0) {
-			rdAttributes.addFlashAttribute("alertMsg", "쪽지 전송 성공");
+			rdAttributes.addFlashAttribute("alertMsg", "전송 성공");
 		}else {
-			rdAttributes.addFlashAttribute("alertMsg", "쪽지 전송 실패");
+			rdAttributes.addFlashAttribute("alertMsg", "전송 실패");
 		}
 		
 		return "redirect:/note/reception.no";
@@ -218,6 +220,21 @@ public class NoteController {
 		
 		return "note/tempdetail";
 	}
+	
+	@PostMapping("recInsertTemp.no")
+	public String recInsertTemp(NoteDto noteDto, RedirectAttributes rdAttributes) throws IOException {
+		int result = noteService.recInsertTemp(noteDto);
+		
+		if(result>0) {
+			rdAttributes.addFlashAttribute("alertMsg", "쪽지 전송 성공");
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "쪽지 전송 실패");
+		}
+		
+		return "redirect:/note/reception.no";
+	}
+	
+	
 	@ResponseBody
 	@PostMapping("sideCount.no")
 	public int sideCount(@RequestParam String userNo) {
@@ -244,7 +261,6 @@ public class NoteController {
 		map.put("list", list);
 		map.put("readCount", readCount);
 		map.put("noReadCount", noReadCount);
-		log.debug("mapㅏㅣㄴ렁ㅁ냐러ㅐㅇㅁㄴㄹㅇ먀ㅓㅐ : {}",map);
 		return map;
 	}
 	

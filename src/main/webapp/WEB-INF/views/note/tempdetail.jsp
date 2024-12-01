@@ -184,7 +184,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
             </div>
           </div>
           <div class="note-body">
-          	<form action="${contextPath }/note/insert.no" method="post">
+          	<form action="${contextPath }/note/recInsertTemp.no" method="post">
 	            <div>
 	                <b style="font-size: 25px; margin-left: 10px;">쪽지쓰기</b>
 	            </div>
@@ -197,6 +197,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
 	                    </div>
 	                    <div class="note-write-box1-input"  style="width: 90%; height: 30px;">
 	                        <input type="text" name="title" value="${n.title }" style="width: 100%; height: 100%; padding-left: 10px;">
+	                    		<input type="hidden" name="sendNo" value="${n.sendNo }">
+	                    		
 	                    </div>
 	                </div>
 	                <div class="note-write-box2">
@@ -238,8 +240,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script
 											style="margin-top: 30px; width: 100%; height: 420px;">${n.content }</textarea>
 									</div>
 									<div class="note-write-btn-box">
-										<button type="submit" name="tempStorage" value="Y" class="btn4">임시저장</button>
-										<button type="submit" name="tempStorage" value="N"  class="btn4">보내기</button>
+										<button type="submit"  name="tempStorage" value="Y" class="btn4">임시저장</button>
+										<button type="submit" name="tempStorage" value="N" class="btn4">보내기</button>
 									</div>
 									
 									<script> 

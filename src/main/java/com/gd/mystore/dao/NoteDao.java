@@ -77,6 +77,10 @@ public class NoteDao {
 	public int insertRecepNote(NoteDto noteDto) {
 		return sqlSession.insert("noteMapper.insertRecepNote",noteDto);
 	}
+	public int insertTempRecepNote(NoteDto noteDto) {
+		return sqlSession.insert("noteMapper.insertTempRecepNote",noteDto);
+	}
+	
 	//public int sendNote(ReceptionNoteDto recepDto) {
 	//	return sqlSession.insert("noteMapper.sendNote",recepDto);
 	//}
@@ -95,5 +99,8 @@ public class NoteDao {
 	}
 	public int selectNoReadNote(String no) {
 		return sqlSession.selectOne("noteMapper.selectNoReadNote",no);
+	}
+	public int updateTemp(NoteDto noteDto) {
+		return sqlSession.update("noteMapper.updateTemp",noteDto);
 	}
 }
