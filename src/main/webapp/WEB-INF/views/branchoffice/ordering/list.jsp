@@ -127,7 +127,7 @@
 			                </td>
 			                <td>
 			                	<c:if test="${o.orderStatus == 'Y'}">
-				                  <button class="btn4 view-order" data-order-no="${o.orderNo}"   data-bs-toggle="modal" data-bs-target="#basicModal2">
+				                  <button class="btn4 view-order" onclick="event.stopPropagation()" data-order-no="${o.orderNo}"   data-bs-toggle="modal" data-bs-target="#basicModal2">
 				                    배차
 				                  </button>
 			                  </c:if>
