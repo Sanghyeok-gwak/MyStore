@@ -92,6 +92,17 @@ public class DepartmentServiceImpl implements DepartmentService {
 	        return 1;  // 모든 작업이 성공적으로 수행되면 1을 반환
 	    }
 
+	@Override
+	public List<DepartmentDto> getUpDepartments() {
+		return departmentDao.getUpDepartments();
+	}
+
+	@Override
+	public List<DepartmentDto> getDeptNames() {
+		return departmentDao.getDeptNames();
+	}
+
+
 
 
 

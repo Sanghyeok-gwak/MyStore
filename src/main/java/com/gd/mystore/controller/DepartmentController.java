@@ -293,8 +293,7 @@ public class DepartmentController {
     
     
     @PostMapping("/moveDept")
-    public ResponseEntity<Map<String, Object>> moveDept(@RequestParam String nowDeptName, 
-                                                        @RequestParam String upDeptName, 
+    public ResponseEntity<Map<String, Object>> moveDept( 
                                                         @RequestParam String deptName, 
                                                         @RequestParam String empNo,
                                                         @RequestParam String modifier) {
@@ -302,8 +301,6 @@ public class DepartmentController {
         try {
             // 파라미터를 Map으로 묶어 전달
             Map<String, Object> params = new HashMap<>();
-            params.put("nowDeptName", nowDeptName);
-            params.put("upDeptName", upDeptName);
             params.put("deptName", deptName);
             params.put("empNo", empNo);
             params.put("modifier", modifier);
@@ -329,6 +326,20 @@ public class DepartmentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
+    @RequestMapping("/getDepartments")
+    public ResponseEntity<Map<String, Object>> getDepartments() {
+        Map<String, Object> response = new HashMap<>();
+        
+        List<DepartmentDto> upDepartments = departmentService.getUpDepartments();
+        List<DepartmentDto> deptNames = departmentService.getDeptNames();
+        
+        response.put("upDepartments", upDepartments);
+        response.put("deptNames", deptNames);
+
+        return ResponseEntity.ok(response);
+    }
+    
 
 
 	

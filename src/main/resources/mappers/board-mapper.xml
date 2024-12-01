@@ -366,6 +366,7 @@
     		TBL_REPLY r
     join tbl_board b on b.board_no = r.ref_bno
     WHERE r.ref_bno=  #{boardNo}
+   		and r.use_YN = 'Y'
   
   
   

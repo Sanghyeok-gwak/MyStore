@@ -48,7 +48,7 @@
 <!-- 부서명 선택 (초기 상태에서 비활성화) -->
 <select class="datatable-selector" id="boardDept" name="boardDept"
     style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 217px; margin-top: 30px;" disabled>
-    <option value="" disabled selected style="display: none;">구분을 선택해주세요</option>
+    <option value=""  selected >구분을 선택해주세요</option>
     <c:forEach var="dept" items="${deptList}">
         <option value="${dept.deptName}" ${dept.deptName == b.boardDept ? 'selected' : ''}>
             ${dept.deptName}
@@ -74,31 +74,37 @@
     });
 
     // 페이지 로드 시, 첫 번째 드롭다운 값이 이미 '공지사항'이면 두 번째 드롭다운 활성화 및 중요공지 체크박스 보이기
-    window.onload = function() {
-        var boardTypeNo = document.getElementById('boardTypeNo').value;
-        var boardDept = document.getElementById('boardDept');
-        var importantSection = document.getElementById('important-section');
+ window.onload = function() {
+    var boardTypeNo = document.getElementById('boardTypeNo').value;
+    var boardDept = document.getElementById('boardDept');
+    var importantSection = document.getElementById('important-section');
+    
+    // 페이지 로드시에는 boardDept를 무조건 활성화
+    boardDept.disabled = false;  // boardDept 활성화
+    importantSection.style.display = 'block';  // 중요공지 체크박스 보이기
 
-        if (boardTypeNo === '1001') {
-            boardDept.disabled = false;  // '공지사항'이면 boardDept 활성화
-            importantSection.style.display = 'block';  // 중요공지 체크박스 보이기
-        } else {
-            boardDept.disabled = true;  // '공지사항'이 아니면 boardDept 비활성화
-            importantSection.style.display = 'none';  // 중요공지 체크박스 숨기기
-        }
-
-        // 이미 선택된 부서명이 있으면 boardDept에 해당 값을 선택하도록 설정
-        var selectedDept = "${b.boardDept}";
-        if (selectedDept) {
-            var deptOptions = boardDept.options;
-            for (var i = 0; i < deptOptions.length; i++) {
-                if (deptOptions[i].value === selectedDept) {
-                    deptOptions[i].selected = true;  // 부서명 선택
-                    break;
-                }
+    // 이미 선택된 부서명 값이 있다면 해당 값을 선택 상태로 설정
+    var selectedDept = "${b.boardDept}";
+    if (selectedDept) {
+        var deptOptions = boardDept.options;
+        for (var i = 0; i < deptOptions.length; i++) {
+            if (deptOptions[i].value === selectedDept) {
+                deptOptions[i].selected = true;  // 부서명 선택
+                break;
             }
         }
     }
+
+    // 첫 번째 드롭다운 값에 따라 boardDept를 비활성화/활성화
+    if (boardTypeNo === '1001') {
+        boardDept.disabled = false;  // boardDept 활성화
+        importantSection.style.display = 'block';  // 중요공지 체크박스 보이기
+    } else {
+        boardDept.disabled = true;  // boardDept 비활성화
+        importantSection.style.display = 'none';  // 중요공지 체크박스 숨기기
+    }
+};
+
 </script>
 
 
@@ -143,7 +149,7 @@
 					        />
 							</div>
 								<button type="submit" class="btn3-hover"
-									style="height: 40px; padding: 5px 15px;">글 등록</button>
+									style="height: 40px; padding: 5px 15px;">글 수정</button>
 							</div>
 						</div>
 
@@ -188,9 +194,7 @@ $(document).ready(function () {
             },
             fCreator: "createSEditor2",
             fOnAppLoad: function () {
-                console.log("스마트 에디터가 초기화되었습니다.");
-                console.log(oEditors);  // oEditors 상태 확인
-
+             
                 // oEditors가 제대로 로드되었는지 확인하고 초기화된 후 setEditorContent() 호출
                 if (oEditors.length > 0 && oEditors[0]) {
                     setEditorContent();  // 에디터가 초기화된 후 본문 내용 설정
@@ -204,11 +208,9 @@ $(document).ready(function () {
     // 에디터 본문 내용을 설정하는 함수
     function setEditorContent() {
         var boardContent = "${b.boardContent}";  // 서버에서 가져온 내용
-        console.log("setEditorContent() 호출");
 
         // oEditors가 제대로 로드되었는지 확인하고 setIR 호출
         if (oEditors.length > 0 && oEditors[0]) {
-            console.log("setEditorContent() 실행됨");
 
             // 스마트 에디터의 본문 내용 설정
             oEditors[0].setIR(boardContent); // 에디터에 본문 내용 설정

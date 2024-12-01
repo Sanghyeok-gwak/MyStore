@@ -83,5 +83,16 @@ public class DepartmentDao {
 	        return sqlSession.insert("departmentMapper.updateAfterDept", params);
 	    }
 
+
+		public List<DepartmentDto> getUpDepartments() {
+			return sqlSession.selectList("departmentMapper.getUpDepartments");
+		}
+
+
+		public List<DepartmentDto> getDeptNames() {
+			return sqlSession.selectList("departmentMapper.getDeptNames");
+		}
+
+
 		
 }

@@ -230,7 +230,7 @@ input {
 		</div>
 	</div>
 <div id="moveDeptModal" class="modal" style="display: none;">
-    <div class="modal-content" style="height:380px;">
+    <div class="modal-content" style="height:300px;">
         <span id="closeModal" class="close">&times;</span>
         <h2>부서 이동</h2>
 
@@ -239,13 +239,12 @@ input {
                 <label for="nowDeptName">현재 부서:</label>
                 <input type="text" id="nowDeptName" name="nowDept" list="UpdeptNameList" style="width:200px; padding-left:10px; margin-left:78px; background-color: #EBEAEA;" readonly>
             </div>
+
             <div style="margin-top:20px;">
-                <label for="UpdeptName">이전 시킬 상위 부서:</label>
-                <input type="text" id="UpdeptName" name="UpdeptName" list="UpdeptNameList" placeholder="상위 부서 입력" style="width:200px; padding-left:10px; margin-left:10px;">
-            </div>
-            <div style="margin-top:20px;">
-                <label for="DeptName">이전 시킬 부서:</label>
-                <input type="text" id="DeptName" name="DeptName" list="DeptNameList" placeholder="이전 할 부서 입력" style="width:200px; padding-left:10px; margin-left:44px;">
+                <label for="DeptName">이동 시킬 부서:</label>
+                <select id="DeptName" name="DeptName" style="width:200px; margin-left:44px; height:35px; padding-left:5px; ">
+            <!-- 서버에서 동적으로 데이터가 들어올 예정 -->
+        </select>
             </div>
             <div class="btn-box-hover" style="display: flex; justify-content: flex-end;">
                 <button class="btn3-hover" type="submit" id="moveDeptBtn" style="margin-top:30px;">이동</button>
@@ -254,10 +253,29 @@ input {
     </div>
 </div>
 
-
-
-
 <script>
+// 페이지 로드 시 동적으로 부서 데이터를 받아오기 위한 AJAX 요청
+$(document).ready(function() {
+    // 현재 부서와 상위 부서 데이터를 받아오는 AJAX 요청
+    $.ajax({
+        url: '${contextPath}/department/getDepartments',  // 서버에서 부서 정보를 가져올 URL
+        type: 'GET',
+        success: function(response) {
+            // 서버로부터 받은 부서 목록을 사용하여 <select>에 추가
+            var deptNameSelect = $('#DeptName');
+
+            // "이전 할 부서" 드롭다운에 항목 추가
+            deptNameSelect.empty();  // 기존 항목 비우기
+            response.deptNames.forEach(function(department) {
+                deptNameSelect.append('<option value="' + department.deptName + '">' + department.deptName + '</option>');
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('부서 데이터를 가져오는 데 실패했습니다:', error);
+        }
+    });
+});
+
 $(document).on('change', '.team-checkbox', function() {
 
 	$('#MoveDept').hide();   
@@ -330,8 +348,7 @@ $(document).ready(function() {
             url: '${contextPath}/department/moveDept',  // 서버에서 부서 이동 처리 URL (예시)
             type: 'POST',
             data: {
-                nowDeptName: nowDeptName,
-                upDeptName: upDeptName,
+            
                 deptName: deptName,
                 empNo: empNo,  // 사원번호
                 modifier: modifier  // 수정자
@@ -435,7 +452,7 @@ $(document).ready(function() {
 
         // AJAX 요청 보내기
         $.ajax({
-            url: "/mystore/department/departmentModify/data",  // URL을 '/mystore/department/departmentModify/data'로 수정
+            url: "${contextPath}/department/departmentModify/data",  // URL을 '/mystore/department/departmentModify/data'로 수정
             type: "GET",  // GET 방식으로 요청
             data: { empName: empName },  // empName 파라미터 전달
             success: function(response) {
@@ -498,7 +515,7 @@ $(function() {
     // 트리 데이터를 AJAX로 로드하는 부분
     function loadTreeData() {
         $.ajax({
-            url: "/mystore/department/departmentModify/data",  // 트리 데이터를 가져올 URL
+            url: "${contextPath}/department/departmentModify/data",  // 트리 데이터를 가져올 URL
             method: 'GET',
             dataType: 'json',
             success: function(response) {

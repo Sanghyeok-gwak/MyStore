@@ -199,10 +199,7 @@
 								<c:forEach var="b" items="${ list }">
     <!-- 중요공지인 경우 스타일 변경 (boardCheck가 'N,on'일 때) -->
     <c:if test="${ b.boardCheck != null && b.boardCheck.trim() == 'N,on' }">
-        <script>
-            // boardCheck 값을 콘솔에 출력
-            console.log('boardCheck: ${b.boardCheck}');
-        </script>
+
       <tr onclick='location.href="${contextPath}/board/${ loginUser.empNo eq b.empNo ? "boardDetail.do" : "increase.do" }?no=${ b.boardNo }"; '>
     <td style="background-color: #e1e1e5">${ b.boardNo }</td>
     <td style="background-color: #e1e1e5">${ b.boardDept }</td>

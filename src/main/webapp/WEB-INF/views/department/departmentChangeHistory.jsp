@@ -157,7 +157,9 @@ input {
 				<table class="table table-hover" style="margin-top: 30px;">
 					<thead>
 						<tr>
-							<th scope="col"></th>
+							 <th scope="col">
+                    <input type="checkbox" id="selectAllCheckbox" style="width: 15px; height: 15px;">
+                </th>
 							<th scope="col">변경코드</th>
 							<th scope="col">변경일자</th>
 							<th scope="col">변경 전 부서</th>
@@ -179,6 +181,14 @@ input {
 
 <script>
 $(document).ready(function() {
+	
+	 $('#selectAllCheckbox').change(function() {
+	        // 전체 선택 체크박스 상태에 따라 모든 체크박스를 선택하거나 해제
+	        var isChecked = $(this).prop('checked');  // 전체 선택 체크박스의 상태
+	        $('#resultTableBody input[type="checkbox"]').prop('checked', isChecked);
+	    });
+	
+	
     // 폼 제출 이벤트
     $("#searchForm").submit(function(event) {
         event.preventDefault();  // 폼 제출 방지
@@ -259,6 +269,8 @@ $(document).ready(function() {
         });
         csvData.push(headerRow.join(','));
 
+        var isChecked = false;  // 체크된 항목 여부
+        
         var selectedRows = $('#resultTableBody').find('tr');  // 모든 행
 
         selectedRows.each(function() {
@@ -267,6 +279,7 @@ $(document).ready(function() {
 
             // 체크박스가 선택된 행만 처리
             if (checkbox.length > 0) {
+            	 isChecked = true;
                 $(this).find('td').each(function(index, td) {
                     var cellText = $(td).text().trim();
 
@@ -286,10 +299,11 @@ $(document).ready(function() {
             }
         });
 
-        // 선택된 항목이 없다면 경고
-        if (csvData.length === 0) {
-            alert('선택된 항목이 없습니다.');
-            return;
+        
+        // 체크된 항목이 없으면 경고 메시지
+        if (!isChecked) {
+            alert('한 개 이상의 이력을 체크해주세요.');
+            return;  // 체크된 항목이 없으면 함수 종료
         }
 
         var csvContent = '\uFEFF' + csvData.join("\n");

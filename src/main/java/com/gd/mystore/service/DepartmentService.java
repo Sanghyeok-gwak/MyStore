@@ -29,6 +29,12 @@ public interface DepartmentService {
 
 	int moveDept(Map<String, Object> params);
 
+	List<DepartmentDto> getUpDepartments();
+
+	List<DepartmentDto> getDeptNames();
+
+
+
 	
 
 }

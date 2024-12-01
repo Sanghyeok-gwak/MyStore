@@ -284,8 +284,20 @@
         ]]>
     </update>
 
-
+		<select id="getUpDepartments" resultMap="departmentResultMap">
+				select dept_name
+		 from tbl_department
+		where dept_upstair = 'D001'
+		
+		
+		</select>
   
-
+	  <select id="getDeptNames" resultMap="departmentResultMap">
+	  
+			  select dept_name
+		 from tbl_department
+		where dept_upstair != 'D001'
+	  
+	  </select>
 
 </mapper>

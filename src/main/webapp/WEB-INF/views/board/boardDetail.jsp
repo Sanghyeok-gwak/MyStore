@@ -116,7 +116,7 @@
          >
         <div class="d-flex" style="flex-direction: column; font-size: 18px; margin-top: 10px;">
             <!-- 작성자 및 댓글 텍스트 부분 -->
-            <div class="d-flex" style="display: flex; align-items: center; width: 50%;">
+            <div class="d-flex" style="display: flex; align-items: center; width: 30%;">
                 <div style="width:100%;"><span>${r.empName}</span></div> 
                 <c:if test="${loginUser.empNo eq r.empNo}">
                     <!-- 드롭다운 아이콘 클릭 -->
@@ -134,22 +134,16 @@
             </div>
     
             <!-- 댓글 텍스트 -->
-            <div style="padding-bottom: 5px; margin-top: 5px; width: 50%;">${r.replyContent}</div>
+            <div style="padding-bottom: 5px; margin-top: 5px; width: 30%;">${r.replyContent}</div>
     
             <!-- 댓글 관련 정보 (날짜, 답글쓰기, 하트이모티콘) -->
-            <div class="d-flex" style="margin-top: 5px; gap: 3px; width: 29%; color: #afacac;">
+            <div class="d-flex" style="margin-top: 5px; gap: 3px; width: 20%; color: #afacac;">
                 <div>${r.formattedCreateDate}</div>
                 
                 <!-- 답글이 아닐 경우 답글쓰기 버튼 표시 -->
                 <c:if test="${empty r.uprReplyNo}">
                     <div style="margin-left: 20px; margin-top: -1px; cursor: pointer;" onclick="toggleTextarea(${r.replyNo})">답글쓰기</div>
                 </c:if>
-
-                <div class="like-container" style="position: relative; cursor: pointer;">
-                    <!-- 비어있는 하트 아이콘 (위에 표시될 아이콘) -->
-                    <i class="bi bi-heart-fill" style="position: absolute; left: 0; top: 0; color: red; z-index: 0; display: none;" onclick="toggleLike(this)"></i><span style="margin-left:24px;">1</span>
-                    <i class="bi bi-heart" style="position: absolute; left: 0; top: 0; z-index: 1;" onclick="toggleLike(this)"></i>
-                </div>
             </div>
         </div>
 
