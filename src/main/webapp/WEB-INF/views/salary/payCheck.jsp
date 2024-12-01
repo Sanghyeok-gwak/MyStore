@@ -102,9 +102,9 @@
 	            </tr>
 	            <tr>
 	                <td>${ salary.salBase }</td>
-                    <td>${ salary.salOvertimePay }</td>
-                    <td>${ salary.bonus }</td>
-                    <td>${ salary.salGrossPay }</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>${ salary.salBase }</td>
 	            </tr>
 	
 	            <tr>
@@ -120,16 +120,8 @@
 	                <td>${ salary.salNp }</td>
                     <td>${ salary.salHi }</td>
                     <td>${ salary.salEi }</td>
-                    <td>${ salary.salTotalDd }</td>
+                    <td>213500</td>
 	            </tr>
-				<!-- 
-	            <tr>
-	                <th></th>
-	                <td></td>
-	                <th></th>
-	                <td></td>
-	            </tr>
-				 -->
 	            <tr>
 	                <th>실수령액</th>
 	                <td colspan="3">${ salary.salNetSalary }</td>

@@ -203,7 +203,7 @@
             dateClick: function (info) {
                 let title = prompt('새로운 이벤트 제목을 입력하세요:');
                 if (title) {
-                    let color = (loginUser.empNo === '1005') ? 'R' : 'B';
+                	let color = (String(loginUser.empNo) === '1005') ? 'R' : 'B';
 
                     $.ajax({
                         url: `${contextPath}/calendar/addEvent.do`,
@@ -309,7 +309,6 @@
             all: $('#allSchedulesCheckbox').is(':checked'),
         };
 
-        console.log('필터 상태:', filters);
 
         // 전역 변수 calendar를 사용하여 이벤트 다시 로드
         if (calendar) {

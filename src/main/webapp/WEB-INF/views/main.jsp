@@ -102,14 +102,24 @@
             margin-right: 25px;
         }
 
-        .top_empInfo {
+        .top_empInfoM {
             width: 50%;
             color: white;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
-            background: rgb(252, 168, 168);
+            background: rgb(168 178 252);
+            border-radius: 5px;
+        }
+        .top_empInfoF {
+            width: 50%;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            background: rgb(255 124 124);
             border-radius: 5px;
         }
 
@@ -336,7 +346,7 @@
                         <div class="emp_img">
                             <img src="<c:out value='${ loginUser.empProfile }' default='${ contextPath }/resources/images/defaultImg.png' />" class="info_img">
                         </div>
-                        <div class="top_empInfo">
+                        <div class="${ loginUser.empGender == 'M' ? 'top_empInfoM' : 'top_empInfoF' }">
                             <div class="emp_dept">${ loginUser.deptCode }</div>
                             <div class="emp_name"><b>${ loginUser.empName }</b></div>
                             <div class="emp_name"><b>${ loginUser.empRank }</b></div>
