@@ -35,6 +35,10 @@
     <jsp:include page="/WEB-INF/views/common/side.jsp" />
 
     <style>
+    		.main-home-bottom-message-box-top {
+				    display: flex ;
+				    justify-content: space-between;
+				}
         .main-home-top-mypage,
         .main-home-bottom-weather,
         .main-home-top-edsm,
@@ -312,6 +316,15 @@
             align-items: center;
             font-size: 500%;
         }
+        .main-home-bottom-message-box {
+				    width: 100%;
+				    height: 100%;
+				    display: flex ;
+				    flex-direction: column;
+				}
+				.main-home-bottom-message-box-body {
+				    overflow-y: scroll;
+				}
     </style>
 
     <div class="body-body">
@@ -697,7 +710,67 @@
 					 -->
 
                 <div class="main-home-bottom-message" style="margin-right: 20px;">
+                	<div class="main-home-bottom-message-box">
+								      <div class="main-home-bottom-message-box-top">
+								          <div style="font-size:30px">📜&nbsp&nbsp쪽지함</div>
+								          <div id="messageCount" style="font-size:30px;">안읽음 0 / 0</div>
+								      </div>
+								      <div class="main-home-bottom-message-box-body">
+									      <table class="table table-hover">
+									          <thead>
+									              <tr>
+									                  <th style="width:80px;">번호</th>
+									                  <th style="width:100px;">보낸이</th>
+									                  <th style="width:150px;">제목</th>
+									                  <th style="width:150px;">시간</th>
+									              </tr>
+									          </thead>
+									          <tbody id="messageTableBody">
+									              <!-- AJAX로 데이터 추가 -->
+									            </tbody>
+									      </table>
+								  	</div>
+								  </div>
+                	
                 </div>
+                <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    $.ajax({
+                        url: '/mystore/note/mainreception.no',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: { empNo: empNo },
+                        success: function (res) {
+                        	const totalCount = res.readCount + res.noReadCount;
+                            document.getElementById('messageCount').innerText = 
+                                '안읽음 ' + res.noReadCount + ' / ' + totalCount;
+
+                            const tbody = document.getElementById('messageTableBody');
+                            tbody.innerHTML = ''; 
+                            
+                            if (res.list && res.list.length > 0) {
+                                let tableContent = '';
+                                res.list.forEach((item, index) => {
+                                    tableContent += 
+                                        '<tr onclick="sendReceptionNo(' + item.receptionNo + ', \'' + item.recCheck + '\')">' +
+                                            '<td>' + (res.list.length - index) + '</td>' +
+                                            '<td>' + item.sentId + '</td>' +
+                                            '<td>' + item.title + '</td>' +
+                                            '<td>' + item.sentDate + '</td>' +
+                                        '</tr>';
+                                });
+                                tbody.innerHTML = tableContent;
+                            } else {
+                                tbody.innerHTML = '<tr><td colspan="4">받은 메시지가 없습니다.</td></tr>';
+                            }
+                        }
+                    });
+                });
+		    	       	function sendReceptionNo(receptionNo, recCheck) {
+		                console.log("receptionNo: " + receptionNo + ", recCheck: " + recCheck);
+		                window.location.href = '${contextPath}/note/recepDetail.no?no=' + receptionNo + '&recCheck=' + recCheck;
+		    	        }
+                </script>
                 <div class="main-home-bottom-board">
                     
                 </div>

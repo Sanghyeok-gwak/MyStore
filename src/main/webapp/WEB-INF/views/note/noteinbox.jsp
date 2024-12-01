@@ -144,7 +144,7 @@
 				                <th style="width: 100px;">번호</th>
 				                <th style="width: 300px;">제목</th>
 				                <th style="width: 150px;">보낸사람</th>
-				                <th style="width: 200px;">확인 일시</th>
+				                <th style="width: 200px;">날짜</th>
 				            </tr>    
 				        </thead>
 				        <tbody>
@@ -164,7 +164,8 @@
 				                            <td>${list.size() - status.index}</td>
 				                            <td>${r.title}</td>
 				                            <td>${r.sentId}</td>
-				                            <td>${r.recCheck eq 'Y' ? r.recDate : ''}</td>
+				                            <td>${r.sentDate}</td>
+				                            <!-- <td>${r.recCheck eq 'Y' ? r.recDate : ''}</td> -->
 				                        </tr>
 				                    </c:forEach>
 				                </c:otherwise>

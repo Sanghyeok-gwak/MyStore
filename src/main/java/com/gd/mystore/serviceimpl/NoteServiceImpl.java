@@ -204,6 +204,21 @@ public class NoteServiceImpl implements NoteService {
 	public int sideCount(String userNo) {
 		return noteDao.checkCount(userNo);
 	}
+
+	@Override
+	public List<NoteDto> selectMainNote(String no) {
+		return noteDao.selectMainNote(no);
+	}
+
+	@Override
+	public int selectReadNote(String no) {
+		return noteDao.selectReadNote(no);
+	}
+
+	@Override
+	public int selectNoReadNote(String no) {
+		return noteDao.selectNoReadNote(no);
+	}
 	
 }
 		

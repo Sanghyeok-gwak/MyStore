@@ -305,4 +305,46 @@
 		 where
 		      RECEPTION_NO = #{no} 	
 	</update>
+	<select id="selectMainNote" resultMap="noteResultMap">
+		SELECT 
+			    RECEPTION_NO,
+					SEND_NO,
+					SENT_ID,
+					RECEP_ID,
+					TITLE,
+					CONTENT,
+					REC_CHECK,
+					REC_DATE,
+					STATUS
+	FROM 
+	     TBL_RECEPTION_NOTE
+	WHERE 
+	    RECEP_ID = #{no}
+	    and
+		     STATUS = 'Y'  
+		     
+	</select>
+	<select id="selectReadNote" resultType="_int">
+		select
+				count(*)
+		FROM  
+	   		 TBL_RECEPTION_NOTE
+	WHERE 
+	    	 RECEP_ID = #{no}
+		  and
+		     REC_CHECK = 'Y' 	
+	</select>
+	<select id="selectNoReadNote" resultType="_int">
+		select
+				count(*)
+		FROM  
+	   		 TBL_RECEPTION_NOTE
+	WHERE 
+	    	 RECEP_ID = #{no}
+		  and
+		     REC_CHECK = 'N' 	
+	</select>
+	
+	
+	
 </mapper>

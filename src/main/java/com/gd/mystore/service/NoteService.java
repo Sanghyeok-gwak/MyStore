@@ -48,4 +48,10 @@ public interface NoteService {
 	// 쪽지 카운트
 	int sideCount(String userNo);
 	
+	// 메인 쪽지 리스트
+	List<NoteDto> selectMainNote(String no);
+	// 메인 쪽지 카운트 (읽음)
+	int selectReadNote(String no);
+	// 메인 쪽지 카운트 (안읽음)
+	int selectNoReadNote(String no);
 }

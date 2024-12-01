@@ -87,4 +87,13 @@ public class NoteDao {
 	public int selectSendYDetail(Map<String,Object> map) {
 		return sqlSession.update("noteMapper.selectSendYDetail",map);
 	}
+	public List<NoteDto> selectMainNote(String no){
+		return sqlSession.selectList("noteMapper.selectMainNote",no);
+	}
+	public int selectReadNote(String no) {
+		return sqlSession.selectOne("noteMapper.selectReadNote",no);
+	}
+	public int selectNoReadNote(String no) {
+		return sqlSession.selectOne("noteMapper.selectNoReadNote",no);
+	}
 }

@@ -221,7 +221,31 @@ public class NoteController {
 	@ResponseBody
 	@PostMapping("sideCount.no")
 	public int sideCount(@RequestParam String userNo) {
+		
 		return noteService.sideCount(userNo);
+	}
+	
+	@ResponseBody
+	@GetMapping("mainreception.no")
+	public Map<String,Object> mainreception(String empNo,HttpSession session){
+		Map<String, Object> map = new HashMap<>();
+		
+		log.debug("여기는 메인 쪽지");
+		String no =(String.valueOf( ((EmpMemberDto)session.getAttribute("loginUser")).getEmpNo() ) );
+		int readCount=0;
+		int noReadCount=0;
+		List<NoteDto> list = noteService.selectMainNote(no);
+		
+		if(!list.isEmpty()) {
+			readCount = noteService.selectReadNote(no);
+			noReadCount = noteService.selectNoReadNote(no);
+		}
+		
+		map.put("list", list);
+		map.put("readCount", readCount);
+		map.put("noReadCount", noReadCount);
+		log.debug("mapㅏㅣㄴ렁ㅁ냐러ㅐㅇㅁㄴㄹㅇ먀ㅓㅐ : {}",map);
+		return map;
 	}
 	
 }
