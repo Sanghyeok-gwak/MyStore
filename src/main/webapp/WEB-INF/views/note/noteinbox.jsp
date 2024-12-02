@@ -152,7 +152,7 @@
 				            <c:choose>
 				                <c:when test="${empty list}">
 				                    <tr>
-				                        <td colspan="5" style="text-align: center;">존재하는 쪽지가 없습니다.</td>
+				                        <td colspan="6" style="text-align: center;">존재하는 쪽지가 없습니다.</td>
 				                    </tr>
 				                </c:when>
 				                <c:otherwise>
