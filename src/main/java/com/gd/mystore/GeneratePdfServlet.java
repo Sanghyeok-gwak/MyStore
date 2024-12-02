@@ -61,7 +61,7 @@ public class GeneratePdfServlet extends HttpServlet {
         employeeInfoTable.addCell(createCell("Position", true, pdfFont)); // Position
         employeeInfoTable.addCell(createCell("Researcher", false, pdfFont)); // Researcher
         employeeInfoTable.addCell(createCell("Name", true, pdfFont)); // Name
-        employeeInfoTable.addCell(createCell("Leesiyeon", false, pdfFont)); // Name
+        employeeInfoTable.addCell(createCell("KimyeJin", false, pdfFont)); // Name
         employeeInfoTable.addCell(createCell("Join Date", true, pdfFont)); // Join Date
         employeeInfoTable.addCell(createCell("2024-11-05", false, pdfFont)); // Join Date
         document.add(employeeInfoTable);
@@ -77,14 +77,14 @@ public class GeneratePdfServlet extends HttpServlet {
         salaryTable.addCell(createCell("Amount", true, pdfFont)); // Amount
 
         salaryTable.addCell(createCell(" Base Salary", false, pdfFont)); // Base Salary
-        salaryTable.addCell(createCell("2,500,000", false, pdfFont));
+        salaryTable.addCell(createCell("2,300,000", false, pdfFont));
         salaryTable.addCell(createCell("Tax", false, pdfFont)); // Tax
-        salaryTable.addCell(createCell("84,290", false, pdfFont));
+        salaryTable.addCell(createCell("215,000", false, pdfFont));
 
         salaryTable.addCell(createCell("Bonus", false, pdfFont)); // Bonus
         salaryTable.addCell(createCell("200,000", false, pdfFont));
         salaryTable.addCell(createCell("Resident Tax", false, pdfFont)); // Resident Tax
-        salaryTable.addCell(createCell("9,420", false, pdfFont));
+        salaryTable.addCell(createCell("14,000", false, pdfFont));
 
         salaryTable.addCell(createCell("Position Allowance", false, pdfFont)); // Position Allowance
         salaryTable.addCell(createCell("120,000", false, pdfFont));
@@ -94,12 +94,12 @@ public class GeneratePdfServlet extends HttpServlet {
         salaryTable.addCell(createCell("Extra Work Allowance", false, pdfFont)); // Extra Work Allowance
         salaryTable.addCell(createCell("170,000", false, pdfFont));
         salaryTable.addCell(createCell(" Health Insurance", false, pdfFont)); // Health Insurance
-        salaryTable.addCell(createCell("66,700", false, pdfFont));
+        salaryTable.addCell(createCell("0", false, pdfFont));
 
         salaryTable.addCell(createCell("Overtime Allowance", false, pdfFont)); // Overtime Allowance
-        salaryTable.addCell(createCell("110,000", false, pdfFont));
+        salaryTable.addCell(createCell("44,000", false, pdfFont));
         salaryTable.addCell(createCell("Employment Insurance", false, pdfFont)); // Employment Insurance
-        salaryTable.addCell(createCell("10,350", false, pdfFont));
+        salaryTable.addCell(createCell("0", false, pdfFont));
 
         // 빈 행 추가
         for (int i = 0; i < 10; i++) { // 필요에 따라 10 이상의 값을 설정 가능
