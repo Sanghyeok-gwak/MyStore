@@ -120,13 +120,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <jsp:include page="/WEB-INF/views/common/side.jsp"/>
 
-<!-- 로그인 사용자 정보 -->
-<script>
-    var loginUser = {
-        empNo: "${loginUser.empNo}",
-        empName: "${loginUser.empName}"
-    };
-</script>
 
 <div class="body-body">
     
