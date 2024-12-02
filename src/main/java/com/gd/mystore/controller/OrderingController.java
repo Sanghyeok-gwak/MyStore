@@ -101,9 +101,9 @@ public class OrderingController {
 		int result = orderingService.updateOrderPro(productList, map);
 		if(productList.isEmpty() && result == 1 
 				|| !productList.isEmpty() && result == productList.size()) {
-			rdAttributes.addFlashAttribute("alertMsg", "발주 등록 성공");
+			rdAttributes.addFlashAttribute("alertMsg", "발주 수정 성공");
 		}else {
-			rdAttributes.addFlashAttribute("alertMsg", "발주 등록 실패");			
+			rdAttributes.addFlashAttribute("alertMsg", "발주 수정 실패");			
 		}
 		
 		log.debug("askldfjioasdjfioasd : {}",productList);
