@@ -568,10 +568,10 @@
                     <div class="weather-body">
                         <div>
 	                        <div class="location-icon">
-														<div class="weather-body-top">
-															<div id="city">위치</div>
-															<div><i class="ri-map-pin-2-fill"></i></div>
-														</div>
+								<div class="weather-body-top">
+									<div id="city">위치</div>
+									<div><i class="ri-map-pin-2-fill"></i></div>
+								</div>
 	                        </div>
 	                        <div style="display: flex;justify-content: space-between;">
 	                            <div id="nowtime"></div>                              
@@ -659,22 +659,22 @@
 
                                 document.getElementById("temp_min").innerHTML = temp_min.toFixed(1);
 								
-																if (weatherDescription >= 200 && weatherDescription < 600) {
-																			document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-cloud-rain"></i>';
-															        console.log( "비");
-															    } else if (weatherDescription >= 600 && weatherDescription < 700) {
-															        console.log( "눈");
-																			document.getElementById("weatherInfo").innerHTML = '<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>';
-															    } else if (weatherDescription >= 700 && weatherDescription < 800) {
-															    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-cloud-fog2"></i>';
-															        console.log( "대기 상태");
-															    } else if (weatherDescription >= 801 && weatherDescription < 900) {
-															    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-clouds"></i>';
-															        console.log( "구름");
-															    } else {
-															    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-sun"></i>';
-															        console.log( "맑음");
-															    }
+								if (weatherDescription >= 200 && weatherDescription < 600) {
+											document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-cloud-rain"></i>';
+							        console.log( "비");
+							    } else if (weatherDescription >= 600 && weatherDescription < 700) {
+							        console.log( "눈");
+											document.getElementById("weatherInfo").innerHTML = '<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>';
+							    } else if (weatherDescription >= 700 && weatherDescription < 800) {
+							    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-cloud-fog2"></i>';
+							        console.log( "대기 상태");
+							    } else if (weatherDescription >= 801 && weatherDescription < 900) {
+							    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-clouds"></i>';
+							        console.log( "구름");
+							    } else {
+							    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-sun"></i>';
+							        console.log( "맑음");
+							    }
 																			
                                 document.getElementById("humidity").innerHTML = humidity;
 
@@ -722,7 +722,7 @@
                 <div class="main-home-bottom-message" style="margin-right: 20px;">
                 	<div class="main-home-bottom-message-box">
 								      <div class="main-home-bottom-message-box-top">
-								          <div style="font-size:30px">📜&nbsp&nbsp쪽지함</div>
+								          <div style="font-size:30px">✉️&nbsp&nbsp쪽지함</div>
 								          <div id="messageCount" style="font-size:30px;">안읽음 0 / 0</div>
 								      </div>
 								      <div class="main-home-bottom-message-box-body">
@@ -786,7 +786,7 @@
                 <div class="main-home-bottom-board">
                          <div class="main-home-bottom-message-box">
 			      <div class="main-home-bottom-message-box-top">
-			          <div style="font-size:30px; margin-right:10px;">📜&nbsp&nbsp공지사항</div>
+			          <div style="font-size:30px; margin-right:10px;">🚨&nbsp&nbsp공지사항</div>
 			         
 			      </div>
 			      <table class="table table-hover">
