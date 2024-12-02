@@ -237,6 +237,7 @@ where board_type_no = #{board_type_no}
 		select board_type_no, boardt_name
         from tbl_boardtype
          where USE_YN = 'Y'
+        and board_type_no = 1001
 	</select>
 	
 	
