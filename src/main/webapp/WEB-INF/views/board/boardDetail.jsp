@@ -197,7 +197,7 @@
 
             // AJAX 요청
             $.ajax({
-                url: '/board/goodReply.do',  // 서버 URL (컨트롤러 맵핑)
+                url: '${contextPath}/board/goodReply.do',  // 서버 URL (컨트롤러 맵핑)
                 type: 'POST',                // 요청 방식
                 data: data,                  // 전송할 데이터
                 success: function(response) {

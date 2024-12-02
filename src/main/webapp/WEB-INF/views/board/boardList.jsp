@@ -88,7 +88,7 @@
 				<div class="d-flex" style="flex-direction: column; width: 100%; padding: 20px;">
 					<!-- 공지사항 제목 -->
 					<div>
-						<b style="font-size: 25px; margin-left: 10px;">공지사항</b>
+						<b style="font-size: 25px; margin-left: 10px;">${ boardTypeName.boardtName }</b>
 					</div>
 
 					<!-- 글 작성 버튼 (공지사항 아래) -->

@@ -176,6 +176,13 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectmainBoardList();
 	}
 
+	@Override
+	public BoardDto getBoardTypeName(String boardTypeNo) {
+		return boardDao.getBoardTypeName(boardTypeNo);
+	}
+	
+	
+
 	
 	
 }

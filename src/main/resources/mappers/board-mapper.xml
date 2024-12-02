@@ -125,6 +125,12 @@
   ]]>
 </select>
 
+<select id="getBoardTypeName" resultMap="boardResultMap">
+select boardt_name
+from tbl_boardtype
+where board_type_no = #{board_type_no}
+
+</select>
 
   <!-- 검색된 게시글 갯수 -->
   <select id="selectSearchListCount" resultType="_int">
@@ -503,7 +509,7 @@
             FROM tbl_board
             ORDER BY board_no DESC
         )
-        WHERE ROWNUM <= 5
+        WHERE ROWNUM <= 9
     ]]>
 </select>
 

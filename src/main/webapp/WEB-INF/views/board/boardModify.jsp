@@ -47,7 +47,7 @@
 
 <!-- 부서명 선택 (초기 상태에서 비활성화) -->
 <select class="datatable-selector" id="boardDept" name="boardDept"
-    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 217px; margin-top: 30px;" disabled>
+    style="margin-right: 5px; border: 1px solid rgb(112, 112, 112); border-radius: 3px; height: 38px; width: 217px; margin-top: 30px;" >
     <option value=""  selected >구분을 선택해주세요</option>
     <c:forEach var="dept" items="${deptList}">
         <option value="${dept.deptName}" ${dept.deptName == b.boardDept ? 'selected' : ''}>
@@ -58,30 +58,37 @@
 </select>
 
 <script>
-    // 첫 번째 드롭다운의 값이 변경될 때
-    document.getElementById('boardTypeNo').addEventListener('change', function() {
-        var boardDept = document.getElementById('boardDept');
-        var importantSection = document.getElementById('important-section');
-        
-        // 게시판 유형이 '공지사항'일 때, 두 번째 드롭다운을 활성화하고 중요공지 체크박스 보여주기
-        if (this.value === '1001') {
-            boardDept.disabled = false;  // boardDept 활성화
-            importantSection.style.display = 'block';  // 중요공지 체크박스 보이기
-        } else {
-            boardDept.disabled = true;  // boardDept 비활성화
-            importantSection.style.display = 'none';  // 중요공지 체크박스 숨기기
-        }
-    });
-
-    // 페이지 로드 시, 첫 번째 드롭다운 값이 이미 '공지사항'이면 두 번째 드롭다운 활성화 및 중요공지 체크박스 보이기
- window.onload = function() {
-    var boardTypeNo = document.getElementById('boardTypeNo').value;
+//첫 번째 드롭다운의 값이 변경될 때
+document.getElementById('boardTypeNo').addEventListener('change', function() {
     var boardDept = document.getElementById('boardDept');
     var importantSection = document.getElementById('important-section');
     
-    // 페이지 로드시에는 boardDept를 무조건 활성화
-    boardDept.disabled = false;  // boardDept 활성화
-    importantSection.style.display = 'block';  // 중요공지 체크박스 보이기
+    // 게시판 유형이 '공지사항'일 때, 두 번째 드롭다운을 활성화하고 중요공지 체크박스 보여주기
+    if (this.value === '1001') {
+        boardDept.disabled = false;  // boardDept 활성화
+        importantSection.style.display = 'block';  // 중요공지 체크박스 보이기
+    } else {
+        boardDept.disabled = true;  // boardDept 비활성화
+        importantSection.style.display = 'none';  // 중요공지 체크박스 숨기기
+    }
+});
+
+// 페이지 로드 시, 첫 번째 드롭다운 값이 이미 '공지사항'이면 두 번째 드롭다운 활성화 및 중요공지 체크박스 보이기
+window.onload = function() {
+    var boardTypeNo = document.getElementById('boardTypeNo').value;  // boardTypeNo 값 가져오기
+    var boardDept = document.getElementById('boardDept');  // boardDept 드롭다운
+    var importantSection = document.getElementById('important-section');  // 중요공지 체크박스 섹션
+    
+    // 페이지 로드시에는 boardDept를 비활성화 상태로 시작
+    boardDept.disabled = true;  // boardDept 비활성화
+    importantSection.style.display = 'block';  // 중요공지 체크박스를 보이게 하기
+
+
+    // boardTypeNo가 '1001'일 경우에만 boardDept를 활성화하고 중요공지 체크박스를 보이기
+    if (boardTypeNo === '1001') {
+        boardDept.disabled = false;  // boardDept 활성화
+        importantSection.style.display = 'block';  // 중요공지 체크박스 보이기
+    }
 
     // 이미 선택된 부서명 값이 있다면 해당 값을 선택 상태로 설정
     var selectedDept = "${b.boardDept}";
@@ -94,16 +101,9 @@
             }
         }
     }
-
-    // 첫 번째 드롭다운 값에 따라 boardDept를 비활성화/활성화
-    if (boardTypeNo === '1001') {
-        boardDept.disabled = false;  // boardDept 활성화
-        importantSection.style.display = 'block';  // 중요공지 체크박스 보이기
-    } else {
-        boardDept.disabled = true;  // boardDept 비활성화
-        importantSection.style.display = 'none';  // 중요공지 체크박스 숨기기
-    }
 };
+
+
 
 </script>
 
@@ -141,7 +141,7 @@
 
 							<div class="btn-box-hover"
 										style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-												<div id="important-section" style="display: none; margin-top: 10px; text-align: center;">
+												<div id="important-section" style=" margin-top: 10px; text-align: center;">
 							    <label for="boardCheck" style="font-size: 14px;">중요공지</label>
 							     <input type="checkbox" id="boardCheck" name="boardCheck"
 					            style="width: 20px; height: 20px; margin-right: 20px;"

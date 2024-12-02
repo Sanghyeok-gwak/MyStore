@@ -68,5 +68,7 @@ public interface BoardService {
 		
 		List<BoardDto> selectmainBoardList();
 		
+		BoardDto getBoardTypeName(String boardTypeNo);
+		
 		
 }

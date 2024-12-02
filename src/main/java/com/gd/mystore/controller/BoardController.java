@@ -60,6 +60,8 @@ public class BoardController {
 	    PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
 	    List<BoardDto> list = boardService.selectBoardList(pi, boardTypeNo);
 	    
+	    BoardDto boardTypeName = boardService.getBoardTypeName(boardTypeNo);
+	    model.addAttribute("boardTypeName", boardTypeName);
 	    model.addAttribute("pi", pi);
 	    model.addAttribute("list", list);
 	    

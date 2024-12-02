@@ -140,6 +140,11 @@ public class BoardDao {
 		
 	}
 
+	public BoardDto getBoardTypeName(String boardTypeNo) {
+	    return sqlSession.selectOne("boardMapper.getBoardTypeName", boardTypeNo);  // 단일 객체 반환
+	}
+
+
 
 
 
