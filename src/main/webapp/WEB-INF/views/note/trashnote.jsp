@@ -148,7 +148,7 @@
 			        			<c:forEach var="t" items="${list }" varStatus="status">
 					            <tr>
 				                <td>
-				                	<input type="checkBox" class="checkItem" class="checkItem" value="${t.source}${t.sendNo}">
+				                	<input type="checkBox" class="checkItem" class="checkItem" value="${t.source}${t.source eq 'S' ? t.sendNo : t.receptionNo}">
 				                </td>
 				                <td>${list.size() - status.index}</td>
 				                <td>${t.title }</td>

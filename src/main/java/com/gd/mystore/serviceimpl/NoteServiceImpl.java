@@ -86,17 +86,19 @@ public class NoteServiceImpl implements NoteService {
         List<String> rValues = new ArrayList<>();
         
         for (String value : checkedValues) {
-            if (value.startsWith("S")) {
+            if (value.startsWith("R")) {
                 sValues.add(value.substring(1));
-            } else if (value.startsWith("R")) {
+            } else if (value.startsWith("S")) {
                 rValues.add(value.substring(1));
             }
         }
         
         for(int i =0; i<rValues.size(); i++) {
+        	log.debug("recep : {}",rValues.get(i) );
         	result = noteDao.updateRecepTrash(rValues.get(i));
         }
         for(int i =0; i<sValues.size(); i++) {
+        	log.debug("send : {}",sValues.get(i) );
         	result+= noteDao.updateSendTrash(sValues.get(i));
         }
         
@@ -114,9 +116,9 @@ public class NoteServiceImpl implements NoteService {
         List<String> rValues = new ArrayList<>();
         
         for (String value : checkedValues) {
-            if (value.startsWith("S")) {
+            if (value.startsWith("R")) {
                 sValues.add(value.substring(1));
-            } else if (value.startsWith("R")) {
+            } else if (value.startsWith("S")) {
                 rValues.add(value.substring(1));
             }
         }
