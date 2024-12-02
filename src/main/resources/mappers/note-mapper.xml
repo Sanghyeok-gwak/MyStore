@@ -64,7 +64,7 @@
 	    RECEP_ID = #{empNo}
 	    and
 		     STATUS = 'Y'  
-	order by SENT_DATE 	     
+	order by SENT_DATE desc	     
 	</select>
 	<select id="selectSendList" resultMap="noteResultMap">
 		SELECT
@@ -357,7 +357,7 @@
 	    RECEP_ID = #{no}
 	    and
 		     STATUS = 'Y' 
-		  order by SENT_DATE 	    
+		  order by SENT_DATE desc    
 		     
 	</select>
 	<select id="selectReadNote" resultType="_int">
@@ -367,8 +367,7 @@
 	   		 TBL_RECEPTION_NOTE
 	WHERE 
 	    	 RECEP_ID = #{no}
-		  and
-		     REC_CHECK = 'Y' 	
+		   	
 	</select>
 	<select id="selectNoReadNote" resultType="_int">
 		select
@@ -377,7 +376,8 @@
 	   		 TBL_RECEPTION_NOTE
 	WHERE 
 	    	 RECEP_ID = #{no}
-		   	
+		  and
+		     REC_CHECK = 'N' 	
 	</select>
 	<update id="updateTemp">
 		update
