@@ -193,7 +193,7 @@ public class NoteServiceImpl implements NoteService {
 			for(WebSocketSession wss : list) {
 				if( noteDto.getReceptionId().contains( ((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo())) {
 					int count = noteDao.checkCount(((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo());
-					int total = noteDao.selectNoReadNote(((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo());
+					int total = noteDao.selectReadNote(((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo());
 					wss.sendMessage(new TextMessage(String.valueOf(count) + "/" + String.valueOf(total) ));
 					
 				}
@@ -242,8 +242,9 @@ public class NoteServiceImpl implements NoteService {
 			for(WebSocketSession wss : list) {
 				if( noteDto.getReceptionId().contains( ((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo())) {
 					int count = noteDao.checkCount(((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo());
-					int total = noteDao.selectNoReadNote(((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo());
-					wss.sendMessage(new TextMessage(String.valueOf(count) + " , " + String.valueOf(total) ));
+					int total = noteDao.selectReadNote(((EmpMemberDto)wss.getAttributes().get("loginUser")).getEmpNo());
+					log.debug("total : "+total);
+					wss.sendMessage(new TextMessage(String.valueOf(count) + "/" + String.valueOf(total) ));
 					
 				}
 			}

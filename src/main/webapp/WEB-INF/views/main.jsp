@@ -754,8 +754,7 @@
                         	
                         	const totalCount = res.readCount + res.noReadCount;
                             document.getElementById('messageCount').innerText = 
-                                '안읽음 ' + res.noReadCount + ' / ' + totalCount;
-													
+                                '안읽음 ' + res.noReadCount + ' / ' + res.readCount;
                             
                             const tbody = document.getElementById('messageTableBody');
                             tbody.innerHTML = ''; 
