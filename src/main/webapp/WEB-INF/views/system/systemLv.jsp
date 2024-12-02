@@ -147,7 +147,6 @@
 								<th scope="col">레벨</th>
 								<th scope="col">부서</th>
 								<th scope="col">가입일</th>
-								<th scope="col">수정일</th>
 							</tr>
 						</thead>
 						
@@ -178,7 +177,6 @@
 											</td>
 											<td>${ e.getDeptCode() }</td>
 											<td>${ e.getCreateDate() }</td>
-											<td>${ e.getModifyDate() }</td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
