@@ -121,7 +121,7 @@
 	            (#{searchType} = 'empNo' AND TO_CHAR(d.emp_no) = #{searchValue})
 	            OR (#{searchType} = 'empName' AND UPPER(e.emp_name) = UPPER(#{searchValue}))
 	        )
-	        AND d.transfer_date BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')  <!-- 날짜 범위 필터링 추가 -->
+	       AND d.transfer_date BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD') + 1  <!-- 날짜 범위 필터링 추가 --> 
 	        AND d.transfer_date >= TO_DATE(#{startDate}, 'YYYY-MM-DD')
 	</select>
 	

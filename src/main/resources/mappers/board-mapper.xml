@@ -507,6 +507,7 @@ where board_type_no = #{board_type_no}
                  WHERE emp_no = tbl_board.emp_no) AS emp_name,  
                  TO_CHAR(create_date, 'YYYY-MM-DD') AS create_date
             FROM tbl_board
+           where board_type_no = 1001
             ORDER BY board_no DESC
         )
         WHERE ROWNUM <= 9
