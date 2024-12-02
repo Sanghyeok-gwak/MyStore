@@ -114,7 +114,7 @@
 		    STATUS, 
 		    NULL AS RECEPTION_NO, 
 		    NULL AS RECEP_ID,
-		    'R' AS SOURCE,
+		    'S' AS SOURCE,
 		    DELETE_DATE
 		FROM 
 		    TBL_SEND_NOTE 
@@ -130,7 +130,7 @@
 		    STATUS, 
 		    RECEPTION_NO, 
 		    RECEP_ID,
-		    'S' AS SOURCE,
+		    'R' AS SOURCE,
 		    DELETE_DATE 
 		FROM 
 		    TBL_RECEPTION_NOTE 
