@@ -785,7 +785,7 @@
                 <div class="main-home-bottom-board">
                          <div class="main-home-bottom-message-box">
 			      <div class="main-home-bottom-message-box-top">
-			          <div style="font-size:30px; margin-right:10px;">🚨&nbsp&nbsp공지사항</div>
+			          <div style="font-size:30px; margin-right:10px;">🚨&nbsp&nbsp중요 공지사항</div>
 			         
 			      </div>
 			      <table class="table table-hover">
@@ -819,11 +819,11 @@
                                     response.boardList.forEach(function(board) {
                           
                                         // 테이블 행 추가
-                                        var row = $('<tr onclick=location.href="${contextPath}/board/list.do?boardTypeNo=1001" style="text-align:center; vertical-align:middle;">');
-                                        row.append('<td>' + board.boardDept + '</td>');  // 구분
-                                        row.append('<td>' + board.boardTitle + '</td>');  // 제목
-                                        row.append('<td>' + board.empName + '</td>');  // 작성자 (emp_name)
-                                        row.append('<td	>' + board.createDate + '</td>');  // 작성일
+var row = $('<tr onclick="location.href=\'${contextPath}/board/boardDetail.do?no=' + board.boardNo + '\'" style="text-align:center; vertical-align:middle; background-color: #e1e1e5">');
+                                        row.append('<td style="background-color: #e1e1e5">' + board.boardDept + '</td>');  // 구분
+                                        row.append('<td style="background-color: #e1e1e5">' + board.boardTitle + '</td>');  // 제목
+                                        row.append('<td style="background-color: #e1e1e5">' + board.empName + '</td>');  // 작성자 (emp_name)
+                                        row.append('<td	style="background-color: #e1e1e5">' + board.createDate + '</td>');  // 작성일
                                         tableBody.append(row);
                                     });
                                 } else {

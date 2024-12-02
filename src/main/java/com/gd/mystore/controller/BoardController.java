@@ -71,6 +71,7 @@ public class BoardController {
 	
 	@GetMapping("/search.do")
 	public String search(@RequestParam(value="page", defaultValue="1") int currentPage
+					,    @RequestParam(value="boardTypeNo", defaultValue="1001") String boardTypeNo
 					,    @RequestParam Map<String, String> search // RequestParam을 쓰면 알아서 map객체에 키 밸류값을 담아줌
 					,	 Model model) {
 		
@@ -80,6 +81,10 @@ public class BoardController {
 		PageInfoDto pi = pagingUtil.getPageInfoDto(listCount, currentPage, 5, 10);
 		List<BoardDto> list = boardService.selectSearchList(search, pi);
 		
+		BoardDto boardTypeName = boardService.getBoardTypeName(boardTypeNo);
+		
+		
+		model.addAttribute("boardTypeName", boardTypeName);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("search", search);
