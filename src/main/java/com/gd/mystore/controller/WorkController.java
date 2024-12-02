@@ -57,7 +57,9 @@ public class WorkController {
 	@ResponseBody
 	@GetMapping("clockIn")
 	public int colockIn(EmpMemberDto em, HttpSession session) {
-		return workService.updateStTime(em);
+		int result = workService.updateStTime(em);
+		session.setAttribute("loginUser", empMemberService.selectEmpMember(em));
+		return result;
 	}
 
 	
@@ -67,8 +69,10 @@ public class WorkController {
 	 */
 	@ResponseBody
 	@GetMapping("clockOut")
-	public int colockOut(EmpMemberDto em, Model model) {
-		return workService.updateEndTime(em);
+	public int colockOut(EmpMemberDto em, HttpSession session) {
+		int result = workService.updateEndTime(em);
+		session.setAttribute("loginUser", empMemberService.selectEmpMember(em));
+		return result;
 	}
 
 }
