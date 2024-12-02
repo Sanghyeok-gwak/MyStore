@@ -377,8 +377,7 @@
 	   		 TBL_RECEPTION_NOTE
 	WHERE 
 	    	 RECEP_ID = #{no}
-		  and
-		     REC_CHECK = 'N' 	
+		   	
 	</select>
 	<update id="updateTemp">
 		update

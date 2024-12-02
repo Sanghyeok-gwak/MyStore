@@ -751,10 +751,12 @@
                         dataType: 'json',
                         data: { empNo: empNo },
                         success: function (res) {
+                        	
                         	const totalCount = res.readCount + res.noReadCount;
                             document.getElementById('messageCount').innerText = 
                                 '안읽음 ' + res.noReadCount + ' / ' + totalCount;
-
+													
+                            
                             const tbody = document.getElementById('messageTableBody');
                             tbody.innerHTML = ''; 
                             

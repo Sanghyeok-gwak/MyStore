@@ -63,6 +63,7 @@
         
   			const loginUser = '${loginUser.empNo}';
   			var noteCount = document.querySelector('.note-count');
+  			
       	document.addEventListener('DOMContentLoaded', function() {
 					$.ajax({
 						url: '${contextPath}/note/sideCount.no',
@@ -77,11 +78,10 @@
      	 	});
 		 		const sock = new SockJS("${contextPath}/notews");
 		 		sock.onmessage = onMessage;
-		 		
 		 		function onMessage(evt) {
 		 		      		
-		 			noteCount.textContent = evt.data;
-		 		      		
+		 			noteCount.textContent = evt.data.split('/')[0];
+		 			location.reload();
 		 		}
       </script>
       

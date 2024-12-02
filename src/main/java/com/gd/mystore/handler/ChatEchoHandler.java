@@ -24,7 +24,6 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 	 */
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println("들어옴들어옴");
 		sessionList.add(session);
 		
 		
