@@ -106,8 +106,6 @@
             	document.getElementById("order-date").addEventListener("change", function() {
             			// 선택된 날짜를 가져옴
             	    const dateTime = document.getElementById("order-date").value;
-            	    console.log('날짜변경 실행확인 : '+dateTime);
-            	    console.log(dateTime);
 
             	    // Ajax 호출
             	    $.ajax({
@@ -116,18 +114,15 @@
             	        dataType: 'json',                          // 서버 응답의 데이터 형식
             	        type: 'get',                               // HTTP 요청 방식 (GET)
             	        success: function(data) {
-            	            console.log(data);  // 서버 응답 데이터 확인
             	            populateTable(data);  // 테이블을 갱신하는 함수 호출
             	        },
             	        error: function(xhr, status, error) {
-            	            console.log("Error: " + error);  // 오류 발생 시 콘솔에 출력
             	        }
             	    });
             	});
 
             	// 테이블을 채우는 함수
             	function populateTable(data) {
-            	    console.log(data);  // 데이터 확인
             	    const tableBody = document.querySelector('table tbody');
             	    tableBody.innerHTML = '';  // 기존 테이블 내용 삭제
 
@@ -162,7 +157,6 @@
             	    document.getElementById("order-date").value = today;
 
             	    const dateTime = document.getElementById("order-date").value;
-            	    console.log(dateTime);
 
             	    $.ajax({
             	      url: '${contextPath}/ordering/regist.or',
@@ -170,7 +164,6 @@
             	      dataType: 'json',
             	      type: 'get',
             	      success: function(data) {
-            	        console.log(data);
             	        populateTable(data);
             	      },
             	      error: function(xhr, status, error) {
@@ -181,7 +174,6 @@
 
             	  // 테이블을 채우는 함수
             	  function populateTable(data) {
-            	    console.log(data);
             	    const tableBody = document.querySelector('table tbody');
             	    tableBody.innerHTML = ''; 
 

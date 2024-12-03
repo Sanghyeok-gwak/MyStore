@@ -482,8 +482,6 @@ input[type=file]::file-selector-button {
 					},
 					method : 'GET',
 					success : function(response) {
-						console.log("응답 데이터:", response);
-
 						// 스마트에디터 내용 업데이트
 						if (oEditors.length > 0 && oEditors[0]) {
 							oEditors[0].exec("SET_CONTENTS", [ "" ]); // 기존 내용 비우기

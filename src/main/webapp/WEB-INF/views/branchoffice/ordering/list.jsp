@@ -149,7 +149,6 @@
 	          $(document).ready(function() {
 	        	    $(".order-row").click(function() {
 	        	        var orderNo = $(this).data("order-no"); 
-	        	        console.log(orderNo)
 	        	        window.location.href = '${contextPath}/ordering/detail.or?orderNo=' + orderNo;
 	        	    });
 	        	});

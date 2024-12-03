@@ -208,10 +208,6 @@ div#ordering-pro-box {
 				    const deptCode = $(this).data("order-deptcode");
 				    const orderCheckDate = $(this).data("order-ordercheckdate");
 				    const approvalNo = $(this).data("order-approvalno");
-				    console.log(empNo);
-				    console.log(deptCode);
-				    console.log(orderCheckDate);
-				    
 				    
 				    $.ajax({
 				      url: '${contextPath}/ordering/orderingPro.or', 
@@ -372,13 +368,11 @@ div#ordering-pro-box {
 		    
 		    if (confirmResult) {
 		        const empNo='${loginUser.empName}';
-		        console.log(empNo);
 		        $.ajax({
 		        	url:'${contextPath}/ordering/companion.or',
 		        	type:'post',
 		        	data:{empNo:empNo , orderNo:orderNo},
 	        	  success: function (data) {
-	        			 console.log(data);
 	        		   if(data>0){
 					        alert("반려 처리되었습니다.");
 					        document.getElementById("empName-div").innerText = '${loginUser.empName}';
@@ -396,7 +390,6 @@ div#ordering-pro-box {
 		  const orderNo = $("#hidden-order-No").val();
 	    if (confirmResult) {
 	        const empNo='${loginUser.empName}';
-	        console.log(empNo);
 	        $.ajax({
 	        	url:'${contextPath}/ordering/approval.or',
 	        	type:'post',

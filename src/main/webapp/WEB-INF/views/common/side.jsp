@@ -74,7 +74,6 @@
 					  }
 						
 					})
-					console.log(noteCount);
      	 	});
 		 		const sock = new SockJS("${contextPath}/notews");
 		 		sock.onmessage = onMessage;

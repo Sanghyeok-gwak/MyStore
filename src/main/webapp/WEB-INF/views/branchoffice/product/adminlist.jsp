@@ -183,7 +183,6 @@
 				    checkboxes.forEach(checkbox => {
 				        checkedValues.push(checkbox.value);
 				    });
-						console.log(checkedValues);
 				    if (checkedValues.length === 0) {
 				        alert('삭제할 상품을 선택해주세요.');
 				        return;

@@ -403,9 +403,6 @@
                          workEndTime: workEndTime
                      },
                      success: function(resData) {
-                         console.log("정상")
-                         console.log(resData)
-
                          if (resData > 0) {
                              alert("출근처리가 완료되었습니다!");
                              location.reload();
@@ -430,9 +427,6 @@
                              workEndTime: workEndTime
                          },
                          success: function(resData) {
-                             console.log("정상")
-                             console.log(resData)
-
                              if (resData > 0) {
                                  alert("퇴근 처리가 완료되었습니다!");
                                  location.reload();
@@ -499,9 +493,6 @@
                         empNo: empNo,
                     },
                     success: function(resData) {
-                        console.log("정상")
-                        console.log(resData)
-                     		
                         const awlcount = resData.awlcount;
                         document.querySelector(".edoc_btn_top_font").textContent = '결재 대기 문서 ' + awlcount + '개';
                         
@@ -633,8 +624,6 @@
               type: 'get',
               dataType: 'json',
               success: function(resData) {
-                  console.log(resData);
-
                   var weatherObject = resData;
 
                   // 필요한 데이터 추출
@@ -659,19 +648,14 @@
 
 		if (weatherDescription >= 200 && weatherDescription < 600) {
 					document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-cloud-rain"></i>';
-	        console.log( "비");
 	    } else if (weatherDescription >= 600 && weatherDescription < 700) {
-	        console.log( "눈");
 					document.getElementById("weatherInfo").innerHTML = '<i style="font-size: 228%;" class="bi bi-cloud-snow-fill"></i>';
 	    } else if (weatherDescription >= 700 && weatherDescription < 800) {
 	    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-cloud-fog2"></i>';
-	        console.log( "대기 상태");
 	    } else if (weatherDescription >= 801 && weatherDescription < 900) {
 	    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-clouds"></i>';
-	        console.log( "구름");
 	    } else {
 	    		document.getElementById("weatherInfo").innerHTML = '<i class="bi bi-sun"></i>';
-	        console.log( "맑음");
 	    }
 					
                   document.getElementById("humidity").innerHTML = humidity;
