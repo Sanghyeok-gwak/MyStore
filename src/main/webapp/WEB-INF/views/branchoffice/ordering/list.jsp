@@ -118,7 +118,14 @@
 		        		<c:otherwise>
              		<!-- case2. 조회된 게시글이 있을 경우 -->
 		        			<c:forEach var="o" items="${list }">
-			              <tr class="order-row" data-order-no="${o.orderNo}">
+		        				<c:choose>
+		        					<c:when test="${ o.orderStatus == 'I' }">
+		        						<tr class='order-row' data-order-no='${o.orderNo}'>
+		        					</c:when>
+		        					<c:otherwise>		
+		        						<tr>
+		        					</c:otherwise>
+		        				</c:choose>
 			                <td>${o.orderNo }</td>
 			                <td>${o.orderCheckDate }</td>
 			                <td>${o.empNo }</td>
