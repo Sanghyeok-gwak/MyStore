@@ -514,7 +514,7 @@ where board_type_no = #{board_type_no}
              and USE_YN = 'Y'
             ORDER BY board_no DESC
         )
-        WHERE ROWNUM <= 3
+        WHERE ROWNUM <= 5
     ]]>
 </select>
 

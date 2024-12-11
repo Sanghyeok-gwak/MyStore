@@ -54,53 +54,53 @@ input {
 }
 
 #jstree {
-    max-height: 320px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch; /* 터치스크린에서 스크롤 부드럽게 하기 */
+	max-height: 320px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch; /* 터치스크린에서 스크롤 부드럽게 하기 */
 }
+
 #jstree .jstree-children {
-    max-height: 320px; /* 높이를 300px로 제한 */
-    width: 444px;
-    overflow-y: auto;  /* 자식 요소가 높이를 초과할 경우 수직 스크롤 추가 */
-    overflow-x: hidden;  /* 하단(수평) 스크롤을 없앰 */
+	max-height: 320px; /* 높이를 300px로 제한 */
+	width: 444px;
+	overflow-y: auto; /* 자식 요소가 높이를 초과할 경우 수직 스크롤 추가 */
+	overflow-x: hidden; /* 하단(수평) 스크롤을 없앰 */
 }
- /* 모달 스타일 */
-    .modal {
-        display: none; /* 기본적으로 숨겨짐 */
-        position: fixed; /* 화면에 고정 */
-        z-index: 1; /* 최상위 */
-        left: 0;
-        top: 0;
-        width: 100%; /* 화면 전체 */
-        height: 100%; /* 화면 전체 */
-        overflow: auto; /* 스크롤 가능 */
-        background-color: rgb(0,0,0); /* 배경은 반투명 검정 */
-        background-color: rgba(0,0,0,0.4); /* 배경에 투명도 추가 */
-    }
+/* 모달 스타일 */
+.modal {
+	display: none; /* 기본적으로 숨겨짐 */
+	position: fixed; /* 화면에 고정 */
+	z-index: 1; /* 최상위 */
+	left: 0;
+	top: 0;
+	width: 100%; /* 화면 전체 */
+	height: 100%; /* 화면 전체 */
+	overflow: auto; /* 스크롤 가능 */
+	background-color: rgb(0, 0, 0); /* 배경은 반투명 검정 */
+	background-color: rgba(0, 0, 0, 0.4); /* 배경에 투명도 추가 */
+}
 
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-    }
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	max-width: 500px;
+}
 
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
 </style>
 
 </head>
@@ -120,20 +120,22 @@ input {
 				<div style="display: flex; flex-direction: column; height: 100%;">
 
 					<div style="width: 450px; height: 400px; border: #868686 solid;">
-    <!-- 왼쪽 영역 내용 -->
-    <div class="d-flex" style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
-        <div>
-            <b>조직도</b>
-        </div>
-        <div class="btn-box-hover">
-            <button id="editNodeBtn" class="btn2-hover" style="width: 50px;">수정</button>
-        </div>
-    <!-- 트리 영역에 스크롤 적용 -->
-    </div>
-    <div style="height: 336px; overflow-y: auto; box-sizing: border-box; ">
-        <div id="jstree"></div>
-    </div>
-</div>
+						<!-- 왼쪽 영역 내용 -->
+						<div class="d-flex"
+							style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
+							<div>
+								<b>조직도</b>
+							</div>
+							<div class="btn-box-hover">
+								<button id="editNodeBtn" class="btn2-hover" style="width: 50px;">수정</button>
+							</div>
+							<!-- 트리 영역에 스크롤 적용 -->
+						</div>
+						<div
+							style="height: 336px; overflow-y: auto; box-sizing: border-box;">
+							<div id="jstree"></div>
+						</div>
+					</div>
 
 
 
@@ -143,26 +145,27 @@ input {
 						<div class="d-flex"
 							style="background-color: #EBEAEA; height: 60px; font-size: 18px; padding: 15px;">
 							<b>구성원</b>
-							 <div class="btn-box-hover">
-							   <button id="MoveDept" class="btn3-hover" style="width: 50px; display: none;">이동</button>
-							   </div>
+							<div class="btn-box-hover">
+								<button id="MoveDept" class="btn3-hover"
+									style="width: 50px; display: none;">이동</button>
+							</div>
 						</div>
 						<div style="height: calc(100% - 60px); overflow-y: auto;">
 							<table id="TeamList" class="table table-hover"
-								    style="margin-top: 0px; width: 100%; text-align: center; vertical-align: middle;">
-								    <thead>
-								        <tr>
-								            <th scope="col"></th>
-								            <th scope="col">이름</th>
-								            <th scope="col">사번</th>
-								            <th scope="col">직책</th>
-								            <th scope="col">부서</th>
-								        </tr>
-								    </thead>
-								    <tbody>
-								        <!-- 여기에 AJAX로 받은 데이터가 들어감 -->
-								    </tbody>
-								</table>
+								style="margin-top: 0px; width: 100%; text-align: center; vertical-align: middle;">
+								<thead>
+									<tr>
+										<th scope="col"></th>
+										<th scope="col">이름</th>
+										<th scope="col">사번</th>
+										<th scope="col">직책</th>
+										<th scope="col">부서</th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- 여기에 AJAX로 받은 데이터가 들어감 -->
+								</tbody>
+							</table>
 
 						</div>
 					</div>
@@ -207,19 +210,22 @@ input {
 									</tr>
 								</thead>
 								<tbody>
-									<c:set var="counter" value="1" /> <!-- 시작 번호 설정 -->
-										
-										<c:forEach var="dept" items="${searchResult}">
-										    <tr>
-										        <td>${counter}</td> <!-- 증가하는 번호 출력 -->
-										        <td>${dept.empName}</td>
-										        <td>${dept.empNo}</td>
-										        <td>${dept.nm}</td>
-										        <td>${dept.deptUpStair}</td>
-										        <td>${dept.deptName}</td>
-										    </tr>
-										    <c:set var="counter" value="${counter + 1}" /> <!-- 번호를 1 증가 -->
-										</c:forEach>
+									<c:set var="counter" value="1" />
+									<!-- 시작 번호 설정 -->
+
+									<c:forEach var="dept" items="${searchResult}">
+										<tr>
+											<td>${counter}</td>
+											<!-- 증가하는 번호 출력 -->
+											<td>${dept.empName}</td>
+											<td>${dept.empNo}</td>
+											<td>${dept.nm}</td>
+											<td>${dept.deptUpStair}</td>
+											<td>${dept.deptName}</td>
+										</tr>
+										<c:set var="counter" value="${counter + 1}" />
+										<!-- 번호를 1 증가 -->
+									</c:forEach>
 								</tbody>
 							</table>
 
@@ -229,31 +235,36 @@ input {
 			</div>
 		</div>
 	</div>
-<div id="moveDeptModal" class="modal" style="display: none;">
-    <div class="modal-content" style="height:300px;">
-        <span id="closeModal" class="close">&times;</span>
-        <h2>부서 이동</h2>
+	<div id="moveDeptModal" class="modal" style="display: none;">
+		<div class="modal-content" style="height: 300px;">
+			<span id="closeModal" class="close">&times;</span>
+			<h2>부서 이동</h2>
 
-        <form id="moveDeptForm" action="/department/moveDept" method="post">
-            <div style="margin-top:20px;">
-                <label for="nowDeptName">현재 부서:</label>
-                <input type="text" id="nowDeptName" name="nowDept" list="UpdeptNameList" style="width:200px; padding-left:10px; margin-left:78px; background-color: #EBEAEA;" readonly>
-            </div>
+			<form id="moveDeptForm" action="/department/moveDept" method="post">
+				<div style="margin-top: 20px;">
+					<label for="nowDeptName">현재 부서:</label> <input type="text"
+						id="nowDeptName" name="nowDept" list="UpdeptNameList"
+						style="width: 200px; padding-left: 10px; margin-left: 78px; background-color: #EBEAEA;"
+						readonly>
+				</div>
 
-            <div style="margin-top:20px;">
-                <label for="DeptName">이동 시킬 부서:</label>
-                <select id="DeptName" name="DeptName" style="width:200px; margin-left:44px; height:35px; padding-left:5px; ">
-            <!-- 서버에서 동적으로 데이터가 들어올 예정 -->
-        </select>
-            </div>
-            <div class="btn-box-hover" style="display: flex; justify-content: flex-end;">
-                <button class="btn3-hover" type="submit" id="moveDeptBtn" style="margin-top:30px;">이동</button>
-            </div>
-        </form>
-    </div>
-</div>
+				<div style="margin-top: 20px;">
+					<label for="DeptName">이동 시킬 부서:</label> <select id="DeptName"
+						name="DeptName"
+						style="width: 200px; margin-left: 44px; height: 35px; padding-left: 5px;">
+						<!-- 서버에서 동적으로 데이터가 들어올 예정 -->
+					</select>
+				</div>
+				<div class="btn-box-hover"
+					style="display: flex; justify-content: flex-end;">
+					<button class="btn3-hover" type="submit" id="moveDeptBtn"
+						style="margin-top: 30px;">이동</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
-<script>
+	<script>
 // 페이지 로드 시 동적으로 부서 데이터를 받아오기 위한 AJAX 요청
 $(document).ready(function() {
     // 현재 부서와 상위 부서 데이터를 받아오는 AJAX 요청
@@ -388,7 +399,7 @@ $(document).ready(function() {
 </script>
 
 
-<script>
+	<script>
 $('#jstree').on("select_node.jstree", function (e, data) {
     var tree = $('#jstree').jstree(true);
 
@@ -400,7 +411,7 @@ $('#jstree').on("select_node.jstree", function (e, data) {
         success: function(response) {
 
             var tbody = $('#TeamList tbody');
-            tbody.empty();  // 기존 데이터 비우기
+            tbody.empty();  
 
             var counter = 1;
 
@@ -428,9 +439,8 @@ $('#jstree').on("select_node.jstree", function (e, data) {
     });
 });
 
-
 </script>
-		<!-- AJAX로 데이터 검색 및 테이블에 반영 -->
+	<!-- AJAX로 데이터 검색 및 테이블에 반영 -->
 	<script>
 $(document).ready(function() {
     // Enter 키를 눌렀을 때 검색 실행
@@ -655,19 +665,9 @@ $(function() {
                                             console.error(xhr.responseText);
                                         }
                                     });
-                                
 									
 									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-								});
+															});
                             }
                         };
 
@@ -732,6 +732,6 @@ $(function() {
 
 
 
-		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+	<jsp:include page="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

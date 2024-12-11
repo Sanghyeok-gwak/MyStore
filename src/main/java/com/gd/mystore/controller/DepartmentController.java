@@ -202,23 +202,7 @@ public class DepartmentController {
 	    return response;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
     @GetMapping("/departmentChangeHistory.do")

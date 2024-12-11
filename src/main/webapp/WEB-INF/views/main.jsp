@@ -819,7 +819,7 @@
                                     response.boardList.forEach(function(board) {
                           
                                         // 테이블 행 추가
-var row = $('<tr onclick="location.href=\'${contextPath}/board/boardDetail.do?no=' + board.boardNo + '\'" style="text-align:center; vertical-align:middle; background-color: #e1e1e5">');
+																				var row = $('<tr onclick="location.href=\'${contextPath}/board/boardDetail.do?no=' + board.boardNo + '\'" style="text-align:center; vertical-align:middle; background-color: #e1e1e5">');
                                         row.append('<td style="background-color: #e1e1e5">' + board.boardDept + '</td>');  // 구분
                                         row.append('<td style="background-color: #e1e1e5">' + board.boardTitle + '</td>');  // 제목
                                         row.append('<td style="background-color: #e1e1e5">' + board.empName + '</td>');  // 작성자 (emp_name)
@@ -840,7 +840,7 @@ var row = $('<tr onclick="location.href=\'${contextPath}/board/boardDetail.do?no
                 });
 
 
-</script>
+							</script>
             </div>
         </div>
     </div>
