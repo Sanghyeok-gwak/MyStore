@@ -116,7 +116,6 @@
           		const changeImgUrl = document.getElementById('imageChUrlInput').value;
           		
           		document.getElementById('imageUrlInput').src=changeImgUrl;
-          		console.log(document.getElementById('imageUrlInput').value);
           	}
           
           </script>
@@ -144,7 +143,6 @@
 					        const selectedValue = this.value;
 					        const selectedOption = this.options[this.selectedIndex]; 
 					        const dataTestValue = selectedOption.getAttribute("data-test").substring(4);
-					        console.log(dataTestValue);
 					        document.getElementById("productDivisionInput").value = selectedValue;
 					        document.getElementById("divisionCode").value = dataTestValue;
 					    });

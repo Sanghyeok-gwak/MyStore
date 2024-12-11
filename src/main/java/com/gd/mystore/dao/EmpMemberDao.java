@@ -16,7 +16,6 @@ public class EmpMemberDao {
 	private final SqlSessionTemplate sqlSession;
 	
 	public EmpMemberDto selectEmpMember(EmpMemberDto em) {
-		System.out.println("dao 들어온 값 : " + em.toString());
 		return sqlSession.selectOne("empMemberMapper.selectEmpMember", em);
 	}
 

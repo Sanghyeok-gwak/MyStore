@@ -725,7 +725,6 @@ $(function() {
     // 수정 모드 활성화/비활성화 토글 함수 (예시)
     $('#toggleEditMode').on('click', function() {
         editMode = !editMode;  // 수정 모드를 토글
-        console.log("수정 모드:", editMode);
     });
 });
 </script>

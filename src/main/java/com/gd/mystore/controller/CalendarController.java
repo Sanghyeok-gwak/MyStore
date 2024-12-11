@@ -99,7 +99,6 @@ public class CalendarController {
     @PostMapping("/deleteEvent.do")
     @ResponseBody
     public String deleteEvent(@RequestBody CalendarDto calendarDto) {
-        System.out.println("삭제 요청 calNo: " + calendarDto.getCalNo());
         int calNo = calendarDto.getCalNo();
         int result = calendarService.deleteEvent(calNo);
         return result > 0 ? "이벤트가 삭제되었습니다." : "이벤트 삭제 실패.";

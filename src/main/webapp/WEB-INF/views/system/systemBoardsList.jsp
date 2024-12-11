@@ -276,8 +276,6 @@
                     const officeUse = this.getAttribute('data-officeUse');
                     const deptCode = this.getAttribute('data-deptCode');
                     
-                    console.log(boardtUse);
-                    
                     //게시판 번호
 										input_No.value = boardTypeNo;
                     

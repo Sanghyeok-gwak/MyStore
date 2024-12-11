@@ -177,7 +177,6 @@
 				</form>
        	<script>
 	       	function sendReceptionNo(receptionNo, recCheck) {
-            console.log("receptionNo: " + receptionNo + ", recCheck: " + recCheck);
             window.location.href = '${contextPath}/note/recepDetail.no?no=' + receptionNo + '&recCheck=' + recCheck;
 	        }
        	</script>
@@ -216,7 +215,6 @@
 	    checkboxes.forEach(checkbox => {
 	        checkedValues.push(checkbox.value);
 	    });
-			console.log(checkedValues);
 	    if (checkedValues.length === 0) {
 	        alert('휴지통으로 보낼 데이터를 선택해주세요.');
 	        return;

@@ -107,7 +107,6 @@
   			const changeImgUrl = document.getElementById('imageChUrlInput').value;
   		
   			document.getElementById('imageUrlInput').src=changeImgUrl;
-  			console.log(document.getElementById('imageUrlInput').value);
   		}
     
         // 주소 API 실행
